@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-// Replace YOUR_LOCAL_IP with your PC's IPv4 address (e.g., 192.168.1.15)
-const API_URL = 'http://YOUR_LOCAL_IP:5000/api/health';
+// Import the RegistrationScreen component
+import RegistrationScreen from './src/screens/auth/RegistrationScreen';
+
+//Retrieve the API URL from environment variables
+const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
 
 export default function App() {
   const [status, setStatus] = useState('Connecting to backend...');
@@ -20,8 +23,14 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hallo There!</Text>
+      {/* Display backend connection status at the top */}
       <Text style={styles.statusText}>{status}</Text>
+      
+      {/* Render the registration screen as the main content */}
+      <View style={styles.screenContainer}>
+        <RegistrationScreen />
+      </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -31,16 +40,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    paddingTop: 40,
   },
   statusText: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#555',
+    textAlign: 'center',
+    paddingVertical: 8,
+    backgroundColor: '#f0f0f0',
+  },
+  screenContainer: {
+    flex: 1,
   },
 });
