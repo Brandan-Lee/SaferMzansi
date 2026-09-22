@@ -3,20 +3,69 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	TextInput,
 	Pressable,
 	ScrollView,
-	Alert,
+	Modal,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../context/AuthContext";
 import { useNetStatus } from "../../utils/NetStatus";
+import { Feather } from "@expo/vector-icons";
+import { CustomInput } from "../../components/common/CustomInput";
+import { PrimaryButton } from "../../components/common/PrimaryButton";
+import { AlertBadge } from "../../components/common/AlertBadge";
+import { validateField, validateForm } from "../../utils/ValidationUtil";
+
+const FORM_FIELDS = [
+	{
+		key: "name",
+		label: "Name",
+		icon: "user",
+		placeholder: "John",
+		autoCapitalize: "words",
+	},
+	{
+		key: "surname",
+		label: "Surname",
+		icon: "user",
+		placeholder: "Wayde",
+		autoCapitalize: "words",
+	},
+	{
+		key: "email",
+		label: "Email",
+		icon: "mail",
+		placeholder: "john@example.com",
+		keyboardType: "email-address",
+		autoCapitalize: "none",
+	},
+	{
+		key: "phone",
+		label: "Phone",
+		icon: "phone",
+		placeholder: "+27 63 345 6789",
+		keyboardType: "phone-pad",
+	},
+	{
+		key: "password",
+		label: "Password",
+		icon: "lock",
+		placeholder: "••••••••",
+		secureTextEntry: true,
+	},
+	{
+		key: "confirmPassword",
+		label: "Confirm Password",
+		icon: "lock",
+		placeholder: "••••••••",
+		secureTextEntry: true,
+	},
+];
 
 const RegistrationScreen = () => {
 	const { register, loading } = useAuth();
 	const navigation = useNavigation();
-
 	const { isOnline } = useNetStatus();
 
 	const [formData, setFormData] = useState({
@@ -28,47 +77,65 @@ const RegistrationScreen = () => {
 		confirmPassword: "",
 	});
 
-	const handleChange = (field, value) => {
-		setFormData((prev) => ({
+	const [errors, setErrors] = useState({});
+	const [banner, setBanner] = useState(null);
+	const [agreed, setAgreed] = useState(false);
+	const [successModalVisible, setSuccessModalVisible] = useState(false);
+
+	const handleFieldBlur = (field) => {
+		const errorMessage = validateField(field, formData[field], formData);
+		setErrors((prev) => ({
 			...prev,
-			[field]: value,
+			[field]: errorMessage,
 		}));
 	};
 
+	const handleChange = (field, value) => {
+		const updatedData = { ...formData, [field]: value };
+		setFormData(updatedData);
+
+		if (errors[field]) {
+			const errorMessage = validateField(field, value, updatedData);
+			setErrors((prev) => ({
+				...prev,
+				[field]: errorMessage,
+			}));
+		}
+	};
+
+	const handleToggleAgreed = () => {
+		const nextAgreed = !agreed;
+		setAgreed(nextAgreed);
+
+		if (nextAgreed && errors.agreed) {
+			setErrors((prev) => ({ ...prev, agreed: "" }));
+		}
+	};
+
 	const handleRegister = async () => {
+		setBanner(null);
 
-		//-----------------------------------------------------------  TESTING -----------------------------------------------------------
-		if (!isOnline){
-			Alert.alert("Internet Connection Required", "Please connect to the internet to register for an account. ")
-			return;
-		} else{
-			console.log("There was internet.")
-		}
+		const { isValid, errors: validationErrors } = validateForm(
+			formData,
+			agreed,
+		);
 
-
-		//Validation Checks
-		if (
-			!formData.name ||
-			!formData.surname ||
-			!formData.email ||
-			!formData.phone ||
-			!formData.password ||
-			!formData.confirmPassword
-		) {
-			Alert.alert("Error", "Please fill in all fields.");
+		if (!isValid) {
+			setErrors(validationErrors);
 			return;
 		}
 
-		//Ensure that the password and confirm password match
-		if (formData.password !== formData.confirmPassword) {
-			Alert.alert("Error", "Passwords do not match.");
+		if (!isOnline) {
+			setBanner({
+				message: "Internet Connection Required. Please connect to register.",
+				type: "error",
+			});
 			return;
 		}
 
-		//Use user service to register the user
 		try {
 			const result = await register({
-				name: formData.name,
+				name: formData.name.trim(),
 				surname: formData.surname.trim(),
 				email: formData.email.trim().toLowerCase(),
 				phoneNum: formData.phone.trim(),
@@ -76,159 +143,222 @@ const RegistrationScreen = () => {
 			});
 
 			if (result?.token) {
-				Alert.alert(
-					"Registration Successful",
-					`User ${formData.name}'s account has been created and synced successfully.`,
-					[
-						{
-							text: "OK",
-							onPress: () => navigation.navigate("OTPScreen"),
-						},
-					],
-				);
+				setSuccessModalVisible(true);
 			} else {
-				Alert.alert(
-					"Registration Incomplete",
-					"Your account was saved locally but could not be synced with the server. Please check your connection and try again.",
-				);
+				setBanner({
+					message:
+						"Account created locally, but failed to sync with the server.",
+					type: "error",
+				});
 			}
 		} catch (error) {
-			Alert.alert(
-				"Registration Failed",
-				error.message || "An unexpected error has occured. Please try again"
-			);
+			setBanner({
+				message:
+					error.message || "An unexpected error occurred. Please try again.",
+				type: "error",
+			});
 		}
+	};
+
+	const handleSuccessConfirm = () => {
+		setSuccessModalVisible(false);
+		navigation.navigate("OTPScreen");
 	};
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<ScrollView
-				contentContainerStyle={styles.ScrollViewContent}
+				contentContainerStyle={styles.scrollContent}
 				showsVerticalScrollIndicator={false}
+				keyboardShouldPersistTaps="handled"
 			>
 				<View style={styles.content}>
+					<View style={styles.logoBadge}>
+						<Feather name="shield" size={40} color="#6B21A8" />
+					</View>
 					<Text style={styles.logo}>SaferMzansi</Text>
 					<Text style={styles.title}>Create Account</Text>
 					<Text style={styles.subtitle}>
-						Please fill in the form to create an account.
+						Join SaferMzansi and take control of your safety.
 					</Text>
-					<Text style={styles.label}>Name</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="John Wayde"
-						placeholderTextColor="#6B7280"
-						value={formData.name}
-						onChangeText={(value) => handleChange("name", value)}
-					/>
-					<Text style={styles.label}>Surname</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="charles"
-						placeholderTextColor="#6B7280"
-						value={formData.surname}
-						onChangeText={(value) => handleChange("surname", value)}
-					/>
-					<Text style={styles.label}>Email</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="johnCharles@example.com"
-						placeholderTextColor="#6B7280"
-						keyboardType="email-address"
-						value={formData.email}
-						onChangeText={(value) => handleChange("email", value)}
-					/>
-					<Text style={styles.label}>Phone</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="+27 63 345 6789"
-						placeholderTextColor="#6B7280"
-						keyboardType="phone-pad"
-						value={formData.phone}
-						onChangeText={(value) => handleChange("phone", value)}
-					/>
-					<Text style={styles.label}>Password</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="••••••••"
-						placeholderTextColor="#000000"
-						secureTextEntry
-						value={formData.password}
-						onChangeText={(value) => handleChange("password", value)}
-					/>
-					<Text style={styles.label}>Confirm Password</Text>
-					<TextInput
-						style={styles.input}
-						placeholder="••••••••"
-						placeholderTextColor="#000000"
-						secureTextEntry
-						value={formData.confirmPassword}
-						onChangeText={(value) => handleChange("confirmPassword", value)}
-					/>
-					<Pressable style={styles.registerButton} onPress={handleRegister}>
-						<Text style={styles.registerButtonText}>Register</Text>
+
+					{/* Banner displayed ONLY for API/Backend/Network states */}
+					{banner && <AlertBadge message={banner.message} type={banner.type} />}
+
+					{FORM_FIELDS.map((field) => (
+						<CustomInput
+							key={field.key}
+							label={field.label}
+							icon={field.icon}
+							placeholder={field.placeholder}
+							value={formData[field.key]}
+							onChangeText={(val) => handleChange(field.key, val)}
+							onBlur={() => handleFieldBlur(field.key)}
+							secureTextEntry={field.secureTextEntry}
+							keyboardType={field.keyboardType}
+							autoCapitalize={field.autoCapitalize}
+							error={errors[field.key]}
+						/>
+					))}
+
+					<Pressable style={styles.checkboxRow} onPress={handleToggleAgreed}>
+						<View style={[styles.checkbox, agreed && styles.checkboxChecked]}>
+							{agreed && <Feather name="check" size={12} color="#FFFFFF" />}
+						</View>
+						<Text style={styles.checkboxLabel}>
+							I agree to the <Text style={styles.link}>Terms of Service</Text>{" "}
+							and <Text style={styles.link}>Privacy Policy</Text>
+						</Text>
 					</Pressable>
+
+					{/* Inline Client Validation Error for Checkbox */}
+					{errors.agreed && (
+						<Text style={styles.checkboxErrorText}>{errors.agreed}</Text>
+					)}
+
+					<PrimaryButton
+						title="REGISTER"
+						onPress={handleRegister}
+						loading={loading}
+					/>
+
+					<Text style={styles.loginRow}>
+						Already have an account?{" "}
+						<Text
+							style={styles.loginLink}
+							onPress={() => navigation.navigate("LoginScreen")}
+						>
+							Login
+						</Text>
+					</Text>
 				</View>
 			</ScrollView>
+
+			{/* Custom Registration Success Modal */}
+			<Modal
+				transparent
+				visible={successModalVisible}
+				animationType="fade"
+				onRequestClose={handleSuccessConfirm}
+			>
+				<View style={styles.modalOverlay}>
+					<View style={styles.modalCard}>
+						<View style={styles.modalIconBadge}>
+							<Feather name="check-circle" size={32} color="#16A34A" />
+						</View>
+						<Text style={styles.modalTitle}>Registration Successful</Text>
+						<Text style={styles.modalMessage}>
+							Account created for {formData.name.trim()}. Please proceed to
+							verify your OTP.
+						</Text>
+						<PrimaryButton title="CONTINUE" onPress={handleSuccessConfirm} />
+					</View>
+				</View>
+			</Modal>
 		</SafeAreaView>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#E5E7EB",
-	},
+	container: { flex: 1, backgroundColor: "#FAF7FF" },
+	scrollContent: { paddingVertical: 20 },
 	content: {
-		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		padding: 20,
+		paddingHorizontal: 20,
 	},
-	text: {
-		fontSize: 18,
-		fontWeight: "500",
-		color: "#000000",
+	logoBadge: {
+		width: 56,
+		height: 56,
+		borderRadius: 28,
+		justifyContent: "center",
+		alignItems: "center",
+		marginBottom: 4,
 	},
 	logo: {
 		fontSize: 24,
 		fontWeight: "bold",
 		marginBottom: 10,
+		color: "#6B21A8",
 	},
 	title: {
 		fontSize: 20,
 		fontWeight: "bold",
 		marginBottom: 10,
+		color: "#111827",
 	},
 	subtitle: {
 		fontSize: 16,
 		textAlign: "center",
 		marginBottom: 20,
+		color: "#374151",
 	},
-	label: {
-		fontSize: 16,
-		fontWeight: "500",
-		marginBottom: 5,
-	},
-	input: {
+	checkboxRow: {
+		flexDirection: "row",
+		alignItems: "flex-start",
 		width: "100%",
-		height: 40,
-		borderWidth: 1,
-		borderColor: "#6B7280",
-		borderRadius: 5,
-		padding: 10,
-		marginBottom: 15,
+		marginVertical: 10,
 	},
-	registerButton: {
-		backgroundColor: "#3B82F6",
-		paddingVertical: 10,
-		paddingHorizontal: 20,
-		borderRadius: 5,
-		marginTop: 10,
+	checkbox: {
+		width: 18,
+		height: 18,
+		borderWidth: 1.5,
+		borderColor: "#6B21A8",
+		borderRadius: 4,
+		marginRight: 8,
+		marginTop: 2,
+		justifyContent: "center",
+		alignItems: "center",
 	},
-	registerButtonText: {
-		color: "#FFFFFF",
-		fontSize: 16,
+	checkboxChecked: { backgroundColor: "#6B21A8" },
+	checkboxLabel: { flex: 1, fontSize: 14, color: "#374151" },
+	checkboxErrorText: {
+		color: "#DC2626",
+		fontSize: 12,
+		marginTop: -4,
+		marginBottom: 8,
+		alignSelf: "flex-start",
+		fontWeight: "500",
+	},
+	link: { color: "#6B21A8", fontWeight: "600" },
+	loginRow: { marginTop: 16, fontSize: 14, color: "#374151" },
+	loginLink: { color: "#6B21A8", fontWeight: "700" },
+
+	// Modal Styles
+	modalOverlay: {
+		flex: 1,
+		backgroundColor: "rgba(0, 0, 0, 0.5)",
+		justifyContent: "center",
+		alignItems: "center",
+		paddingHorizontal: 24,
+	},
+	modalCard: {
+		width: "100%",
+		backgroundColor: "#FFFFFF",
+		borderRadius: 16,
+		padding: 24,
+		alignItems: "center",
+	},
+	modalIconBadge: {
+		width: 56,
+		height: 56,
+		borderRadius: 28,
+		backgroundColor: "#DCFCE7",
+		justifyContent: "center",
+		alignItems: "center",
+		marginBottom: 12,
+	},
+	modalTitle: {
+		fontSize: 18,
 		fontWeight: "bold",
+		color: "#111827",
+		marginBottom: 8,
+	},
+	modalMessage: {
+		fontSize: 14,
+		color: "#4B5563",
+		textAlign: "center",
+		marginBottom: 20,
 	},
 });
 

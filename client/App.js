@@ -24,10 +24,10 @@ const Stack = createNativeStackNavigator();
 
 //Retrieve environment variables
 const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
-const DATABASE_NAME = process.env.EXPO_PUBLIC_DATABASE_NAME;
+const DATABASE_NAME = "safer_mzansi.db";
 
 export default function App() {
-	const [status, setStatus] = useState("Connecting to backend...");
+	const [status, setStatus] = useState("TESTING 123 - NEW BUNDLE");
 
 	//Connect to the backend Node.js server
 	useEffect(() => {
@@ -62,23 +62,23 @@ export default function App() {
 			useNewConnection={false}
 		>
 			<NetStatusProvider>
-			<AuthProvider>
-				<View style={styles.container}>
-					<NavigationContainer>
-						<Stack.Navigator
-							initialRouteName="Registration"
-							screenOptions={{ headerShown: false }}
-						>
-							<Stack.Screen
-								name="Registration"
-								component={RegistrationScreen}
-							/>
-							<Stack.Screen name="OTPScreen" component={OTPScreen} />
-						</Stack.Navigator>
-					</NavigationContainer>
-					<StatusBar style="auto" />
-				</View>
-			</AuthProvider>
+				<AuthProvider>
+					<View style={styles.container}>
+						<NavigationContainer>
+							<Stack.Navigator
+								initialRouteName="Registration"
+								screenOptions={{ headerShown: false }}
+							>
+								<Stack.Screen
+									name="Registration"
+									component={RegistrationScreen}
+								/>
+								<Stack.Screen name="OTPScreen" component={OTPScreen} />
+							</Stack.Navigator>
+						</NavigationContainer>
+						<StatusBar style="auto" />
+					</View>
+				</AuthProvider>
 			</NetStatusProvider>
 		</SQLiteProvider>
 	);
