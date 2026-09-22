@@ -14,10 +14,10 @@ import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
 
 //Retrieve environment variables
 const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
-const DATABASE_NAME = process.env.EXPO_PUBLIC_DATABASE_NAME;
+const DATABASE_NAME = "safer_mzansi.db";
 
 export default function App() {
-	const [status, setStatus] = useState("Connecting to backend...");
+	   const [status, setStatus] = useState("TESTING 123 - NEW BUNDLE");
 
 	//Connect to the backend Node.js server
 	useEffect(() => {
@@ -58,11 +58,11 @@ export default function App() {
 				{/* Render the registration screen as the main content */}
 				<View style={styles.screenContainer}>
 					{/* Just change this to the screen you want to test, for example <LoginScreen /> or <OTPScreen /> */}
-					<RegistrationScreen />
-					<ForgotPasswordScreen />
-					<ForgotPasswordSuccessScreen />
-					<OTPScreen />
-					<LoginScreen />
+					 <RegistrationScreen />
+					{/* <ForgotPasswordScreen /> */}
+					{/* <ForgotPasswordSuccessScreen /> */}
+					{/* <OTPScreen /> */}
+					{/*<LoginScreen />*/}
 				</View>
 
 				<StatusBar style="auto" />
