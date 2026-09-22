@@ -58,11 +58,11 @@ export default function App() {
 				{/* Render the registration screen as the main content */}
 				<View style={styles.screenContainer}>
 					{/* Just change this to the screen you want to test, for example <LoginScreen /> or <OTPScreen /> */}
-					 <RegistrationScreen />
+					 {/*<RegistrationScreen />*/}
 					{/* <ForgotPasswordScreen /> */}
 					{/* <ForgotPasswordSuccessScreen /> */}
 					{/* <OTPScreen /> */}
-					{/*<LoginScreen />*/}
+					<LoginScreen />
 				</View>
 
 				<StatusBar style="auto" />
