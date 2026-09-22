@@ -171,7 +171,7 @@ const RegistrationScreen = () => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#F5E6FE",
+		backgroundColor: "#FAF7FF",
 	},
 	content: {
 		flex: 1,
