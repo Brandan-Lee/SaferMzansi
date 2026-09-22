@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -8,12 +8,20 @@ import {
 	ScrollView,
 	Alert,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "../../context/AuthContext";
+import { useNetStatus } from "../../utils/NetStatus";
 
 const RegistrationScreen = () => {
+	const { register, loading } = useAuth();
+	const navigation = useNavigation();
+
+	const { isOnline } = useNetStatus();
+
 	const [formData, setFormData] = useState({
 		name: "",
-		surName: "",
+		surname: "",
 		email: "",
 		phone: "",
 		password: "",
@@ -21,16 +29,27 @@ const RegistrationScreen = () => {
 	});
 
 	const handleChange = (field, value) => {
-		setFormData({
-			...formData,
+		setFormData((prev) => ({
+			...prev,
 			[field]: value,
-		});
+		}));
 	};
 
-	const handleRegister = () => {
+	const handleRegister = async () => {
+
+		//-----------------------------------------------------------  TESTING -----------------------------------------------------------
+		if (!isOnline){
+			Alert.alert("Internet Connection Required", "Please connect to the internet to register for an account. ")
+			return;
+		} else{
+			console.log("There was internet.")
+		}
+
+
+		//Validation Checks
 		if (
 			!formData.name ||
-			!formData.surName ||
+			!formData.surname ||
 			!formData.email ||
 			!formData.phone ||
 			!formData.password ||
@@ -40,15 +59,45 @@ const RegistrationScreen = () => {
 			return;
 		}
 
+		//Ensure that the password and confirm password match
 		if (formData.password !== formData.confirmPassword) {
 			Alert.alert("Error", "Passwords do not match.");
 			return;
 		}
-		console.log("Registration data:", formData);
-		Alert.alert(
-			"Registration Successful",
-			"You have been registered successfully!",
-		);
+
+		//Use user service to register the user
+		try {
+			const result = await register({
+				name: formData.name,
+				surname: formData.surname.trim(),
+				email: formData.email.trim().toLowerCase(),
+				phoneNum: formData.phone.trim(),
+				password: formData.password,
+			});
+
+			if (result?.token) {
+				Alert.alert(
+					"Registration Successful",
+					`User ${formData.name}'s account has been created and synced successfully.`,
+					[
+						{
+							text: "OK",
+							onPress: () => navigation.navigate("OTPScreen"),
+						},
+					],
+				);
+			} else {
+				Alert.alert(
+					"Registration Incomplete",
+					"Your account was saved locally but could not be synced with the server. Please check your connection and try again.",
+				);
+			}
+		} catch (error) {
+			Alert.alert(
+				"Registration Failed",
+				error.message || "An unexpected error has occured. Please try again"
+			);
+		}
 	};
 
 	return (
@@ -76,8 +125,8 @@ const RegistrationScreen = () => {
 						style={styles.input}
 						placeholder="charles"
 						placeholderTextColor="#6B7280"
-						value={formData.surName}
-						onChangeText={(value) => handleChange("surName", value)}
+						value={formData.surname}
+						onChangeText={(value) => handleChange("surname", value)}
 					/>
 					<Text style={styles.label}>Email</Text>
 					<TextInput
@@ -182,4 +231,5 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 });
+
 export default RegistrationScreen;

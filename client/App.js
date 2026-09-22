@@ -1,16 +1,26 @@
+import "react-native-get-random-values";
+
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
 
-import { initDatabase } from "./back_end/database/init";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-// Import all the screens you want to test
+import { initDatabase } from "./src/back_end/database/init";
+import { AuthProvider } from "./src/context/AuthContext";
+
+// Import of all screens for the mobile app
 import ForgotPasswordScreen from "./src/screens/auth/ForgotPasswordScreen";
 import ForgotPasswordSuccessScreen from "./src/screens/auth/ForgotPasswordSuccessScreen";
 import OTPScreen from "./src/screens/auth/OTPScreen";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
+
+import { NetStatusProvider } from "./src/utils/NetStatus";
+
+const Stack = createNativeStackNavigator();
 
 //Retrieve environment variables
 const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
@@ -51,22 +61,25 @@ export default function App() {
 			onInit={initDatabase}
 			useNewConnection={false}
 		>
-			<View style={styles.container}>
-				{/* Display backend connection status at the top */}
-				<Text style={styles.statusText}>{status}</Text>
-
-				{/* Render the registration screen as the main content */}
-				<View style={styles.screenContainer}>
-					{/* Just change this to the screen you want to test, for example <LoginScreen /> or <OTPScreen /> */}
-					<RegistrationScreen />
-					<ForgotPasswordScreen />
-					<ForgotPasswordSuccessScreen />
-					<OTPScreen />
-					<LoginScreen />
+			<NetStatusProvider>
+			<AuthProvider>
+				<View style={styles.container}>
+					<NavigationContainer>
+						<Stack.Navigator
+							initialRouteName="Registration"
+							screenOptions={{ headerShown: false }}
+						>
+							<Stack.Screen
+								name="Registration"
+								component={RegistrationScreen}
+							/>
+							<Stack.Screen name="OTPScreen" component={OTPScreen} />
+						</Stack.Navigator>
+					</NavigationContainer>
+					<StatusBar style="auto" />
 				</View>
-
-				<StatusBar style="auto" />
-			</View>
+			</AuthProvider>
+			</NetStatusProvider>
 		</SQLiteProvider>
 	);
 }
