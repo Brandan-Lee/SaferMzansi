@@ -74,6 +74,7 @@ export default function App() {
 									component={RegistrationScreen}
 								/>
 								<Stack.Screen name="OTPScreen" component={OTPScreen} />
+								<Stack.Screen name="LoginScreen" component={LoginScreen} />
 							</Stack.Navigator>
 						</NavigationContainer>
 						<StatusBar style="auto" />
