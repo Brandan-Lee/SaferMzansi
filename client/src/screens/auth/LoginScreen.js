@@ -19,7 +19,6 @@ const LoginScreen = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
-    // TODO: hook up your auth logic here
     console.log('Login pressed', { email, password });
   };
 
