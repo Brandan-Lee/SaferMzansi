@@ -8,12 +8,11 @@ import { SQLiteProvider } from "expo-sqlite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { initDatabase } from "./src/back_end/database/init";
+import { initDatabase } from "./src/database/init";
 import { AuthProvider } from "./src/context/AuthContext";
 
 // Import of all screens for the mobile app
 import ForgotPasswordScreen from "./src/screens/auth/ForgotPasswordScreen";
-import ForgotPasswordSuccessScreen from "./src/screens/auth/ForgotPasswordSuccessScreen";
 import OTPScreen from "./src/screens/auth/OTPScreen";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
