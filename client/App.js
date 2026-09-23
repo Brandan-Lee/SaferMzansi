@@ -66,11 +66,11 @@ export default function App() {
 					<View style={styles.container}>
 						<NavigationContainer>
 							<Stack.Navigator
-								initialRouteName="Registration"
+								initialRouteName="RegistrationScreen"
 								screenOptions={{ headerShown: false }}
 							>
 								<Stack.Screen
-									name="Registration"
+									name="RegistrationScreen"
 									component={RegistrationScreen}
 								/>
 								<Stack.Screen name="OTPScreen" component={OTPScreen} />
