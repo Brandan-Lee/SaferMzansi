@@ -998,3 +998,10 @@
 {"_e":"metro:bundling:progress","_t":1790185534078,"id":"2","progress":0,"total":1,"current":0}
 {"_e":"metro:bundling:done","_t":1790185534180,"id":"2","total":1,"ms":102.3747}
 {"_e":"metro:client_log","_t":1790185538363,"level":"log","data":["Database initialized successfully."]}
+{"_e":"root:init","_t":1790249918438,"format":"v0-jsonl","version":"57.0.26"}
+{"_e":"env:mode","_t":1790249918440,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790249918466,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790249929003,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790249941707,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790249947094,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790249965632,"atlas":false,"workers":6,"host":"::","port":8081}
