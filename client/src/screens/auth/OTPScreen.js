@@ -35,6 +35,11 @@ const OTPScreen = ({navigation}) => {
               maxLength={1}
               textAlign="center"
               value={digit}
+              onChangeText={(text) => {
+                const newOtp = [...otp];
+                newOtp[index] = text;
+                setOtp(newOtp);
+              }}
             />
           ))}
         </View> 
@@ -42,11 +47,12 @@ const OTPScreen = ({navigation}) => {
           <Text style={styles.buttonText}>Verify code</Text>
 
         </Pressable>
-        <Text style={styles.resendText}>Didn't receive the code?</Text>
-        <Pressable onPress={handleResendCode}>
-          <Text style={styles.resendButton}>Resend code</Text>
-        </Pressable>
-
+        <View style={styles.resendSection}>
+          <Text style={styles.resendText}>Didn't receive the code?</Text>
+          <Pressable onPress={handleResendCode}>
+            <Text style={styles.resendButton}>Resend code</Text>
+          </Pressable>
+        </View>
         <Pressable style={styles.backButton} onPress={() => navigation.navigate('ForgotPassword')}>
           <Text style={styles.buttonText}>Back</Text>
         </Pressable>
@@ -66,7 +72,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
+   
     alignItems: 'center',
     paddingHorizontal: 20,
   },
@@ -78,21 +84,21 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 50,
+    marginTop: 45,
     color: '#6A1B9A',
     paddingTop: 30,
   },
   ScrollViewContent: {
     flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 30,
+    paddingBottom: 40,
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    marginTop: 55,
-    
+    fontWeight: '700',
+    marginBottom: 15,
+    textAlign: 'center',
+    lineHeight: 34,
   },
   subtitle: {
     fontSize: 16,
@@ -101,29 +107,30 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     color: '#6B7280',
     paddingHorizontal: 20,
+    lineHeight: 24,
   },
   otpContainer: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 5,
+    paddingHorizontal: 0,
+    marginBottom: 40,
   },
   otpBox: {
     width: 45,
-    height: 52,
-    borderWidth: 2,
+    height: 55,
+    borderWidth: 1.5,
     borderColor: '#6B7280',
-    borderRadius: 8,
-    padding: 10,
+    borderRadius: 9,
     textAlign: 'center',
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '#000000',
   },
   filledOtpBox: {
     borderColor: '#6A1B9A',
-    backgroundColor: '#6A1B9A',
-    color: '#FFFFFF',
+    backgroundColor: '#ffffff',
+    
   },
   input: {
     width: '100%',
@@ -135,23 +142,26 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
+    width: '100%',
+    height: 52,
     backgroundColor: '#6A1B9A',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 12,
-    marginTop: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 28
+    
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
-  backButton: {
-    backgroundColor: '#E5E7EB',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 12,
-    marginTop: 10,
+  
+  resendSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30,
   },
   resendText: {
     fontSize: 14,
@@ -160,7 +170,16 @@ const styles = StyleSheet.create({
   resendButton: {
     color: '#6A1B9A',
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '700',
+    marginLeft: 5,
+  },
+  backButton: {
+    width: '100%',
+    height: 52, 
+    backgroundColor: '#E5E7EB',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
