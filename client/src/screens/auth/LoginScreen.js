@@ -13,14 +13,34 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from '@expo/vector-icons/Ionicons';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({ email: '', password: '' });
+
+  const validate = () => {
+    const nextErrors = { email: '', password: '' };
+
+    if (!email.trim()) {
+      nextErrors.email = 'Email address is required.';
+    } else if (!EMAIL_REGEX.test(email.trim())) {
+      nextErrors.email = 'Please enter a valid email address.';
+    }
+     if (!password) {
+      nextErrors.password = 'Password is required.';
+    }
+    
+    setErrors(nextErrors);
+    return !nextErrors.email && !nextErrors.password;
+  };
 
   const handleLogin = () => {
-    // TODO: hook up your auth logic here
-    console.log('Login pressed', { email, password });
+    if (validate()) {
+      console.log('Login pressed', { email, password });
+    }
   };
 
   return (
@@ -56,33 +76,43 @@ const LoginScreen = ({ navigation }) => {
           {/* Welcome Text */}
           <Text style={styles.welcomeTitle}>Welcome Back</Text>
           <Text style={styles.welcomeSubtitle}>
-            Sign in to access your SaferMzansi account
+            Sign in to access your SaferMzansi account.
           </Text>
 
           {/* Email Input */}
-          <View style={styles.inputWrapper}>
-            <Icon name="mail-outline" size={20} color="#6B21A8" style={styles.inputIcon} />
+          <View style={styles.fieldGroup}>
+            <View style={[styles.inputWrapper, errors.email ? styles.inputWrapperError : null,]}>
+            <Icon name="mail-outline" size={20} color={errors.email ? "#EF4444" : "#6B21A8"} style={styles.inputIcon} />
             <TextInput
               style={styles.input}
               placeholder="Email address"
               placeholderTextColor="#9CA3AF"
               value={email}
-              onChangeText={setEmail}
+              onChangeText={(text) => {setEmail(text);
+                if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
+              }}
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
             />
           </View>
+          {errors.email ? (
+            <Text style={styles.errorText}>{errors.email}</Text>
+          ) : null}
+          </View>
 
           {/* Password Input */}
-          <View style={styles.inputWrapper}>
-            <Icon name="lock-closed-outline" size={20} color="#6B21A8" style={styles.inputIcon} />
+          <View style={styles.fieldGroup}>
+          <View style={[styles.inputWrapper, errors.password ? styles.inputWrapperError : null,]}>
+            <Icon name="lock-closed-outline" size={20} color={errors.password ? "#EF4444" : "#6B21A8"} style={styles.inputIcon} />
             <TextInput
               style={styles.input}
               placeholder="Password"
               placeholderTextColor="#9CA3AF"
               value={password}
-              onChangeText={setPassword}
+              onChangeText={(text) => {setPassword(text);
+                if (errors.password) setErrors((prev) => ({ ...prev, password: '' }));
+              }}
               secureTextEntry={!showPassword}
               autoCapitalize="none"
             />
@@ -96,6 +126,10 @@ const LoginScreen = ({ navigation }) => {
                 color="#9CA3AF"
               />
             </TouchableOpacity>
+          </View>
+          {errors.password ? (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          ) : null}
           </View>
 
           {/* Forgot Password */}
@@ -186,6 +220,10 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     paddingHorizontal: 12,
   },
+  fieldGroup: {
+    marginBottom: 16,
+  },
+
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -195,7 +233,16 @@ const styles = StyleSheet.create({
     borderColor: '#E5E7EB',
     paddingHorizontal: 16,
     height: 54,
-    marginBottom: 16,
+  },
+  inputWrapperError: {
+    borderColor: '#DC2626',
+    borderWidth: 1.5,
+  },
+  errorText: {
+    color: '#DC2626',
+    fontSize: 12,
+    marginTop: 6,
+    marginLeft: 4,
   },
   inputIcon: {
     marginRight: 10,
@@ -215,7 +262,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   loginButton: {
-    backgroundColor: PURPLE_DARK,
+    backgroundColor: PURPLE,
     borderRadius: 14,
     height: 54,
     alignItems: 'center',
@@ -248,7 +295,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: PURPLE_DARK,
     textAlign: 'center',
     fontWeight: '600',
   },
