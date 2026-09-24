@@ -65,7 +65,7 @@ export default function App() {
 					<View style={styles.container}>
 						<NavigationContainer>
 							<Stack.Navigator
-								initialRouteName="RegistrationScreen"
+								initialRouteName="ForgotPasswordScreen"
 								screenOptions={{ headerShown: false }}
 							>
 								<Stack.Screen
@@ -74,6 +74,7 @@ export default function App() {
 								/>
 								<Stack.Screen name="OTPScreen" component={OTPScreen} />
 								<Stack.Screen name="LoginScreen" component={LoginScreen} />
+								<Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
 							</Stack.Navigator>
 						</NavigationContainer>
 						<StatusBar style="auto" />
