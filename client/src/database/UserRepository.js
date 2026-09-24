@@ -1,6 +1,8 @@
-//Method that finds all the user emails from the SQLite database
+// Method that finds all local users with their login credentials from SQLite
 export const findLocalUserEmails = async (db) => {
-	return await db.getAllAsync("SELECT encrypted_email FROM Local_Users");
+	return await db.getAllAsync(
+		"SELECT user_id, encrypted_email, password_hash FROM Local_Users WHERE is_deleted = 0"
+	);
 };
 
 //Method to insert a user into the local SQLite database Local_Users Table

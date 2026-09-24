@@ -28,11 +28,48 @@ export const encryptPayload = (payload) => {
 	}, {});
 };
 
-//Method to hash the password with sha-256
+// Method to hash the password with sha-256
 export const hashPassword = (password) => {
 	if (!password) {
-		return null;
+		return "";
 	}
 
-	return CryptoJS.SHA256(password).toString();
+	return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+};
+
+export const parseJwt = (token) => {
+	try {
+		if (!token) {
+			return null;
+		}
+
+		const basae64url = token.split(".")[1];
+
+		if (!basae64url) {
+			return null;
+		}
+
+		const jsonPayload = decodeURIComponent(
+			atob(base64)
+				.split("")
+				.map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+				.join(),
+		);
+
+		return JSON.parse(jsonPayload);
+	} catch (error) {
+		console.warn("Failed to parse JWT token:", error);
+		return null;
+	}
+};
+
+export const isTokenExpired = (token) => {
+	const decoded = parseJwt(token);
+
+	if (!decoded || !decoded.exp) {
+		return true;
+	}
+
+	const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+	return decoded.exp < currentTimeInSeconds;
 };
