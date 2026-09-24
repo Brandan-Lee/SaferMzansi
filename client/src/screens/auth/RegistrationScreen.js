@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		fontSize: 13,
 		color: "#374151",
-		flexWrap: "wrap", // Fixes squashed inline text
+		flexWrap: "wrap",
 		lineHeight: 18,
 	},
 	checkboxErrorText: {
