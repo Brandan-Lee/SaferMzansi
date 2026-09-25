@@ -65,7 +65,7 @@ export default function App() {
 					<View style={styles.container}>
 						<NavigationContainer>
 							<Stack.Navigator
-								initialRouteName="RegistrationScreen"
+								initialRouteName="OTPScreen"
 								screenOptions={{ headerShown: false }}
 							>
 								<Stack.Screen

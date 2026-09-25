@@ -53,7 +53,7 @@ const OTPScreen = ({navigation}) => {
             <Text style={styles.resendButton}>Resend code</Text>
           </Pressable>
         </View>
-        <Pressable style={styles.backButton} onPress={() => navigation.navigate('ForgotPassword')}>
+        <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
           <Text style={styles.buttonText}>Back</Text>
         </Pressable>
       </View>
