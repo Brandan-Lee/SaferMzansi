@@ -16,6 +16,7 @@ import { CustomInput } from "../../components/common/CustomInput";
 import { PrimaryButton } from "../../components/common/PrimaryButton";
 import { AlertBadge } from "../../components/common/AlertBadge";
 import { validateField, validateForm } from "../../utils/ValidationUtil";
+import { API_BASE_URL } from "../../utils/config";
 
 const FORM_FIELDS = [
 	{
@@ -144,6 +145,20 @@ const RegistrationScreen = () => {
 
 			if (result?.token) {
 				setSuccessModalVisible(true);
+
+				//Once a successful registration occurs, send a request to the server to send the OTP email. The server will handle sending the email.
+				const response = await fetch(`${API_BASE_URL}/send-otp-email`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ email: formData.email.trim().toLowerCase() }),
+				});
+
+				const data = await response.text();
+				alert(data);
+
+
 			} else {
 				setBanner({
 					message:
@@ -162,7 +177,8 @@ const RegistrationScreen = () => {
 
 	const handleSuccessConfirm = () => {
 		setSuccessModalVisible(false);
-		navigation.navigate("OTPScreen");
+		//Navigate to the OTP verification screen, passing the user's email as a parameter for OTP verification. Also used if the user never received the OTP email and needs to request a new one.
+		navigation.navigate("OTPScreen", { email: formData.email.trim().toLowerCase() });
 	};
 
 	return (
