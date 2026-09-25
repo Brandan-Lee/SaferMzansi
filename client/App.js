@@ -29,31 +29,31 @@ const DATABASE_NAME = "safer_mzansi.db";
 export default function App() {
 	const [status, setStatus] = useState("TESTING 123 - NEW BUNDLE");
 
-	//Connect to the backend Node.js server
-	useEffect(() => {
-		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+	// //Connect to the backend Node.js server
+	// useEffect(() => {
+	// 	const controller = new AbortController();
+	// 	const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-		fetch(API_URL, { signal: controller.signal })
-			.then(async (res) => {
-				clearTimeout(timeoutId);
-				const text = await res.text();
-				if (!res.ok) throw new Error(`HTTP ${res.status}`);
-				return JSON.parse(text);
-			})
-			.then((data) => setStatus(data.message))
-			.catch((err) => {
-				clearTimeout(timeoutId);
-				console.error("Fetch error details:", err);
-				if (err.name === "AbortError") {
-					setStatus("Connection timed out (Server unreachable)");
-				} else {
-					setStatus(`Connection failed: ${err.message}`);
-				}
-			});
+	// 	fetch(API_URL, { signal: controller.signal })
+	// 		.then(async (res) => {
+	// 			clearTimeout(timeoutId);
+	// 			const text = await res.text();
+	// 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+	// 			return JSON.parse(text);
+	// 		})
+	// 		.then((data) => setStatus(data.message))
+	// 		.catch((err) => {
+	// 			clearTimeout(timeoutId);
+	// 			console.error("Fetch error details:", err);
+	// 			if (err.name === "AbortError") {
+	// 				setStatus("Connection timed out (Server unreachable)");
+	// 			} else {
+	// 				setStatus(`Connection failed: ${err.message}`);
+	// 			}
+	// 		});
 
-		return () => clearTimeout(timeoutId);
-	}, []);
+	// 	return () => clearTimeout(timeoutId);
+	// }, []);
 
 	return (
 		<SQLiteProvider

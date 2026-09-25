@@ -173,7 +173,10 @@ const OTPScreen = ({ navigation, route }) => {
         type: 'success',
       });
 
-      navigation.navigate('LoginScreen');
+      setTimeout(() => {
+        navigation.navigate('LoginScreen');
+      }, 800);
+
     } catch (error) {
       setBanner({
         message: error.message || 'Failed to verify OTP. Please try again.',
