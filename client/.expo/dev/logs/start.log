@@ -4012,3 +4012,695 @@
 {"_e":"metro:client_log","_t":1790515823567,"level":"error","data":["Error retrieving local user_id:","[ReferenceError: Property 'findLocalUserEmails' doesn't exist]"]}
 {"_e":"metro:client_log","_t":1790516020735,"level":"log","data":["3. Response received in OTPScreen:","{\"data\": {\"error\": \"An error occurred during verification. Please try again\"}, \"ok\": false, \"status\": 500}"]}
 {"_e":"metro:client_log","_t":1790516020736,"level":"log","data":["Type of response:","object"]}
+{"_e":"metro:bundling:failed","_t":1790517767152,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Missing initializer in const declaration. (2:26)\n\n  1 | //Helper to update local user fields by user id\n> 2 | const updateLocalUserField\n    |                           ^\n  3 |\n  4 | // Method that finds all local users with their login credentials from SQLite\n  5 | export const findLocalUserEmails = async (db) => {","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1790517777208,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:bundling:failed","_t":1790517782573,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Missing semicolon. (2:55)\n\n  1 | //Helper to update local user fields by user id\n> 2 | const updateLocalUserField = async (db, userId, fields) {\n    |                                                        ^\n  3 | \t\n  4 | }\n  5 |","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517783296,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Missing semicolon. (2:55)\n\n  1 | //Helper to update local user fields by user id\n> 2 | const updateLocalUserField = async (db, userId, fields) {\n    |                                                        ^\n  3 | \t\n  4 | }\n  5 |","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517785294,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Missing semicolon. (2:55)\n\n  1 | //Helper to update local user fields by user id\n> 2 | const updateLocalUserField = async (db, userId, fields) {\n    |                                                        ^\n  3 | \tconst assign\n  4 | }\n  5 |","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517787052,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Missing semicolon. (2:55)\n\n  1 | //Helper to update local user fields by user id\n> 2 | const updateLocalUserField = async (db, userId, fields) {\n    |                                                        ^\n  3 | \tconst assignment\n  4 | }\n  5 |","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517793805,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Missing initializer in const declaration. (3:17)\n\n  1 | //Helper to update local user fields by user id\n  2 | const updateLocalUserField = async (db, userId, fields) => {\n> 3 | \tconst assignment\n    | \t                ^\n  4 | }\n  5 |\n  6 | // Method that finds all local users with their login credentials from SQLite","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517799577,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Unexpected token (4:0)\n\n  2 | const updateLocalUserField = async (db, userId, fields) => {\n  3 | \tconst assignments = Objects.\n> 4 | }\n    | ^\n  5 |\n  6 | // Method that finds all local users with their login credentials from SQLite\n  7 | export const findLocalUserEmails = async (db) => {","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517817109,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Unexpected token (4:15)\n\n  2 | const updateLocalUserField = async (db, userId, fields) => {\n  3 | \tconst assignments = Objects.keys(fields)\n> 4 | \t\t.map((key) =>)\n    | \t\t             ^\n  5 | }\n  6 |\n  7 | // Method that finds all local users with their login credentials from SQLite","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517841302,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Unexpected token (8:0)\n\n   6 |\n   7 | \tconst values = \n>  8 | }\n     | ^\n   9 |\n  10 | // Method that finds all local users with their login credentials from SQLite\n  11 | export const findLocalUserEmails = async (db) => {","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790517843736,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\UserRepository.js: Unexpected token (7:20)\n\n   5 | \t\t.join(\", \");\n   6 |\n>  7 | \tconst values = [...]\n     | \t                   ^\n   8 | }\n   9 |\n  10 | // Method that finds all local users with their login credentials from SQLite","importStack":null,"filename":"src\\database\\UserRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1790518264141,"level":"error","data":["[ReferenceError: Property 'justifyContent' doesn't exist]"]}
+{"_e":"metro:bundling:started","_t":1790521060162,"id":"1r","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790521060162,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521060168,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521060316,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521060571,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521060671,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521060771,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521060871,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521060971,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521061072,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521061172,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521061294,"id":"1r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790521061455,"id":"1r","total":1,"ms":1292.5361}
+{"_e":"metro:client_log","_t":1790521067226,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:failed","_t":1790521258328,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Unexpected token (11:4)\n\n   9 |\n  10 |     //Method to handle the changing of the OTP input\n> 11 |     const handleOtpChange = (text, index) => {\n     |     ^\n  12 |         const sanitizedText = text.replace(/[^0-9]/g, \"\");\n  13 |\n  14 |         //Handle the pasting of OTP from the user","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790521275805,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Unexpected token (11:4)\n\n   9 |\n  10 |     //Method to handle the changing of the OTP input\n> 11 |     const handleOtpChange = (text, index) => {\n     |     ^\n  12 |         const sanitizedText = text.replace(/[^0-9]/g, \"\");\n  13 |\n  14 |         //Handle the pasting of OTP from the user","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790521317125,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Missing semicolon. (17:17)\n\n  15 |         if (digits.length > 1) {\n  16 |             const pastedOtp = Array.\n> 17 |             const newOtp = [...otp];\n     |                  ^\n  18 |\n  19 |             pastedArray.forEach((char, i) => {\n  20 |                 if (i < length) {","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790521327498,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Unexpected token (16:65)\n\n  14 |         //Handle the pasting of OTP from the user\n  15 |         if (digits.length > 1) {\n> 16 |             const pastedOtp = Array.from(digits.slice(0, length).)\n     |                                                                  ^\n  17 |             const newOtp = [...otp];\n  18 |\n  19 |             pastedArray.forEach((char, i) => {","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790521367046,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Missing semicolon. (16:91)\n\n  14 |         //Handle the pasting of OTP from the user\n  15 |         if (digits.length > 1) {\n> 16 |             const pastedOtp = Array.from(digits.slice(0, length)).concat().slice(0, length));\n     |                                                                                            ^\n  17 |             const newOtp = [...otp];\n  18 |\n  19 |             pastedArray.forEach((char, i) => {","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790521738821,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\LoginScreen.js: Unterminated regular expression. (56:5)\n\n  54 | \t\t\t\t});\n  55 |\n> 56 | \t\t\t\t/\n     | \t\t\t\t ^\n  57 |\n  58 | \t\t\t\tsetTimeout(() => {\n  59 | \t\t\t\t\tnavigation.navigate(\"HomeScreen\");","importStack":null,"filename":"src\\screens\\auth\\LoginScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790521757132,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\LoginScreen.js: Unexpected token, expected \":\" (59:23)\n\n  57 | \t\t\t\tsetTimeout(() => {\n  58 | \t\t\t\t\tnavigation.navigate(\"HomeScreen\");\n> 59 | \t\t\t\t}, isOffline ? 1200);\n     | \t\t\t\t                   ^\n  60 | \t\t\t} else {\n  61 | \t\t\t\tsetBanner({\n  62 | \t\t\t\t\tmessage:","importStack":null,"filename":"src\\screens\\auth\\LoginScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1790521819473,"id":"1v","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790521819473,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521819475,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521819628,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521819851,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521819951,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521820051,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521820151,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521820251,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790521820367,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790521820458,"id":"1v","total":1,"ms":984.8786}
+{"_e":"metro:client_log","_t":1790521825878,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:failed","_t":1790522028244,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\OTPScreen.js: Identifier 'PURPLE' has already been declared. (187:6)\n\n  185 | };\n  186 |\n> 187 | const PURPLE = \"#6B21A8\";\n      |       ^\n  188 |\n  189 | const styles = StyleSheet.create({\n  190 | \tcontainer: {","importStack":null,"filename":"src\\screens\\auth\\OTPScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522031221,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\OTPScreen.js: Identifier 'PURPLE' has already been declared. (187:6)\n\n  185 | };\n  186 |\n> 187 | const PURPLE = \"#6B21A8\";\n      |       ^\n  188 |\n  189 | const styles = StyleSheet.create({\n  190 | \tcontainer: {","importStack":null,"filename":"src\\screens\\auth\\OTPScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1790522175269,"id":"1x","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790522175270,"id":"1x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790522175348,"id":"1x","total":1,"ms":78.1792}
+{"_e":"metro:client_log","_t":1790522180440,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790522180453,"level":"error","data":["[ReferenceError: Property 'opt' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790522209329,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790522285926,"level":"error","data":["[ReferenceError: Property 'Pressable' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790522286870,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790522286933,"level":"error","data":["[ReferenceError: Property 'Pressable' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790522292586,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790522342868,"level":"error","data":["[ReferenceError: Property 'Feather' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790522344954,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790522345100,"level":"error","data":["[ReferenceError: Property 'Feather' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790522347840,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790522372117,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:bundling:failed","_t":1790522616486,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token (38:2)\n\n  36 | \t\tsetAgreed((prev) => {\n  37 | \t\t\tconst next = \n> 38 | \t\t})\n     | \t\t^\n  39 | \t};\n  40 |\n  41 | \tconst handleRegister = async () => {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522622198,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token (40:2)\n\n  38 |\n  39 | \t\t\tif (next )\n> 40 | \t\t})\n     | \t\t^\n  41 | \t};\n  42 |\n  43 | \tconst handleRegister = async () => {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522625847,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token (40:2)\n\n  38 |\n  39 | \t\t\tif (next && errors)\n> 40 | \t\t})\n     | \t\t^\n  41 | \t};\n  42 |\n  43 | \tconst handleRegister = async () => {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522629343,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token (40:2)\n\n  38 |\n  39 | \t\t\tif (next && errors.agreeed)\n> 40 | \t\t})\n     | \t\t^\n  41 | \t};\n  42 |\n  43 | \tconst handleRegister = async () => {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522636138,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token (40:2)\n\n  38 |\n  39 | \t\t\tif (next && errors.agreed)\n> 40 | \t\t})\n     | \t\t^\n  41 | \t};\n  42 |\n  43 | \tconst handleRegister = async () => {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522658335,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token (40:24)\n\n  38 |\n  39 | \t\t\tif (next && errors.agreed) {\n> 40 | \t\t\t\tsetErrors((errs) => )\n     | \t\t\t\t                    ^\n  41 | \t\t\t}\n  42 | \t\t})\n  43 | \t};","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522666641,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token (40:25)\n\n  38 |\n  39 | \t\t\tif (next && errors.agreed) {\n> 40 | \t\t\t\tsetErrors((errs) => ())\n     | \t\t\t\t                     ^\n  41 | \t\t\t}\n  42 | \t\t})\n  43 | \t};","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522766476,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Unexpected token, expected \":\" (86:88)\n\n  84 | \t\t\t\t\t\tmessage:\n  85 | \t\t\t\t\t\t\totpResponse?error ||\n> 86 | \t\t\t\t\t\t\t\"Failed to send a verification code. Please request a new one on the next screen\",\n     | \t\t\t\t\t\t\t                                                                                 ^\n  87 | \t\t\t\t\t\ttype: \"error\",\n  88 | \t\t\t\t\t});\n  89 | \t\t\t\t} else {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522809138,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Identifier 'PURPLE' has already been declared. (188:6)\n\n  186 | const PURPLE = \"#6B21A8\";\n  187 |\n> 188 | const PURPLE = \"#6B21A8\";\n      |       ^\n  189 |\n  190 | const styles = StyleSheet.create({\n  191 | \tcheckboxRow: {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790522810942,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\RegistrationScreen.js: Identifier 'PURPLE' has already been declared. (189:6)\n\n  187 | const PURPLE = \"#6B21A8\";\n  188 |\n> 189 | const PURPLE = \"#6B21A8\";\n      |       ^\n  190 |\n  191 | const styles = StyleSheet.create({\n  192 | \tcheckboxRow: {","importStack":null,"filename":"src\\screens\\auth\\RegistrationScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1790523542100,"id":"2b","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790523542100,"id":"2b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790523542192,"id":"2b","total":1,"ms":91.7873}
+{"_e":"metro:client_log","_t":1790523546301,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790523686027,"id":"2f","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790523686027,"id":"2f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790523686179,"id":"2f","total":1,"ms":151.8107}
+{"_e":"metro:client_log","_t":1790523693372,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790523847988,"level":"warn","data":["Backend sync error","Failed to register user on the server"]}
+{"_e":"metro:bundling:started","_t":1790524227800,"id":"2n","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790524227800,"id":"2n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790524227896,"id":"2n","total":1,"ms":95.8221}
+{"_e":"metro:client_log","_t":1790524235549,"level":"log","data":["Database initialized successfully."]}
+{"_e":"root:init","_t":1790524372330,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790524372332,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790524372353,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790524379396,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790524388777,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790524393038,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790524409794,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790524422176,"id":"3","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790524422177,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524422198,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524430400,"id":"3","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1790524430500,"id":"3","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1790524430651,"id":"3","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1790524430779,"id":"3","progress":0.04000000000000001,"total":20,"current":3}
+{"_e":"metro:bundling:progress","_t":1790524430912,"id":"3","progress":0.04000000000000001,"total":21,"current":4}
+{"_e":"metro:bundling:progress","_t":1790524430983,"id":"3","progress":0.056689342403628114,"total":21,"current":5}
+{"_e":"metro:bundling:progress","_t":1790524431104,"id":"3","progress":0.0625,"total":24,"current":6}
+{"_e":"metro:bundling:progress","_t":1790524431210,"id":"3","progress":0.0625,"total":25,"current":6}
+{"_e":"metro:bundling:progress","_t":1790524432563,"id":"3","progress":0.07840000000000001,"total":25,"current":7}
+{"_e":"metro:bundling:progress","_t":1790524432877,"id":"3","progress":0.07840000000000001,"total":26,"current":7}
+{"_e":"metro:bundling:progress","_t":1790524433059,"id":"3","progress":0.07840000000000001,"total":124,"current":8}
+{"_e":"metro:bundling:progress","_t":1790524433252,"id":"3","progress":0.07840000000000001,"total":131,"current":9}
+{"_e":"metro:bundling:progress","_t":1790524433371,"id":"3","progress":0.07840000000000001,"total":142,"current":12}
+{"_e":"metro:bundling:progress","_t":1790524433503,"id":"3","progress":0.07840000000000001,"total":143,"current":13}
+{"_e":"metro:bundling:progress","_t":1790524433671,"id":"3","progress":0.07840000000000001,"total":145,"current":14}
+{"_e":"metro:bundling:progress","_t":1790524433800,"id":"3","progress":0.07840000000000001,"total":163,"current":15}
+{"_e":"metro:bundling:progress","_t":1790524433911,"id":"3","progress":0.07840000000000001,"total":164,"current":16}
+{"_e":"metro:bundling:progress","_t":1790524434041,"id":"3","progress":0.07840000000000001,"total":168,"current":20}
+{"_e":"metro:bundling:progress","_t":1790524434143,"id":"3","progress":0.07840000000000001,"total":171,"current":21}
+{"_e":"metro:bundling:progress","_t":1790524434250,"id":"3","progress":0.07840000000000001,"total":175,"current":22}
+{"_e":"metro:bundling:progress","_t":1790524434517,"id":"3","progress":0.07840000000000001,"total":175,"current":23}
+{"_e":"metro:bundling:progress","_t":1790524434624,"id":"3","progress":0.07840000000000001,"total":188,"current":25}
+{"_e":"metro:bundling:progress","_t":1790524435263,"id":"3","progress":0.07840000000000001,"total":188,"current":26}
+{"_e":"metro:bundling:progress","_t":1790524435417,"id":"3","progress":0.07840000000000001,"total":188,"current":27}
+{"_e":"metro:bundling:progress","_t":1790524435522,"id":"3","progress":0.07840000000000001,"total":193,"current":31}
+{"_e":"metro:bundling:progress","_t":1790524435622,"id":"3","progress":0.07840000000000001,"total":197,"current":32}
+{"_e":"metro:bundling:progress","_t":1790524435723,"id":"3","progress":0.07840000000000001,"total":202,"current":38}
+{"_e":"metro:bundling:progress","_t":1790524435824,"id":"3","progress":0.07840000000000001,"total":206,"current":41}
+{"_e":"metro:bundling:progress","_t":1790524435930,"id":"3","progress":0.07840000000000001,"total":218,"current":46}
+{"_e":"metro:bundling:progress","_t":1790524436036,"id":"3","progress":0.07840000000000001,"total":222,"current":48}
+{"_e":"metro:bundling:progress","_t":1790524436218,"id":"3","progress":0.07840000000000001,"total":222,"current":49}
+{"_e":"metro:bundling:progress","_t":1790524436368,"id":"3","progress":0.07840000000000001,"total":226,"current":53}
+{"_e":"metro:bundling:progress","_t":1790524436510,"id":"3","progress":0.07840000000000001,"total":234,"current":58}
+{"_e":"metro:bundling:progress","_t":1790524436611,"id":"3","progress":0.07840000000000001,"total":235,"current":59}
+{"_e":"metro:bundling:progress","_t":1790524436713,"id":"3","progress":0.07840000000000001,"total":247,"current":67}
+{"_e":"metro:bundling:progress","_t":1790524436813,"id":"3","progress":0.08259966519933039,"total":254,"current":73}
+{"_e":"metro:bundling:progress","_t":1790524436920,"id":"3","progress":0.09413739669421488,"total":264,"current":81}
+{"_e":"metro:bundling:progress","_t":1790524437044,"id":"3","progress":0.10946504332444273,"total":269,"current":89}
+{"_e":"metro:bundling:progress","_t":1790524437145,"id":"3","progress":0.12879845572970414,"total":287,"current":103}
+{"_e":"metro:bundling:progress","_t":1790524437253,"id":"3","progress":0.13200272985237246,"total":289,"current":105}
+{"_e":"metro:bundling:progress","_t":1790524437355,"id":"3","progress":0.16272335535765586,"total":295,"current":119}
+{"_e":"metro:bundling:progress","_t":1790524437455,"id":"3","progress":0.1910442524450682,"total":302,"current":132}
+{"_e":"metro:bundling:progress","_t":1790524437556,"id":"3","progress":0.19720611149584488,"total":304,"current":135}
+{"_e":"metro:bundling:progress","_t":1790524437676,"id":"3","progress":0.19720611149584488,"total":321,"current":136}
+{"_e":"metro:bundling:progress","_t":1790524437795,"id":"3","progress":0.19720611149584488,"total":321,"current":137}
+{"_e":"metro:bundling:progress","_t":1790524437902,"id":"3","progress":0.19720611149584488,"total":325,"current":140}
+{"_e":"metro:bundling:progress","_t":1790524438008,"id":"3","progress":0.19720611149584488,"total":331,"current":146}
+{"_e":"metro:bundling:progress","_t":1790524438113,"id":"3","progress":0.19724048442906572,"total":340,"current":151}
+{"_e":"metro:bundling:progress","_t":1790524438214,"id":"3","progress":0.2056517036235803,"total":344,"current":156}
+{"_e":"metro:bundling:progress","_t":1790524438324,"id":"3","progress":0.22193357613017475,"total":346,"current":163}
+{"_e":"metro:bundling:progress","_t":1790524438430,"id":"3","progress":0.22193357613017475,"total":382,"current":166}
+{"_e":"metro:bundling:progress","_t":1790524438532,"id":"3","progress":0.22193357613017475,"total":393,"current":174}
+{"_e":"metro:bundling:progress","_t":1790524438640,"id":"3","progress":0.22193357613017475,"total":398,"current":181}
+{"_e":"metro:bundling:progress","_t":1790524438754,"id":"3","progress":0.22193357613017475,"total":436,"current":189}
+{"_e":"metro:bundling:progress","_t":1790524438858,"id":"3","progress":0.22193357613017475,"total":469,"current":201}
+{"_e":"metro:bundling:progress","_t":1790524438972,"id":"3","progress":0.22193357613017475,"total":477,"current":212}
+{"_e":"metro:bundling:progress","_t":1790524439071,"id":"3","progress":0.22193357613017475,"total":482,"current":218}
+{"_e":"metro:bundling:progress","_t":1790524439171,"id":"3","progress":0.22193357613017475,"total":488,"current":221}
+{"_e":"metro:bundling:progress","_t":1790524439290,"id":"3","progress":0.22193357613017475,"total":494,"current":228}
+{"_e":"metro:bundling:progress","_t":1790524439391,"id":"3","progress":0.22657599999999997,"total":500,"current":238}
+{"_e":"metro:bundling:progress","_t":1790524439501,"id":"3","progress":0.236196,"total":500,"current":243}
+{"_e":"metro:bundling:progress","_t":1790524439607,"id":"3","progress":0.236196,"total":537,"current":254}
+{"_e":"metro:bundling:progress","_t":1790524439707,"id":"3","progress":0.236196,"total":557,"current":270}
+{"_e":"metro:bundling:progress","_t":1790524439838,"id":"3","progress":0.24821109697974073,"total":558,"current":278}
+{"_e":"metro:bundling:progress","_t":1790524439965,"id":"3","progress":0.24821109697974073,"total":569,"current":280}
+{"_e":"metro:bundling:progress","_t":1790524440078,"id":"3","progress":0.2534246176426051,"total":586,"current":295}
+{"_e":"metro:bundling:progress","_t":1790524440177,"id":"3","progress":0.2585463947141626,"total":590,"current":300}
+{"_e":"metro:bundling:progress","_t":1790524440315,"id":"3","progress":0.2601341148309303,"total":598,"current":305}
+{"_e":"metro:bundling:progress","_t":1790524440419,"id":"3","progress":0.2601341148309303,"total":633,"current":321}
+{"_e":"metro:bundling:progress","_t":1790524440526,"id":"3","progress":0.2675947351766149,"total":636,"current":329}
+{"_e":"metro:bundling:progress","_t":1790524440631,"id":"3","progress":0.2683207574432861,"total":639,"current":331}
+{"_e":"metro:bundling:progress","_t":1790524440734,"id":"3","progress":0.2683207574432861,"total":687,"current":339}
+{"_e":"metro:bundling:progress","_t":1790524440833,"id":"3","progress":0.2683207574432861,"total":690,"current":346}
+{"_e":"metro:bundling:progress","_t":1790524440939,"id":"3","progress":0.2683207574432861,"total":694,"current":351}
+{"_e":"metro:bundling:progress","_t":1790524441149,"id":"3","progress":0.2683207574432861,"total":695,"current":356}
+{"_e":"metro:bundling:progress","_t":1790524441263,"id":"3","progress":0.2683207574432861,"total":710,"current":357}
+{"_e":"metro:bundling:progress","_t":1790524441364,"id":"3","progress":0.2683207574432861,"total":711,"current":359}
+{"_e":"metro:bundling:progress","_t":1790524441465,"id":"3","progress":0.2683207574432861,"total":715,"current":364}
+{"_e":"metro:bundling:progress","_t":1790524441635,"id":"3","progress":0.2683207574432861,"total":717,"current":365}
+{"_e":"metro:bundling:progress","_t":1790524441737,"id":"3","progress":0.2683207574432861,"total":719,"current":366}
+{"_e":"metro:bundling:progress","_t":1790524441848,"id":"3","progress":0.2683207574432861,"total":719,"current":368}
+{"_e":"metro:bundling:progress","_t":1790524441985,"id":"3","progress":0.26912861898673207,"total":719,"current":373}
+{"_e":"metro:bundling:progress","_t":1790524442023,"id":"3","progress":0.27057360226400057,"total":719,"current":374}
+{"_e":"metro:bundling:progress","_t":1790524442136,"id":"3","progress":0.275625,"total":720,"current":378}
+{"_e":"metro:bundling:progress","_t":1790524442228,"id":"3","progress":0.27708526234567904,"total":720,"current":379}
+{"_e":"metro:bundling:progress","_t":1790524442347,"id":"3","progress":0.28001736111111114,"total":720,"current":381}
+{"_e":"metro:bundling:progress","_t":1790524442453,"id":"3","progress":0.28503488423255646,"total":723,"current":386}
+{"_e":"metro:bundling:progress","_t":1790524442587,"id":"3","progress":0.28503488423255646,"total":742,"current":389}
+{"_e":"metro:bundling:progress","_t":1790524442835,"id":"3","progress":0.28503488423255646,"total":744,"current":395}
+{"_e":"metro:bundling:progress","_t":1790524442953,"id":"3","progress":0.2859675712774172,"total":748,"current":400}
+{"_e":"metro:bundling:progress","_t":1790524443073,"id":"3","progress":0.294610941119277,"total":748,"current":406}
+{"_e":"metro:bundling:progress","_t":1790524443191,"id":"3","progress":0.30044467957333637,"total":748,"current":410}
+{"_e":"metro:bundling:progress","_t":1790524443301,"id":"3","progress":0.3243515685321284,"total":748,"current":426}
+{"_e":"metro:bundling:progress","_t":1790524443413,"id":"3","progress":0.3306631817131651,"total":753,"current":433}
+{"_e":"metro:bundling:progress","_t":1790524443512,"id":"3","progress":0.3574647966182358,"total":756,"current":452}
+{"_e":"metro:bundling:progress","_t":1790524443612,"id":"3","progress":0.3682792517456715,"total":758,"current":460}
+{"_e":"metro:bundling:progress","_t":1790524443722,"id":"3","progress":0.37596260387811636,"total":760,"current":466}
+{"_e":"metro:bundling:progress","_t":1790524443822,"id":"3","progress":0.38291214746845365,"total":766,"current":474}
+{"_e":"metro:bundling:progress","_t":1790524443923,"id":"3","progress":0.3955230712890625,"total":768,"current":483}
+{"_e":"metro:bundling:progress","_t":1790524444064,"id":"3","progress":0.40045166015625,"total":768,"current":486}
+{"_e":"metro:bundling:progress","_t":1790524444164,"id":"3","progress":0.40045166015625,"total":777,"current":491}
+{"_e":"metro:bundling:progress","_t":1790524444290,"id":"3","progress":0.4139648663969698,"total":788,"current":507}
+{"_e":"metro:bundling:progress","_t":1790524444409,"id":"3","progress":0.4159197996250053,"total":797,"current":514}
+{"_e":"metro:bundling:progress","_t":1790524444510,"id":"3","progress":0.42953404815296387,"total":798,"current":523}
+{"_e":"metro:bundling:progress","_t":1790524444611,"id":"3","progress":0.4438890625,"total":800,"current":533}
+{"_e":"metro:bundling:progress","_t":1790524444713,"id":"3","progress":0.45830218851093035,"total":808,"current":547}
+{"_e":"metro:bundling:progress","_t":1790524444822,"id":"3","progress":0.48258696585538774,"total":809,"current":562}
+{"_e":"metro:bundling:progress","_t":1790524444924,"id":"3","progress":0.49449301123540973,"total":812,"current":571}
+{"_e":"metro:bundling:progress","_t":1790524445029,"id":"3","progress":0.5064548910384282,"total":815,"current":580}
+{"_e":"metro:bundling:progress","_t":1790524445129,"id":"3","progress":0.5308672234144942,"total":818,"current":596}
+{"_e":"metro:bundling:progress","_t":1790524445231,"id":"3","progress":0.5888365841247045,"total":821,"current":630}
+{"_e":"metro:bundling:progress","_t":1790524445337,"id":"3","progress":0.5984689480503491,"total":826,"current":639}
+{"_e":"metro:bundling:progress","_t":1790524445447,"id":"3","progress":0.6103515625,"total":832,"current":650}
+{"_e":"metro:bundling:progress","_t":1790524445552,"id":"3","progress":0.6277661124473799,"total":833,"current":660}
+{"_e":"metro:bundling:progress","_t":1790524445652,"id":"3","progress":0.6442174515235458,"total":836,"current":671}
+{"_e":"metro:bundling:progress","_t":1790524445753,"id":"3","progress":0.6442174515235458,"total":861,"current":684}
+{"_e":"metro:bundling:progress","_t":1790524445854,"id":"3","progress":0.6463264624975102,"total":862,"current":693}
+{"_e":"metro:bundling:progress","_t":1790524445954,"id":"3","progress":0.6699375187944804,"total":865,"current":708}
+{"_e":"metro:bundling:progress","_t":1790524446055,"id":"3","progress":0.6877325596090936,"total":867,"current":719}
+{"_e":"metro:bundling:progress","_t":1790524446155,"id":"3","progress":0.7031219028082093,"total":867,"current":727}
+{"_e":"metro:bundling:progress","_t":1790524446298,"id":"3","progress":0.7031219028082093,"total":883,"current":738}
+{"_e":"metro:bundling:progress","_t":1790524446412,"id":"3","progress":0.7187675162595375,"total":887,"current":752}
+{"_e":"metro:bundling:progress","_t":1790524446512,"id":"3","progress":0.7357912543623478,"total":893,"current":766}
+{"_e":"metro:bundling:progress","_t":1790524446623,"id":"3","progress":0.7484082330672414,"total":897,"current":776}
+{"_e":"metro:bundling:progress","_t":1790524446728,"id":"3","progress":0.7612659229797297,"total":902,"current":787}
+{"_e":"metro:bundling:progress","_t":1790524446828,"id":"3","progress":0.7738561661525567,"total":906,"current":797}
+{"_e":"metro:bundling:progress","_t":1790524446934,"id":"3","progress":0.7797951566185912,"total":915,"current":808}
+{"_e":"metro:bundling:progress","_t":1790524447034,"id":"3","progress":0.7852035798815177,"total":922,"current":817}
+{"_e":"metro:bundling:progress","_t":1790524447143,"id":"3","progress":0.7852035798815177,"total":935,"current":826}
+{"_e":"metro:bundling:progress","_t":1790524447252,"id":"3","progress":0.7960372177149764,"total":937,"current":836}
+{"_e":"metro:bundling:progress","_t":1790524447361,"id":"3","progress":0.81,"total":940,"current":846}
+{"_e":"metro:bundling:progress","_t":1790524447461,"id":"3","progress":0.8236382260037199,"total":941,"current":854}
+{"_e":"metro:bundling:progress","_t":1790524447563,"id":"3","progress":0.8355859832285445,"total":943,"current":862}
+{"_e":"metro:bundling:progress","_t":1790524447663,"id":"3","progress":0.8420533246209616,"total":947,"current":869}
+{"_e":"metro:bundling:progress","_t":1790524447764,"id":"3","progress":0.848795816821899,"total":953,"current":878}
+{"_e":"metro:bundling:progress","_t":1790524447873,"id":"3","progress":0.848795816821899,"total":958,"current":882}
+{"_e":"metro:bundling:progress","_t":1790524447974,"id":"3","progress":0.8572672277404649,"total":958,"current":887}
+{"_e":"metro:bundling:progress","_t":1790524448078,"id":"3","progress":0.8656920815770206,"total":963,"current":896}
+{"_e":"metro:bundling:progress","_t":1790524448179,"id":"3","progress":0.8721398811556588,"total":968,"current":904}
+{"_e":"metro:bundling:progress","_t":1790524448284,"id":"3","progress":0.8745713305898491,"total":972,"current":909}
+{"_e":"metro:bundling:progress","_t":1790524448384,"id":"3","progress":0.8774718867138692,"total":980,"current":918}
+{"_e":"metro:bundling:progress","_t":1790524448485,"id":"3","progress":0.8952809915225849,"total":985,"current":932}
+{"_e":"metro:bundling:progress","_t":1790524448587,"id":"3","progress":0.9108050228554736,"total":986,"current":941}
+{"_e":"metro:bundling:progress","_t":1790524448697,"id":"3","progress":0.9108050228554736,"total":1017,"current":950}
+{"_e":"metro:bundling:progress","_t":1790524448802,"id":"3","progress":0.9108050228554736,"total":1017,"current":951}
+{"_e":"metro:bundling:progress","_t":1790524448908,"id":"3","progress":0.9108050228554736,"total":1022,"current":960}
+{"_e":"metro:bundling:progress","_t":1790524449013,"id":"3","progress":0.9108050228554736,"total":1028,"current":970}
+{"_e":"metro:bundling:progress","_t":1790524449119,"id":"3","progress":0.9108050228554736,"total":1032,"current":977}
+{"_e":"metro:bundling:progress","_t":1790524449219,"id":"3","progress":0.914853398381527,"total":1034,"current":989}
+{"_e":"metro:bundling:progress","_t":1790524449325,"id":"3","progress":0.922708025147929,"total":1040,"current":999}
+{"_e":"metro:bundling:progress","_t":1790524449427,"id":"3","progress":0.922708025147929,"total":1062,"current":1012}
+{"_e":"metro:bundling:progress","_t":1790524449532,"id":"3","progress":0.922708025147929,"total":1073,"current":1021}
+{"_e":"metro:bundling:progress","_t":1790524449634,"id":"3","progress":0.922708025147929,"total":1082,"current":1025}
+{"_e":"metro:bundling:progress","_t":1790524449735,"id":"3","progress":0.922708025147929,"total":1082,"current":1029}
+{"_e":"metro:bundling:progress","_t":1790524449836,"id":"3","progress":0.922708025147929,"total":1085,"current":1033}
+{"_e":"metro:bundling:progress","_t":1790524449939,"id":"3","progress":0.922708025147929,"total":1094,"current":1039}
+{"_e":"metro:bundling:progress","_t":1790524450045,"id":"3","progress":0.922708025147929,"total":1096,"current":1047}
+{"_e":"metro:bundling:progress","_t":1790524450153,"id":"3","progress":0.922708025147929,"total":1104,"current":1058}
+{"_e":"metro:bundling:progress","_t":1790524450258,"id":"3","progress":0.9291638784565335,"total":1109,"current":1069}
+{"_e":"metro:bundling:progress","_t":1790524450359,"id":"3","progress":0.9379311744176608,"total":1110,"current":1075}
+{"_e":"metro:bundling:progress","_t":1790524450459,"id":"3","progress":0.9520709672263352,"total":1113,"current":1086}
+{"_e":"metro:bundling:progress","_t":1790524450560,"id":"3","progress":0.9627196785755578,"total":1116,"current":1095}
+{"_e":"metro:bundling:progress","_t":1790524450663,"id":"3","progress":0.9627196785755578,"total":1124,"current":1102}
+{"_e":"metro:bundling:progress","_t":1790524450764,"id":"3","progress":0.966625112482652,"total":1129,"current":1110}
+{"_e":"metro:bundling:progress","_t":1790524450864,"id":"3","progress":0.9858908293523376,"total":1130,"current":1122}
+{"_e":"metro:bundling:progress","_t":1790524451150,"id":"3","progress":0.9947113358453645,"total":1133,"current":1130}
+{"_e":"metro:bundling:progress","_t":1790524451251,"id":"3","progress":0.9964819728228526,"total":1136,"current":1134}
+{"_e":"metro:bundling:progress","_t":1790524451315,"id":"3","progress":0.9982402115155723,"total":1136,"current":1135}
+{"_e":"metro:bundling:progress","_t":1790524452821,"id":"3","progress":0.999,"total":1136,"current":1136}
+{"_e":"metro:bundling:progress","_t":1790524452921,"id":"3","progress":0.999,"total":1144,"current":1140}
+{"_e":"metro:bundling:progress","_t":1790524453028,"id":"3","progress":0.999,"total":1146,"current":1146}
+{"_e":"metro:bundling:done","_t":1790524453782,"id":"3","total":1146,"ms":31606.1381}
+{"_e":"metro:bundling:started","_t":1790524498639,"id":"5","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790524498639,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524498645,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524498973,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499255,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499359,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499497,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499597,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499697,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499797,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499897,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524499997,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524500103,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524500219,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790524500329,"id":"5","total":1,"ms":1690.2225}
+{"_e":"metro:client_log","_t":1790524506867,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790524916365,"id":"b","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790524916365,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790524916366,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790524916449,"id":"b","total":1,"ms":84.096}
+{"_e":"metro:client_log","_t":1790524922463,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790525074949,"id":"h","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790525074949,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790525075043,"id":"h","total":1,"ms":93.3042}
+{"_e":"metro:client_log","_t":1790525082658,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790525442913,"id":"o","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790525442913,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525442915,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525443254,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525443592,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525443694,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525443796,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525443896,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525443996,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444124,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444224,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444324,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444425,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444528,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444628,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444733,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525444897,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790525445102,"id":"o","total":1,"ms":2189.0338}
+{"_e":"metro:client_log","_t":1790525450592,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790525492485,"id":"v","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790525492485,"id":"v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790525492572,"id":"v","total":1,"ms":86.9082}
+{"_e":"metro:client_log","_t":1790525497548,"level":"log","data":["Database initialized successfully."]}
+{"_e":"root:init","_t":1790525722092,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790525722093,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790525722098,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790525722490,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790525722941,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790525723372,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790525734069,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790525795895,"id":"4","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790525795895,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525795900,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790525797297,"id":"4","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1790525797397,"id":"4","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1790525797506,"id":"4","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1790525797625,"id":"4","progress":0.04000000000000001,"total":20,"current":4}
+{"_e":"metro:bundling:progress","_t":1790525797730,"id":"4","progress":0.04340277777777778,"total":24,"current":5}
+{"_e":"metro:bundling:progress","_t":1790525797839,"id":"4","progress":0.04340277777777778,"total":48,"current":7}
+{"_e":"metro:bundling:progress","_t":1790525797943,"id":"4","progress":0.04340277777777778,"total":51,"current":8}
+{"_e":"metro:bundling:progress","_t":1790525798090,"id":"4","progress":0.04340277777777778,"total":51,"current":9}
+{"_e":"metro:bundling:progress","_t":1790525798219,"id":"4","progress":0.04340277777777778,"total":58,"current":10}
+{"_e":"metro:bundling:progress","_t":1790525798346,"id":"4","progress":0.04340277777777778,"total":63,"current":12}
+{"_e":"metro:bundling:progress","_t":1790525798508,"id":"4","progress":0.04340277777777778,"total":63,"current":13}
+{"_e":"metro:bundling:progress","_t":1790525798626,"id":"4","progress":0.051652892561983466,"total":66,"current":15}
+{"_e":"metro:bundling:progress","_t":1790525798707,"id":"4","progress":0.05876951331496787,"total":66,"current":16}
+{"_e":"metro:bundling:progress","_t":1790525798809,"id":"4","progress":0.06079939951210358,"total":73,"current":18}
+{"_e":"metro:bundling:progress","_t":1790525798927,"id":"4","progress":0.10518626734842952,"total":74,"current":24}
+{"_e":"metro:bundling:progress","_t":1790525799032,"id":"4","progress":0.12249999999999998,"total":80,"current":28}
+{"_e":"metro:bundling:progress","_t":1790525799133,"id":"4","progress":0.1429208804283165,"total":82,"current":31}
+{"_e":"metro:bundling:progress","_t":1790525799252,"id":"4","progress":0.17192147531231408,"total":82,"current":34}
+{"_e":"metro:bundling:progress","_t":1790525799355,"id":"4","progress":0.1881259979677747,"total":83,"current":36}
+{"_e":"metro:bundling:progress","_t":1790525799455,"id":"4","progress":0.1881259979677747,"total":119,"current":38}
+{"_e":"metro:bundling:progress","_t":1790525799557,"id":"4","progress":0.1881259979677747,"total":119,"current":42}
+{"_e":"metro:bundling:progress","_t":1790525799683,"id":"4","progress":0.1881259979677747,"total":124,"current":44}
+{"_e":"metro:bundling:progress","_t":1790525799807,"id":"4","progress":0.1881259979677747,"total":224,"current":46}
+{"_e":"metro:bundling:progress","_t":1790525799949,"id":"4","progress":0.1881259979677747,"total":234,"current":50}
+{"_e":"metro:bundling:progress","_t":1790525799978,"id":"4","progress":0.1881259979677747,"total":234,"current":51}
+{"_e":"metro:bundling:progress","_t":1790525800094,"id":"4","progress":0.1881259979677747,"total":238,"current":56}
+{"_e":"metro:bundling:progress","_t":1790525800199,"id":"4","progress":0.1881259979677747,"total":262,"current":63}
+{"_e":"metro:bundling:progress","_t":1790525800299,"id":"4","progress":0.1881259979677747,"total":262,"current":66}
+{"_e":"metro:bundling:progress","_t":1790525800400,"id":"4","progress":0.1881259979677747,"total":299,"current":72}
+{"_e":"metro:bundling:progress","_t":1790525800511,"id":"4","progress":0.1881259979677747,"total":301,"current":80}
+{"_e":"metro:bundling:progress","_t":1790525800615,"id":"4","progress":0.1881259979677747,"total":319,"current":84}
+{"_e":"metro:bundling:progress","_t":1790525800719,"id":"4","progress":0.1881259979677747,"total":335,"current":89}
+{"_e":"metro:bundling:progress","_t":1790525800826,"id":"4","progress":0.1881259979677747,"total":336,"current":96}
+{"_e":"metro:bundling:progress","_t":1790525800931,"id":"4","progress":0.1881259979677747,"total":340,"current":102}
+{"_e":"metro:bundling:progress","_t":1790525801043,"id":"4","progress":0.1881259979677747,"total":343,"current":107}
+{"_e":"metro:bundling:progress","_t":1790525801150,"id":"4","progress":0.1881259979677747,"total":353,"current":120}
+{"_e":"metro:bundling:progress","_t":1790525801257,"id":"4","progress":0.1881259979677747,"total":353,"current":122}
+{"_e":"metro:bundling:progress","_t":1790525801369,"id":"4","progress":0.1881259979677747,"total":370,"current":127}
+{"_e":"metro:bundling:progress","_t":1790525801482,"id":"4","progress":0.1881259979677747,"total":373,"current":131}
+{"_e":"metro:bundling:progress","_t":1790525801597,"id":"4","progress":0.1881259979677747,"total":376,"current":136}
+{"_e":"metro:bundling:progress","_t":1790525801698,"id":"4","progress":0.1881259979677747,"total":387,"current":141}
+{"_e":"metro:bundling:progress","_t":1790525801812,"id":"4","progress":0.1881259979677747,"total":398,"current":146}
+{"_e":"metro:bundling:progress","_t":1790525801949,"id":"4","progress":0.1881259979677747,"total":399,"current":146}
+{"_e":"metro:bundling:progress","_t":1790525802059,"id":"4","progress":0.1881259979677747,"total":404,"current":153}
+{"_e":"metro:bundling:progress","_t":1790525802168,"id":"4","progress":0.1881259979677747,"total":408,"current":159}
+{"_e":"metro:bundling:progress","_t":1790525802269,"id":"4","progress":0.1881259979677747,"total":425,"current":170}
+{"_e":"metro:bundling:progress","_t":1790525802376,"id":"4","progress":0.1881259979677747,"total":444,"current":183}
+{"_e":"metro:bundling:progress","_t":1790525802480,"id":"4","progress":0.1881259979677747,"total":453,"current":191}
+{"_e":"metro:bundling:progress","_t":1790525802601,"id":"4","progress":0.19480271502675475,"total":469,"current":207}
+{"_e":"metro:bundling:progress","_t":1790525802732,"id":"4","progress":0.2104733852115729,"total":473,"current":217}
+{"_e":"metro:bundling:progress","_t":1790525802839,"id":"4","progress":0.2104733852115729,"total":508,"current":219}
+{"_e":"metro:bundling:progress","_t":1790525802964,"id":"4","progress":0.2104733852115729,"total":511,"current":223}
+{"_e":"metro:bundling:progress","_t":1790525803105,"id":"4","progress":0.2104733852115729,"total":512,"current":226}
+{"_e":"metro:bundling:progress","_t":1790525803237,"id":"4","progress":0.2104733852115729,"total":521,"current":231}
+{"_e":"metro:bundling:progress","_t":1790525803368,"id":"4","progress":0.2104733852115729,"total":548,"current":237}
+{"_e":"metro:bundling:progress","_t":1790525803469,"id":"4","progress":0.2104733852115729,"total":559,"current":243}
+{"_e":"metro:bundling:progress","_t":1790525803574,"id":"4","progress":0.2104733852115729,"total":565,"current":244}
+{"_e":"metro:bundling:progress","_t":1790525803783,"id":"4","progress":0.2104733852115729,"total":580,"current":250}
+{"_e":"metro:bundling:progress","_t":1790525803894,"id":"4","progress":0.2104733852115729,"total":590,"current":256}
+{"_e":"metro:bundling:progress","_t":1790525804001,"id":"4","progress":0.2104733852115729,"total":591,"current":259}
+{"_e":"metro:bundling:progress","_t":1790525804160,"id":"4","progress":0.2104733852115729,"total":591,"current":261}
+{"_e":"metro:bundling:progress","_t":1790525804262,"id":"4","progress":0.2104733852115729,"total":599,"current":265}
+{"_e":"metro:bundling:progress","_t":1790525804373,"id":"4","progress":0.21242742960290806,"total":601,"current":277}
+{"_e":"metro:bundling:progress","_t":1790525804483,"id":"4","progress":0.22811316551570504,"total":603,"current":288}
+{"_e":"metro:bundling:progress","_t":1790525804598,"id":"4","progress":0.2362374993596329,"total":609,"current":296}
+{"_e":"metro:bundling:progress","_t":1790525804704,"id":"4","progress":0.2467320612738511,"total":610,"current":303}
+{"_e":"metro:bundling:progress","_t":1790525804814,"id":"4","progress":0.25,"total":618,"current":309}
+{"_e":"metro:bundling:progress","_t":1790525804916,"id":"4","progress":0.2531545429373838,"total":636,"current":320}
+{"_e":"metro:bundling:progress","_t":1790525805026,"id":"4","progress":0.2692239231043076,"total":636,"current":330}
+{"_e":"metro:bundling:progress","_t":1790525805137,"id":"4","progress":0.290720413517949,"total":638,"current":344}
+{"_e":"metro:bundling:progress","_t":1790525805240,"id":"4","progress":0.308641975308642,"total":639,"current":355}
+{"_e":"metro:bundling:progress","_t":1790525805340,"id":"4","progress":0.31366989468970335,"total":641,"current":359}
+{"_e":"metro:bundling:progress","_t":1790525805444,"id":"4","progress":0.3305805656352348,"total":647,"current":372}
+{"_e":"metro:bundling:progress","_t":1790525805549,"id":"4","progress":0.338350911951518,"total":655,"current":381}
+{"_e":"metro:bundling:progress","_t":1790525805650,"id":"4","progress":0.34581421251949207,"total":670,"current":394}
+{"_e":"metro:bundling:progress","_t":1790525805752,"id":"4","progress":0.3592934250966833,"total":679,"current":407}
+{"_e":"metro:bundling:progress","_t":1790525805855,"id":"4","progress":0.3592934250966833,"total":686,"current":411}
+{"_e":"metro:bundling:progress","_t":1790525805959,"id":"4","progress":0.36034892171444016,"total":688,"current":413}
+{"_e":"metro:bundling:progress","_t":1790525806060,"id":"4","progress":0.36034892171444016,"total":710,"current":426}
+{"_e":"metro:bundling:progress","_t":1790525806160,"id":"4","progress":0.3681353364474183,"total":712,"current":432}
+{"_e":"metro:bundling:progress","_t":1790525806267,"id":"4","progress":0.3718440999559881,"total":715,"current":436}
+{"_e":"metro:bundling:progress","_t":1790525806374,"id":"4","progress":0.3735517629223923,"total":715,"current":437}
+{"_e":"metro:bundling:progress","_t":1790525806545,"id":"4","progress":0.37526333806054085,"total":715,"current":438}
+{"_e":"metro:bundling:progress","_t":1790525806652,"id":"4","progress":0.37526333806054085,"total":734,"current":442}
+{"_e":"metro:bundling:progress","_t":1790525806757,"id":"4","progress":0.37526333806054085,"total":740,"current":447}
+{"_e":"metro:bundling:progress","_t":1790525806874,"id":"4","progress":0.37526333806054085,"total":742,"current":454}
+{"_e":"metro:bundling:progress","_t":1790525806974,"id":"4","progress":0.37526333806054085,"total":758,"current":462}
+{"_e":"metro:bundling:progress","_t":1790525807091,"id":"4","progress":0.37931484646267355,"total":768,"current":473}
+{"_e":"metro:bundling:progress","_t":1790525807196,"id":"4","progress":0.3865875593975677,"total":772,"current":480}
+{"_e":"metro:bundling:progress","_t":1790525807291,"id":"4","progress":0.3930575317458187,"total":772,"current":484}
+{"_e":"metro:bundling:progress","_t":1790525807383,"id":"4","progress":0.39468341431984755,"total":772,"current":485}
+{"_e":"metro:bundling:progress","_t":1790525807483,"id":"4","progress":0.40781128352439,"total":772,"current":493}
+{"_e":"metro:bundling:progress","_t":1790525807607,"id":"4","progress":0.42452314156084725,"total":772,"current":503}
+{"_e":"metro:bundling:progress","_t":1790525807706,"id":"4","progress":0.43474880332986465,"total":775,"current":511}
+{"_e":"metro:bundling:progress","_t":1790525807811,"id":"4","progress":0.4416252670056138,"total":787,"current":523}
+{"_e":"metro:bundling:progress","_t":1790525807914,"id":"4","progress":0.4579628970373007,"total":795,"current":538}
+{"_e":"metro:bundling:progress","_t":1790525808014,"id":"4","progress":0.49795656817372724,"total":795,"current":561}
+{"_e":"metro:bundling:progress","_t":1790525808115,"id":"4","progress":0.5359344962620148,"total":795,"current":582}
+{"_e":"metro:bundling:progress","_t":1790525808217,"id":"4","progress":0.5531640625,"total":800,"current":595}
+{"_e":"metro:bundling:progress","_t":1790525808317,"id":"4","progress":0.559711900202575,"total":806,"current":603}
+{"_e":"metro:bundling:progress","_t":1790525808437,"id":"4","progress":0.5718204710322518,"total":808,"current":611}
+{"_e":"metro:bundling:progress","_t":1790525808538,"id":"4","progress":0.5872121082834444,"total":813,"current":623}
+{"_e":"metro:bundling:progress","_t":1790525808661,"id":"4","progress":0.5890987323157365,"total":813,"current":624}
+{"_e":"metro:bundling:progress","_t":1790525808765,"id":"4","progress":0.5998654363706267,"total":816,"current":632}
+{"_e":"metro:bundling:progress","_t":1790525808876,"id":"4","progress":0.6053599048185604,"total":820,"current":638}
+{"_e":"metro:bundling:progress","_t":1790525808982,"id":"4","progress":0.6133885030732552,"total":821,"current":643}
+{"_e":"metro:bundling:progress","_t":1790525809098,"id":"4","progress":0.629146168919199,"total":822,"current":652}
+{"_e":"metro:bundling:progress","_t":1790525809200,"id":"4","progress":0.629146168919199,"total":834,"current":658}
+{"_e":"metro:bundling:progress","_t":1790525809302,"id":"4","progress":0.632358277457062,"total":835,"current":664}
+{"_e":"metro:bundling:progress","_t":1790525809402,"id":"4","progress":0.6445960355082797,"total":837,"current":672}
+{"_e":"metro:bundling:progress","_t":1790525809516,"id":"4","progress":0.6568918955394143,"total":839,"current":680}
+{"_e":"metro:bundling:progress","_t":1790525809618,"id":"4","progress":0.6618460175692984,"total":842,"current":685}
+{"_e":"metro:bundling:progress","_t":1790525809727,"id":"4","progress":0.680722521223502,"total":846,"current":698}
+{"_e":"metro:bundling:progress","_t":1790525809831,"id":"4","progress":0.7033064604516364,"total":849,"current":712}
+{"_e":"metro:bundling:progress","_t":1790525809931,"id":"4","progress":0.7033064604516364,"total":862,"current":718}
+{"_e":"metro:bundling:progress","_t":1790525810030,"id":"4","progress":0.7086295729349454,"total":866,"current":729}
+{"_e":"metro:bundling:progress","_t":1790525810133,"id":"4","progress":0.726815179765975,"total":868,"current":740}
+{"_e":"metro:bundling:progress","_t":1790525810255,"id":"4","progress":0.7386491537301705,"total":868,"current":746}
+{"_e":"metro:bundling:progress","_t":1790525810360,"id":"4","progress":0.7573595416013634,"total":871,"current":758}
+{"_e":"metro:bundling:progress","_t":1790525810460,"id":"4","progress":0.7719021320537599,"total":873,"current":767}
+{"_e":"metro:bundling:progress","_t":1790525810569,"id":"4","progress":0.7719021320537599,"total":893,"current":782}
+{"_e":"metro:bundling:progress","_t":1790525810671,"id":"4","progress":0.7866234679278864,"total":902,"current":800}
+{"_e":"metro:bundling:progress","_t":1790525810781,"id":"4","progress":0.8014888488286012,"total":907,"current":812}
+{"_e":"metro:bundling:progress","_t":1790525810892,"id":"4","progress":0.8127594577900781,"total":914,"current":824}
+{"_e":"metro:bundling:progress","_t":1790525810994,"id":"4","progress":0.8127594577900781,"total":924,"current":833}
+{"_e":"metro:bundling:progress","_t":1790525811094,"id":"4","progress":0.8310837173008323,"total":928,"current":846}
+{"_e":"metro:bundling:progress","_t":1790525811224,"id":"4","progress":0.8333922996878252,"total":930,"current":849}
+{"_e":"metro:bundling:progress","_t":1790525811328,"id":"4","progress":0.8425595901091557,"total":938,"current":861}
+{"_e":"metro:bundling:progress","_t":1790525811432,"id":"4","progress":0.8508641066267937,"total":941,"current":868}
+{"_e":"metro:bundling:progress","_t":1790525811533,"id":"4","progress":0.8618256031250243,"total":949,"current":881}
+{"_e":"metro:bundling:progress","_t":1790525811638,"id":"4","progress":0.876705776212621,"total":958,"current":897}
+{"_e":"metro:bundling:progress","_t":1790525811738,"id":"4","progress":0.8836388835715103,"total":967,"current":909}
+{"_e":"metro:bundling:progress","_t":1790525811853,"id":"4","progress":0.8895919421487605,"total":968,"current":913}
+{"_e":"metro:bundling:progress","_t":1790525812399,"id":"4","progress":0.8915417321221228,"total":968,"current":914}
+{"_e":"metro:bundling:progress","_t":1790525812505,"id":"4","progress":0.8994633429929465,"total":969,"current":919}
+{"_e":"metro:bundling:progress","_t":1790525812607,"id":"4","progress":0.9003642507349835,"total":978,"current":928}
+{"_e":"metro:bundling:progress","_t":1790525812717,"id":"4","progress":0.9067529661577104,"total":984,"current":937}
+{"_e":"metro:bundling:progress","_t":1790525812817,"id":"4","progress":0.9067529661577104,"total":1006,"current":947}
+{"_e":"metro:bundling:progress","_t":1790525812921,"id":"4","progress":0.9067529661577104,"total":1011,"current":955}
+{"_e":"metro:bundling:progress","_t":1790525813037,"id":"4","progress":0.9067529661577104,"total":1020,"current":962}
+{"_e":"metro:bundling:progress","_t":1790525813140,"id":"4","progress":0.9067529661577104,"total":1020,"current":964}
+{"_e":"metro:bundling:progress","_t":1790525813247,"id":"4","progress":0.9067529661577104,"total":1021,"current":969}
+{"_e":"metro:bundling:progress","_t":1790525813350,"id":"4","progress":0.9067529661577104,"total":1025,"current":976}
+{"_e":"metro:bundling:progress","_t":1790525813450,"id":"4","progress":0.9073807339406554,"total":1033,"current":984}
+{"_e":"metro:bundling:progress","_t":1790525813557,"id":"4","progress":0.9073807339406554,"total":1052,"current":998}
+{"_e":"metro:bundling:progress","_t":1790525813670,"id":"4","progress":0.9073807339406554,"total":1066,"current":1009}
+{"_e":"metro:bundling:progress","_t":1790525813817,"id":"4","progress":0.9073807339406554,"total":1070,"current":1014}
+{"_e":"metro:bundling:progress","_t":1790525813894,"id":"4","progress":0.9073807339406554,"total":1070,"current":1015}
+{"_e":"metro:bundling:progress","_t":1790525813994,"id":"4","progress":0.9073807339406554,"total":1082,"current":1025}
+{"_e":"metro:bundling:progress","_t":1790525814104,"id":"4","progress":0.9073807339406554,"total":1089,"current":1033}
+{"_e":"metro:bundling:progress","_t":1790525814205,"id":"4","progress":0.9122698882314267,"total":1092,"current":1043}
+{"_e":"metro:bundling:progress","_t":1790525814314,"id":"4","progress":0.9122698882314267,"total":1098,"current":1047}
+{"_e":"metro:bundling:progress","_t":1790525814421,"id":"4","progress":0.9184750516983683,"total":1105,"current":1059}
+{"_e":"metro:bundling:progress","_t":1790525814540,"id":"4","progress":0.9343281223526958,"total":1108,"current":1071}
+{"_e":"metro:bundling:progress","_t":1790525814643,"id":"4","progress":0.9414763258504067,"total":1111,"current":1078}
+{"_e":"metro:bundling:progress","_t":1790525814747,"id":"4","progress":0.9467710004658143,"total":1112,"current":1082}
+{"_e":"metro:bundling:progress","_t":1790525815056,"id":"4","progress":0.9467710004658143,"total":1118,"current":1086}
+{"_e":"metro:bundling:progress","_t":1790525815156,"id":"4","progress":0.9542717290814453,"total":1124,"current":1098}
+{"_e":"metro:bundling:progress","_t":1790525815258,"id":"4","progress":0.963015111111111,"total":1125,"current":1104}
+{"_e":"metro:bundling:progress","_t":1790525815360,"id":"4","progress":0.9736738191262221,"total":1132,"current":1117}
+{"_e":"metro:bundling:progress","_t":1790525815462,"id":"4","progress":0.9859527644627297,"total":1135,"current":1127}
+{"_e":"metro:bundling:progress","_t":1790525815580,"id":"4","progress":0.9964819728228526,"total":1136,"current":1134}
+{"_e":"metro:bundling:progress","_t":1790525815682,"id":"4","progress":0.9982402115155723,"total":1136,"current":1135}
+{"_e":"metro:bundling:progress","_t":1790525817194,"id":"4","progress":0.999,"total":1136,"current":1136}
+{"_e":"metro:bundling:progress","_t":1790525817300,"id":"4","progress":0.999,"total":1146,"current":1146}
+{"_e":"metro:bundling:done","_t":1790525817659,"id":"4","total":1146,"ms":21764.0575}
+{"_e":"metro:client_log","_t":1790525824521,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790525984312,"id":"a","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790525984312,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790525984542,"id":"a","total":1,"ms":229.8537}
+{"_e":"metro:client_log","_t":1790525993262,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:failed","_t":1790526075953,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unexpected token (15:29)\n\n  13 |\n  14 | \t\tif (!response.ok) {\n> 15 | \t\t\treturn { error: response. || \"Failed to send OTP\" };\n     | \t\t\t                          ^\n  16 | \t\t}\n  17 |\n  18 | \t\treturn { data };","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790526076145,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unexpected token (15:29)\n\n  13 |\n  14 | \t\tif (!response.ok) {\n> 15 | \t\t\treturn { error: response. || \"Failed to send OTP\" };\n     | \t\t\t                          ^\n  16 | \t\t}\n  17 |\n  18 | \t\treturn { data };","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1790526085541,"level":"error","data":["[ReferenceError: Property 'sanitizedText' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790526087948,"level":"error","data":["[ReferenceError: Property 'pastedArray' doesn't exist]"]}
+{"_e":"metro:bundling:started","_t":1790526301438,"id":"m","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790526301438,"id":"m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790526301506,"id":"m","total":1,"ms":67.7259}
+{"_e":"metro:client_log","_t":1790526307946,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790526448660,"id":"s","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790526448661,"id":"s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790526448743,"id":"s","total":1,"ms":82.7675}
+{"_e":"metro:client_log","_t":1790526455394,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:failed","_t":1790526648735,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unexpected token (12:0)\n\n  10 |\n  11 | //Method that uses the api client to send an OTP to the users email\n> 12 | export const sendOtpEmail = async (email) => {\n     | ^\n  13 | \ttry {\n  14 | \t\tconst response = await postApi(\"/otp/send-otp-email\", { email });\n  15 |","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1790526651015,"level":"error","data":["[ReferenceError: Property 'email' doesn't exist]"]}
+{"_e":"metro:bundling:failed","_t":1790526664757,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unterminated string constant. (9:68)\n\n   7 | import { postApi } from \"./ApiClient\";\n   8 |\n>  9 | const normalizedEmail = (email) => email?.trim().toLowerCase() || \"\"'\n     |                                                                     ^\n  10 |\n  11 | //Method that uses the api client to send an OTP to the users email\n  12 | export const sendOtpEmail = async (email) => {","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790526751619,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unexpected token (39:3)\n\n  37 |\n  38 | \t\t\t//Mathced user has been found\n> 39 | \t\t\tif (matchedUser) {\n     | \t\t\t^\n  40 | \t\t\t\tmatchedUserId = matchedUser.user_id;\n  41 | \t\t\t}\n  42 | \t\t} catch (error) {","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790526753849,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unexpected token (36:49)\n\n  34 |\n  35 | \t\t\t//Decrypt the raw email\n> 36 | \t\t\tconst matchedUser = localUsers.find((user) => )\n     | \t\t\t                                              ^\n  37 |\n  38 | \t\t\t//Mathced user has been found\n  39 | \t\t\tif (matchedUser) {","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790526805458,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unexpected token (40:2)\n\n  38 | \t\t\t//Mathced user has been found\n  39 | \t\t\tmatchedUserId = \n> 40 | \t\t} catch (error) {\n     | \t\t^\n  41 | \t\t\tconsole.error(\"Error retrieving local user_id:\", error);\n  42 | \t\t}\n  43 | \t}","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790526808892,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\EmailService.js: Unexpected token (40:2)\n\n  38 | \t\t\t//Mathced user has been found\n  39 | \t\t\tmatchedUserId = matchedUser?\n> 40 | \t\t} catch (error) {\n     | \t\t^\n  41 | \t\t\tconsole.error(\"Error retrieving local user_id:\", error);\n  42 | \t\t}\n  43 | \t}","importStack":null,"filename":"src\\services\\EmailService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790526976631,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (8:0)\n\n   6 |\n   7 | //Method that helps to check if the phone number matches South African format\n>  8 | export const isValidPhone = (phone) => {\n     | ^\n   9 | \tif (!phone) return false;\n  10 | \tconst cleanPhone = phone.replace(/\\D/g, \"\");\n  11 | \treturn cleanPhone.length >= 9 && cleanPhone.length <= 12;","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527012943,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: 'import' and 'export' may only appear at the top level. (16:0)\n\n  14 |\n  15 | //Method that helps to validate the fields enter into the form\n> 16 | export const validateField = (field, value, formData = {}) => {\n     | ^\n  17 | \tconst trimmed = value?.trim() || \"\";\n  18 |\n  19 | \t//Validate each field","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527075668,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Missing initializer in const declaration. (50:16)\n\n  48 | export const validateField = (field, value, formData = {}) => {\n  49 | \tconst trimmed = value?.trim() || \"\";\n> 50 | \tconst validator\n     | \t               ^\n  51 |\n  52 | \t//Validate each field\n  53 | \tswitch (field) {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527091504,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Missing semicolon. (54:15)\n\n  52 |\n  53 | \t//Validate each field\n> 54 | \tswitch (field) {\n     | \t              ^\n  55 | \t\tcase \"name\":\n  56 | \t\t\treturn !trimmed ? \"Name is required\" : \"\";\n  57 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527099733,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token, expected \":\" (54:1)\n\n  52 |\n  53 | \t//Validate each field\n> 54 | \tswitch (field) {\n     | \t^\n  55 | \t\tcase \"name\":\n  56 | \t\t\treturn !trimmed ? \"Name is required\" : \"\";\n  57 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527104978,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token, expected \":\" (54:1)\n\n  52 |\n  53 | \t//Validate each field\n> 54 | \tswitch (field) {\n     | \t^\n  55 | \t\tcase \"name\":\n  56 | \t\t\treturn !trimmed ? \"Name is required\" : \"\";\n  57 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527110429,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token, expected \":\" (54:1)\n\n  52 |\n  53 | \t//Validate each field\n> 54 | \tswitch (field) {\n     | \t^\n  55 | \t\tcase \"name\":\n  56 | \t\t\treturn !trimmed ? \"Name is required\" : \"\";\n  57 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527113691,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (54:1)\n\n  52 |\n  53 | \t//Validate each field\n> 54 | \tswitch (field) {\n     | \t^\n  55 | \t\tcase \"name\":\n  56 | \t\t\treturn !trimmed ? \"Name is required\" : \"\";\n  57 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527123966,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token, expected \":\" (54:1)\n\n  52 |\n  53 | \t//Validate each field\n> 54 | \tswitch (field) {\n     | \t^\n  55 | \t\tcase \"name\":\n  56 | \t\t\treturn !trimmed ? \"Name is required\" : \"\";\n  57 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527240287,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Missing initializer in const declaration. (56:18)\n\n  54 |\n  55 | //Method to validate form\n> 56 | const validateForm()\n     |                   ^\n  57 |\n  58 | //Method that helps to validate the form of the registration screen\n  59 | export const validateRegistrationForm = (formData, agreed) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527244978,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (56:22)\n\n  54 |\n  55 | //Method to validate form\n> 56 | const validateForm = ()\n     |                       ^\n  57 |\n  58 | //Method that helps to validate the form of the registration screen\n  59 | export const validateRegistrationForm = (formData, agreed) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1790527253315,"level":"error","data":["[ReferenceError: Property 'formData' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790527255876,"level":"error","data":["[ReferenceError: Property 'formData' doesn't exist]"]}
+{"_e":"metro:bundling:failed","_t":1790527260483,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (56:59)\n\n  54 |\n  55 | //Method to validate form\n> 56 | const validateForm = (formData, extraValidations = {}) => ()\n     |                                                            ^\n  57 |\n  58 | //Method that helps to validate the form of the registration screen\n  59 | export const validateRegistrationForm = (formData, agreed) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527292192,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (59:40)\n\n  57 | \tconst errors = {};\n  58 |\n> 59 | \tObject.keys(formData).forEach((key) => )\n     | \t                                       ^\n  60 | }\n  61 |\n  62 | //Method that helps to validate the form of the registration screen","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527313082,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (63:1)\n\n  61 |\n  62 | \t\tif (error)\n> 63 | \t})\n     | \t^\n  64 | }\n  65 |\n  66 | //Method that helps to validate the form of the registration screen","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527321179,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (64:2)\n\n  62 | \t\tif (error) {\n  63 | \t\t\terrors[key] = \n> 64 | \t\t}\n     | \t\t^\n  65 | \t})\n  66 | }\n  67 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527383994,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Missing initializer in const declaration. (77:18)\n\n  75 | //Method that helps to validate the form of the registration screen\n  76 | export const validateRegistrationForm = (formData, agreed) => {\n> 77 | \tconst extraErrors\n     | \t                 ^\n  78 |\n  79 | \tconst errors = {};\n  80 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527391153,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Lexical declaration cannot appear in a single-statement context. (81:1)\n\n  79 | \tif (!agreed)\n  80 |\n> 81 | \tconst errors = {};\n     | \t^\n  82 |\n  83 | \t//Map through each field inside the form to show errors on the field\n  84 | \tObject.keys(formData).forEach((key) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527397564,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (81:1)\n\n  79 | \tif (!agreed) {\n  80 | \t\textraErrors.\n> 81 | \t}\n     | \t^\n  82 |\n  83 | \tconst errors = {};\n  84 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527474495,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (88:14)\n\n  86 | //Method that validates the Login form\n  87 | export const validateLoginForm = (formData) => {\n> 88 | \tvalidateForm(for)\n     | \t             ^\n  89 | };\n  90 |\n  91 | //Method that checks if it is a valid OTP or not","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527486525,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (89:0)\n\n  87 | export const validateLoginForm = (formData) => \n  88 | \tvalidateForm(formData)\n> 89 | };\n     | ^\n  90 |\n  91 | //Method that checks if it is a valid OTP or not\n  92 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527507106,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Missing initializer in const declaration. (90:10)\n\n  88 | export const validateLoginForm = (formData) => validateForm(formData);\n  89 |\n> 90 | const norm\n     |           ^\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n  93 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527511536,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Missing initializer in const declaration. (90:24)\n\n  88 | export const validateLoginForm = (formData) => validateForm(formData);\n  89 |\n> 90 | const normalizeOtpString\n     |                         ^\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n  93 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527515398,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (93:0)\n\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n> 93 | export const isValidOtp = (otpArrayOrString, length = 6) => {\n     | ^\n  94 | \tconst otpString = Array.isArray(otpArrayOrString)\n  95 | \t\t? otpArrayOrString.join(\"\")\n  96 | \t\t: otpArrayOrString?.trim() || \"\";","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527524365,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (90:56)\n\n  88 | export const validateLoginForm = (formData) => validateForm(formData);\n  89 |\n> 90 | const normalizeOtpString = (otp) => (Array.isArray(otp) ?)\n     |                                                         ^\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n  93 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527528541,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token, expected \":\" (90:70)\n\n  88 | export const validateLoginForm = (formData) => validateForm(formData);\n  89 |\n> 90 | const normalizeOtpString = (otp) => (Array.isArray(otp) ? otp.join(\"\"))\n     |                                                                       ^\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n  93 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527530239,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token, expected \":\" (90:71)\n\n  88 | export const validateLoginForm = (formData) => validateForm(formData);\n  89 |\n> 90 | const normalizeOtpString = (otp) => (Array.isArray(otp) ? otp.join(\"\") )\n     |                                                                        ^\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n  93 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527531780,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (90:72)\n\n  88 | export const validateLoginForm = (formData) => validateForm(formData);\n  89 |\n> 90 | const normalizeOtpString = (otp) => (Array.isArray(otp) ? otp.join(\"\") :)\n     |                                                                         ^\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n  93 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527533643,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (90:76)\n\n  88 | export const validateLoginForm = (formData) => validateForm(formData);\n  89 |\n> 90 | const normalizeOtpString = (otp) => (Array.isArray(otp) ? otp.join(\"\") : otp?)\n     |                                                                             ^\n  91 |\n  92 | //Method that checks if it is a valid OTP or not\n  93 | export const isValidOtp = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527556617,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (96:1)\n\n  94 | \tconst otpString = \n  95 |\n> 96 | \tconst regex = new RegExp(`^\\\\d{${length}}$`);\n     | \t^\n  97 | \treturn regex.test(otpString);\n  98 | };\n  99 |","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790527579029,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\utils\\ValidationUtil.js: Unexpected token (98:0)\n\n   96 | \treturn new RegExp(`^\\\\d{${length}}$`).test(otpString);\n   97 | };\n>  98 | };\n      | ^\n   99 |\n  100 | //Method that validates the OTP form\n  101 | export const validateOtpInput = (otpArrayOrString, length = 6) => {","importStack":null,"filename":"src\\utils\\ValidationUtil.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1790533631867,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790533641978,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790533641986,"level":"error","data":["Failed to log Local_Users database:","[TypeError: Cannot read property 'getAllAsync' of undefined]"]}
+{"_e":"metro:client_log","_t":1790533644351,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790533644448,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790533644451,"level":"error","data":["Failed to log Local_Users database:","[ReferenceError: Property 'decryptData' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790533659246,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790533659252,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790533659274,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790533737286,"id":"17","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790533737287,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533737289,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533737443,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533737718,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533737818,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533737919,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533738019,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533738119,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533738219,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533738319,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790533738436,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790533738592,"id":"17","total":1,"ms":1305.563}
+{"_e":"metro:client_log","_t":1790533745008,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790533745163,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790533745189,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790533745190,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790534638532,"id":"1a","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790534638532,"id":"1a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790534638696,"id":"1a","total":1,"ms":164.0867}
+{"_e":"metro:client_log","_t":1790534646232,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790534646234,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790534646251,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:client_log","_t":1790534820338,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790534820383,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790534820395,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:client_log","_t":1790534827732,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790534827736,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790534827772,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790534859044,"id":"1b","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790534859045,"id":"1b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790534859121,"id":"1b","total":1,"ms":76.2703}
+{"_e":"metro:client_log","_t":1790534865328,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790534865328,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790534865328,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:client_log","_t":1790534960918,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790534960927,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790534960936,"level":"log","data":["Found 1 user(s):"]}
+{"_e":"metro:client_log","_t":1790534960938,"level":"log","data":["\n--- User 1 ---"]}
+{"_e":"metro:client_log","_t":1790534960944,"level":"log","data":["ID:          3f9df585-9928-4997-ac33-f78aac05ea47"]}
+{"_e":"metro:client_log","_t":1790534961002,"level":"log","data":["Email:       brandan.sherbrooke@gmail.com"]}
+{"_e":"metro:client_log","_t":1790534961005,"level":"log","data":["Verified:    true (1)"]}
+{"_e":"metro:client_log","_t":1790534961005,"level":"log","data":["Synced:      true (1)"]}
+{"_e":"metro:client_log","_t":1790534961005,"level":"log","data":["Deleted:     false (0)"]}
+{"_e":"metro:client_log","_t":1790534961024,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:client_log","_t":1790534963098,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE] ================"]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["Found 1 user(s):"]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["\n--- User 1 ---"]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["ID:          3f9df585-9928-4997-ac33-f78aac05ea47"]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["Email:       brandan.sherbrooke@gmail.com"]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["Verified:    true (1)"]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["Synced:      true (1)"]}
+{"_e":"metro:client_log","_t":1790534963100,"level":"log","data":["Deleted:     false (0)"]}
+{"_e":"metro:client_log","_t":1790534963152,"level":"log","data":["============================================================\n"]}
+{"_e":"metro:client_log","_t":1790535023326,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790535023327,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790535023327,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790535023327,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790535023329,"level":"log","data":["{\n  \"user_id\": \"3f9df585-9928-4997-ac33-f78aac05ea47\",\n  \"encrypted_name\": \"U2FsdGVkX19pqwJck8bJmVxHJdTl6dAG+ZAewtLHBIs=\",\n  \"encrypted_surname\": \"U2FsdGVkX19arDU9MDZ+KnaoFG7sZ5+Mn00TB9cF6gI=\",\n  \"encrypted_email\": \"U2FsdGVkX18BeuvKSHtlRlrecJHSAZwH2aMYZV3/ckn87JIEH8orTfNQLTJjHSM+\",\n  \"encrypted_phone_num\": \"U2FsdGVkX182RUwTjJx/MaO5L6LE07qpUIeJR1UZA0o=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-09-27 18:29:58.079\",\n  \"updated_at\": \"2026-09-27 18:29:58.079\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1790535023329,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790535023329,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790535024469,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790535024773,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790535024773,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790535024773,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790535024774,"level":"log","data":["{\n  \"user_id\": \"3f9df585-9928-4997-ac33-f78aac05ea47\",\n  \"encrypted_name\": \"U2FsdGVkX19pqwJck8bJmVxHJdTl6dAG+ZAewtLHBIs=\",\n  \"encrypted_surname\": \"U2FsdGVkX19arDU9MDZ+KnaoFG7sZ5+Mn00TB9cF6gI=\",\n  \"encrypted_email\": \"U2FsdGVkX18BeuvKSHtlRlrecJHSAZwH2aMYZV3/ckn87JIEH8orTfNQLTJjHSM+\",\n  \"encrypted_phone_num\": \"U2FsdGVkX182RUwTjJx/MaO5L6LE07qpUIeJR1UZA0o=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-09-27 18:29:58.079\",\n  \"updated_at\": \"2026-09-27 18:29:58.079\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1790535024774,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790535024774,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790535185120,"id":"1f","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790535185120,"id":"1f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790535185231,"id":"1f","total":1,"ms":111.2595}
+{"_e":"metro:client_log","_t":1790535195546,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790535195557,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790535195563,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790535195565,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790535955083,"id":"1l","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790535955083,"id":"1l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790535955164,"id":"1l","total":1,"ms":80.4071}
+{"_e":"metro:client_log","_t":1790535966522,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790535966763,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790535966768,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790535966770,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790536341144,"id":"1q","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790536341144,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790536341243,"id":"1q","total":1,"ms":98.779}
+{"_e":"metro:client_log","_t":1790536348742,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790536349015,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790536349017,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790536349025,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:failed","_t":1790536526379,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Unexpected token (17:19)\n\n  15 | \t\tif (digits.length > 1) {\n  16 | \t\t\tconst pastedDigits = digits.slidce(0, length).split(\"\");\n> 17 | \t\t\tconst newOtp = [;\n     | \t\t\t                ^\n  18 | \t\t\tsetOtp(newOtp);\n  19 | \t\t\tconst targetIndex = Math.min(digits.length, length - 1);\n  20 | \t\t\tfocusInput(targetIndex);","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790536527365,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Unexpected token (17:19)\n\n  15 | \t\tif (digits.length > 1) {\n  16 | \t\t\tconst pastedDigits = digits.slidce(0, length).split(\"\");\n> 17 | \t\t\tconst newOtp = [;\n     | \t\t\t                ^\n  18 | \t\t\tsetOtp(newOtp);\n  19 | \t\t\tconst targetIndex = Math.min(digits.length, length - 1);\n  20 | \t\t\tfocusInput(targetIndex);","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790536527673,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Unexpected token (17:18)\n\n  15 | \t\tif (digits.length > 1) {\n  16 | \t\t\tconst pastedDigits = digits.slidce(0, length).split(\"\");\n> 17 | \t\t\tconst newOtp = ;\n     | \t\t\t               ^\n  18 | \t\t\tsetOtp(newOtp);\n  19 | \t\t\tconst targetIndex = Math.min(digits.length, length - 1);\n  20 | \t\t\tfocusInput(targetIndex);","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790536554052,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Missing semicolon. (19:14)\n\n  17 | \t\t\tconst newOtp = Array(length)\n  18 | \t\t\t\t.fill(\"\")\n> 19 | \t\t\t\t.map(_, i) => pastedDigits[i] || \n     | \t\t\t\t          ^\n  20 | \t\t\tsetOtp(newOtp);\n  21 | \t\t\tconst targetIndex = Math.min(digits.length, length - 1);\n  22 | \t\t\tfocusInput(targetIndex);","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790536555302,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Missing semicolon. (19:14)\n\n  17 | \t\t\tconst newOtp = Array(length)\n  18 | \t\t\t\t.fill(\"\")\n> 19 | \t\t\t\t.map(_, i) => pastedDigits[i] || \"\";\n     | \t\t\t\t          ^\n  20 | \t\t\tsetOtp(newOtp);\n  21 | \t\t\tconst targetIndex = Math.min(digits.length, length - 1);\n  22 | \t\t\tfocusInput(targetIndex);","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1790536566291,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\hooks\\UseOtp.js: Unexpected token, expected \",\" (19:40)\n\n  17 | \t\t\tconst newOtp = Array(length)\n  18 | \t\t\t\t.fill(\"\")\n> 19 | \t\t\t\t.map((_, i) => pastedDigits[i] || \"\";\n     | \t\t\t\t                                    ^\n  20 | \t\t\tsetOtp(newOtp);\n  21 | \t\t\tconst targetIndex = Math.min(digits.length, length - 1);\n  22 | \t\t\tfocusInput(targetIndex);","importStack":null,"filename":"src\\hooks\\UseOtp.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1790536584846,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1790536603986,"level":"error","data":["[ReferenceError: Property 'pastedOtp' doesn't exist]"]}
+{"_e":"metro:bundling:started","_t":1790537159377,"id":"21","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790537159378,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537159379,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537159491,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537159758,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537159858,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537159959,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537160059,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537160159,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537160259,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537160359,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790537160507,"id":"21","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790537160659,"id":"21","total":1,"ms":1281.7916}
+{"_e":"root:init","_t":1790537308438,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790537308439,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790537308444,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790537308868,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790537309321,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790537309646,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790537318648,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"root:init","_t":1790537593899,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790537593900,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790537593904,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790537594385,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790537594882,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790537595221,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"root:init","_t":1790537841435,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790537841503,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790537841635,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790537868829,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790537897961,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790537914606,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"root:init","_t":1790537946668,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790537946670,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790537946681,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790537948063,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790537949738,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790537951363,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}

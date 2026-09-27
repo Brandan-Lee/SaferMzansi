@@ -2,9 +2,13 @@ const { supabase } = require("../database/supabase_init");
 
 //Method to create a user in supabase during registration
 const createUserInSupabase = async (userData) => {
+	const cleanPayload = Object.fromEntries(
+		Object.entries(userData).filter(([_, value]) => value !== null),
+	);
+
 	const { data, error } = await supabase
 		.from("Users")
-		.insert([userData])
+		.insert([cleanPayload])
 		.select();
 
 	//There was an error inserting the user into supabase
@@ -36,29 +40,25 @@ const verifyUserInSupabase = async ({ encrypted_email, password_hash }) => {
 
 // Method that helps to mark the user as verified within Supabase
 const updateUserVerificationInSupabase = async (userId) => {
-    //Find the
+	if (!userId) {
+		throw new Error("updateUserVerificationInSupabase requires a valid user_id");
+	}
 
 	const { data, error } = await supabase
 		.from("Users")
 		.update({
 			is_verified: true,
-			updated_at: new Date().toISOString(), // Fixed timestamp format
 		})
 		.eq("user_id", userId)
 		.select();
 
-	// Check for explicit Supabase errors (e.g., schema/permission issues)
 	if (error) {
-		console.error("Supabase update error:", error);
 		throw error;
 	}
 
-	// Check if any row was actually updated
+
 	if (!data || data.length === 0) {
-		console.warn(
-			"No matching user found or update blocked by RLS policies for email:",
-			encrypted_email,
-		);
+		console.warn(`No row updated in Supabase for user_id: ${userId}`);
 		return null;
 	}
 

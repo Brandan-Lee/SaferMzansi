@@ -45,14 +45,16 @@ export const AuthScreenLayout = ({
 							<AlertBadge message={banner.message} type={banner.type} />
 						) : null}
 
-						{children}
+						<View style={styles.contentContainer}>{children}</View>
 
-						<View style={styles.navRow}>
-							<Text style={styles.navText}>{navQuestion}</Text>
-							<TouchableOpacity onPress={onNavPress} activeOpacity={0.7}>
-								<Text style={styles.navLink}> {navActionText}</Text>
-							</TouchableOpacity>
-						</View>
+						{navQuestion && navActionText ? (
+							<View style={styles.navRow}>
+								<Text style={styles.navText}>{navQuestion}</Text>
+								<TouchableOpacity onPress={onNavPress} activeOpacity={0.7}>
+									<Text style={styles.navLink}> {navActionText}</Text>
+								</TouchableOpacity>
+							</View>
+						) : null}
 
 						<Text style={styles.footerText}>
 							Your safety. Your privacy. Our priority.
@@ -73,9 +75,12 @@ const styles = StyleSheet.create({
 	flexOne: { flex: 1 },
 	scrollContent: {
 		flexGrow: 1,
+		justifyContent: "center",
 		paddingHorizontal: 28,
-		paddingTop: 48,
-		paddingBottom: 32,
+		paddingVertical: 32,
+	},
+	contentContainer: {
+		width: "100%",
 	},
 	navRow: {
 		flexDirection: "row",

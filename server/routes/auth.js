@@ -12,7 +12,7 @@ const REQUIRED_REGISTRATION_FIELDS = [
 	"encrypted_name",
 	"encrypted_surname",
 	"encrypted_email",
-	"encrypted_phone_num",
+	"encrypted_phone_num", 
 	"password_hash",
 ];
 
@@ -95,7 +95,7 @@ router.post("/login", validateBody(REQUIRED_LOGIN_FIELDS), async (req, res) => {
 
 		return handleAuthSuccess(
 			res,
-			201,
+			200,
 			"Login Successful",
 			resolvedUserId,
 			encrypted_email,

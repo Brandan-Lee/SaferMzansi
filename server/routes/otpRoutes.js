@@ -2,79 +2,74 @@ const express = require("express");
 const router = express.Router();
 const { sendOtpEmail, verifyOtpCode } = require("../services/OtpService");
 const { updateUserVerificationInSupabase } = require("../services/UserService");
+const { validateBody } = require("../middleware/ValidateRequest");
+
+const REQUIRED_SEND_OTP_FIELDS = ["email"];
+
+const REQUIRED_VERIFY_OTP_FIELDS = ["email", "otp", "user_id"];
+
+const handleOtpError = (res, error, actionMessage) => {
+	console.error(`Error during ${actionMessage}. Please try again`);
+	return res.status(500).json({
+		success: false,
+		error: error?.message || `Error occurred while ${actionMessage}`,
+	});
+};
 
 //Post call to send the OTP code to the user via email
-router.post("/send-otp-email", async (req, res) => {
-    try {
-        //Retrieve the email from the request
-        const { email } = req.body;
+router.post(
+	"/send-otp-email",
+	validateBody(REQUIRED_SEND_OTP_FIELDS),
+	async (req, res) => {
+		try {
+			//Retrieve the email from the request
+			const sanitizedEmail = req.body.email.trim().toLowerCase();
+			await sendOtpEmail(sanitizedEmail);
 
-        //Validate the email
-        if (!email || !email.trim()) {  
-            return res.status(400).json({
-                error: "Email address is required"
-            });
-        }
+			return res.status(200).json({
+				success: true,
+				message: "Verification OTP sent successfully",
+			});
+		} catch (error) {
+			return handleOtpError(res, error, "sending OTP email");
+		}
+	},
+);
 
-        const sanitizedEmail = email.trim().toLowerCase();
+router.post(
+	"/verify-otp",
+	validateBody(REQUIRED_VERIFY_OTP_FIELDS),
+	async (req, res) => {
+		try {
+			const { user_id, email, otp } = req.body;
+			const sanitizedEmail = email.trim().toLowerCase();
+			const result = await verifyOtpCode(sanitizedEmail, otp);
 
-        //User OTP service method to send the OTP via email
-        await sendOtpEmail(sanitizedEmail);
-        //OTP has been sent successfully
-        return res.status(200).json({
-            success: true,
-            message: "Verification OTP sent successfully",
-        });
-    } catch (error) {
-        console.error("Error sending OTP email:", error);
-        return res.status(500).json({
-            error: "Failed to send verification email. Please try again later.",
-        });
-    }
-});
+			if (!result || !result.success) {
+				return res.status(result?.status || 400).json({
+					success: false,
+					error: result?.message || "Invalid OTP code",
+				});
+			}
 
-//Post call to verify the OTP and to update the verification status of the user in supabase
-router.post("/verify-otp", async (req, res) => {
-    try {
-        //Retrieve the email, encrypted email and the otp from the request
-        const { user_id, email, otp, } = req.body;
-        console.log(email, otp, user_id);
+			const updatedUser = await updateUserVerificationInSupabase(user_id);
 
-        //Validate presence of both the email and the otp
-        if (!email || !otp || !user_id) {
-            return res.status(400).json({
-                error: "Email, OTP and User ID are required"
-            });
-        }
+			if (!updatedUser) {
+				return res.status(404).json({
+					success: false,
+					error: "User record not found or update returned no data.",
+				});
+			}
 
-        const sanitizedEmail = email.trim().toLowerCase();
-
-        //Verify the OTP code with the OTP service
-        const result = await verifyOtpCode(sanitizedEmail, otp);
-        console.log(result, sanitizedEmail);
-        
-        //OTP coud not be verified
-        if (!result.success) {
-            return res.status(result.status).json({
-                error: result.message
-            });
-        }
-
-        //Update the user verification status in supabase
-        await updateUserVerificationInSupabase(user_id);
-
-        //Success on all operations
-        return res.status(200).json({
-            success: true,
-            message: "OTP verified successfully",
-            is_verified: true,
-        });
-    } catch (error) {
-        console.error("Error verifying OTP:", error);
-        return res.status(500).json({
-            error: "An error occurred during verification. Please try again",
-        });
-    }
-});
+			return res.status(200).json({
+				success: true,
+				message: "OTP verified successfully",
+				is_verified: true,
+			});
+		} catch (error) {
+			return handleOtpError(res, error, "verifying OTP");
+		}
+	}
+);
 
 module.exports = router;

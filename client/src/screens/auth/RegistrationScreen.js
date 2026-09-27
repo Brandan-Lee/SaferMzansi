@@ -10,8 +10,8 @@ import { validateRegistrationForm } from "../../utils/ValidationUtil";
 import { useFormHandler } from "../../hooks/UseFormHandler";
 import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
 import { REGISTRATION_FORM_FIELDS } from "../../constants/AuthFields";
-import { API_BASE_URL } from "../../utils/config";
 import { sendOtpEmail } from "../../services/EmailService";
+import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
 
 const INITIAL_STATE = {
 	name: "",
@@ -33,12 +33,18 @@ const RegistrationScreen = () => {
 
 	//Method that helps to handle when the user agrees to the terms and conditions
 	const handleToggleAgreed = () => {
-		const nextAgreed = !agreed;
-		setAgreed(nextAgreed);
+		setAgreed((prev) => {
+			const next = !prev;
 
-		if (nextAgreed && errors.agreed) {
-			setErrors((prev) => ({ ...prev, agreed: "" }));
-		}
+			if (next && errors.agreed) {
+				setErrors((errs) => ({
+					...errs,
+					agreed: "",
+				}));
+			}
+
+			return next;
+		});
 	};
 
 	const handleRegister = async () => {
@@ -57,13 +63,7 @@ const RegistrationScreen = () => {
 		}
 
 		//The user was not online when registering
-		if (!isOnline) {
-			setBanner({
-				message: "Internet Connection Required. Please connect to register.",
-				type: "error",
-			});
-			return;
-		}
+		checkNetworkAndNotify(isOnline, banner);
 
 		try {
 			const sanitizedEmail = formData.email.trim().toLowerCase();
@@ -72,7 +72,7 @@ const RegistrationScreen = () => {
 			const result = await register({
 				name: formData.name.trim(),
 				surname: formData.surname.trim(),
-				email: formData.email.trim().toLowerCase(),
+				email: sanitizedEmail,
 				phoneNum: formData.phone.trim(),
 				password: formData.password,
 			});
@@ -82,10 +82,10 @@ const RegistrationScreen = () => {
 				//Once a successful registration occurs, send a request to the server to send the OTP email. The server will handle sending the email.
 				const otpResponse = await sendOtpEmail(sanitizedEmail);
 
-				if (!otpResponse.ok) {
+				if (otpResponse?.error) {
 					setBanner({
 						message:
-							otpResponse?.data.error ||
+							otpResponse?.error ||
 							"Failed to send a verification code. Please request a new one on the next screen",
 						type: "error",
 					});
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
 		width: 20,
 		height: 20,
 		borderWidth: 1.5,
-		borderColor: "#6B21A8",
+		borderColor: PURPLE,
 		borderRadius: 6,
 		marginRight: 12,
 		justifyContent: "center",
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FFFFFF",
 	},
 	checkboxChecked: {
-		backgroundColor: "#6B21A8",
+		backgroundColor: PURPLE,
 	},
 	checkboxLabel: {
 		flex: 1,
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-start",
 	},
 	link: {
-		color: "#6B21A8",
+		color: PURPLE,
 		fontWeight: "700",
 	},
 });
