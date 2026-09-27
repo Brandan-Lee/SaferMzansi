@@ -72,9 +72,28 @@ const validateForm = (formData, extraValidations = {}) => {
 	};
 };
 
+//Method to get the strength of the password
+export const getPasswordStrength = (password = "") => {
+	const checks = {
+		length: password.length >= 8,
+		uppercase: /[A-Z]/.test(password),
+		lowercase: /[a-z]/.test(password),
+		number: /[0-9]/.test(password),
+		symbol: /[^A-Za-z0-9]/.test(password),
+	};
+
+	return Object.values(checks).filter(Boolean).length;
+}
+
 //Method that helps to validate the form of the registration screen
 export const validateRegistrationForm = (formData, agreed) => {
 	const extraErrors = {};
+	const strenth = getPasswordStrength(formData.password);
+
+	//Password strength check. User can only register if their password is very strong
+	if (strenth < 5) {
+		extraErrors.password = "Password must meet all security requirements below to register";
+	}
 
 	if (!agreed) {
 		extraErrors.agreed =

@@ -66,9 +66,6 @@ export const registerUser = async (db, userData) => {
 		encryptedPhoneNum: encryptedData.phoneNum,
 	};
 
-	// Insert the new user into the local database
-	await insertLocalUser(db, localPayload);
-
 	// Call Node.js server to perform registration process before synching with Supabase.
 	const apiPayload = {
 		user_id: userId,
@@ -86,8 +83,11 @@ export const registerUser = async (db, userData) => {
 		const message =
 			data?.error || data?.message || `Server sync failed (HTTP ${status})`;
 		console.warn("Backend sync error", message);
-		throw new Error(`${message}. Account saved locally.`);
+		throw new Error("Problem with server. Please try again");
 	}
+
+	// Insert the new user into the local database
+	await insertLocalUser(db, localPayload);
 
 	// Store session tokens and update the sync flag
 	await saveToken(data.token);
@@ -112,11 +112,13 @@ export const loginUser = async (db, email, password) => {
 	let token = await SecureStore.getItemAsync(TOKEN_KEY);
 	let isOffline = false;
 
-	// Should the user be online, re-authenticate through the server to retrieve new JWT token
-	const { ok, data } = await postApi("/users/login", {
+	const response = await postApi("/users/login", {
 		encrypted_email: matchedUser.encrypted_email,
 		password,
 	});
+
+	// Should the user be online, re-authenticate through the server to retrieve new JWT token
+	const { ok, status, data } = response;
 
 	// API call was a success and new token was generated and retrieved
 	if (ok && data?.token) {
@@ -128,6 +130,9 @@ export const loginUser = async (db, email, password) => {
 		if (matchedUser.user_id) {
 			await markUserAsSynched(db, matchedUser.user_id);
 		}
+	//Online login failed
+	} else if (status === 401 || status === 400) {
+		throw new Error(data?.error || "Invalid email or password. Please try again");
 	} else {
 		isOffline = true;
 		if (!token) {

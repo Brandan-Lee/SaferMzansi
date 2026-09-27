@@ -12,6 +12,7 @@ import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
 import { REGISTRATION_FORM_FIELDS } from "../../constants/AuthFields";
 import { sendOtpEmail } from "../../services/EmailService";
 import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
+import PasswordStrengthMeter from "../../components/common/PasswordStrengthMeter";
 
 const INITIAL_STATE = {
 	name: "",
@@ -127,19 +128,23 @@ const RegistrationScreen = () => {
 			onNavPress={() => navigation.navigate("LoginScreen")}
 		>
 			{REGISTRATION_FORM_FIELDS.map((field) => (
-				<CustomInput
-					key={field.key}
-					label={field.label}
-					icon={field.icon}
-					placeholder={field.placeholder}
-					value={formData[field.key]}
-					onChangeText={(val) => handleChange(field.key, val)}
-					onBlur={() => handleFieldBlur(field.key)}
-					secureTextEntry={field.secureTextEntry}
-					keyboardType={field.keyboardType}
-					autoCapitalize={field.autoCapitalize}
-					error={errors[field.key]}
-				/>
+				<View key={field.key}>
+					<CustomInput
+						label={field.label}
+						icon={field.icon}
+						placeholder={field.placeholder}
+						value={formData[field.key]}
+						onChangeText={(val) => handleChange(field.key, val)}
+						onBlur={() => handleFieldBlur(field.key)}
+						secureTextEntry={field.secureTextEntry}
+						keyboardType={field.keyboardType}
+						autoCapitalize={field.autoCapitalize}
+						error={errors[field.key]}
+					/>
+					{field.key === "password" && (
+						<PasswordStrengthMeter password={formData.password} />
+					)}
+				</View>
 			))}
 
 			{/* Terms and Conditions Checkbox */}

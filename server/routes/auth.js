@@ -81,14 +81,14 @@ router.post(
 //Post call to login the user and verify their credentials
 router.post("/login", validateBody(REQUIRED_LOGIN_FIELDS), async (req, res) => {
 	try {
-		const { encrypted_email } = req.body;
+		const { encrypted_email, password } = req.body;
 
 		//Verify the user credentials against the data stored in supabase
-		const user = await verifyUserInSupabase(req.body);
+		const user = await verifyUserInSupabase({ encrypted_email, password });
 
 		//Users credentials are wrong or doesn't exist
 		if (!user) {
-			return res.status(401).json({ error: "Invalid credentials" });
+			return res.status(401).json({ error: "Invalid credentials. Please try again" });
 		}
 
 		const resolvedUserId = user.user_id || user.id;

@@ -45,6 +45,10 @@ const verifyUserInSupabase = async ({ encrypted_email, password }) => {
 		return null;
 	}
 
+	if (!user.password_hash) {
+		return null;
+	}
+
 	//Verify the plain password against the stored password hash
 	const isPasswordValid = await verifyPassword(user.password_hash, password);
 
