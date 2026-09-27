@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,208 +6,229 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-} from 'react-native';
+  ScrollView,
+} from "react-native";
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
+
 const ForgotPasswordScreen = ({ navigation }) => {
-  
-  const [email, setEmail] = useState('');
-  
+  const [email, setEmail] = useState("");
+
   const handleSendOTP = () => {
-
-    if (email.trim() === '') {
+    if (email.trim() === "") {
       Alert.alert(
-        'Error',
-        'Please enter your email address.'
+        "Error",
+        "Please enter your email address."
       );
-
       return;
     }
 
-    if (!email.includes('@')) {
+    if (!email.includes("@")) {
       Alert.alert(
-        'Error',
-        'Please enter a valid email address.'        
+        "Error",
+        "Please enter a valid email address."
       );
-
       return;
     }
 
     if (navigation) {
-     navigation.navigate('OTP');
-
+      navigation.navigate("OTPScreen");
     }
+  };
 
+  const handleBackToLogin = () => {
+    if (navigation) {
+      navigation.goBack();
+    }
   };
 
   return (
-
     <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.content}>
 
-      <View style={styles.content}>
+          {/* SaferMzansi Logo */}
+          <View style={styles.logoBadge}>
+            <Feather
+              name="shield"
+              size={40}
+              color="#6B21A8"
+            />
+          </View>
 
-        {/* SaferMzansi Logo Area */}
-
-        <View style={styles.logoContainer}>
-
-          <Text style={styles.logoIcon}>
-
-          </Text>
-
-          <Text style={styles.logoText}>
+          <Text style={styles.logo}>
             SaferMzansi
           </Text>
 
+          {/* Title */}
+          <Text style={styles.title}>
+            Forgot Password?
+          </Text>
+
+          {/* Description */}
+          <Text style={styles.subtitle}>
+            Enter your email address and we'll send you an OTP to reset your password.
+          </Text>
+
+          {/* Email Input */}
+          <View style={styles.inputContainer}>
+            <Feather
+              name="mail"
+              size={20}
+              color="#6B21A8"
+              style={styles.inputIcon}
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Email Address"
+              placeholderTextColor="#6B7280"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={email}
+              onChangeText={setEmail}
+            />
+          </View>
+
+          {/* Send OTP Button */}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSendOTP}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.buttonText}>
+              Send OTP
+            </Text>
+          </TouchableOpacity>
+
+          {/* Back to Login */}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={handleBackToLogin}
+          >
+            <Feather
+              name="chevron-left"
+              size={20}
+              color="#6B21A8"
+            />
+
+            <Text style={styles.backText}>
+              Back to Login
+            </Text>
+          </TouchableOpacity>
+
         </View>
-
-        {/*Title */}
-
-        <Text style={styles.title}>
-          Forgot Password?
-        </Text>
-
-        {/*Description */}
-
-        <Text style={styles.description}>
-          Enter your email address and{'\n'}
-          we'll send you a OTP to reset{'\n'}
-          your Password.
-        </Text>
-
-        {/* Email Input */}
-
-        <TextInput
-          style={styles.input}
-          placeholder="Email address"
-          placeholderTextColor="#777777"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          value={email}
-          onChangeText={setEmail}
-        />
-
-        {/* Send OTP Button */}
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSendOTP}
-        >
-          <Text style={styles.buttonText}>
-            Send OTP
-          </Text>
-
-        </TouchableOpacity>
-
-        {/* Back to Login */}
-
-        <TouchableOpacity
-          onPress={() => {
-            if (navigation) {
-              navigation.goBack();
-            }
-          }} 
-        >
-          <Text style={styles.backText}>
-                Back to Login
-          </Text>
-
-        </TouchableOpacity>
-             
-      </View>
-
+      </ScrollView>
     </SafeAreaView>
-
   );
 };
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FAF7FF",
+  },
 
+  scrollContent: {
+    flexGrow: 1,
   },
 
   content: {
     flex: 1,
-    paddingHorizontal: 28,
-    paddingTop: 45,
-    alignItems: 'center',
-  },
-
-  /* Logo */
-  logoContainer: {
-    alignItems: 'center',
-    marginBottom: 55,
-  },
-
-  logoIcon: {
-    fontSize: 38,
-    color: '#7B16D9',
-    fontWeight: 'bold',
-  },
-
-  logoText: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#7B16D9',
-  },
-
-  /* Title */
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#171717',
-    marginBottom: 35, 
-  },
-
-  /* Description */
-  description: {
-    width: '100%',
-    fontSize: 20,
-    lineHeight: 30,
-    color: '#777777',
-    marginBottom: 55,
-  },
-
-  /* Email Input */
-  input: {
-    width: '100%',
-    height: 60,
-    backgroundColor: '#F7F5F8',
-    borderWidth: 1,
-    borderColor: '#ECE8EF',
-    borderRadius: 14,
+    alignItems: "center",
     paddingHorizontal: 20,
-    fontSize: 17,
-    color: '#111111',
+    paddingTop: 35,
   },
 
-  /* Send OTP Button */
+  logoBadge: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+
+  logo: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#6B21A8",
+    marginBottom: 28,
+  },
+
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#111827",
+    marginBottom: 12,
+  },
+
+  subtitle: {
+    width: "100%",
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: "center",
+    color: "#374151",
+    marginBottom: 28,
+    paddingHorizontal: 10,
+  },
+
+  inputContainer: {
+    width: "100%",
+    height: 56,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+    borderRadius: 10,
+    paddingHorizontal: 16,
+  },
+
+  inputIcon: {
+    marginRight: 12,
+  },
+
+  input: {
+    flex: 1,
+    height: "100%",
+    fontSize: 16,
+    color: "#111827",
+  },
+
   button: {
-    width: '100%',
-    height: 58,
-    backgroundColor: '#7A0AD9',
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 80,
+    width: "100%",
+    height: 56,
+    backgroundColor: "#6B21A8",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 32,
   },
 
   buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: 'bold',
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 
-  /* Back to Login */
+  backButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 30,
+  },
+
   backText: {
-    color: '#6F20B8',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 65,
+    color: "#6B21A8",
+    fontSize: 16,
+    fontWeight: "700",
   },
 });
 
 export default ForgotPasswordScreen;
-
