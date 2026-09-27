@@ -1,7 +1,7 @@
 // Method that finds all local users with their login credentials from SQLite
 export const findLocalUserEmails = async (db) => {
 	return await db.getAllAsync(
-		"SELECT user_id, encrypted_email, password_hash FROM Local_Users WHERE is_deleted = 0"
+		"SELECT user_id, encrypted_email, password_hash FROM Local_Users WHERE is_deleted = 0",
 	);
 };
 
@@ -44,6 +44,18 @@ export const markUserAsSynched = async (db, userId) => {
 		`UPDATE Local_Users
             SET is_synched = 1
             WHERE user_id = ?`,
+		[userId],
+	);
+};
+
+//Method that marks the user as verified on the local database
+// Method that marks the user as verified on the local database by user_id
+export const markUserAsVerifiedLocally = async (db, userId) => {
+	await db.runAsync(
+		`
+        UPDATE Local_Users
+        SET is_verified = 1, is_synched = 0
+        WHERE user_id = ?`,
 		[userId],
 	);
 };

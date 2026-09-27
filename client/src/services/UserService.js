@@ -16,9 +16,15 @@ const TOKEN_KEY = "user_jwt_token";
 
 //Helper method to save the JWT token
 const saveToken = async (token) => {
-	if (token) {
-		await SecureStore.setItemAsync(TOKEN_KEY, token);
-	}
+    if (!token) return;
+
+    const rawToken = typeof token === "object" ? (token.token || token.accessToken) : token;
+
+    if (typeof rawToken === "string" && rawToken.includes(".")) {
+        await SecureStore.setItemAsync(TOKEN_KEY, rawToken.trim());
+    } else {
+        console.warn("Skipping token save: Provided token is not a valid JWT format", token);
+    }
 };
 
 //Helper method to find the user by their email

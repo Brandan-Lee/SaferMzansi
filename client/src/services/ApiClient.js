@@ -34,7 +34,7 @@ export const postApi = async (endpoint, body) => {
 		} catch {
 			console.error(
 				`Server returned non-JSON response (${response.status}):`,
-				rawText,
+				response.text,
 			);
 			return {
 				ok: false,

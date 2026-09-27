@@ -11,6 +11,7 @@ import { useFormHandler } from "../../hooks/UseFormHandler";
 import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
 import { REGISTRATION_FORM_FIELDS } from "../../constants/AuthFields";
 import { API_BASE_URL } from "../../utils/config";
+import { sendOtpEmail } from "../../services/EmailService";
 
 const INITIAL_STATE = {
 	name: "",
@@ -65,6 +66,8 @@ const RegistrationScreen = () => {
 		}
 
 		try {
+			const sanitizedEmail = formData.email.trim().toLowerCase();
+
 			//Register through authcontext
 			const result = await register({
 				name: formData.name.trim(),
@@ -76,27 +79,27 @@ const RegistrationScreen = () => {
 
 			//Token has been received from the server
 			if (result?.token) {
-
 				//Once a successful registration occurs, send a request to the server to send the OTP email. The server will handle sending the email.
-				const response = await fetch(`${API_BASE_URL}/send-otp-email`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ email: formData.email.trim().toLowerCase() }),
-				});
+				const otpResponse = await sendOtpEmail(sanitizedEmail);
 
-				const data = await response.text();
-				alert(data);
-
-
-				setBanner({
-					message: "Registration successful! Redirecting...",
-					type: "success",
-				});
+				if (!otpResponse.ok) {
+					setBanner({
+						message:
+							otpResponse?.data.error ||
+							"Failed to send a verification code. Please request a new one on the next screen",
+						type: "error",
+					});
+				} else {
+					setBanner({
+						message: "Registration successful! Sending verification code...",
+						type: "success",
+					});
+				}
 
 				setTimeout(() => {
-					navigation.navigate("OTPScreen", { email: formData.email.trim().toLowerCase() });
+					navigation.navigate("OTPScreen", {
+						email: formData.email.trim().toLowerCase(),
+					});
 				}, 800);
 			} else {
 				setBanner({
