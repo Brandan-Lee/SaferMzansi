@@ -13,10 +13,10 @@ const REQUIRED_REGISTRATION_FIELDS = [
 	"encrypted_surname",
 	"encrypted_email",
 	"encrypted_phone_num", 
-	"password_hash",
+	"password",
 ];
 
-const REQUIRED_LOGIN_FIELDS = ["encrypted_email", "password_hash"];
+const REQUIRED_LOGIN_FIELDS = ["encrypted_email", "password"];
 
 //Helper method to standardize the generation of tokens and the success response
 const handleAuthSuccess = (

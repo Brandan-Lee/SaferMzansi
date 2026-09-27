@@ -29,15 +29,6 @@ export const encryptPayload = (payload) => {
 	}, {});
 };
 
-// Method to hash the password with sha-256
-export const hashPassword = (password) => {
-	if (!password) {
-		return "";
-	}
-
-	return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
-};
-
 export const parseJwt = (token) => {
     try {
         if (!token || typeof token !== "string") {

@@ -3,7 +3,6 @@ import * as SecureStore from "expo-secure-store";
 import {
 	decryptData,
 	encryptPayload,
-	hashPassword,
 } from "../utils/SecurityUtil";
 import { postApi } from "./ApiClient";
 import {
@@ -16,7 +15,9 @@ const TOKEN_KEY = "user_jwt_token";
 
 //Helper method to save the JWT token
 const saveToken = async (token) => {
-    if (!token) return;
+    if (!token) {
+		return;
+	}
 
     const rawToken = typeof token === "object" ? (token.token || token.accessToken) : token;
 
@@ -38,16 +39,6 @@ const findUserByEmail = async (db, targetEmail) => {
 	);
 };
 
-//Helper method to format the encrypted api payload
-const formatApiPayload = (userId, encryptedData, passwordHash) => ({
-	user_id: userId,
-	encrypted_name: encryptedData.name,
-	encrypted_surname: encryptedData.surname,
-	encrypted_email: encryptedData.email,
-	encrypted_phone_num: encryptedData.phoneNum,
-	password_hash: passwordHash,
-});
-
 // Service to handle user registration
 export const registerUser = async (db, userData) => {
 	//Data that needs to retrieved from the userData object for registration
@@ -65,7 +56,6 @@ export const registerUser = async (db, userData) => {
 	// Generate a unique user ID to help with syncing data between the local database and supabase by generating a random 16-byte string.
 	const userId = Crypto.randomUUID();
 	// Encrypt sensitive user PII data to comply with POPIA regulations and hash password
-	const passwordHash = hashPassword(password);
 	const encryptedData = encryptPayload({ name, surname, email, phoneNum });
 
 	const localPayload = {
@@ -74,14 +64,21 @@ export const registerUser = async (db, userData) => {
 		encryptedSurname: encryptedData.surname,
 		encryptedEmail: encryptedData.email,
 		encryptedPhoneNum: encryptedData.phoneNum,
-		passwordHash,
 	};
 
 	// Insert the new user into the local database
 	await insertLocalUser(db, localPayload);
 
 	// Call Node.js server to perform registration process before synching with Supabase.
-	const apiPayload = formatApiPayload(userId, encryptedData, passwordHash);
+	const apiPayload = {
+		user_id: userId,
+		encrypted_name: encryptedData.name,
+		encrypted_surname: encryptedData.surname,
+		encrypted_email: encryptedData.email,
+		encrypted_phone_num: encryptedData.phoneNum,
+		password,
+	};
+
 	const { ok, status, data } = await postApi("/users/register", apiPayload);
 
 	//There was an error synching the local data to the supabase table
@@ -103,14 +100,11 @@ export const registerUser = async (db, userData) => {
 // Service to handle User Login
 export const loginUser = async (db, email, password) => {
 	const normalEmail = email.trim().toLowerCase();
-	// Hash the incoming password
-	const passwordHash = hashPassword(password);
-
 	// Check to see if the User has already registered and exists in the local database
 	const matchedUser = await findUserByEmail(db, normalEmail);
 
 	// Check if user exists locally or if there passwords are correct or not
-	if (!matchedUser || matchedUser.password_hash !== passwordHash) {
+	if (!matchedUser) {
 		throw new Error("Invalid email or password. Please try again");
 	}
 
@@ -121,7 +115,7 @@ export const loginUser = async (db, email, password) => {
 	// Should the user be online, re-authenticate through the server to retrieve new JWT token
 	const { ok, data } = await postApi("/users/login", {
 		encrypted_email: matchedUser.encrypted_email,
-		password_hash: passwordHash,
+		password,
 	});
 
 	// API call was a success and new token was generated and retrieved

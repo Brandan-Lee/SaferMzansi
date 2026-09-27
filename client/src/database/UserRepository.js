@@ -64,7 +64,7 @@ export const logLocalUsersDatabase = async (db) => {
 // Method that finds all local users with their login credentials from SQLite
 export const findLocalUserEmails = async (db) => {
 	return await db.getAllAsync(
-		"SELECT user_id, encrypted_email, password_hash FROM Local_Users WHERE is_deleted = 0",
+		"SELECT user_id, encrypted_email FROM Local_Users WHERE is_deleted = 0",
 	);
 };
 
@@ -76,7 +76,6 @@ export const insertLocalUser = async (db, user) => {
 		encryptedSurname,
 		encryptedEmail,
 		encryptedPhoneNum,
-		passwordHash,
 	} = user;
 
 	await db.runAsync(
@@ -86,17 +85,15 @@ export const insertLocalUser = async (db, user) => {
             encrypted_surname,
             encrypted_email,
             encrypted_phone_num,
-            password_hash,
             is_verified,
             is_synched
-        ) VALUES (?, ?, ?, ?, ?, ?, 0, 0)`,
+        ) VALUES (?, ?, ?, ?, ?, 0, 0)`,
 		[
 			userId,
 			encryptedName,
 			encryptedSurname,
 			encryptedEmail,
 			encryptedPhoneNum,
-			passwordHash,
 		],
 	);
 };
