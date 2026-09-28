@@ -31,6 +31,7 @@ const OTPScreen = ({ navigation, route }) => {
 	const db = useSQLiteContext();
 	const { isOnline } = useNetStatus();
 	const userEmail = route?.params?.email || "";
+  const isResetPassword = route?.params?.isResetPassword || false;
 
 	// Timer countdown effect to avoid spamming the resend button
 	useEffect(() => {
@@ -120,8 +121,12 @@ const OTPScreen = ({ navigation, route }) => {
 
 			//Redirect the user to the login screen
 			setTimeout(() => {
-				navigation.navigate("LoginScreen");
-			}, 800);
+        if (isResetPassword) {
+          navigation.navigate('ResetPasswordScreen', { email: userEmail });
+        } else {
+          navigation.navigate('LoginScreen');
+        }
+      }, 800);
 		} catch (error) {
 			setBanner({
 				message: error.message || "Failed to verify OTP. Please try again.",

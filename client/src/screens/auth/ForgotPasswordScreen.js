@@ -3,94 +3,80 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Alert,
-} from "react-native";
+} from 'react-native';
 
-import { Feather } from "@expo/vector-icons";
-import { CustomInput } from "../../components/common/CustomInput";
-import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
-import { FORGOT_PASSWORD_FORM_FIELDS } from "../../constants/AuthFields";
-import { PrimaryButton } from "../../components/common/PrimaryButton";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
+import { useNetStatus } from "../../utils/NetStatus";
 import { useFormHandler } from "../../hooks/UseFormHandler";
-
-const INITIAL_STATE = {
-  email: "",
-};
+import { API_BASE_URL } from "../../utils/config";
 
 const ForgotPasswordScreen = () => {
   const navigation = useNavigation();
-  const {formData, errors, setErrors, handleChange, handleFieldBlur} = useFormHandler(INITIAL_STATE);
+  const { isOnline } = useNetStatus();
+  const { formData, errors, setErrors, handleChange, handleFieldBlur } =
+    useFormHandler({ email: "" });
   const [banner, setBanner] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { isOnline } = useNetStatus();
 
   const handleSendOTP = async () => {
     setBanner(null);
-    setLoading(true);
 
-    //Check to see if the user entered data into the email field
-    const { isValid, errors, validationErrors } = validateForgotPasswordForm(formData);
-
-    //Validation has failed
-    if (!isValid) {
-      setErrors(validationErrors);
+    // Check internet connectivity
+    if (!isOnline) {
+      setBanner({
+        message: "Internet Connection Required. Please connect to proceed.",
+        type: "error",
+      });
       return;
     }
 
-    //Check user online status
-    checkNetworkAndNotify(isOnline, banner);
+    // Basic email validation check
+    const emailToSubmit = formData.email.trim().toLowerCase();
+    if (!emailToSubmit || !emailToSubmit.includes('@') || !emailToSubmit.includes('.')) {
+      setBanner({
+        message: "Please enter a valid email address.",
+        type: "error",
+      });
+      return;
+    }
 
     try {
-      const sanitizedEmail = formData.email.trim().toLowerCase();
-      //Use UserService to find mathching user email
-      const result = await forgotPassword({
-        email: sanitizedEmail,
+      setLoading(true);
+
+      // Directly call backend OTP endpoint for password reset
+      const response = await fetch(`${API_BASE_URL}/send-otp-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: emailToSubmit }),
       });
 
-      if (result?.success) {
-        //Once the users email has been verified, send a request to the server sending the OTP email. The server will handle sending the email
-        const otpResponse = await sendOtpEmail(sanitizedEmail);
+      if (response.ok) {
 
-        if (otpResponse?.error) {
-					setBanner({
-						message:
-							otpResponse?.error ||
-							"Failed to send a verification code. Please request a new one on the next screen",
-						type: "error",
-					});
-				} else {
-					setBanner({
-						message: "Validation of email during forgot password screen successful! Sending verification code...",
-						type: "success",
-					});
-				}
+        setBanner({
+          message: "We have sent an OTP to your email address.",
+          type: "success",
+        });
+
+        setTimeout(() => {
+          navigation.navigate("OTPScreen", { email: emailToSubmit, isResetPassword: true });
+        }, 800);
+      } else {
+        setBanner({
+          message: "Failed to send OTP. Please try again.",
+          type: "error",
+        });
       }
-    }
-    if (email.trim() === "") {
-      Alert.alert(
-        "Error",
-        "Please enter your email address."
-      );
-      return;
-    }
-
-    if (!email.includes("@")) {
-      Alert.alert(
-        "Error",
-        "Please enter a valid email address."
-      );
-      return;
-    }
-
-    if (navigation) {
-      navigation.navigate("OTPScreen");
-    }
-  };
-
-  const handleBackToLogin = () => {
-    if (navigation) {
-      navigation.goBack();
+    } catch (error) {
+      setBanner({
+        message:
+          error.message || "An error occurred while sending the OTP. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -144,16 +130,79 @@ const ForgotPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FAF7FF",
-  },
-
-  scrollContent: {
-    flexGrow: 1,
+    backgroundColor: '#FFFFFF',
   },
 
   content: {
     flex: 1,
-    alignItems: "center",
+    paddingHorizontal: 28,
+    paddingTop: 10,
+    alignItems: 'center',
+  },
+
+  /* Logo */
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+
+  logoIcon: {
+    fontSize: 38,
+    color: '#7B16D9',
+    fontWeight: 'bold',
+  },
+
+  logoText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#7B16D9',
+  },
+
+  /* Title */
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#171717',
+    marginBottom: 15,
+  },
+
+  /* Description */
+  description: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 20,
+    lineHeight: 30,
+    color: '#777777',
+    marginBottom: 30,
+  },
+
+  /* Status Banner */
+  banner: {
+    width: '100%',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  bannerError: {
+    backgroundColor: '#FEE2E2',
+  },
+  bannerSuccess: {
+    backgroundColor: '#DCFCE7',
+  },
+  bannerText: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: '#1F2937',
+  },
+
+  /* Email Input */
+  input: {
+    width: '100%',
+    height: 70,
+    backgroundColor: '#F7F5F8',
+    borderWidth: 1,
+    borderColor: '#ECE8EF',
+    borderRadius: 14,
     paddingHorizontal: 20,
     paddingTop: 35,
   },
@@ -225,21 +274,16 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
-  backButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 30,
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 
   backText: {
-    color: "#6B21A8",
+    color: '#6F20B8',
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: 'bold',
+    marginTop: 30,
   },
 });
 
