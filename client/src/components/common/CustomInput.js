@@ -7,6 +7,7 @@ export const CustomInput = ({
 	icon,
 	value,
 	onChangeText,
+	onFocus,
 	onBlur,
 	placeholder,
 	secureTextEntry,
@@ -37,6 +38,7 @@ export const CustomInput = ({
 					placeholderTextColor="#9CA3AF"
 					value={value}
 					onChangeText={onChangeText}
+					onFocus={onFocus}
 					onBlur={onBlur}
 					secureTextEntry={isSecure}
 					keyboardType={keyboardType}

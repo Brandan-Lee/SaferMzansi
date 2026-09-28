@@ -6253,3 +6253,589 @@
 {"_e":"metro:bundling:failed","_t":1790602931425,"id":"9","message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\ForgotPasswordScreen.js: Unexpected token (84:1)\n\n  82 |\n  83 |   return (\n> 84 | <<<<<<< HEAD\n     |  ^\n  85 |     <AuthScreenLayout\n  86 | \t\t\ttitle=\"Forgot Password?\"\n  87 | \t\t\tsubtitle=\"Enter your email address and we'll send you a OTP to reset your password\"","importStack":null,"filename":"src\\screens\\auth\\ForgotPasswordScreen.js","targetModuleName":null,"originModulePath":null}
 {"_e":"metro:bundling:failed","_t":1790602934557,"id":"9","message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\auth\\ForgotPasswordScreen.js: Unexpected token (267:0)\n\n  265 |\n  266 |   button: {\n> 267 | <<<<<<< HEAD\n      | ^\n  268 |     width: \"100%\",\n  269 |     height: 56,\n  270 |     backgroundColor: \"#6B21A8\",","importStack":null,"filename":"src\\screens\\auth\\ForgotPasswordScreen.js","targetModuleName":null,"originModulePath":null}
 {"_e":"metro:client_log","_t":1790602949561,"level":"error","data":["[ReferenceError: Property 'AuthScreenLayout' doesn't exist]"]}
+{"_e":"root:init","_t":1790611256192,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790611256221,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790611256250,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790611265514,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790611277369,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790611282231,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790611289656,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790611347004,"id":"4","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790611347004,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790611347011,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1790611347952,"id":"4","message":"index.js: Cannot find module 'C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\node_modules\\expo\\node_modules\\babel-preset-expo\\build\\index.js'. Please verify that the package.json has a valid \"main\" entry","importStack":null,"filename":null,"targetModuleName":null,"originModulePath":null}
+{"_e":"root:init","_t":1790611581210,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790611581223,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790611581236,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790611586200,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790611592084,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790611594715,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790611600087,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790611604268,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790611604269,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790611604272,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790611611461,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1790611611561,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1790611611585,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1790611611689,"id":"1","progress":0.04725897920604915,"total":23,"current":5}
+{"_e":"metro:bundling:progress","_t":1790611611798,"id":"1","progress":0.04725897920604915,"total":36,"current":7}
+{"_e":"metro:bundling:progress","_t":1790611611900,"id":"1","progress":0.06059171597633137,"total":65,"current":16}
+{"_e":"metro:bundling:progress","_t":1790611612007,"id":"1","progress":0.11426304304701447,"total":71,"current":24}
+{"_e":"metro:bundling:progress","_t":1790611612114,"id":"1","progress":0.140625,"total":80,"current":30}
+{"_e":"metro:bundling:progress","_t":1790611612224,"id":"1","progress":0.21633315305570577,"total":86,"current":40}
+{"_e":"metro:bundling:progress","_t":1790611612328,"id":"1","progress":0.2852530991735537,"total":88,"current":47}
+{"_e":"metro:bundling:progress","_t":1790611612429,"id":"1","progress":0.2852530991735537,"total":103,"current":52}
+{"_e":"metro:bundling:progress","_t":1790611612539,"id":"1","progress":0.2852530991735537,"total":162,"current":66}
+{"_e":"metro:bundling:progress","_t":1790611612639,"id":"1","progress":0.2852530991735537,"total":271,"current":97}
+{"_e":"metro:bundling:progress","_t":1790611612740,"id":"1","progress":0.2852530991735537,"total":301,"current":103}
+{"_e":"metro:bundling:progress","_t":1790611612835,"id":"1","progress":0.2852530991735537,"total":301,"current":104}
+{"_e":"metro:bundling:progress","_t":1790611612937,"id":"1","progress":0.2852530991735537,"total":398,"current":104}
+{"_e":"metro:bundling:progress","_t":1790611613006,"id":"1","progress":0.2852530991735537,"total":398,"current":105}
+{"_e":"metro:bundling:progress","_t":1790611613109,"id":"1","progress":0.2852530991735537,"total":424,"current":113}
+{"_e":"metro:bundling:progress","_t":1790611613167,"id":"1","progress":0.2852530991735537,"total":424,"current":114}
+{"_e":"metro:bundling:progress","_t":1790611613269,"id":"1","progress":0.2852530991735537,"total":432,"current":117}
+{"_e":"metro:bundling:progress","_t":1790611613703,"id":"1","progress":0.2852530991735537,"total":432,"current":118}
+{"_e":"metro:bundling:progress","_t":1790611613804,"id":"1","progress":0.2852530991735537,"total":463,"current":148}
+{"_e":"metro:bundling:progress","_t":1790611613907,"id":"1","progress":0.2852530991735537,"total":473,"current":175}
+{"_e":"metro:bundling:progress","_t":1790611614007,"id":"1","progress":0.2852530991735537,"total":491,"current":210}
+{"_e":"metro:bundling:progress","_t":1790611614108,"id":"1","progress":0.2852530991735537,"total":528,"current":261}
+{"_e":"metro:bundling:progress","_t":1790611614228,"id":"1","progress":0.3009881323120949,"total":545,"current":299}
+{"_e":"metro:bundling:progress","_t":1790611614329,"id":"1","progress":0.3043328906487221,"total":571,"current":315}
+{"_e":"metro:bundling:progress","_t":1790611614436,"id":"1","progress":0.32463493780421854,"total":602,"current":343}
+{"_e":"metro:bundling:progress","_t":1790611614536,"id":"1","progress":0.3504200817469285,"total":647,"current":383}
+{"_e":"metro:bundling:progress","_t":1790611614639,"id":"1","progress":0.3802777777777778,"total":660,"current":407}
+{"_e":"metro:bundling:progress","_t":1790611614771,"id":"1","progress":0.3821487603305785,"total":660,"current":408}
+{"_e":"metro:bundling:progress","_t":1790611614872,"id":"1","progress":0.5062460759538923,"total":669,"current":476}
+{"_e":"metro:bundling:progress","_t":1790611614973,"id":"1","progress":0.5965917789551084,"total":681,"current":526}
+{"_e":"metro:bundling:progress","_t":1790611615074,"id":"1","progress":0.6049382716049383,"total":756,"current":588}
+{"_e":"metro:bundling:progress","_t":1790611615178,"id":"1","progress":0.6407835934374948,"total":817,"current":654}
+{"_e":"metro:bundling:progress","_t":1790611615278,"id":"1","progress":0.6407835934374948,"total":867,"current":691}
+{"_e":"metro:bundling:progress","_t":1790611615381,"id":"1","progress":0.6411064686020089,"total":868,"current":695}
+{"_e":"metro:bundling:progress","_t":1790611615551,"id":"1","progress":0.6429527065769075,"total":868,"current":696}
+{"_e":"metro:bundling:progress","_t":1790611615653,"id":"1","progress":0.6451657328702091,"total":869,"current":698}
+{"_e":"metro:bundling:progress","_t":1790611615843,"id":"1","progress":0.6470156695062378,"total":869,"current":699}
+{"_e":"metro:bundling:progress","_t":1790611615947,"id":"1","progress":0.6881456611570249,"total":880,"current":730}
+{"_e":"metro:bundling:progress","_t":1790611616048,"id":"1","progress":0.7465736649412952,"total":890,"current":769}
+{"_e":"metro:bundling:progress","_t":1790611616149,"id":"1","progress":0.8125650066161288,"total":913,"current":823}
+{"_e":"metro:bundling:progress","_t":1790611616249,"id":"1","progress":0.8499459521290285,"total":935,"current":862}
+{"_e":"metro:bundling:progress","_t":1790611616353,"id":"1","progress":0.8499459521290285,"total":997,"current":917}
+{"_e":"metro:bundling:progress","_t":1790611616453,"id":"1","progress":0.8499459521290285,"total":997,"current":918}
+{"_e":"metro:bundling:progress","_t":1790611616555,"id":"1","progress":0.8534945642788584,"total":998,"current":922}
+{"_e":"metro:bundling:progress","_t":1790611616655,"id":"1","progress":0.8534945642788584,"total":1037,"current":950}
+{"_e":"metro:bundling:progress","_t":1790611616760,"id":"1","progress":0.8582970083469444,"total":1074,"current":995}
+{"_e":"metro:bundling:progress","_t":1790611617049,"id":"1","progress":0.8600230954090072,"total":1074,"current":996}
+{"_e":"metro:bundling:progress","_t":1790611617153,"id":"1","progress":0.9031008226372538,"total":1107,"current":1052}
+{"_e":"metro:bundling:progress","_t":1790611617253,"id":"1","progress":0.9313891522647071,"total":1117,"current":1078}
+{"_e":"metro:bundling:progress","_t":1790611617353,"id":"1","progress":0.9580833052242405,"total":1133,"current":1109}
+{"_e":"metro:bundling:progress","_t":1790611617453,"id":"1","progress":0.9982433029302479,"total":1138,"current":1137}
+{"_e":"metro:bundling:progress","_t":1790611618018,"id":"1","progress":0.999,"total":1138,"current":1138}
+{"_e":"metro:bundling:progress","_t":1790611618118,"id":"1","progress":0.999,"total":1148,"current":1148}
+{"_e":"metro:bundling:done","_t":1790611618729,"id":"1","total":1148,"ms":14460.1398}
+{"_e":"metro:client_log","_t":1790611620923,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790611620927,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790611620927,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790611620927,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790611620927,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790611620927,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790611620927,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790611620928,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790611620928,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790611620928,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790611632776,"level":"error","data":["[ReferenceError: Property 'AuthScreenLayout' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790611650214,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790611650216,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790611650217,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790611650218,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790611650219,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790611650220,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790611650221,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790611650221,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790611650221,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790611650221,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790611657434,"level":"error","data":["[ReferenceError: Property 'AuthScreenLayout' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790611726394,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790611726400,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790611726401,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790611726401,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790611726401,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790611726401,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790611726406,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790611726408,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790611726408,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790611726409,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790611729454,"level":"error","data":["[ReferenceError: Property 'AuthScreenLayout' doesn't exist]"]}
+{"_e":"metro:bundling:failed","_t":1790611871435,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790611879995,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790611880110,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790611916834,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790611927541,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790611941488,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790611965527,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790612014534,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790612069995,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:failed","_t":1790612106822,"id":null,"message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"root:init","_t":1790612150049,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790612150049,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790612150052,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790612150284,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790612150538,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790612150709,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790612153761,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790612158614,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790612158615,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612158618,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612159226,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1790612159333,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1790612159349,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1790612159461,"id":"1","progress":0.04000000000000001,"total":34,"current":5}
+{"_e":"metro:bundling:progress","_t":1790612159579,"id":"1","progress":0.08872793119058396,"total":47,"current":14}
+{"_e":"metro:bundling:progress","_t":1790612159687,"id":"1","progress":0.15311909262759926,"total":69,"current":27}
+{"_e":"metro:bundling:progress","_t":1790612159787,"id":"1","progress":0.2043535372490148,"total":73,"current":33}
+{"_e":"metro:bundling:progress","_t":1790612159888,"id":"1","progress":0.23137317737542062,"total":79,"current":38}
+{"_e":"metro:bundling:progress","_t":1790612159990,"id":"1","progress":0.23137317737542062,"total":112,"current":51}
+{"_e":"metro:bundling:progress","_t":1790612160097,"id":"1","progress":0.25,"total":126,"current":63}
+{"_e":"metro:bundling:progress","_t":1790612160199,"id":"1","progress":0.25,"total":191,"current":80}
+{"_e":"metro:bundling:progress","_t":1790612160299,"id":"1","progress":0.3612131415161718,"total":198,"current":119}
+{"_e":"metro:bundling:progress","_t":1790612160399,"id":"1","progress":0.3612131415161718,"total":243,"current":140}
+{"_e":"metro:bundling:progress","_t":1790612160500,"id":"1","progress":0.46843926363880684,"total":244,"current":167}
+{"_e":"metro:bundling:progress","_t":1790612160600,"id":"1","progress":0.46843926363880684,"total":383,"current":192}
+{"_e":"metro:bundling:progress","_t":1790612160701,"id":"1","progress":0.46843926363880684,"total":414,"current":233}
+{"_e":"metro:bundling:progress","_t":1790612160802,"id":"1","progress":0.46843926363880684,"total":426,"current":251}
+{"_e":"metro:bundling:progress","_t":1790612160913,"id":"1","progress":0.46843926363880684,"total":457,"current":271}
+{"_e":"metro:bundling:progress","_t":1790612161013,"id":"1","progress":0.46843926363880684,"total":479,"current":295}
+{"_e":"metro:bundling:progress","_t":1790612161113,"id":"1","progress":0.46843926363880684,"total":532,"current":344}
+{"_e":"metro:bundling:progress","_t":1790612161215,"id":"1","progress":0.46843926363880684,"total":566,"current":381}
+{"_e":"metro:bundling:progress","_t":1790612161315,"id":"1","progress":0.46843926363880684,"total":673,"current":426}
+{"_e":"metro:bundling:progress","_t":1790612161415,"id":"1","progress":0.46843926363880684,"total":727,"current":487}
+{"_e":"metro:bundling:progress","_t":1790612161515,"id":"1","progress":0.4752640036730947,"total":792,"current":546}
+{"_e":"metro:bundling:progress","_t":1790612161617,"id":"1","progress":0.5330759181303527,"total":830,"current":606}
+{"_e":"metro:bundling:progress","_t":1790612161716,"id":"1","progress":0.6022789807057344,"total":844,"current":655}
+{"_e":"metro:bundling:progress","_t":1790612161816,"id":"1","progress":0.6325797728501892,"total":860,"current":684}
+{"_e":"metro:bundling:progress","_t":1790612161916,"id":"1","progress":0.6758827192837613,"total":877,"current":721}
+{"_e":"metro:bundling:progress","_t":1790612162022,"id":"1","progress":0.7341461095346055,"total":894,"current":766}
+{"_e":"metro:bundling:progress","_t":1790612162122,"id":"1","progress":0.7467917298178386,"total":935,"current":808}
+{"_e":"metro:bundling:progress","_t":1790612162222,"id":"1","progress":0.8060631893015078,"total":959,"current":861}
+{"_e":"metro:bundling:progress","_t":1790612162323,"id":"1","progress":0.843209470501924,"total":991,"current":910}
+{"_e":"metro:bundling:progress","_t":1790612162422,"id":"1","progress":0.843209470501924,"total":1051,"current":957}
+{"_e":"metro:bundling:progress","_t":1790612162522,"id":"1","progress":0.8593050112579907,"total":1082,"current":1003}
+{"_e":"metro:bundling:progress","_t":1790612162623,"id":"1","progress":0.887319590764165,"total":1103,"current":1039}
+{"_e":"metro:bundling:progress","_t":1790612162723,"id":"1","progress":0.9346758571341083,"total":1114,"current":1077}
+{"_e":"metro:bundling:progress","_t":1790612162828,"id":"1","progress":0.9771837259647781,"total":1133,"current":1120}
+{"_e":"metro:bundling:progress","_t":1790612162934,"id":"1","progress":0.9964757736656619,"total":1134,"current":1132}
+{"_e":"metro:bundling:progress","_t":1790612163321,"id":"1","progress":0.998237109201248,"total":1134,"current":1133}
+{"_e":"metro:bundling:progress","_t":1790612163435,"id":"1","progress":0.9982417585817729,"total":1137,"current":1136}
+{"_e":"metro:bundling:progress","_t":1790612163579,"id":"1","progress":0.999,"total":1137,"current":1137}
+{"_e":"metro:bundling:failed","_t":1790612163613,"id":"1","message":"Unable to resolve \"../../components/AuthScreenLayout\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  13 | import { API_BASE_URL } from \"../../utils/config\";\n  14 |\n> 15 | import AuthScreenLayout from \"../../components/AuthScreenLayout\";\n     |                               ^\n  16 | import CustomInput from \"../../components/CustomInput\";\n  17 | import PrimaryButton from \"../../components/PrimaryButton\";\n  18 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"../../components/AuthScreenLayout","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:started","_t":1790612243757,"id":"2","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790612243757,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612243759,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612243860,"id":"2","progress":0.07622804929202237,"total":297,"current":82}
+{"_e":"metro:bundling:progress","_t":1790612243960,"id":"2","progress":0.25653567212008765,"total":462,"current":234}
+{"_e":"metro:bundling:progress","_t":1790612244062,"id":"2","progress":0.2984136372347526,"total":778,"current":425}
+{"_e":"metro:bundling:progress","_t":1790612244162,"id":"2","progress":0.6024977767788889,"total":849,"current":659}
+{"_e":"metro:bundling:progress","_t":1790612244263,"id":"2","progress":0.8334876821452573,"total":988,"current":902}
+{"_e":"metro:bundling:progress","_t":1790612244363,"id":"2","progress":0.9099020957525775,"total":1106,"current":1055}
+{"_e":"metro:bundling:progress","_t":1790612244468,"id":"2","progress":0.999,"total":1148,"current":1148}
+{"_e":"metro:bundling:done","_t":1790612244740,"id":"2","total":1148,"ms":982.967}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790612246765,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790612248432,"level":"error","data":["[Error: Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.\n\nCheck the render method of `ForgotPasswordScreen`.]"]}
+{"_e":"metro:bundling:failed","_t":1790612379896,"id":"1","message":"Unable to resolve \"../../components//PrimaryButton\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  15 | import { AuthScreenLayout } from \"../../components/auth/AuthScreenLayout\";\n  16 | import { CustomInput } from \"../../components/common/CustomInput\";\n> 17 | import { PrimaryButton } from \"../../components//PrimaryButton\";\n     |                                ^\n  18 |\n  19 | const FORGOT_PASSWORD_FORM_FIELDS = [\n  20 |   {","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components//PrimaryButton\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"../../components//PrimaryButton","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:started","_t":1790612383939,"id":"6","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790612383939,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612383940,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1790612383946,"id":"6","message":"Unable to resolve \"../../components//PrimaryButton\" from \"src\\screens\\auth\\ForgotPasswordScreen.js\"\n  15 | import { AuthScreenLayout } from \"../../components/auth/AuthScreenLayout\";\n  16 | import { CustomInput } from \"../../components/common/CustomInput\";\n> 17 | import { PrimaryButton } from \"../../components//PrimaryButton\";\n     |                                ^\n  18 |\n  19 | const FORGOT_PASSWORD_FORM_FIELDS = [\n  20 |   {","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\ForgotPasswordScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components//PrimaryButton\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/ForgotPasswordScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"../../components//PrimaryButton","originModulePath":"src\\screens\\auth\\ForgotPasswordScreen.js"}
+{"_e":"metro:bundling:started","_t":1790612438028,"id":"7","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790612438028,"id":"7","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612438029,"id":"7","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612438129,"id":"7","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612438189,"id":"7","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612438289,"id":"7","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790612438396,"id":"7","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790612438448,"id":"7","total":1,"ms":419.5967}
+{"_e":"metro:client_log","_t":1790612440670,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790612440670,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790612440670,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790612440670,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790612440670,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790612440670,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790612440673,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790612440673,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790612440673,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790612440673,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790613055313,"id":"a","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790613055313,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613055314,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613055414,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613055437,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613055537,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613055637,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790613055690,"id":"a","total":1,"ms":377.4345}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613057908,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790613298294,"id":"b","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790613298294,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790613298324,"id":"b","total":1,"ms":29.6324}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613300126,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790613743989,"id":"e","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790613743989,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613743990,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613744090,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613744138,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613744239,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790613744339,"id":"e","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790613744425,"id":"e","total":1,"ms":435.785}
+{"_e":"metro:client_log","_t":1790613746109,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613746110,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790613961115,"id":"f","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790613961115,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790613961144,"id":"f","total":1,"ms":28.9408}
+{"_e":"metro:client_log","_t":1790613963461,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790613963461,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790613963461,"level":"log","data":["Total Records: 2\n"]}
+{"_e":"metro:client_log","_t":1790613963461,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790613963461,"level":"log","data":["{\n  \"user_id\": \"8df2cb00-a9a2-4335-8789-a38e9bbd6fb2\",\n  \"encrypted_name\": \"U2FsdGVkX1/2ihZrgj6QC6bDak6o/e0j4Jyxgxt1jLA=\",\n  \"encrypted_surname\": \"U2FsdGVkX18q+zlfcVbKY8TO8ABRiqs7yWx3zmtF3j0=\",\n  \"encrypted_email\": \"U2FsdGVkX1+DvhyJnYepZ2QZSShv+qZmTkX3MkBZBWjQTy9h9SCe8cRixm9dI/y8\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1/kXDzwAEmDOO15jXAUijc2BtVZoO9jQW4=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:37:55.663\",\n  \"updated_at\": \"2026-09-25 11:37:55.663\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613963461,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613963461,"level":"log","data":["--- Record #2 ---"]}
+{"_e":"metro:client_log","_t":1790613963465,"level":"log","data":["{\n  \"user_id\": \"16e45f0f-867a-46c0-973a-f2eeb6b264ce\",\n  \"encrypted_name\": \"U2FsdGVkX19QX+HG56hdBokIXjdLULGVGm/kiCTIn9s=\",\n  \"encrypted_surname\": \"U2FsdGVkX18qFPota2Wn4f/Hysh/NMsJot/LXLwPsyE=\",\n  \"encrypted_email\": \"U2FsdGVkX1/DkoZXPqorWKmvREBYyFT8MVAw2wgyNbXPGpO4iH6f7QdfVDxlJi5K\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18O4xEtJ4YCFxmOLrImby1h7gVkcm9d4ng=\",\n  \"password_hash\": \"e806a291cfc3e61f83b98d344ee57e3e8933cccece4fb45e1481f1f560e70eb1\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-25 11:39:58.240\",\n  \"updated_at\": \"2026-09-25 11:39:58.240\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790613963465,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790613963465,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790613994378,"id":"i","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790613994378,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790613994409,"id":"i","total":1,"ms":31.2578}
+{"_e":"metro:client_log","_t":1790613996172,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790613996199,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790613996200,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790613996200,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790614485132,"id":"m","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790614485132,"id":"m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790614485159,"id":"m","total":1,"ms":27.0569}
+{"_e":"metro:client_log","_t":1790614487190,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790614487190,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790614487190,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790614487190,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790614563810,"id":"n","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790614563810,"id":"n","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790614563839,"id":"n","total":1,"ms":28.8702}
+{"_e":"metro:client_log","_t":1790614565891,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790614565891,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790614565891,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790614565891,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790614740231,"id":"o","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790614740231,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790614740270,"id":"o","total":1,"ms":38.3222}
+{"_e":"metro:client_log","_t":1790614742136,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790614742137,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790614742137,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1790614742137,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790614836253,"level":"warn","data":["Backend sync error","Missing required parameter(s): password"]}
+{"_e":"metro:bundling:started","_t":1790616164041,"id":"r","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790616164041,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790616164079,"id":"r","total":1,"ms":38.5434}
+{"_e":"metro:client_log","_t":1790616166405,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790616166405,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790616166405,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790616166406,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790616166406,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790616166406,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790616166406,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790616971188,"id":"s","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790616971188,"id":"s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790616971246,"id":"s","total":1,"ms":57.7588}
+{"_e":"metro:client_log","_t":1790616973199,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790616973203,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790616973203,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790616973203,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790616973203,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790616973203,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790616973203,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:failed","_t":1790617063559,"id":"6","message":"Unable to resolve \"react-native-keyboard-aware-scroll-view\" from \"src\\components\\auth\\AuthScreenLayout.js\"\n  13 | import { AppHeader } from \"../common/AppHeader\";\n  14 | import { AlertBadge } from \"../common/AlertBadge\";\n> 15 | import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'\n     |                                          ^\n  16 |\n  17 | export const AuthScreenLayout = ({\n  18 | \ttitle,","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\components\\auth\\AuthScreenLayout.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"react-native-keyboard-aware-scroll-view\"\u001b[39m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\OTPScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/auth/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/OTPScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"react-native-keyboard-aware-scroll-view","originModulePath":"src\\components\\auth\\AuthScreenLayout.js"}
+{"_e":"metro:bundling:started","_t":1790617091986,"id":"u","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617091986,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617091986,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1790617091990,"id":"u","message":"Unable to resolve \"react-native-keyboard-aware-scroll-view\" from \"src\\components\\auth\\AuthScreenLayout.js\"\n  13 | import { AppHeader } from \"../common/AppHeader\";\n  14 | import { AlertBadge } from \"../common/AlertBadge\";\n> 15 | import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'\n     |                                          ^\n  16 |\n  17 | export const AuthScreenLayout = ({\n  18 | \ttitle,","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\components\\auth\\AuthScreenLayout.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"react-native-keyboard-aware-scroll-view\"\u001b[39m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\OTPScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/auth/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/OTPScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"react-native-keyboard-aware-scroll-view","originModulePath":"src\\components\\auth\\AuthScreenLayout.js"}
+{"_e":"metro:bundling:started","_t":1790617110055,"id":"v","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617110055,"id":"v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617110056,"id":"v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1790617110072,"id":"v","message":"Unable to resolve \"react-native-keyboard-aware-scroll-view\" from \"src\\components\\auth\\AuthScreenLayout.js\"\n  13 | import { AppHeader } from \"../common/AppHeader\";\n  14 | import { AlertBadge } from \"../common/AlertBadge\";\n> 15 | import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';\n     |                                          ^\n  16 |\n  17 | export const AuthScreenLayout = ({\n  18 | \ttitle,","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\components\\auth\\AuthScreenLayout.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"react-native-keyboard-aware-scroll-view\"\u001b[39m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\OTPScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/auth/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/OTPScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"react-native-keyboard-aware-scroll-view","originModulePath":"src\\components\\auth\\AuthScreenLayout.js"}
+{"_e":"metro:bundling:started","_t":1790617241174,"id":"w","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617241174,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617241176,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617241276,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617241357,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617241457,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617241561,"id":"w","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1790617241636,"id":"w","message":"Unable to resolve \"react-native-keyboard-aware-scroll-view\" from \"src\\components\\auth\\AuthScreenLayout.js\"\n  10 | import { AppHeader } from \"../common/AppHeader\";\n  11 | import { AlertBadge } from \"../common/AlertBadge\";\n> 12 | import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';\n     |                                          ^\n  13 |\n  14 | export const AuthScreenLayout = ({\n  15 | \ttitle,","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\components\\auth\\AuthScreenLayout.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"react-native-keyboard-aware-scroll-view\"\u001b[39m\n\n\u001b[90m \u001b[39msrc\\screens\\auth\\OTPScreen.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../../components/auth/AuthScreenLayout\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/auth/OTPScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"react-native-keyboard-aware-scroll-view","originModulePath":"src\\components\\auth\\AuthScreenLayout.js"}
+{"_e":"root:init","_t":1790617322306,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790617322307,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790617322310,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790617322627,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790617322978,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790617323262,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790617326476,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790617328308,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617328309,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617328314,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617328972,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:failed","_t":1790617328983,"id":"1","message":"Unable to resolve \"expo\" from \"index.js\"","importStack":null,"filename":null,"targetModuleName":"expo","originModulePath":"index.js"}
+{"_e":"metro:bundling:started","_t":1790617336712,"id":"2","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617336712,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617336714,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1790617336722,"id":"2","message":"Unable to resolve \"expo\" from \"index.js\"","importStack":null,"filename":null,"targetModuleName":"expo","originModulePath":"index.js"}
+{"_e":"metro:bundling:started","_t":1790617346863,"id":"5","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617346864,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617346866,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1790617346871,"id":"5","message":"Unable to resolve \"expo\" from \"index.js\"","importStack":null,"filename":null,"targetModuleName":"expo","originModulePath":"index.js"}
+{"_e":"root:init","_t":1790617391867,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790617391868,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790617391871,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790617392155,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790617392502,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790617392751,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790617395921,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790617401302,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617401303,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617401305,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617401895,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:failed","_t":1790617401906,"id":"1","message":"Unable to resolve \"expo\" from \"index.js\"","importStack":null,"filename":null,"targetModuleName":"expo","originModulePath":"index.js"}
+{"_e":"root:init","_t":1790617550195,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790617550195,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790617550198,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790617554597,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790617559037,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790617562028,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790617568565,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790617587579,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790617587579,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617587584,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790617593126,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1790617593229,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1790617593336,"id":"1","progress":0.04000000000000001,"total":29,"current":5}
+{"_e":"metro:bundling:progress","_t":1790617593440,"id":"1","progress":0.08345679012345678,"total":45,"current":13}
+{"_e":"metro:bundling:progress","_t":1790617593547,"id":"1","progress":0.16000000000000003,"total":50,"current":20}
+{"_e":"metro:bundling:progress","_t":1790617593648,"id":"1","progress":0.16796560064498792,"total":61,"current":25}
+{"_e":"metro:bundling:progress","_t":1790617593757,"id":"1","progress":0.17254437869822487,"total":65,"current":27}
+{"_e":"metro:bundling:progress","_t":1790617593861,"id":"1","progress":0.21602856576076174,"total":71,"current":33}
+{"_e":"metro:bundling:progress","_t":1790617593982,"id":"1","progress":0.21602856576076174,"total":99,"current":39}
+{"_e":"metro:bundling:progress","_t":1790617594084,"id":"1","progress":0.21602856576076174,"total":110,"current":44}
+{"_e":"metro:bundling:progress","_t":1790617594185,"id":"1","progress":0.21602856576076174,"total":129,"current":59}
+{"_e":"metro:bundling:progress","_t":1790617594293,"id":"1","progress":0.21602856576076174,"total":182,"current":76}
+{"_e":"metro:bundling:progress","_t":1790617594402,"id":"1","progress":0.21602856576076174,"total":271,"current":106}
+{"_e":"metro:bundling:progress","_t":1790617594502,"id":"1","progress":0.21602856576076174,"total":327,"current":134}
+{"_e":"metro:bundling:progress","_t":1790617594610,"id":"1","progress":0.21602856576076174,"total":348,"current":151}
+{"_e":"metro:bundling:progress","_t":1790617594711,"id":"1","progress":0.21602856576076174,"total":462,"current":191}
+{"_e":"metro:bundling:progress","_t":1790617594812,"id":"1","progress":0.21602856576076174,"total":500,"current":201}
+{"_e":"metro:bundling:progress","_t":1790617594964,"id":"1","progress":0.21602856576076174,"total":500,"current":202}
+{"_e":"metro:bundling:progress","_t":1790617595064,"id":"1","progress":0.28003451982618965,"total":514,"current":272}
+{"_e":"metro:bundling:progress","_t":1790617595164,"id":"1","progress":0.35397887747130574,"total":516,"current":307}
+{"_e":"metro:bundling:progress","_t":1790617595270,"id":"1","progress":0.4262889446617081,"total":533,"current":348}
+{"_e":"metro:bundling:progress","_t":1790617595379,"id":"1","progress":0.4317011820823939,"total":554,"current":364}
+{"_e":"metro:bundling:progress","_t":1790617595478,"id":"1","progress":0.4317011820823939,"total":574,"current":377}
+{"_e":"metro:bundling:progress","_t":1790617595578,"id":"1","progress":0.4567143600416233,"total":620,"current":419}
+{"_e":"metro:bundling:progress","_t":1790617595680,"id":"1","progress":0.4923467910269687,"total":657,"current":461}
+{"_e":"metro:bundling:progress","_t":1790617595792,"id":"1","progress":0.5213689446366782,"total":680,"current":491}
+{"_e":"metro:bundling:progress","_t":1790617595893,"id":"1","progress":0.5213689446366782,"total":774,"current":549}
+{"_e":"metro:bundling:progress","_t":1790617595993,"id":"1","progress":0.5213689446366782,"total":810,"current":575}
+{"_e":"metro:bundling:progress","_t":1790617596093,"id":"1","progress":0.5213689446366782,"total":835,"current":589}
+{"_e":"metro:bundling:progress","_t":1790617596242,"id":"1","progress":0.5213689446366782,"total":835,"current":590}
+{"_e":"metro:bundling:progress","_t":1790617596348,"id":"1","progress":0.5213689446366782,"total":836,"current":591}
+{"_e":"metro:bundling:progress","_t":1790617596428,"id":"1","progress":0.5213689446366782,"total":836,"current":592}
+{"_e":"metro:bundling:progress","_t":1790617596529,"id":"1","progress":0.5213689446366782,"total":838,"current":594}
+{"_e":"metro:bundling:progress","_t":1790617596631,"id":"1","progress":0.5278536029292303,"total":863,"current":627}
+{"_e":"metro:bundling:progress","_t":1790617596731,"id":"1","progress":0.5839593584977453,"total":882,"current":674}
+{"_e":"metro:bundling:progress","_t":1790617596831,"id":"1","progress":0.6382135389032801,"total":895,"current":715}
+{"_e":"metro:bundling:progress","_t":1790617596932,"id":"1","progress":0.6981284933896662,"total":906,"current":757}
+{"_e":"metro:bundling:progress","_t":1790617597038,"id":"1","progress":0.7262003780718336,"total":920,"current":784}
+{"_e":"metro:bundling:progress","_t":1790617597138,"id":"1","progress":0.7649277624251677,"total":941,"current":823}
+{"_e":"metro:bundling:progress","_t":1790617597238,"id":"1","progress":0.8479340277777777,"total":960,"current":884}
+{"_e":"metro:bundling:progress","_t":1790617597338,"id":"1","progress":0.8590577949486147,"total":998,"current":925}
+{"_e":"metro:bundling:progress","_t":1790617597439,"id":"1","progress":0.8682444372467543,"total":1041,"current":970}
+{"_e":"metro:bundling:progress","_t":1790617597539,"id":"1","progress":0.8682444372467543,"total":1072,"current":996}
+{"_e":"metro:bundling:progress","_t":1790617597639,"id":"1","progress":0.8682444372467543,"total":1079,"current":1000}
+{"_e":"metro:bundling:progress","_t":1790617597739,"id":"1","progress":0.8693835733882032,"total":1080,"current":1007}
+{"_e":"metro:bundling:progress","_t":1790617597839,"id":"1","progress":0.8985814619869846,"total":1114,"current":1056}
+{"_e":"metro:bundling:progress","_t":1790617597939,"id":"1","progress":0.9285016831298959,"total":1126,"current":1085}
+{"_e":"metro:bundling:progress","_t":1790617598039,"id":"1","progress":0.942992485488305,"total":1141,"current":1108}
+{"_e":"metro:bundling:progress","_t":1790617598139,"id":"1","progress":0.9895743544294577,"total":1148,"current":1142}
+{"_e":"metro:bundling:progress","_t":1790617598240,"id":"1","progress":0.9965217417650796,"total":1149,"current":1147}
+{"_e":"metro:bundling:progress","_t":1790617598372,"id":"1","progress":0.998260113422123,"total":1149,"current":1148}
+{"_e":"metro:bundling:progress","_t":1790617598478,"id":"1","progress":0.9982646424093363,"total":1152,"current":1151}
+{"_e":"metro:bundling:progress","_t":1790617598684,"id":"1","progress":0.999,"total":1152,"current":1152}
+{"_e":"metro:bundling:progress","_t":1790617598786,"id":"1","progress":0.999,"total":1162,"current":1162}
+{"_e":"metro:bundling:done","_t":1790617599041,"id":"1","total":1162,"ms":11461.8225}
+{"_e":"metro:client_log","_t":1790617601024,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790617601025,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790617601025,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790617601025,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790617601025,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790617601025,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790617601025,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790617631306,"level":"error","data":["[ReferenceError: Property 'ScrollView' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790617639647,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790617639659,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790617639661,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790617639662,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790617639662,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790617639662,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790617639662,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:failed","_t":1790617689064,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\components\\auth\\AuthScreenLayout.js: Expected corresponding JSX closing tag for <ScrollView>. (66:4)\n\n  64 | \t\t\t\t\t\tYour safety. Your privacy. Our priority.\n  65 | \t\t\t\t\t</Text>\n> 66 | \t\t\t\t</KeyboardAwareScrollView>\n     | \t\t\t\t^\n  67 | \t\t\t</ScrollView>\n  68 | \t\t</SafeAreaView>\n  69 | \t\t</LinearGradient >","importStack":null,"filename":"src\\components\\auth\\AuthScreenLayout.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1790620370378,"id":"5","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790620370378,"id":"5","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790620370418,"id":"5","total":1,"ms":39.5565}
+{"_e":"metro:client_log","_t":1790620372612,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790620372612,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790620372612,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790620372612,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790620372612,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790620372612,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790620372612,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790621312814,"level":"error","data":["[ReferenceError: Property 'KeyboardAvoidingView' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790621320762,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790621320762,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790621320762,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790621320762,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790621320762,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790621320762,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790621320762,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790621320788,"level":"error","data":["[ReferenceError: Property 'Platform' doesn't exist]"]}
+{"_e":"metro:bundling:started","_t":1790621332679,"id":"c","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790621332679,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790621332680,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790621332780,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790621332835,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790621332935,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790621333035,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790621333110,"id":"c","total":1,"ms":431.0983}
+{"_e":"metro:client_log","_t":1790621335391,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790621335391,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790621335391,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790621335391,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790621335391,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790621335391,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790621335391,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1790621335391,"level":"error","data":["[ReferenceError: Property 'Platform' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1790621364230,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790621364231,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790621364231,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790621364231,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790621364231,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790621364231,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790621364231,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790621616160,"id":"f","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790621616160,"id":"f","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790621616188,"id":"f","total":1,"ms":28.6989}
+{"_e":"metro:client_log","_t":1790621618455,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790621618774,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790621618774,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790621618774,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790621618774,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790621618774,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790621618774,"level":"log","data":["========================================================================\n"]}
+{"_e":"root:init","_t":1790622825167,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790622825168,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790622825170,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1790622825406,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790622825688,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790622825886,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790622828873,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790622845759,"id":"3","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790622845759,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790622845764,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790622846317,"id":"3","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1790622846423,"id":"3","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1790622846431,"id":"3","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1790622846539,"id":"3","progress":0.04000000000000001,"total":37,"current":6}
+{"_e":"metro:bundling:progress","_t":1790622846643,"id":"3","progress":0.11588954277953825,"total":47,"current":16}
+{"_e":"metro:bundling:progress","_t":1790622846751,"id":"3","progress":0.28994082840236685,"total":52,"current":28}
+{"_e":"metro:bundling:progress","_t":1790622846853,"id":"3","progress":0.308641975308642,"total":63,"current":35}
+{"_e":"metro:bundling:progress","_t":1790622846955,"id":"3","progress":0.308641975308642,"total":86,"current":41}
+{"_e":"metro:bundling:progress","_t":1790622847064,"id":"3","progress":0.308641975308642,"total":89,"current":47}
+{"_e":"metro:bundling:progress","_t":1790622847168,"id":"3","progress":0.308641975308642,"total":131,"current":56}
+{"_e":"metro:bundling:progress","_t":1790622847268,"id":"3","progress":0.308641975308642,"total":148,"current":64}
+{"_e":"metro:bundling:progress","_t":1790622847368,"id":"3","progress":0.308641975308642,"total":181,"current":80}
+{"_e":"metro:bundling:progress","_t":1790622847468,"id":"3","progress":0.308641975308642,"total":215,"current":96}
+{"_e":"metro:bundling:progress","_t":1790622847594,"id":"3","progress":0.308641975308642,"total":331,"current":112}
+{"_e":"metro:bundling:progress","_t":1790622847694,"id":"3","progress":0.308641975308642,"total":340,"current":143}
+{"_e":"metro:bundling:progress","_t":1790622847795,"id":"3","progress":0.3375674916513218,"total":358,"current":208}
+{"_e":"metro:bundling:progress","_t":1790622847896,"id":"3","progress":0.3375674916513218,"total":379,"current":219}
+{"_e":"metro:bundling:progress","_t":1790622847999,"id":"3","progress":0.34027777777777785,"total":408,"current":238}
+{"_e":"metro:bundling:progress","_t":1790622848099,"id":"3","progress":0.3572778925619835,"total":440,"current":263}
+{"_e":"metro:bundling:progress","_t":1790622848204,"id":"3","progress":0.37331324951168604,"total":473,"current":289}
+{"_e":"metro:bundling:progress","_t":1790622848305,"id":"3","progress":0.4327549661731949,"total":491,"current":323}
+{"_e":"metro:bundling:progress","_t":1790622848405,"id":"3","progress":0.4485539412589698,"total":542,"current":363}
+{"_e":"metro:bundling:progress","_t":1790622848508,"id":"3","progress":0.4485539412589698,"total":616,"current":395}
+{"_e":"metro:bundling:progress","_t":1790622848610,"id":"3","progress":0.4485539412589698,"total":670,"current":439}
+{"_e":"metro:bundling:progress","_t":1790622848710,"id":"3","progress":0.4574473580000345,"total":723,"current":489}
+{"_e":"metro:bundling:progress","_t":1790622848810,"id":"3","progress":0.48450666367189593,"total":737,"current":513}
+{"_e":"metro:bundling:progress","_t":1790622848910,"id":"3","progress":0.48450666367189593,"total":809,"current":553}
+{"_e":"metro:bundling:progress","_t":1790622849010,"id":"3","progress":0.5027468750186812,"total":818,"current":580}
+{"_e":"metro:bundling:progress","_t":1790622849110,"id":"3","progress":0.5367231394740323,"total":834,"current":611}
+{"_e":"metro:bundling:progress","_t":1790622849213,"id":"3","progress":0.5677692920779107,"total":856,"current":645}
+{"_e":"metro:bundling:progress","_t":1790622849314,"id":"3","progress":0.610462793364501,"total":878,"current":686}
+{"_e":"metro:bundling:progress","_t":1790622849414,"id":"3","progress":0.6801615957581113,"total":890,"current":734}
+{"_e":"metro:bundling:progress","_t":1790622849514,"id":"3","progress":0.7518791183320273,"total":903,"current":783}
+{"_e":"metro:bundling:progress","_t":1790622849614,"id":"3","progress":0.8170896817375718,"total":916,"current":828}
+{"_e":"metro:bundling:progress","_t":1790622849714,"id":"3","progress":0.8378544833571289,"total":945,"current":865}
+{"_e":"metro:bundling:progress","_t":1790622849817,"id":"3","progress":0.8396543107038734,"total":980,"current":898}
+{"_e":"metro:bundling:progress","_t":1790622849923,"id":"3","progress":0.8503711140593067,"total":1002,"current":924}
+{"_e":"metro:bundling:progress","_t":1790622850023,"id":"3","progress":0.8748936390644649,"total":1021,"current":955}
+{"_e":"metro:bundling:progress","_t":1790622850124,"id":"3","progress":0.8748936390644649,"total":1073,"current":999}
+{"_e":"metro:bundling:progress","_t":1790622850225,"id":"3","progress":0.9017164854349519,"total":1091,"current":1036}
+{"_e":"metro:bundling:progress","_t":1790622850326,"id":"3","progress":0.9189774080016563,"total":1112,"current":1066}
+{"_e":"metro:bundling:progress","_t":1790622850429,"id":"3","progress":0.959529086419753,"total":1125,"current":1102}
+{"_e":"metro:bundling:progress","_t":1790622850543,"id":"3","progress":0.9964757736656619,"total":1134,"current":1132}
+{"_e":"metro:bundling:progress","_t":1790622850794,"id":"3","progress":0.998237109201248,"total":1134,"current":1133}
+{"_e":"metro:bundling:progress","_t":1790622850899,"id":"3","progress":0.9982417585817729,"total":1137,"current":1136}
+{"_e":"metro:bundling:progress","_t":1790622851048,"id":"3","progress":0.999,"total":1137,"current":1137}
+{"_e":"metro:bundling:progress","_t":1790622851162,"id":"3","progress":0.999,"total":1147,"current":1147}
+{"_e":"metro:bundling:done","_t":1790622851254,"id":"3","total":1147,"ms":5494.9154}
+{"_e":"metro:client_log","_t":1790622853557,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790622853558,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790622853558,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790622853558,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790622853558,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790622853558,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790622853558,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1790623102671,"id":"4","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790623102671,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790623102709,"id":"4","total":1,"ms":38.122}
+{"_e":"metro:client_log","_t":1790623104699,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790623104699,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1790623104699,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1790623104699,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1790623104699,"level":"log","data":["{\n  \"user_id\": \"6aae53f1-3216-492a-b055-86f39ff75f04\",\n  \"encrypted_name\": \"U2FsdGVkX1/pejg7CkcqrteNG4V2WY1eDEDY7llQKxM=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/Mkxy1cnen7jkaydbNIUSBOedBb//nxJg=\",\n  \"encrypted_email\": \"U2FsdGVkX19mNdZRDaLUlzSWmgguqbyKWUL6aOzvVKR115Jbpz/CZJLMKxs7QY/6\",\n  \"encrypted_phone_num\": \"U2FsdGVkX18vVC5TyIgs8lW/jFFMXwzazwy+UEdHQME=\",\n  \"is_verified\": 0,\n  \"created_at\": \"2026-09-28 19:00:53.705\",\n  \"updated_at\": \"2026-09-28 19:00:53.705\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1790623104699,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1790623104699,"level":"log","data":["========================================================================\n"]}

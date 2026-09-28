@@ -34,8 +34,8 @@ const FIELD_RULES = {
 	password: (val) =>
 		!val
 			? "Password is required"
-			: val.length < 6
-				? "Password must be at least 6 characters"
+			: val.length < 8
+				? "Password must be at least 8 characters"
 				: "",
 	confirmPassword: (val, rawVal, formData) =>
 		!val

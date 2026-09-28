@@ -32,6 +32,9 @@ const RegistrationScreen = () => {
 	const [banner, setBanner] = useState(null);
 	const [agreed, setAgreed] = useState(false);
 
+	// State to track if the password field is focused for showing the password strength meter
+	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
 	//Method that helps to handle when the user agrees to the terms and conditions
 	const handleToggleAgreed = () => {
 		setAgreed((prev) => {
@@ -135,13 +138,23 @@ const RegistrationScreen = () => {
 						placeholder={field.placeholder}
 						value={formData[field.key]}
 						onChangeText={(val) => handleChange(field.key, val)}
-						onBlur={() => handleFieldBlur(field.key)}
+						onFocus={() => {
+							if (field.key === "password") {
+								setIsPasswordFocused(true);
+							}
+						}}
+						onBlur={() => {
+							if (field.key === "password") {
+								setIsPasswordFocused(false);
+							}
+							handleFieldBlur(field.key);
+						}}
 						secureTextEntry={field.secureTextEntry}
 						keyboardType={field.keyboardType}
 						autoCapitalize={field.autoCapitalize}
 						error={errors[field.key]}
 					/>
-					{field.key === "password" && (
+					{field.key === "password" && isPasswordFocused && (
 						<PasswordStrengthMeter password={formData.password} />
 					)}
 				</View>

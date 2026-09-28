@@ -5,70 +5,77 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useNetStatus } from "../../utils/NetStatus";
 import { useFormHandler } from "../../hooks/UseFormHandler";
-import { API_BASE_URL } from "../../utils/config";
+import { sendOtpEmail } from "../../services/EmailService";
+import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
+import { CustomInput } from "../../components/common/CustomInput";
+import { PrimaryButton } from "../../components/common/PrimaryButton";
+import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
+
+
+const FORGOT_PASSWORD_FORM_FIELDS = [
+  {
+    key: "email",
+    label: "Email Address",
+    placeholder: "Enter your email",
+    icon: "mail",
+    keyboardType: "email-address",
+    autoCapitalize: "none",
+  },
+];
 
 const ForgotPasswordScreen = () => {
   const navigation = useNavigation();
   const { isOnline } = useNetStatus();
-  const { formData, errors, setErrors, handleChange, handleFieldBlur } =
+  const { formData, errors, handleChange, handleFieldBlur } =
     useFormHandler({ email: "" });
   const [banner, setBanner] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Handle navigation back to the login screen
+  const handleBackToLogin = () => {
+    navigation.goBack();
+  };
 
   const handleSendOTP = async () => {
     setBanner(null);
 
     // Check internet connectivity
-    if (!isOnline) {
-      setBanner({
-        message: "Internet Connection Required. Please connect to proceed.",
-        type: "error",
-      });
-      return;
-    }
+    //The user was not online when registering
+    checkNetworkAndNotify(isOnline, banner);
 
     // Basic email validation check
-    const emailToSubmit = formData.email.trim().toLowerCase();
-    if (!emailToSubmit || !emailToSubmit.includes('@') || !emailToSubmit.includes('.')) {
-      setBanner({
-        message: "Please enter a valid email address.",
-        type: "error",
-      });
-      return;
-    }
+    const sanitizedEmail = formData.email.trim().toLowerCase();
 
     try {
       setLoading(true);
 
       // Directly call backend OTP endpoint for password reset
-      const response = await fetch(`${API_BASE_URL}/send-otp-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: emailToSubmit }),
-      });
+      const otpResponse = await sendOtpEmail(sanitizedEmail);
 
-      if (response.ok) {
 
+
+      if (otpResponse?.error) {
+        setBanner({
+          message:
+            otpResponse?.error ||
+            "Failed to send a verification code. Please request a new one on the next screen",
+          type: "error",
+        });
+      } else {
         setBanner({
           message: "We have sent an OTP to your email address.",
           type: "success",
         });
-
-        setTimeout(() => {
-          navigation.navigate("OTPScreen", { email: emailToSubmit, isResetPassword: true });
-        }, 800);
-      } else {
-        setBanner({
-          message: "Failed to send OTP. Please try again.",
-          type: "error",
-        });
       }
+
+      setTimeout(() => {
+        navigation.navigate("OTPScreen", { email: sanitizedEmail, isResetPassword: true });
+      }, 800);
+
     } catch (error) {
       setBanner({
         message:
@@ -82,47 +89,47 @@ const ForgotPasswordScreen = () => {
 
   return (
     <AuthScreenLayout
-			title="Forgot Password?"
-			subtitle="Enter your email address and we'll send you a OTP to reset your password"
-			banner={banner}
-		>
-			{FORGOT_PASSWORD_FORM_FIELDS.map((field) => (
-				<CustomInput
-					key={field.key}
-					label={field.label}
-					icon={field.icon}
-					placeholder={field.placeholder}
-					value={formData[field.key]}
-					onChangeText={(val) => handleChange(field.key, val)}
-					onBlur={() => handleFieldBlur(field.key)}
-					secureTextEntry={field.secureTextEntry}
-					keyboardType={field.keyboardType}
-					autoCapitalize={field.autoCapitalize}
-					error={errors[field.key]}
-				/>
-			))}
+      title="Forgot Password?"
+      subtitle="Enter your email address and we'll send you a OTP to reset your password"
+      banner={banner}
+    >
+      {FORGOT_PASSWORD_FORM_FIELDS.map((field) => (
+        <CustomInput
+          key={field.key}
+          label={field.label}
+          icon={field.icon}
+          placeholder={field.placeholder}
+          value={formData[field.key]}
+          onChangeText={(val) => handleChange(field.key, val)}
+          onBlur={() => handleFieldBlur(field.key)}
+          secureTextEntry={field.secureTextEntry}
+          keyboardType={field.keyboardType}
+          autoCapitalize={field.autoCapitalize}
+          error={errors[field.key]}
+        />
+      ))}
 
       <PrimaryButton
-        title = "SEND OTP"
-        onPress = {handleSendOTP}
-        loadin = {loading}
+        title="SEND OTP"
+        onPress={handleSendOTP}
+        loading={loading}
       />
 
-       {/* Back to Login */}
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={handleBackToLogin}
-          >
-            <Feather
-              name="chevron-left"
-              size={20}
-              color="#6B21A8"
-            />
+      {/* Back to Login */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={handleBackToLogin}
+      >
+        <Feather
+          name="chevron-left"
+          size={20}
+          color="#6B21A8"
+        />
 
-            <Text style={styles.backText}>
-              Back to Login
-            </Text>
-          </TouchableOpacity>
+        <Text style={styles.backText}>
+          Back to Login
+        </Text>
+      </TouchableOpacity>
     </AuthScreenLayout>
   );
 };
@@ -205,6 +212,10 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     paddingHorizontal: 20,
     paddingTop: 35,
+    flex: 1,
+    height: "100%",
+    fontSize: 16,
+    color: "#111827",
   },
 
   logoBadge: {
@@ -221,13 +232,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#6B21A8",
     marginBottom: 28,
-  },
-
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#111827",
-    marginBottom: 12,
   },
 
   subtitle: {
@@ -256,13 +260,6 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
 
-  input: {
-    flex: 1,
-    height: "100%",
-    fontSize: 16,
-    color: "#111827",
-  },
-
   button: {
     width: "100%",
     height: 56,
@@ -279,11 +276,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 24,
+    marginBottom: 24,
+  },
+
   backText: {
     color: '#6F20B8',
     fontSize: 16,
     fontWeight: 'bold',
-    marginTop: 30,
+    marginLeft: 4,
   },
 });
 
