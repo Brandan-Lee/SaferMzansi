@@ -34,8 +34,8 @@ const FIELD_RULES = {
 	password: (val) =>
 		!val
 			? "Password is required"
-			: val.length < 6
-				? "Password must be at least 6 characters"
+			: val.length < 8
+				? "Password must be at least 8 characters"
 				: "",
 	confirmPassword: (val, rawVal, formData) =>
 		!val
@@ -105,6 +105,9 @@ export const validateRegistrationForm = (formData, agreed) => {
 
 //Method that validates the Login form
 export const validateLoginForm = (formData) => validateForm(formData);
+
+//Method that validates the Forgot Password form
+export const validateForgotPasswordForm = (formData) => validateForm(formData);
 
 const normalizeOtpString = (otp) =>
 	Array.isArray(otp) ? otp.join("") : otp?.trim() || "";

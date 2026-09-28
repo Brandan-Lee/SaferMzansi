@@ -6,7 +6,7 @@ const { validateBody } = require("../middleware/ValidateRequest");
 
 const REQUIRED_SEND_OTP_FIELDS = ["email"];
 
-const REQUIRED_VERIFY_OTP_FIELDS = ["email", "otp", "user_id"];
+const REQUIRED_VERIFY_OTP_FIELDS = ["email", "otp"];
 
 const handleOtpError = (res, error, actionMessage) => {
 	console.error(`Error during ${actionMessage}. Please try again`);
@@ -41,7 +41,7 @@ router.post(
 	validateBody(REQUIRED_VERIFY_OTP_FIELDS),
 	async (req, res) => {
 		try {
-			const { user_id, email, otp } = req.body;
+			const { email, otp } = req.body;
 			const sanitizedEmail = email.trim().toLowerCase();
 			const result = await verifyOtpCode(sanitizedEmail, otp);
 
@@ -49,15 +49,6 @@ router.post(
 				return res.status(result?.status || 400).json({
 					success: false,
 					error: result?.message || "Invalid OTP code",
-				});
-			}
-
-			const updatedUser = await updateUserVerificationInSupabase(user_id);
-
-			if (!updatedUser) {
-				return res.status(404).json({
-					success: false,
-					error: "User record not found or update returned no data.",
 				});
 			}
 

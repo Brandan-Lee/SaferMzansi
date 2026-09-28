@@ -27,26 +27,25 @@ export const verifyOtpCode = async (db, email, otp) => {
 	const sanitizedEmail = normalizedEmail(email);
 	let matchedUserId = null;
 
-	if (db) {
-		try {
-			// Fetch all local user records
-			const localUsers = await findLocalUserEmails(db);
+	// if (db) {
+	// 	try {
+	// 		// Fetch all local user records
+	// 		const localUsers = await findLocalUserEmails(db);
 
-			//Decrypt the raw email
-			const matchedUser = localUsers.find((user) => normalizedEmail(decryptData(user.encrypted_email)) === sanitizedEmail);
+	// 		//Decrypt the raw email
+	// 		const matchedUser = localUsers.find((user) => normalizedEmail(decryptData(user.encrypted_email)) === sanitizedEmail);
 
-			//Mathced user has been found
-			matchedUserId = matchedUser?.user_id || null;
-		} catch (error) {
-			console.error("Error retrieving local user_id:", error);
-		}
-	}
+	// 		//Mathced user has been found
+	// 		matchedUserId = matchedUser?.user_id || null;
+	// 	} catch (error) {
+	// 		console.error("Error retrieving local user_id:", error);
+	// 	}
+	// }
 
 	// Send raw email, otp and user id to server
 	const serverResponse = await postApi("/otp/verify-otp", {
 		email: sanitizedEmail,
 		otp,
-		user_id: matchedUserId,
 	});
 
 	//Failed server response

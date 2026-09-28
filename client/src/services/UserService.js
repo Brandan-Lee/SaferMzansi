@@ -1,31 +1,33 @@
 import * as Crypto from "expo-crypto";
 import * as SecureStore from "expo-secure-store";
-import {
-	decryptData,
-	encryptPayload,
-} from "../utils/SecurityUtil";
+import { decryptData, encryptPayload } from "../utils/SecurityUtil";
 import { postApi } from "./ApiClient";
 import {
 	findLocalUserEmails,
 	insertLocalUser,
 	markUserAsSynched,
+	markUserAsVerifiedLocally,
 } from "../database/UserRepository";
 
 const TOKEN_KEY = "user_jwt_token";
 
 //Helper method to save the JWT token
 const saveToken = async (token) => {
-    if (!token) {
+	if (!token) {
 		return;
 	}
 
-    const rawToken = typeof token === "object" ? (token.token || token.accessToken) : token;
+	const rawToken =
+		typeof token === "object" ? token.token || token.accessToken : token;
 
-    if (typeof rawToken === "string" && rawToken.includes(".")) {
-        await SecureStore.setItemAsync(TOKEN_KEY, rawToken.trim());
-    } else {
-        console.warn("Skipping token save: Provided token is not a valid JWT format", token);
-    }
+	if (typeof rawToken === "string" && rawToken.includes(".")) {
+		await SecureStore.setItemAsync(TOKEN_KEY, rawToken.trim());
+	} else {
+		console.warn(
+			"Skipping token save: Provided token is not a valid JWT format",
+			token,
+		);
+	}
 };
 
 //Helper method to find the user by their email
@@ -76,6 +78,8 @@ export const registerUser = async (db, userData) => {
 		password,
 	};
 
+	console.log(apiPayload);
+
 	const { ok, status, data } = await postApi("/users/register", apiPayload);
 
 	//There was an error synching the local data to the supabase table
@@ -88,10 +92,12 @@ export const registerUser = async (db, userData) => {
 
 	// Insert the new user into the local database
 	await insertLocalUser(db, localPayload);
+	const result = await markUserAsSynched(db, userId);
+	console.log(result);
+	await markUserAsVerifiedLocally(db, userId);
 
 	// Store session tokens and update the sync flag
 	await saveToken(data.token);
-	await markUserAsSynched(db, userId);
 
 	//Data that has to be returned to the registration screen
 	return { userId, email, token: data.token };
@@ -130,9 +136,11 @@ export const loginUser = async (db, email, password) => {
 		if (matchedUser.user_id) {
 			await markUserAsSynched(db, matchedUser.user_id);
 		}
-	//Online login failed
+		//Online login failed
 	} else if (status === 401 || status === 400) {
-		throw new Error(data?.error || "Invalid email or password. Please try again");
+		throw new Error(
+			data?.error || "Invalid email or password. Please try again",
+		);
 	} else {
 		isOffline = true;
 		if (!token) {
@@ -148,5 +156,35 @@ export const loginUser = async (db, email, password) => {
 		user: matchedUser,
 		token,
 		isOffline,
+	};
+};
+
+//Service to handle Forgot password request of the user
+export const forgotPasswordUser = async (db, email) => {
+	const normalEmail = email.trim().toLowerCase();
+
+	//Find if the email exists in the local database
+	const matchedUser = await findUserByEmail(db, normalEmail);
+
+	if (!matchedUser) {
+		return null;
+	}
+
+	//Check to see if the user email exists in the server supabase
+	const response = await postApi("/users/forgot-password", {
+		encrypted_email: matchedUser.encrypted_email,
+		user_id: matchedUser.user_id,
+	});
+
+	//Api call was a success and the users email was found on the supabase
+	const { ok, data } = response;
+
+	if (!ok && !data?.success) {
+		throw new Error("Please check your email and try again");
+	}
+
+	return {
+		email: normalEmail,
+		success: true,
 	};
 };

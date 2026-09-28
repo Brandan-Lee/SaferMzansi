@@ -5,6 +5,8 @@ const { generateToken } = require("../services/AuthService");
 const {
 	createUserInSupabase,
 	verifyUserInSupabase,
+	findUserInSupabase,
+	updateUserVerificationInSupabase,
 } = require("../services/UserService");
 
 const REQUIRED_REGISTRATION_FIELDS = [
@@ -12,11 +14,13 @@ const REQUIRED_REGISTRATION_FIELDS = [
 	"encrypted_name",
 	"encrypted_surname",
 	"encrypted_email",
-	"encrypted_phone_num", 
+	"encrypted_phone_num",
 	"password",
 ];
 
 const REQUIRED_LOGIN_FIELDS = ["encrypted_email", "password"];
+
+const REQUIRED_FORGOT_PASSWORD_FIELDS = ["encrypted_email", "user_id"];
 
 //Helper method to standardize the generation of tokens and the success response
 const handleAuthSuccess = (
@@ -65,6 +69,15 @@ router.post(
 			//Save the data to the Supabase User Table
 			await createUserInSupabase(req.body);
 
+			//OTP verification has passed
+			const updatedUser = await updateUserVerificationInSupabase(user_id);
+
+			if (!updatedUser) {
+				if (!updatedUser) {
+					handleError(res, error, "User record not found or update returned no data.")
+				}
+			}
+
 			return handleAuthSuccess(
 				res,
 				201,
@@ -88,7 +101,9 @@ router.post("/login", validateBody(REQUIRED_LOGIN_FIELDS), async (req, res) => {
 
 		//Users credentials are wrong or doesn't exist
 		if (!user) {
-			return res.status(401).json({ error: "Invalid credentials. Please try again" });
+			return res
+				.status(401)
+				.json({ error: "Invalid credentials. Please try again" });
 		}
 
 		const resolvedUserId = user.user_id || user.id;
@@ -104,5 +119,30 @@ router.post("/login", validateBody(REQUIRED_LOGIN_FIELDS), async (req, res) => {
 		return handleError(res, error, "authenticate user");
 	}
 });
+
+router.post(
+	"/forgot-password",
+	validateBody(REQUIRED_FORGOT_PASSWORD_FIELDS),
+	async (req, res) => {
+		try {
+			const { encrypted_email, user_id } = req.body;
+			const user = await findUserInSupabase(user_id);
+
+			if (!user) {
+				return res
+					.status(401)
+					.json({ error: "We'll send an email if this user does exist" });
+			}
+
+			return res.status(200).json({
+				success: true,
+				messagee: "Forgot Password email verification successfull",
+				encrypted_email,
+			});
+		} catch (error) {
+			return handleError(res, error, "authenticate user");
+		}
+	},
+);
 
 module.exports = router;

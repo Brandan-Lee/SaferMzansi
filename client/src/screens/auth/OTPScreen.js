@@ -17,6 +17,7 @@ import { useOtp } from "../../hooks/UseOtp";
 import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
 import { validateOtpInput } from "../../utils/ValidationUtil";
 import { Feather } from "@expo/vector-icons";
+import { useAuth } from "../../context/AuthContext";
 
 const OTP_LENGTH = 6;
 const PURPLE = "#6B21A8";
@@ -24,14 +25,26 @@ const PURPLE = "#6B21A8";
 const OTPScreen = ({ navigation, route }) => {
 	const { otp, otpString, inputRefs, handleOtpChange, handleKeyPress } =
 		useOtp(OTP_LENGTH);
-	const [loading, setLoading] = useState(false);
 	const [resending, setResending] = useState(false);
 	const [banner, setBanner] = useState(null);
 	const [timer, setTimer] = useState(60);
 	const db = useSQLiteContext();
 	const { isOnline } = useNetStatus();
+
+	// Safe parameter extraction
 	const userEmail = route?.params?.email || "";
-  const isResetPassword = route?.params?.isResetPassword || false;
+	const isRegistration = route?.params?.isRegistration || false;
+	const pendingUserData = route?.params?.pendingUserData || null;
+	const isResetPassword = route?.params?.isResetPassword || false;
+
+	const { register, loading } = useAuth();
+
+	const [loadingSpinner, setLoadingSpinner] = useState(false);
+
+	const rawEmail = isRegistration ? pendingUserData?.email : userEmail;
+	const sanitizedEmail = String(rawEmail || "")
+		.trim()
+		.toLowerCase();
 
 	// Timer countdown effect to avoid spamming the resend button
 	useEffect(() => {
@@ -43,38 +56,31 @@ const OTPScreen = ({ navigation, route }) => {
 		return () => clearInterval(interval);
 	}, [timer]);
 
-	//Send a request to the server to resend the OTP email. Disable the button for 60 seconds after sending.
+	// Send a request to the server to resend the OTP email.
 	const handleResendCode = async () => {
-		//Prevents the spamming of resend code to the server
 		if (timer > 0 || resending || loading) {
 			return;
 		}
 
-		//Check to see if the user is online or not
-		if (!checkNetworkAndNotify(isOnline, banner)) {
+		// Pass state setter callback to network check
+		if (!checkNetworkAndNotify(isOnline, setBanner)) {
 			return;
 		}
 
-		//Set the resending state to true to show the loading indicator and prevent multiple requests
 		setResending(true);
-		// Clear any existing banners before sending the request
 		setBanner(null);
 
 		try {
-			//Use Email Service to send the OTP email
-			const response = await sendOtpEmail(userEmail);
+			const response = await sendOtpEmail(sanitizedEmail);
 
-			//There was a problem to resend the OTP
 			if (response?.error) {
 				throw new Error(response.error);
 			}
 
-			//OTP has been sent successfully
 			setBanner({
 				message: "A new OTP has been sent to your email.",
 				type: "success",
 			});
-			// Reset the timer to 60 seconds after successfully resending the OTP
 			setTimer(60);
 		} catch (error) {
 			setBanner({
@@ -87,17 +93,15 @@ const OTPScreen = ({ navigation, route }) => {
 		}
 	};
 
-	//Verifys the user's entered OTP by sending it to the server. If successful, navigates to the login screen.
+	// Verifies the user's entered OTP
 	const handleVerifyCode = async () => {
-		setLoading(true);
-		//Check to see if the user is online or not
-		if (!checkNetworkAndNotify(isOnline, banner)) {
+		setBanner(null);
+
+		if (!checkNetworkAndNotify(isOnline, setBanner)) {
 			return;
 		}
 
-		//Checks to see if the user has entered all 6 digits of the OTP
 		const otpError = validateOtpInput(otp, OTP_LENGTH);
-
 		if (otpError) {
 			setBanner({
 				message: otpError,
@@ -106,41 +110,81 @@ const OTPScreen = ({ navigation, route }) => {
 			return;
 		}
 
-		//Shows a loading indicator while the verification request is being processed
-		setLoading(true);
-		//Clear any existing banners before sending the request
-		setBanner(null);
+		setLoadingSpinner(true);
 
 		try {
-			//Sends a POST request to the server with the user's email and entered OTP for verification
-			const response = await verifyOtpCode(db, userEmail, otpString);
-			setBanner({
-				message: response.message || "OTP verified successfully.",
-				type: "success",
-			});
+			const response = await verifyOtpCode(db, sanitizedEmail, otpString);
 
-			//Redirect the user to the login screen
-			setTimeout(() => {
-        if (isResetPassword) {
-          navigation.navigate('ResetPasswordScreen', { email: userEmail });
-        } else {
-          navigation.navigate('LoginScreen');
-        }
-      }, 800);
+			if (response) {
+				// Registration Flow
+				if (isRegistration && pendingUserData) {
+					const result = await register({
+						name: pendingUserData.name,
+						surname: pendingUserData.surname,
+						email: sanitizedEmail,
+						phoneNum: pendingUserData.phoneNum,
+						password: pendingUserData.password,
+					});
+
+					if (result?.token) {
+						setBanner({
+							message:
+								"Registration successful! Redirecting to login screen...",
+							type: "success",
+						});
+					} else {
+						setBanner({
+							message:
+								"Account created locally, but failed to sync with the server.",
+							type: "error",
+						});
+					}
+
+					setTimeout(() => {
+						navigation.navigate("LoginScreen");
+					}, 800);
+					return;
+				}
+
+				// Reset Password Flow
+				if (isResetPassword) {
+					setBanner({
+						message:
+							"OTP successfully verified. Redirecting to reset password screen...",
+						type: "success",
+					});
+
+					setTimeout(() => {
+						navigation.navigate("ResetPasswordScreen", {
+							email: sanitizedEmail,
+						});
+					}, 800);
+					return;
+				}
+
+				navigation.navigate("LoginScreen");
+			} else {
+				setBanner({
+					message:
+						(typeof response === "object" && response?.error) ||
+						"There was a problem verifying your OTP code. Please try again.",
+					type: "error",
+				});
+			}
 		} catch (error) {
 			setBanner({
 				message: error.message || "Failed to verify OTP. Please try again.",
 				type: "error",
 			});
 		} finally {
-			setLoading(false);
+			setLoadingSpinner(false);
 		}
 	};
 
 	return (
 		<AuthScreenLayout
 			title="Verify your account"
-			subtitle={`Enter the OTP sent to ${userEmail || "your email"}`}
+			subtitle={`Enter the OTP sent to ${sanitizedEmail || "your email"}`}
 			banner={banner}
 		>
 			<View style={styles.otpContainer}>
@@ -150,7 +194,7 @@ const OTPScreen = ({ navigation, route }) => {
 						ref={(ref) => (inputRefs.current[index] = ref)}
 						style={[styles.otpBox, digit !== "" && styles.filledOtpBox]}
 						keyboardType="number-pad"
-						maxLength={index === 0 ? 6 : 1} // Allows paste action on first box
+						maxLength={index === 0 ? 6 : 1}
 						textAlign="center"
 						value={digit}
 						selectTextOnFocus
@@ -160,12 +204,10 @@ const OTPScreen = ({ navigation, route }) => {
 				))}
 			</View>
 
-			{/* Action Button */}
 			<PrimaryButton
 				title="VERIFY CODE"
 				onPress={handleVerifyCode}
-				loading={loading}
-				co
+				loading={loading || loadingSpinner}
 			/>
 
 			<View style={styles.resendSection}>

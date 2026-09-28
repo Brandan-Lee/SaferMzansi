@@ -17,6 +17,7 @@ import OTPScreen from "./src/screens/auth/OTPScreen";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
 import HomeScreen from "./src/screens/main/HomeScreen";
+import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';
 
 import { NetStatusProvider } from "./src/utils/NetStatus";
 
@@ -80,6 +81,10 @@ export default function App() {
 								<Stack.Screen
 									name="ForgotPasswordScreen"
 									component={ForgotPasswordScreen}
+								/>
+								<Stack.Screen
+									name="ResetPasswordScreen"
+									component={ResetPasswordScreen}
 								/>
 								<Stack.Screen name="HomeScreen" component={HomeScreen} />
 							</Stack.Navigator>

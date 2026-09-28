@@ -24,13 +24,13 @@ const INITIAL_STATE = {
 };
 
 const RegistrationScreen = () => {
-	const { register, loading } = useAuth();
 	const navigation = useNavigation();
 	const { isOnline } = useNetStatus();
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
 	const [banner, setBanner] = useState(null);
 	const [agreed, setAgreed] = useState(false);
+	const [loading, setIsLoading] = useState(false);
 
 	//Method that helps to handle when the user agrees to the terms and conditions
 	const handleToggleAgreed = () => {
@@ -65,56 +65,48 @@ const RegistrationScreen = () => {
 
 		//The user was not online when registering
 		checkNetworkAndNotify(isOnline, banner);
+		setIsLoading(true);
 
 		try {
 			const sanitizedEmail = formData.email.trim().toLowerCase();
+			const otpResponse = await sendOtpEmail(sanitizedEmail);
 
-			//Register through authcontext
-			const result = await register({
-				name: formData.name.trim(),
-				surname: formData.surname.trim(),
-				email: sanitizedEmail,
-				phoneNum: formData.phone.trim(),
-				password: formData.password,
-			});
-
-			//Token has been received from the server
-			if (result?.token) {
-				//Once a successful registration occurs, send a request to the server to send the OTP email. The server will handle sending the email.
-				const otpResponse = await sendOtpEmail(sanitizedEmail);
-
-				if (otpResponse?.error) {
-					setBanner({
-						message:
-							otpResponse?.error ||
-							"Failed to send a verification code. Please request a new one on the next screen",
-						type: "error",
-					});
-				} else {
-					setBanner({
-						message: "Registration successful! Sending verification code...",
-						type: "success",
-					});
-				}
-
-				setTimeout(() => {
-					navigation.navigate("OTPScreen", {
-						email: formData.email.trim().toLowerCase(),
-					});
-				}, 800);
-			} else {
+			if (otpResponse?.error) {
 				setBanner({
 					message:
-						"Account created locally, but failed to sync with the server.",
+						otpResponse?.error ||
+						"Failed to send a verification code. Please request a new one on the next screen",
 					type: "error",
 				});
+			} else {
+				setBanner({
+					message: "Sending verification code...",
+					type: "success",
+				});
 			}
+
+			setTimeout(() => {
+				navigation.navigate("OTPScreen", {
+				email: sanitizedEmail,
+				isRegistration: true,
+				pendingUserData: {
+					name: formData.name,
+					surname: formData.surname,
+					email: sanitizedEmail,
+					phoneNum: formData.phone,
+					password: formData.password,
+				},
+			});
+			}, 800);
+			
 		} catch (error) {
 			setBanner({
 				message:
 					error.message || "An unexpected error occurred. Please try again.",
 				type: "error",
 			});
+		} finally {
+			setIsLoading(false);
 		}
 	};
 

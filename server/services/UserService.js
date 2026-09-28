@@ -89,8 +89,28 @@ const updateUserVerificationInSupabase = async (userId) => {
 	return data[0];
 };
 
+const findUserInSupabase = async (userId) => {
+	if (!userId) {
+		throw new Error("findUserInSupabase requires a valid user_id");
+	}
+
+	const {data: user, error} = await supabase
+		.from("Users")
+		.select("*")
+		.eq("user_id", userId)
+		.maybeSingle();
+
+	if (error || !user) {
+		console.log("cannot find user");
+		return null;
+	}
+
+	return user;
+} 
+
 module.exports = {
 	createUserInSupabase,
 	verifyUserInSupabase,
 	updateUserVerificationInSupabase,
+	findUserInSupabase,
 };
