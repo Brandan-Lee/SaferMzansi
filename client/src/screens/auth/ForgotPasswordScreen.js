@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useNetStatus } from "../../utils/NetStatus";
 import { useFormHandler } from "../../hooks/UseFormHandler";
@@ -24,11 +24,16 @@ const INITIAL_STATE = {
 const ForgotPasswordScreen = () => {
 	const navigation = useNavigation();
 	const { isOnline } = useNetStatus();
-	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
+	const { formData, errors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
 	const [banner, setBanner] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const db = useSQLiteContext();
+
+  // Handle navigation back to the login screen
+  const handleBackToLogin = () => {
+    navigation.goBack();
+  };
 
 	const handleSendOTP = async () => {
 		setBanner(null);
@@ -110,27 +115,27 @@ const ForgotPasswordScreen = () => {
 		}, 800);
 	};
 
-	return (
-		<AuthScreenLayout
-			title="Forgot Password?"
-			subtitle="Enter your email address and we'll send you a OTP to reset your password"
-			banner={banner}
-		>
-			{FORGOT_PASSWORD_FORM_FIELDS.map((field) => (
-				<CustomInput
-					key={field.key}
-					label={field.label}
-					icon={field.icon}
-					placeholder={field.placeholder}
-					value={formData[field.key]}
-					onChangeText={(val) => handleChange(field.key, val)}
-					onBlur={() => handleFieldBlur(field.key)}
-					secureTextEntry={field.secureTextEntry}
-					keyboardType={field.keyboardType}
-					autoCapitalize={field.autoCapitalize}
-					error={errors[field.key]}
-				/>
-			))}
+  return (
+    <AuthScreenLayout
+      title="Forgot Password?"
+      subtitle="Enter your email address and we'll send you a OTP to reset your password"
+      banner={banner}
+    >
+      {FORGOT_PASSWORD_FORM_FIELDS.map((field) => (
+        <CustomInput
+          key={field.key}
+          label={field.label}
+          icon={field.icon}
+          placeholder={field.placeholder}
+          value={formData[field.key]}
+          onChangeText={(val) => handleChange(field.key, val)}
+          onBlur={() => handleFieldBlur(field.key)}
+          secureTextEntry={field.secureTextEntry}
+          keyboardType={field.keyboardType}
+          autoCapitalize={field.autoCapitalize}
+          error={errors[field.key]}
+        />
+      ))}
 
 			<PrimaryButton
 				title="SEND OTP"
@@ -138,14 +143,23 @@ const ForgotPasswordScreen = () => {
 				loading={loading}
 			/>
 
-			{/* Back to Login */}
-			<TouchableOpacity style={styles.backButton} onPress={handleBackToLogin}>
-				<Feather name="chevron-left" size={20} color="#6B21A8" />
+      {/* Back to Login */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={handleBackToLogin}
+      >
+        <Feather
+          name="chevron-left"
+          size={20}
+          color="#6B21A8"
+        />
 
-				<Text style={styles.backText}>Back to Login</Text>
-			</TouchableOpacity>
-		</AuthScreenLayout>
-	);
+        <Text style={styles.backText}>
+          Back to Login
+        </Text>
+      </TouchableOpacity>
+    </AuthScreenLayout>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -216,17 +230,21 @@ const styles = StyleSheet.create({
 		color: "#1F2937",
 	},
 
-	/* Email Input */
-	input: {
-		width: "100%",
-		height: 70,
-		backgroundColor: "#F7F5F8",
-		borderWidth: 1,
-		borderColor: "#ECE8EF",
-		borderRadius: 14,
-		paddingHorizontal: 20,
-		paddingTop: 35,
-	},
+  /* Email Input */
+  input: {
+    width: '100%',
+    height: 70,
+    backgroundColor: '#F7F5F8',
+    borderWidth: 1,
+    borderColor: '#ECE8EF',
+    borderRadius: 14,
+    paddingHorizontal: 20,
+    paddingTop: 35,
+    flex: 1,
+    height: "100%",
+    fontSize: 16,
+    color: "#111827",
+  },
 
 	logoBadge: {
 		width: 56,
@@ -237,19 +255,12 @@ const styles = StyleSheet.create({
 		marginBottom: 4,
 	},
 
-	logo: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "#6B21A8",
-		marginBottom: 28,
-	},
-
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-		color: "#111827",
-		marginBottom: 12,
-	},
+  logo: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#6B21A8",
+    marginBottom: 28,
+  },
 
 	subtitle: {
 		width: "100%",
@@ -273,16 +284,9 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 	},
 
-	inputIcon: {
-		marginRight: 12,
-	},
-
-	input: {
-		flex: 1,
-		height: "100%",
-		fontSize: 16,
-		color: "#111827",
-	},
+  inputIcon: {
+    marginRight: 12,
+  },
 
 	button: {
 		width: "100%",
@@ -294,18 +298,26 @@ const styles = StyleSheet.create({
 		marginTop: 32,
 	},
 
-	buttonText: {
-		color: "#FFFFFF",
-		fontSize: 20,
-		fontWeight: "bold",
-	},
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 
-	backText: {
-		color: "#6F20B8",
-		fontSize: 16,
-		fontWeight: "bold",
-		marginTop: 30,
-	},
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 24,
+    marginBottom: 24,
+  },
+
+  backText: {
+    color: '#6F20B8',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 4,
+  },
 });
 
 export default ForgotPasswordScreen;

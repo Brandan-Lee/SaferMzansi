@@ -27,16 +27,77 @@ const buildResponse = (success, status, message) => ({
 });
 
 // Method to generate the HTML message that will be used in the email
-const generateOtpEmailHTML = (otp) => `
-	<div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-		<h2>SaferMzansi Verification Code</h2>
-		<p>Please use the following code to complete your verification:</p>
-		<h1 style="color: #6B21A8; letter-spacing: 4px;">${otp}</h1>
-		<p>
-			This code will expire in <strong>5 minutes</strong>.
-		</p>
-	</div>
-`;
+const generateOtpEmailHTML = (otp) => {
+	return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your OTP Code</title>
+</head>
+<body style="margin: 0; padding: 20px; background-color: #F9FAFB; font-family: Arial, sans-serif; color: #374151;">
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center">
+                <table role="presentation" border="0" cellspacing="0" cellpadding="0" style="
+                    max-width: 420px;
+                    width: 100%;
+                    background-color: #FFFFFF;
+                    border: 1px solid #E5E7EB;
+                    border-radius: 12px;
+                    padding: 32px 24px;
+                ">
+                    <tr>
+                        <td align="center" style="padding-bottom: 16px;">
+                            <h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #111827;">
+                                SaferMzansi Verification
+                            </h2>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center" style="padding-bottom: 24px;">
+                            <p style="margin: 0; font-size: 14px; color: #4B5563; line-height: 1.4;">
+                                Your verification code is:
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center" style="padding-bottom: 24px;">
+                            <table role="presentation" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" style="padding: 0 5px;">
+                                        <span style="font-size: 24px; font-weight: 700; color: #6B21A8;">${otp}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+					
+					<tr>
+						<td align="center">
+							<p style="margin: 0; font-size: 13px; color: #474b53;">
+								This code is valid for <strong>5 minutes</strong>.
+							</p>
+						</td>
+					</tr>
+                    <tr>
+                        <td align="center" style="padding-bottom: 20px;">
+                            <p style="margin: 0; font-size: 13px; font-weight: 600;">
+                                Do not share this code with anyone.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+    `;
+};
 
 // Periodic background cleanup interval for expired OTPs
 setInterval(
