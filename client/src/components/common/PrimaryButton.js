@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { Pressable, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 
 export const PrimaryButton = ({ title, onPress, loading, disabled }) => {
 	return (

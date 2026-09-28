@@ -21,9 +21,9 @@ export const CustomInput = ({
 
 	return (
 		<View style={styles.container}>
-			{label && <Text style={styles.label}>{label}</Text>}
-			<View style={[styles.inputWrapper, error && styles.inputWrapperError]}>
-				{icon && (
+			{Boolean(label) && <Text style={styles.label}>{label}</Text>}
+			<View style={[styles.inputWrapper, Boolean(error) && styles.inputWrapperError]}>
+				{Boolean(icon) && (
 					<Feather
 						name={icon}
 						size={18}
@@ -34,15 +34,15 @@ export const CustomInput = ({
 				<TextInput
 					style={styles.input}
 					placeholder={placeholder}
-					placeholderTextColor="#9CA3AF" // Softened placeholder color
+					placeholderTextColor="#9CA3AF"
 					value={value}
 					onChangeText={onChangeText}
 					onBlur={onBlur}
-					secureTextEntry={isSecure} // Uses toggle state
+					secureTextEntry={isSecure}
 					keyboardType={keyboardType}
 					autoCapitalize={autoCapitalize}
 				/>
-				{secureTextEntry && (
+				{Boolean(secureTextEntry) && (
 					<Pressable
 						onPress={() => setIsPasswordVisible((prev) => !prev)}
 						hitSlop={8}
@@ -50,12 +50,12 @@ export const CustomInput = ({
 						<Feather
 							name={isPasswordVisible ? "eye-off" : "eye"}
 							size={18}
-							color="#6B7280"
+							color="#6B21A8"
 						/>
 					</Pressable>
 				)}
 			</View>
-			{error && <Text style={styles.errorText}>{error}</Text>}
+			{Boolean(error) && <Text style={styles.errorText}>{error}</Text>}
 		</View>
 	);
 };

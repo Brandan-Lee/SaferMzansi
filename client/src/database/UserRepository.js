@@ -45,3 +45,12 @@ export const markUserAsSynched = async (db, userId) => {
 		[userId],
 	);
 };
+
+export const markUserAsVerified = async (db, userId) => {
+	await db.runAsync(
+		`UPDATE Local_Users
+            SET is_verified = 1
+            WHERE user_id = ?`,
+		[userId],
+	);
+};
