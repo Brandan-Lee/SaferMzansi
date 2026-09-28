@@ -2,20 +2,71 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
-  View,
-  TextInput,
   TouchableOpacity,
   Alert,
-  ScrollView,
 } from "react-native";
 
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { CustomInput } from "../../components/common/CustomInput";
+import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
+import { FORGOT_PASSWORD_FORM_FIELDS } from "../../constants/AuthFields";
+import { PrimaryButton } from "../../components/common/PrimaryButton";
+import { useNavigation } from "@react-navigation/native";
+import { useFormHandler } from "../../hooks/UseFormHandler";
 
-const ForgotPasswordScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+const INITIAL_STATE = {
+  email: "",
+};
 
-  const handleSendOTP = () => {
+const ForgotPasswordScreen = () => {
+  const navigation = useNavigation();
+  const {formData, errors, setErrors, handleChange, handleFieldBlur} = useFormHandler(INITIAL_STATE);
+  const [banner, setBanner] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { isOnline } = useNetStatus();
+
+  const handleSendOTP = async () => {
+    setBanner(null);
+    setLoading(true);
+
+    //Check to see if the user entered data into the email field
+    const { isValid, errors, validationErrors } = validateForgotPasswordForm(formData);
+
+    //Validation has failed
+    if (!isValid) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    //Check user online status
+    checkNetworkAndNotify(isOnline, banner);
+
+    try {
+      const sanitizedEmail = formData.email.trim().toLowerCase();
+      //Use UserService to find mathching user email
+      const result = await forgotPassword({
+        email: sanitizedEmail,
+      });
+
+      if (result?.success) {
+        //Once the users email has been verified, send a request to the server sending the OTP email. The server will handle sending the email
+        const otpResponse = await sendOtpEmail(sanitizedEmail);
+
+        if (otpResponse?.error) {
+					setBanner({
+						message:
+							otpResponse?.error ||
+							"Failed to send a verification code. Please request a new one on the next screen",
+						type: "error",
+					});
+				} else {
+					setBanner({
+						message: "Validation of email during forgot password screen successful! Sending verification code...",
+						type: "success",
+					});
+				}
+      }
+    }
     if (email.trim() === "") {
       Alert.alert(
         "Error",
@@ -44,70 +95,34 @@ const ForgotPasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.content}>
+    <AuthScreenLayout
+			title="Forgot Password?"
+			subtitle="Enter your email address and we'll send you a OTP to reset your password"
+			banner={banner}
+		>
+			{FORGOT_PASSWORD_FORM_FIELDS.map((field) => (
+				<CustomInput
+					key={field.key}
+					label={field.label}
+					icon={field.icon}
+					placeholder={field.placeholder}
+					value={formData[field.key]}
+					onChangeText={(val) => handleChange(field.key, val)}
+					onBlur={() => handleFieldBlur(field.key)}
+					secureTextEntry={field.secureTextEntry}
+					keyboardType={field.keyboardType}
+					autoCapitalize={field.autoCapitalize}
+					error={errors[field.key]}
+				/>
+			))}
 
-          {/* SaferMzansi Logo */}
-          <View style={styles.logoBadge}>
-            <Feather
-              name="shield"
-              size={40}
-              color="#6B21A8"
-            />
-          </View>
+      <PrimaryButton
+        title = "SEND OTP"
+        onPress = {handleSendOTP}
+        loadin = {loading}
+      />
 
-          <Text style={styles.logo}>
-            SaferMzansi
-          </Text>
-
-          {/* Title */}
-          <Text style={styles.title}>
-            Forgot Password?
-          </Text>
-
-          {/* Description */}
-          <Text style={styles.subtitle}>
-            Enter your email address and we'll send you an OTP to reset your password.
-          </Text>
-
-          {/* Email Input */}
-          <View style={styles.inputContainer}>
-            <Feather
-              name="mail"
-              size={20}
-              color="#6B21A8"
-              style={styles.inputIcon}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder="Email Address"
-              placeholderTextColor="#6B7280"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              value={email}
-              onChangeText={setEmail}
-            />
-          </View>
-
-          {/* Send OTP Button */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleSendOTP}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.buttonText}>
-              Send OTP
-            </Text>
-          </TouchableOpacity>
-
-          {/* Back to Login */}
+       {/* Back to Login */}
           <TouchableOpacity
             style={styles.backButton}
             onPress={handleBackToLogin}
@@ -122,10 +137,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
               Back to Login
             </Text>
           </TouchableOpacity>
-
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    </AuthScreenLayout>
   );
 };
 
@@ -207,8 +219,8 @@ const styles = StyleSheet.create({
     height: 56,
     backgroundColor: "#6B21A8",
     borderRadius: 10,
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
     marginTop: 32,
   },
 

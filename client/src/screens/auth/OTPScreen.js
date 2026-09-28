@@ -88,6 +88,7 @@ const OTPScreen = ({ navigation, route }) => {
 
 	//Verifys the user's entered OTP by sending it to the server. If successful, navigates to the login screen.
 	const handleVerifyCode = async () => {
+		setLoading(true);
 		//Check to see if the user is online or not
 		if (!checkNetworkAndNotify(isOnline, banner)) {
 			return;
@@ -159,6 +160,7 @@ const OTPScreen = ({ navigation, route }) => {
 				title="VERIFY CODE"
 				onPress={handleVerifyCode}
 				loading={loading}
+				co
 			/>
 
 			<View style={styles.resendSection}>
