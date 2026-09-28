@@ -9,13 +9,19 @@ const NetworkContext = createContext({
 	connectionType: "unknown",
 });
 
-export const NetStatusProvider = ({children}) => {
-
+export const NetStatusProvider = ({ children }) => {
 	const netInfo = useNetInfo();
 
-	const isOnline = Boolean(netInfo.isConnected && netInfo.isInternetReachable !== false);
+	const isOnline = Boolean(
+		netInfo.isConnected && netInfo.isInternetReachable !== false,
+	);
 
-	const value ={isOnline, isConnected: netInfo.isConnected, isInternetReachable: netInfo.isInternetReachable, connectionType: netInfo.type || "none",};
+	const value = {
+		isOnline,
+		isConnected: netInfo.isConnected,
+		isInternetReachable: netInfo.isInternetReachable,
+		connectionType: netInfo.type || "none",
+	};
 
 	return (
 		<NetworkContext.Provider value={value}>{children}</NetworkContext.Provider>

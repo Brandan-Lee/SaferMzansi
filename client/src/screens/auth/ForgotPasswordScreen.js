@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -234,11 +233,65 @@ const styles = StyleSheet.create({
     borderColor: '#ECE8EF',
     borderRadius: 14,
     paddingHorizontal: 20,
-    fontSize: 17,
-    color: '#111111',
+    paddingTop: 35,
   },
 
-  /* Send OTP Button */
+  logoBadge: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+
+  logo: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#6B21A8",
+    marginBottom: 28,
+  },
+
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#111827",
+    marginBottom: 12,
+  },
+
+  subtitle: {
+    width: "100%",
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: "center",
+    color: "#374151",
+    marginBottom: 28,
+    paddingHorizontal: 10,
+  },
+
+  inputContainer: {
+    width: "100%",
+    height: 56,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+    borderRadius: 10,
+    paddingHorizontal: 16,
+  },
+
+  inputIcon: {
+    marginRight: 12,
+  },
+
+  input: {
+    flex: 1,
+    height: "100%",
+    fontSize: 16,
+    color: "#111827",
+  },
+
   button: {
     width: '100%',
     height: 58,
@@ -255,7 +308,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  /* Back to Login */
   backText: {
     color: '#6F20B8',
     fontSize: 16,
