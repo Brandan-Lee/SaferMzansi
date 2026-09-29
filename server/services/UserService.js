@@ -101,7 +101,6 @@ const findUserInSupabase = async (userId) => {
 		.maybeSingle();
 
 	if (error || !user) {
-		console.log("cannot find user");
 		return null;
 	}
 

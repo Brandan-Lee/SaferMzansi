@@ -128,19 +128,21 @@ router.post(
 			const { encrypted_email, user_id } = req.body;
 			const user = await findUserInSupabase(user_id);
 
+			const responseMessage = "If an account exists, a verification code will be dispatched"
+
 			if (!user) {
-				return res
-					.status(401)
-					.json({ error: "We'll send an email if this user does exist" });
+				return res.status(200).json({
+					success: true,
+					message: responseMessage,
+				});
 			}
 
 			return res.status(200).json({
 				success: true,
-				messagee: "Forgot Password email verification successfull",
-				encrypted_email,
+				message: responseMessage,
 			});
 		} catch (error) {
-			return handleError(res, error, "authenticate user");
+			return handleError(res, error, "Forgot password request");
 		}
 	},
 );

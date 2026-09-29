@@ -78,8 +78,6 @@ export const registerUser = async (db, userData) => {
 		password,
 	};
 
-	console.log(apiPayload);
-
 	const { ok, status, data } = await postApi("/users/register", apiPayload);
 
 	//There was an error synching the local data to the supabase table
@@ -92,9 +90,8 @@ export const registerUser = async (db, userData) => {
 
 	// Insert the new user into the local database
 	await insertLocalUser(db, localPayload);
-	const result = await markUserAsSynched(db, userId);
-	console.log(result);
 	await markUserAsVerifiedLocally(db, userId);
+	await markUserAsSynched(db, userId);
 
 	// Store session tokens and update the sync flag
 	await saveToken(data.token);
@@ -179,12 +176,14 @@ export const forgotPasswordUser = async (db, email) => {
 	//Api call was a success and the users email was found on the supabase
 	const { ok, data } = response;
 
-	if (!ok && !data?.success) {
-		throw new Error("Please check your email and try again");
+	if (!ok || !data?.success) {
+		const errorMessage = data?.error || data?.message || "We'll send an email if this user does exist";
+		throw new Error(errorMessage);
 	}
 
 	return {
 		email: normalEmail,
 		success: true,
+		ok: true,
 	};
 };

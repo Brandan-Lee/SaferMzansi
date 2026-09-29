@@ -23,7 +23,7 @@ const INITIAL_STATE = {
 const ForgotPasswordScreen = () => {
 	const navigation = useNavigation();
 	const { isOnline } = useNetStatus();
-	const { formData, errors, handleChange, handleFieldBlur } =
+	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
 	const [banner, setBanner] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -52,7 +52,7 @@ const ForgotPasswordScreen = () => {
 			//Use user service to perform forgot password operations
 			const result = await forgotPasswordUser(db, sanitizedEmail);
 
-			if (result?.success) {
+			if (result?.ok) {
 				//Use Email Service to send an otp to the users email
 				const otpResponse = await sendOtpEmail(sanitizedEmail);
 
