@@ -1,23 +1,32 @@
 import * as Crypto from "expo-crypto";
 import * as SecureStore from "expo-secure-store";
-import {
-	decryptData,
-	encryptPayload,
-	hashPassword,
-} from "../utils/SecurityUtil";
+import { decryptData, encryptPayload } from "../utils/SecurityUtil";
 import { postApi } from "./ApiClient";
 import {
 	findLocalUserEmails,
 	insertLocalUser,
 	markUserAsSynched,
+	markUserAsVerifiedLocally,
 } from "../database/UserRepository";
 
 const TOKEN_KEY = "user_jwt_token";
 
 //Helper method to save the JWT token
 const saveToken = async (token) => {
-	if (token) {
-		await SecureStore.setItemAsync(TOKEN_KEY, token);
+	if (!token) {
+		return;
+	}
+
+	const rawToken =
+		typeof token === "object" ? token.token || token.accessToken : token;
+
+	if (typeof rawToken === "string" && rawToken.includes(".")) {
+		await SecureStore.setItemAsync(TOKEN_KEY, rawToken.trim());
+	} else {
+		console.warn(
+			"Skipping token save: Provided token is not a valid JWT format",
+			token,
+		);
 	}
 };
 
@@ -31,16 +40,6 @@ const findUserByEmail = async (db, targetEmail) => {
 			decryptData(user.encrypted_email)?.toLowerCase() === normalizedEmail,
 	);
 };
-
-//Helper method to format the encrypted api payload
-const formatApiPayload = (userId, encryptedData, passwordHash) => ({
-	user_id: userId,
-	encrypted_name: encryptedData.name,
-	encrypted_surname: encryptedData.surname,
-	encrypted_email: encryptedData.email,
-	encrypted_phone_num: encryptedData.phoneNum,
-	password_hash: passwordHash,
-});
 
 // Service to handle user registration
 export const registerUser = async (db, userData) => {
@@ -59,7 +58,6 @@ export const registerUser = async (db, userData) => {
 	// Generate a unique user ID to help with syncing data between the local database and supabase by generating a random 16-byte string.
 	const userId = Crypto.randomUUID();
 	// Encrypt sensitive user PII data to comply with POPIA regulations and hash password
-	const passwordHash = hashPassword(password);
 	const encryptedData = encryptPayload({ name, surname, email, phoneNum });
 
 	const localPayload = {
@@ -68,14 +66,18 @@ export const registerUser = async (db, userData) => {
 		encryptedSurname: encryptedData.surname,
 		encryptedEmail: encryptedData.email,
 		encryptedPhoneNum: encryptedData.phoneNum,
-		passwordHash,
 	};
 
-	// Insert the new user into the local database
-	await insertLocalUser(db, localPayload);
-
 	// Call Node.js server to perform registration process before synching with Supabase.
-	const apiPayload = formatApiPayload(userId, encryptedData, passwordHash);
+	const apiPayload = {
+		user_id: userId,
+		encrypted_name: encryptedData.name,
+		encrypted_surname: encryptedData.surname,
+		encrypted_email: encryptedData.email,
+		encrypted_phone_num: encryptedData.phoneNum,
+		password,
+	};
+
 	const { ok, status, data } = await postApi("/users/register", apiPayload);
 
 	//There was an error synching the local data to the supabase table
@@ -83,12 +85,16 @@ export const registerUser = async (db, userData) => {
 		const message =
 			data?.error || data?.message || `Server sync failed (HTTP ${status})`;
 		console.warn("Backend sync error", message);
-		throw new Error(`${message}. Account saved locally.`);
+		throw new Error("Problem with server. Please try again");
 	}
+
+	// Insert the new user into the local database
+	await insertLocalUser(db, localPayload);
+	await markUserAsVerifiedLocally(db, userId);
+	await markUserAsSynched(db, userId);
 
 	// Store session tokens and update the sync flag
 	await saveToken(data.token);
-	await markUserAsSynched(db, userId);
 
 	//Data that has to be returned to the registration screen
 	return { userId, email, token: data.token };
@@ -97,14 +103,11 @@ export const registerUser = async (db, userData) => {
 // Service to handle User Login
 export const loginUser = async (db, email, password) => {
 	const normalEmail = email.trim().toLowerCase();
-	// Hash the incoming password
-	const passwordHash = hashPassword(password);
-
 	// Check to see if the User has already registered and exists in the local database
 	const matchedUser = await findUserByEmail(db, normalEmail);
 
 	// Check if user exists locally or if there passwords are correct or not
-	if (!matchedUser || matchedUser.password_hash !== passwordHash) {
+	if (!matchedUser) {
 		throw new Error("Invalid email or password. Please try again");
 	}
 
@@ -112,11 +115,13 @@ export const loginUser = async (db, email, password) => {
 	let token = await SecureStore.getItemAsync(TOKEN_KEY);
 	let isOffline = false;
 
-	// Should the user be online, re-authenticate through the server to retrieve new JWT token
-	const { ok, data } = await postApi("/users/login", {
+	const response = await postApi("/users/login", {
 		encrypted_email: matchedUser.encrypted_email,
-		password_hash: passwordHash,
+		password,
 	});
+
+	// Should the user be online, re-authenticate through the server to retrieve new JWT token
+	const { ok, status, data } = response;
 
 	// API call was a success and new token was generated and retrieved
 	if (ok && data?.token) {
@@ -128,6 +133,11 @@ export const loginUser = async (db, email, password) => {
 		if (matchedUser.user_id) {
 			await markUserAsSynched(db, matchedUser.user_id);
 		}
+		//Online login failed
+	} else if (status === 401 || status === 400) {
+		throw new Error(
+			data?.error || "Invalid email or password. Please try again",
+		);
 	} else {
 		isOffline = true;
 		if (!token) {
@@ -143,5 +153,37 @@ export const loginUser = async (db, email, password) => {
 		user: matchedUser,
 		token,
 		isOffline,
+	};
+};
+
+//Service to handle Forgot password request of the user
+export const forgotPasswordUser = async (db, email) => {
+	const normalEmail = email.trim().toLowerCase();
+
+	//Find if the email exists in the local database
+	const matchedUser = await findUserByEmail(db, normalEmail);
+
+	if (!matchedUser) {
+		return null;
+	}
+
+	//Check to see if the user email exists in the server supabase
+	const response = await postApi("/users/forgot-password", {
+		encrypted_email: matchedUser.encrypted_email,
+		user_id: matchedUser.user_id,
+	});
+
+	//Api call was a success and the users email was found on the supabase
+	const { ok, data } = response;
+
+	if (!ok || !data?.success) {
+		const errorMessage = data?.error || data?.message || "We'll send an email if this user does exist";
+		throw new Error(errorMessage);
+	}
+
+	return {
+		email: normalEmail,
+		success: true,
+		ok: true,
 	};
 };

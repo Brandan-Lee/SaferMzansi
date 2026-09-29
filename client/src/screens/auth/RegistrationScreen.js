@@ -10,6 +10,9 @@ import { validateRegistrationForm } from "../../utils/ValidationUtil";
 import { useFormHandler } from "../../hooks/UseFormHandler";
 import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
 import { REGISTRATION_FORM_FIELDS } from "../../constants/AuthFields";
+import { sendOtpEmail } from "../../services/EmailService";
+import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
+import PasswordStrengthMeter from "../../components/common/PasswordStrengthMeter";
 
 const INITIAL_STATE = {
 	name: "",
@@ -21,22 +24,31 @@ const INITIAL_STATE = {
 };
 
 const RegistrationScreen = () => {
-	const { register, loading } = useAuth();
 	const navigation = useNavigation();
 	const { isOnline } = useNetStatus();
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
 	const [banner, setBanner] = useState(null);
 	const [agreed, setAgreed] = useState(false);
+	const [loading, setIsLoading] = useState(false);
+
+	// State to track if the password field is focused for showing the password strength meter
+	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
 	//Method that helps to handle when the user agrees to the terms and conditions
 	const handleToggleAgreed = () => {
-		const nextAgreed = !agreed;
-		setAgreed(nextAgreed);
+		setAgreed((prev) => {
+			const next = !prev;
 
-		if (nextAgreed && errors.agreed) {
-			setErrors((prev) => ({ ...prev, agreed: "" }));
-		}
+			if (next && errors.agreed) {
+				setErrors((errs) => ({
+					...errs,
+					agreed: "",
+				}));
+			}
+
+			return next;
+		});
 	};
 
 	const handleRegister = async () => {
@@ -55,47 +67,49 @@ const RegistrationScreen = () => {
 		}
 
 		//The user was not online when registering
-		if (!isOnline) {
-			setBanner({
-				message: "Internet Connection Required. Please connect to register.",
-				type: "error",
-			});
-			return;
-		}
+		checkNetworkAndNotify(isOnline, banner);
+		setIsLoading(true);
 
 		try {
-			//Register through authcontext
-			const result = await register({
-				name: formData.name.trim(),
-				surname: formData.surname.trim(),
-				email: formData.email.trim().toLowerCase(),
-				phoneNum: formData.phone.trim(),
-				password: formData.password,
-			});
+			const sanitizedEmail = formData.email.trim().toLowerCase();
+			const otpResponse = await sendOtpEmail(sanitizedEmail);
 
-			//Token has been received from the server
-			if (result?.token) {
-				setBanner({
-					message: "Registration successful! Redirecting...",
-					type: "success",
-				});
-
-				setTimeout(() => {
-					navigation.navigate("OTPScreen");
-				}, 800);
-			} else {
+			if (otpResponse?.error) {
 				setBanner({
 					message:
-						"Account created locally, but failed to sync with the server.",
+						otpResponse?.error ||
+						"Failed to send a verification code. Please request a new one on the next screen",
 					type: "error",
 				});
+			} else {
+				setBanner({
+					message: "Sending verification code...",
+					type: "success",
+				});
 			}
+
+			setTimeout(() => {
+				navigation.navigate("OTPScreen", {
+				email: sanitizedEmail,
+				isRegistration: true,
+				pendingUserData: {
+					name: formData.name,
+					surname: formData.surname,
+					email: sanitizedEmail,
+					phoneNum: formData.phone,
+					password: formData.password,
+				},
+			});
+			}, 800);
+			
 		} catch (error) {
 			setBanner({
 				message:
 					error.message || "An unexpected error occurred. Please try again.",
 				type: "error",
 			});
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -109,19 +123,33 @@ const RegistrationScreen = () => {
 			onNavPress={() => navigation.navigate("LoginScreen")}
 		>
 			{REGISTRATION_FORM_FIELDS.map((field) => (
-				<CustomInput
-					key={field.key}
-					label={field.label}
-					icon={field.icon}
-					placeholder={field.placeholder}
-					value={formData[field.key]}
-					onChangeText={(val) => handleChange(field.key, val)}
-					onBlur={() => handleFieldBlur(field.key)}
-					secureTextEntry={field.secureTextEntry}
-					keyboardType={field.keyboardType}
-					autoCapitalize={field.autoCapitalize}
-					error={errors[field.key]}
-				/>
+				<View key={field.key}>
+					<CustomInput
+						label={field.label}
+						icon={field.icon}
+						placeholder={field.placeholder}
+						value={formData[field.key]}
+						onChangeText={(val) => handleChange(field.key, val)}
+						onFocus={() => {
+							if (field.key === "password") {
+								setIsPasswordFocused(true);
+							}
+						}}
+						onBlur={() => {
+							if (field.key === "password") {
+								setIsPasswordFocused(false);
+							}
+							handleFieldBlur(field.key);
+						}}
+						secureTextEntry={field.secureTextEntry}
+						keyboardType={field.keyboardType}
+						autoCapitalize={field.autoCapitalize}
+						error={errors[field.key]}
+					/>
+					{field.key === "password" && isPasswordFocused && (
+						<PasswordStrengthMeter password={formData.password} />
+					)}
+				</View>
 			))}
 
 			{/* Terms and Conditions Checkbox */}
@@ -181,7 +209,7 @@ const styles = StyleSheet.create({
 		width: 20,
 		height: 20,
 		borderWidth: 1.5,
-		borderColor: "#6B21A8",
+		borderColor: PURPLE,
 		borderRadius: 6,
 		marginRight: 12,
 		justifyContent: "center",
@@ -189,7 +217,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FFFFFF",
 	},
 	checkboxChecked: {
-		backgroundColor: "#6B21A8",
+		backgroundColor: PURPLE,
 	},
 	checkboxLabel: {
 		flex: 1,
@@ -206,7 +234,7 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-start",
 	},
 	link: {
-		color: "#6B21A8",
+		color: PURPLE,
 		fontWeight: "700",
 	},
 });

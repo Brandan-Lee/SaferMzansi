@@ -1,0 +1,2 @@
+//Used to store the base URL for API requests, which is retrieved from environment variables. This allows for easy configuration of the API endpoint without hardcoding it into the application.
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
