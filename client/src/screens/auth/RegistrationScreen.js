@@ -171,6 +171,73 @@ const RegistrationScreen = () => {
 const PURPLE = "#6B21A8";
 
 const styles = StyleSheet.create({
+<<<<<<< Updated upstream
+=======
+	gradient: {
+		flex: 1,
+	},
+	container: {
+		flex: 1,
+		backgroundColor: "transparent",
+	},
+	content: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		padding: 20,
+	},
+	logoBadge: {
+		width: 56,
+		height: 56,
+		borderRadius: 28,
+		justifyContent: "center",
+		alignItems: "center",
+		marginBottom: 4,
+	},
+	logo: {
+		fontSize: 24,
+		fontWeight: "bold",
+		marginBottom: 10,
+		color: "#6B21A8",
+	},
+	title: {
+		fontSize: 20,
+		fontWeight: "bold",
+		marginBottom: 10,
+		color: "#111827",
+	},
+	subtitle: {
+		fontSize: 16,
+		textAlign: "center",
+		marginBottom: 20,
+		color: "#374151",
+	},
+	label: {
+		fontSize: 16,
+		fontWeight: "500",
+		marginBottom: 5,
+		alignSelf: "flex-start",
+	},
+	inputWrapper: {
+		width: "100%",
+		flexDirection: "row",
+		alignItems: "center",
+		backgroundColor: "#FFFFFF",
+		borderWidth: 1,
+		borderColor: "#6B7280",
+		borderRadius: 5,
+		paddingHorizontal: 10,
+		marginBottom: 15,
+	},
+	inputIcon: {
+		marginRight: 8,
+	},
+	input: {
+		flex: 1,
+		height: 40,
+		paddingVertical: 0,
+	},
+>>>>>>> Stashed changes
 	checkboxRow: {
 		flexDirection: "row",
 		alignItems: "center",

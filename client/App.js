@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,6 +19,7 @@ import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
 <<<<<<< HEAD
 import EmergencyContactsScreen from "./src/screens/auth/EmergencyContactsScreen";
+<<<<<<< Updated upstream
 =======
 import HomeScreen from "./src/screens/main/HomeScreen";
 
@@ -25,6 +27,9 @@ import { NetStatusProvider } from "./src/utils/NetStatus";
 
 const Stack = createNativeStackNavigator();
 >>>>>>> a9ceb9dff2f4ea92eef48c7ca8dbbda0d660f8f6
+=======
+import AddContactScreen from "./src/screens/auth/AddContactScreen";
+>>>>>>> Stashed changes
 
 //Retrieve environment variables
 const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
@@ -65,6 +70,7 @@ export default function App() {
 			onInit={initDatabase}
 			useNewConnection={false}
 		>
+<<<<<<< Updated upstream
 			<NetStatusProvider>
 				<AuthProvider>
 					<View style={styles.container}>
@@ -90,6 +96,26 @@ export default function App() {
 					</View>
 				</AuthProvider>
 			</NetStatusProvider>
+=======
+			<View style={styles.container}>
+				{/* Display backend connection status at the top */}
+				<Text style={styles.statusText}>{status}</Text>
+
+				{/* Render the registration screen as the main content */}
+				<View style={styles.screenContainer}>
+					{/* Just change this to the screen you want to test, for example <LoginScreen /> or <OTPScreen /> */}
+					{/*<RegistrationScreen />*/}
+					{/* <ForgotPasswordScreen /> */}
+					{/* <ForgotPasswordSuccessScreen /> */}
+					{/* <OTPScreen /> */}
+					{/*<LoginScreen />*/}
+					{/*<EmergencyContactsScreen />*/}
+					<AddContactScreen />
+				</View>
+
+				<StatusBar style="auto" />
+			</View>
+>>>>>>> Stashed changes
 		</SQLiteProvider>
 	);
 }
