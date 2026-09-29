@@ -11,6 +11,7 @@ import ForgotPasswordSuccessScreen from "./src/screens/auth/ForgotPasswordSucces
 import OTPScreen from "./src/screens/auth/OTPScreen";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
+import EmergencyContactsScreen from "./src/screens/auth/EmergencyContactsScreen";
 
 //Retrieve environment variables
 const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
