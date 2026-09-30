@@ -45,26 +45,18 @@ const LoginScreen = () => {
 			//Token has been found in the local hardware
 			if (result?.token) {
 				//User logged in offline
-				if (result.isOffline) {
-					setBanner({
-						message:
-							"Logged in locally (offline). Your data will be synched once online",
-						type: "warning",
-					});
-					//User logged in online
-				} else {
-					setBanner({
-						message: "Login successful! Redirecting...",
-						type: "success",
-					});
-				}
+				const isOffline = result.isOffline;
+				setBanner({
+					message: isOffline
+						? "Logged in locally (offline). Your data will sync once online."
+						: "Login successful! Redirecting...",
+					type: isOffline ? "warning" : "success",
+				});
 
-				//Navigate to home screen after a delay
-				const redirectDelay = result.isOffline ? 1200 : 800;
-
+				//Navigate to the home screen
 				setTimeout(() => {
 					navigation.navigate("HomeScreen");
-				}, redirectDelay);
+				}, isOffline ? 1200 : 800);
 			} else {
 				setBanner({
 					message:
@@ -123,22 +115,8 @@ const LoginScreen = () => {
 };
 
 const PURPLE = "#6B21A8";
-const PURPLE_DARK = "#581C87";
 
 const styles = StyleSheet.create({
-	gradient: {
-		flex: 1,
-	},
-	container: {
-		flex: 1,
-		backgroundColor: "transparent",
-	},
-	scrollContent: {
-		flexGrow: 1,
-		paddingHorizontal: 28,
-		paddingTop: 48,
-		paddingBottom: 32,
-	},
 	forgotPasswordWrapper: {
 		alignSelf: "flex-end",
 		marginTop: 4,
@@ -148,62 +126,6 @@ const styles = StyleSheet.create({
 		color: PURPLE,
 		fontSize: 14,
 		fontWeight: "600",
-	},
-	registerRow: {
-		flexDirection: "row",
-		justifyContent: "center",
-		marginTop: 20,
-		marginBottom: 32,
-	},
-	registerText: {
-		fontSize: 14,
-		color: "#6B7280",
-	},
-	registerLink: {
-		fontSize: 14,
-		color: PURPLE,
-		fontWeight: "700",
-	},
-	footerText: {
-		fontSize: 12,
-		color: PURPLE_DARK,
-		textAlign: "center",
-		fontWeight: "600",
-	},
-	modalOverlay: {
-		flex: 1,
-		backgroundColor: "rgba(0, 0, 0, 0.5)",
-		justifyContent: "center",
-		alignItems: "center",
-		paddingHorizontal: 24,
-	},
-	modalCard: {
-		width: "100%",
-		backgroundColor: "#FFFFFF",
-		borderRadius: 20,
-		padding: 24,
-		alignItems: "center",
-	},
-	modalIconBadge: {
-		width: 56,
-		height: 56,
-		borderRadius: 28,
-		backgroundColor: "#DCFCE7",
-		justifyContent: "center",
-		alignItems: "center",
-		marginBottom: 12,
-	},
-	modalTitle: {
-		fontSize: 18,
-		fontWeight: "700",
-		color: "#111827",
-		marginBottom: 8,
-	},
-	modalMessage: {
-		fontSize: 14,
-		color: "#4B5563",
-		textAlign: "center",
-		marginBottom: 20,
 	},
 });
 

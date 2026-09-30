@@ -5,6 +5,8 @@ const { generateToken } = require("../services/AuthService");
 const {
 	createUserInSupabase,
 	verifyUserInSupabase,
+	findUserInSupabase,
+	updateUserVerificationInSupabase,
 } = require("../services/UserService");
 
 const REQUIRED_REGISTRATION_FIELDS = [
@@ -13,10 +15,12 @@ const REQUIRED_REGISTRATION_FIELDS = [
 	"encrypted_surname",
 	"encrypted_email",
 	"encrypted_phone_num",
-	"password_hash",
+	"password",
 ];
 
-const REQUIRED_LOGIN_FIELDS = ["encrypted_email", "password_hash"];
+const REQUIRED_LOGIN_FIELDS = ["encrypted_email", "password"];
+
+const REQUIRED_FORGOT_PASSWORD_FIELDS = ["encrypted_email", "user_id"];
 
 //Helper method to standardize the generation of tokens and the success response
 const handleAuthSuccess = (
@@ -65,6 +69,15 @@ router.post(
 			//Save the data to the Supabase User Table
 			await createUserInSupabase(req.body);
 
+			//OTP verification has passed
+			const updatedUser = await updateUserVerificationInSupabase(user_id);
+
+			if (!updatedUser) {
+				if (!updatedUser) {
+					handleError(res, error, "User record not found or update returned no data.")
+				}
+			}
+
 			return handleAuthSuccess(
 				res,
 				201,
@@ -81,21 +94,23 @@ router.post(
 //Post call to login the user and verify their credentials
 router.post("/login", validateBody(REQUIRED_LOGIN_FIELDS), async (req, res) => {
 	try {
-		const { encrypted_email } = req.body;
+		const { encrypted_email, password } = req.body;
 
 		//Verify the user credentials against the data stored in supabase
-		const user = await verifyUserInSupabase(req.body);
+		const user = await verifyUserInSupabase({ encrypted_email, password });
 
 		//Users credentials are wrong or doesn't exist
 		if (!user) {
-			return res.status(401).json({ error: "Invalid credentials" });
+			return res
+				.status(401)
+				.json({ error: "Invalid credentials. Please try again" });
 		}
 
 		const resolvedUserId = user.user_id || user.id;
 
 		return handleAuthSuccess(
 			res,
-			201,
+			200,
 			"Login Successful",
 			resolvedUserId,
 			encrypted_email,
@@ -104,5 +119,32 @@ router.post("/login", validateBody(REQUIRED_LOGIN_FIELDS), async (req, res) => {
 		return handleError(res, error, "authenticate user");
 	}
 });
+
+router.post(
+	"/forgot-password",
+	validateBody(REQUIRED_FORGOT_PASSWORD_FIELDS),
+	async (req, res) => {
+		try {
+			const { encrypted_email, user_id } = req.body;
+			const user = await findUserInSupabase(user_id);
+
+			const responseMessage = "If an account exists, a verification code will be dispatched"
+
+			if (!user) {
+				return res.status(200).json({
+					success: true,
+					message: responseMessage,
+				});
+			}
+
+			return res.status(200).json({
+				success: true,
+				message: responseMessage,
+			});
+		} catch (error) {
+			return handleError(res, error, "Forgot password request");
+		}
+	},
+);
 
 module.exports = router;

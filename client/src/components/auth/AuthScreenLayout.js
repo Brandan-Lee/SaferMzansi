@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
 	StyleSheet,
@@ -9,6 +8,7 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AppHeader } from "../common/AppHeader";
 import { AlertBadge } from "../common/AlertBadge";
@@ -32,26 +32,30 @@ export const AuthScreenLayout = ({
 			<SafeAreaView style={styles.container} edges={["top", "bottom"]}>
 				<KeyboardAvoidingView
 					style={styles.flexOne}
-					behavior={Platform.OS === "ios" ? "padding" : undefined}
+					behavior={Platform.OS === "ios" ? "padding" : "height"}
 				>
 					<ScrollView
 						contentContainerStyle={styles.scrollContent}
 						showsVerticalScrollIndicator={false}
 						keyboardShouldPersistTaps="handled"
 					>
-						<AppHeader title={title} subtitle={subtitle} />
+						<View style={styles.mainBlock}>
+							<AppHeader title={title} subtitle={subtitle} />
 
-						{banner?.message ? (
-							<AlertBadge message={banner.message} type={banner.type} />
-						) : null}
+							{banner?.message ? (
+								<AlertBadge message={banner.message} type={banner.type} />
+							) : null}
 
-						{children}
+							<View style={styles.contentContainer}>{children}</View>
 
-						<View style={styles.navRow}>
-							<Text style={styles.navText}>{navQuestion}</Text>
-							<TouchableOpacity onPress={onNavPress} activeOpacity={0.7}>
-								<Text style={styles.navLink}> {navActionText}</Text>
-							</TouchableOpacity>
+							{navQuestion && navActionText ? (
+								<View style={styles.navRow}>
+									<Text style={styles.navText}>{navQuestion}</Text>
+									<TouchableOpacity onPress={onNavPress} activeOpacity={0.7}>
+										<Text style={styles.navLink}> {navActionText}</Text>
+									</TouchableOpacity>
+								</View>
+							) : null}
 						</View>
 
 						<Text style={styles.footerText}>
@@ -73,16 +77,23 @@ const styles = StyleSheet.create({
 	flexOne: { flex: 1 },
 	scrollContent: {
 		flexGrow: 1,
+		justifyContent: "space-between", 
 		paddingHorizontal: 28,
-		paddingTop: 48,
-		paddingBottom: 32,
+		paddingTop: 16,
+		paddingBottom: 24,
 	},
+	mainBlock: {
+		width: "100%",
+		justifyContent: "center",
+		flex: 1,
+	},
+	contentContainer: { width: "100%" },
 	navRow: {
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
 		marginTop: 20,
-		marginBottom: 32,
+		marginBottom: 16,
 	},
 	navText: { fontSize: 14, color: "#6B7280" },
 	navLink: { fontSize: 14, color: PURPLE, fontWeight: "700" },
@@ -91,5 +102,6 @@ const styles = StyleSheet.create({
 		color: PURPLE_DARK,
 		textAlign: "center",
 		fontWeight: "600",
+		paddingVertical: 12,
 	},
 });
