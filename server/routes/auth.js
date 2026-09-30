@@ -7,7 +7,9 @@ const {
 	verifyUserInSupabase,
 	findUserInSupabase,
 	updateUserVerificationInSupabase,
+	updatePasswordInSupabase,
 } = require("../services/UserService");
+const { hashPassword, verifyPassword } = require("../utils/SecurityUtil");
 
 const REQUIRED_REGISTRATION_FIELDS = [
 	"user_id",
@@ -19,8 +21,8 @@ const REQUIRED_REGISTRATION_FIELDS = [
 ];
 
 const REQUIRED_LOGIN_FIELDS = ["encrypted_email", "password"];
-
 const REQUIRED_FORGOT_PASSWORD_FIELDS = ["encrypted_email", "user_id"];
+const REQUIRED_RESET_PASSWORD_FIELDS = ["user_id", "password"];
 
 //Helper method to standardize the generation of tokens and the success response
 const handleAuthSuccess = (
@@ -66,6 +68,9 @@ router.post(
 			//fields that is needed to update supabase table
 			const { user_id, encrypted_email } = req.body;
 
+			// //Look if the user already exists on the supabase
+			// const user = await find
+
 			//Save the data to the Supabase User Table
 			await createUserInSupabase(req.body);
 
@@ -73,9 +78,11 @@ router.post(
 			const updatedUser = await updateUserVerificationInSupabase(user_id);
 
 			if (!updatedUser) {
-				if (!updatedUser) {
-					handleError(res, error, "User record not found or update returned no data.")
-				}
+				return handleError(
+					res,
+					error,
+					"User record not found or update returned no data.",
+				);
 			}
 
 			return handleAuthSuccess(
@@ -120,16 +127,21 @@ router.post("/login", validateBody(REQUIRED_LOGIN_FIELDS), async (req, res) => {
 	}
 });
 
+
+//Post call to verify the users email matches the email stored in supabase
 router.post(
 	"/forgot-password",
 	validateBody(REQUIRED_FORGOT_PASSWORD_FIELDS),
 	async (req, res) => {
 		try {
+			//Retrieve the encrypted email and the user id from the request
 			const { encrypted_email, user_id } = req.body;
 			const user = await findUserInSupabase(user_id);
 
-			const responseMessage = "If an account exists, a verification code will be dispatched"
+			const responseMessage =
+				"If an account exists, a verification code will be dispatched";
 
+			//Even if the user does not exist... still show a success message
 			if (!user) {
 				return res.status(200).json({
 					success: true,
@@ -137,12 +149,76 @@ router.post(
 				});
 			}
 
+			//Return a success message
 			return res.status(200).json({
 				success: true,
 				message: responseMessage,
 			});
 		} catch (error) {
 			return handleError(res, error, "Forgot password request");
+		}
+	},
+);
+
+//Post call to reset the users password and update the password in supabase
+router.post(
+	"/reset-password",
+	validateBody(REQUIRED_RESET_PASSWORD_FIELDS),
+	async (req, res) => {
+		try {
+			//Retrieve the user id and password from the request
+			const { user_id, password } = req.body;
+			const user = await findUserInSupabase(user_id);
+
+			console.log(user);
+
+			if (!user) {
+				return res.status(404).json({ error: "User record not found" });
+			}
+
+			const isValidHash =
+				typeof user.password_hash === "string" &&
+				user.password_hash.startsWith("$");
+
+			console.log(isValidHash);
+
+			if (isValidHash) {
+				const isSamePassword = await verifyPassword(
+					user.password_hash,
+					password,
+				);
+
+				console.log(isSamePassword);
+
+				if (isSamePassword) {
+					return res.status(400).json({
+						error:
+							"Cannot use the same password. Please choose a new password.",
+					});
+				}
+			}
+
+			//Password hash
+			let updatedPassword = await hashPassword(password);
+			updatedPassword = await updatePasswordInSupabase(
+				user_id,
+				updatedPassword,
+			);
+			
+			console.log(updatedPassword);
+
+			if (!updatedPassword) {
+				return res.status(500).json({
+					error: "Password could not be updated. Please try again.",
+				});
+			}
+
+			return res.status(200).json({
+				success: true,
+				message: "Password was successfully updated",
+			});
+		} catch (error) {
+			return handleError(res, error, "Reset Password Request");
 		}
 	},
 );

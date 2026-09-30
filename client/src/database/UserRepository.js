@@ -103,6 +103,10 @@ export const markUserAsSynched = async (db, userId) => {
 	await updateLocalUserField(db, userId, { is_synched: 1 });
 };
 
+export const markUserAsUnSynched = async (db, userId) => {
+	await updateLocalUserField(db, userId, { is_synched: 0});
+}
+
 // Method that marks the user as verified on the local database by user_id
 export const markUserAsVerifiedLocally = async (db, userId) => {
 	await updateLocalUserField(db, userId, { is_verified: 1, is_synched: 0 });

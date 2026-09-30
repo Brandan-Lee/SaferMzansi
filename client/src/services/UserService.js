@@ -6,6 +6,7 @@ import {
 	findLocalUserEmails,
 	insertLocalUser,
 	markUserAsSynched,
+	markUserAsUnSynched,
 	markUserAsVerifiedLocally,
 } from "../database/UserRepository";
 
@@ -177,7 +178,9 @@ export const forgotPasswordUser = async (db, email) => {
 	const { ok, data } = response;
 
 	if (!ok || !data?.success) {
-		const errorMessage = data?.error || data?.message || "We'll send an email if this user does exist";
+		const errorMessage =
+			data?.error ||
+			data?.message ||			"We'll send an email if this user does exist";
 		throw new Error(errorMessage);
 	}
 
@@ -185,5 +188,37 @@ export const forgotPasswordUser = async (db, email) => {
 		email: normalEmail,
 		success: true,
 		ok: true,
+	};
+};
+
+export const resetPasswordUser = async (db, password, email) => {
+	const normalEmail = email.trim().toLowerCase();
+	const matchedUser = await findUserByEmail(db, normalEmail);
+
+	if (!matchedUser) {
+		throw new Error("This user does not exist");
+	}
+
+	const response = await postApi("/users/reset-password", {
+		user_id: matchedUser.user_id,
+		password,
+	});
+
+	const { ok, data } = response;
+
+	if (!ok || !data?.success) {
+		const errorMessage =
+			data?.error ||
+			data?.message ||
+			"There was an error updating your password. Please try again";
+		throw new Error(errorMessage);
+	}
+
+	await markUserAsUnSynched(db, matchedUser.user_id);
+	await markUserAsSynched(db, matchedUser.user_id);
+
+	return {
+		success: true,
+		message: data?.message || "Password updated successfully",
 	};
 };

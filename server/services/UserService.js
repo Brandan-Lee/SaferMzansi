@@ -105,11 +105,35 @@ const findUserInSupabase = async (userId) => {
 	}
 
 	return user;
-} 
+}
+
+const updatePasswordInSupabase = async (userId, passwordHash) => {
+	if (!userId || !passwordHash) {
+		throw new Error("updatePasswordInSupabase");
+	}
+
+	const {data, error} = await supabase
+		.from("Users")
+		.update({password_hash: passwordHash})
+		.eq("user_id", userId)
+		.select();
+
+	if (error) {
+		throw error;
+	}
+
+	if (!data || data.length === 0) {
+		console.warn("The password hash could not be updated in Supabase for user_id: ", userId);
+		return null;
+	}
+
+	return data[0];
+}
 
 module.exports = {
 	createUserInSupabase,
 	verifyUserInSupabase,
 	updateUserVerificationInSupabase,
 	findUserInSupabase,
+	updatePasswordInSupabase,
 };
