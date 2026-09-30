@@ -2585,3 +2585,84 @@
 {"_e":"metro:bundling:progress","_t":1790291230382,"id":"10","progress":0,"total":1,"current":0}
 {"_e":"metro:bundling:done","_t":1790291230590,"id":"10","total":1,"ms":2191.5064}
 {"_e":"metro:client_log","_t":1790291246194,"level":"log","data":["Database initialized successfully."]}
+{"_e":"root:init","_t":1790684163642,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1790684163644,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1790684163647,"mode":"development","files":[],"env":{}}
+{"_e":"devserver:start","_t":1790684164450,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1790684165708,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1790684167347,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1790684177915,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1790684493984,"id":"1","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790684493985,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790684493994,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790684494094,"id":"1","progress":0.01137777777777778,"total":150,"current":16}
+{"_e":"metro:bundling:progress","_t":1790684494194,"id":"1","progress":0.150544,"total":250,"current":97}
+{"_e":"metro:bundling:progress","_t":1790684494294,"id":"1","progress":0.40749859260649285,"total":365,"current":233}
+{"_e":"metro:bundling:progress","_t":1790684494394,"id":"1","progress":0.47735537190082644,"total":495,"current":342}
+{"_e":"metro:bundling:progress","_t":1790684494494,"id":"1","progress":0.6906574334005056,"total":586,"current":487}
+{"_e":"metro:bundling:progress","_t":1790684494594,"id":"1","progress":0.8437378432055035,"total":663,"current":609}
+{"_e":"metro:bundling:progress","_t":1790684494701,"id":"1","progress":0.9971651325386047,"total":705,"current":704}
+{"_e":"metro:bundling:progress","_t":1790684495503,"id":"1","progress":0.999,"total":705,"current":705}
+{"_e":"metro:bundling:progress","_t":1790684495605,"id":"1","progress":0.999,"total":826,"current":752}
+{"_e":"metro:bundling:progress","_t":1790684495705,"id":"1","progress":0.999,"total":1009,"current":844}
+{"_e":"metro:bundling:progress","_t":1790684495805,"id":"1","progress":0.999,"total":1144,"current":1137}
+{"_e":"metro:bundling:done","_t":1790684495890,"id":"1","total":1144,"ms":1905.9277}
+{"_e":"metro:client_log","_t":1790684497465,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:bundling:started","_t":1790684536723,"id":"3","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790684536723,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1790684536752,"id":"3","total":1,"ms":28.611}
+{"_e":"metro:client_log","_t":1790684538111,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:server_log","_t":1790684612462,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.Exponent","iPhone","60"]}
+{"_e":"metro:bundling:started","_t":1790755379079,"id":"6","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1790755379081,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790755379131,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1790755379257,"id":"6","progress":0.02366863905325444,"total":26,"current":4}
+{"_e":"metro:bundling:progress","_t":1790755379367,"id":"6","progress":0.03698224852071006,"total":26,"current":5}
+{"_e":"metro:bundling:progress","_t":1790755379545,"id":"6","progress":0.041367423154266024,"total":59,"current":12}
+{"_e":"metro:bundling:progress","_t":1790755379654,"id":"6","progress":0.041367423154266024,"total":204,"current":25}
+{"_e":"metro:bundling:progress","_t":1790755379772,"id":"6","progress":0.07502835538752362,"total":230,"current":63}
+{"_e":"metro:bundling:progress","_t":1790755379880,"id":"6","progress":0.10269673976237685,"total":259,"current":83}
+{"_e":"metro:bundling:progress","_t":1790755379980,"id":"6","progress":0.12412456782462226,"total":281,"current":99}
+{"_e":"metro:bundling:progress","_t":1790755380081,"id":"6","progress":0.16105436288088645,"total":304,"current":122}
+{"_e":"metro:bundling:progress","_t":1790755380181,"id":"6","progress":0.20386593204775025,"total":330,"current":149}
+{"_e":"metro:bundling:progress","_t":1790755380280,"id":"6","progress":0.271951790215187,"total":349,"current":182}
+{"_e":"metro:bundling:progress","_t":1790755380386,"id":"6","progress":0.271951790215187,"total":411,"current":204}
+{"_e":"metro:bundling:progress","_t":1790755380486,"id":"6","progress":0.2960295987975488,"total":465,"current":253}
+{"_e":"metro:bundling:progress","_t":1790755380586,"id":"6","progress":0.3225382698469206,"total":530,"current":301}
+{"_e":"metro:bundling:progress","_t":1790755380686,"id":"6","progress":0.36,"total":570,"current":342}
+{"_e":"metro:bundling:progress","_t":1790755380799,"id":"6","progress":0.36,"total":693,"current":401}
+{"_e":"metro:bundling:progress","_t":1790755380900,"id":"6","progress":0.36,"total":751,"current":445}
+{"_e":"metro:bundling:progress","_t":1790755381002,"id":"6","progress":0.41174970009800294,"total":787,"current":505}
+{"_e":"metro:bundling:progress","_t":1790755381102,"id":"6","progress":0.5304031796267449,"total":806,"current":587}
+{"_e":"metro:bundling:progress","_t":1790755381202,"id":"6","progress":0.6244315125434007,"total":858,"current":678}
+{"_e":"metro:bundling:progress","_t":1790755381302,"id":"6","progress":0.6705933411866823,"total":889,"current":728}
+{"_e":"metro:bundling:progress","_t":1790755381402,"id":"6","progress":0.6899277445914546,"total":921,"current":765}
+{"_e":"metro:bundling:progress","_t":1790755381503,"id":"6","progress":0.713519685446852,"total":953,"current":805}
+{"_e":"metro:bundling:progress","_t":1790755381603,"id":"6","progress":0.8296671341709217,"total":976,"current":889}
+{"_e":"metro:bundling:progress","_t":1790755381723,"id":"6","progress":0.8334043687852727,"total":976,"current":891}
+{"_e":"metro:bundling:progress","_t":1790755381823,"id":"6","progress":0.8334043687852727,"total":1029,"current":921}
+{"_e":"metro:bundling:progress","_t":1790755381923,"id":"6","progress":0.8430107374627092,"total":1063,"current":976}
+{"_e":"metro:bundling:progress","_t":1790755382024,"id":"6","progress":0.8890284388821718,"total":1103,"current":1040}
+{"_e":"metro:bundling:progress","_t":1790755382124,"id":"6","progress":0.9240902488088593,"total":1111,"current":1068}
+{"_e":"metro:bundling:progress","_t":1790755382226,"id":"6","progress":0.9597063199937349,"total":1130,"current":1107}
+{"_e":"metro:bundling:progress","_t":1790755382351,"id":"6","progress":0.999,"total":1142,"current":1142}
+{"_e":"metro:bundling:done","_t":1790755382477,"id":"6","total":1142,"ms":3395.4492}
+{"_e":"metro:client_log","_t":1790755391444,"level":"error","data":["Fetch error details:","[Error: fetch failed: Call to function 'NativeRequest.start' has been rejected.\n→ Caused by: The 2nd argument cannot be cast to type class java.net.URL (received class java.lang.String)\n→ Caused by: java.net.MalformedURLException: no protocol: undefined/health]"]}
+{"_e":"metro:client_log","_t":1790755391923,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1790756777787,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790756834064,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790756927846,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757045548,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757073812,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757119892,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757156800,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757175399,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757190293,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757272789,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757485365,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757524289,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757844641,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757844698,"level":"warn","data":["\"profile\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757888975,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790757889040,"level":"warn","data":["\"account_circle\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1790758041655,"level":"warn","data":["\"e911_emergency\" is not a valid icon name for family \"feather\""]}
