@@ -24,16 +24,16 @@ const HomeScreen = () => {
           </View>
 
           <View style={[styles.topleftIcon, styles.iconCircle]}>
-            <Feather name="lock" size={28} color="#000000" />
+            <Feather name="lock" size={28} color="#ffffff" />
           </View>
           <View style={[styles.bottomleftIcon, styles.iconCircle ]}>
-            <Feather name="user-plus" size={28} color="#000000"  />
+            <Feather name="user-plus" size={28} color="#ffffff"  />
           </View>
           <View style={[styles.toprightIcon, styles.iconCircle]}>
-            <Feather name="map-pin" size={28} color="#000000" />
+            <Feather name="map-pin" size={28} color="#ffffff" />
           </View>
           <View style={[styles.bottomrightIcon, styles.iconCircle]}>
-            <Feather name='alert-circle' size={28} color= "#000000"/>
+            <Feather name='alert-circle' size={28} color= "#ffffff"/>
           </View>
 
         </View>
@@ -42,14 +42,14 @@ const HomeScreen = () => {
           <TouchableOpacity style={styles.Tab} 
             onPress={() => navigation.navigate('EmergencyContactScreen')}
           >
-            <Feather name="user" size={28} color="#000000" />
+            <Feather name="user" size={28} color="#ffffff" />
             <Text style={styles.navText}>Profile</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.Tab}
             onPress={() => navigation.navigate('VaultScreen')}
           >
-            <Feather name="archive" size={28} color="#000000" />
+            <Feather name="archive" size={28} color="#ffffff" />
             <Text style={styles.navText}>Vault</Text>
           </TouchableOpacity>
 
@@ -63,7 +63,7 @@ const HomeScreen = () => {
           <TouchableOpacity style={styles.Tab}
             onPress={() => navigation.navigate('SettingsScreen')}
           >
-            <Feather name="settings" size={28} color="#000000" />
+            <Feather name="settings" size={28} color="#ffffff" />
             <Text style={styles.navText}>Settings</Text>
           </TouchableOpacity>
 
