@@ -31,7 +31,6 @@ const buildResponse = (success, status, message) => ({
 
 // Method to generate the HTML message that will be used in the email
 const generateOtpEmailHTML = (otp) => {
-	// TODO: REMOVE PENIS EMOJI FROM EMAIL TEMPLATE
 	return `
 <!DOCTYPE html>
 <html>
@@ -90,7 +89,7 @@ const generateOtpEmailHTML = (otp) => {
                     <tr>
                         <td align="center" style="padding-bottom: 20px;">
                             <p style="margin: 0; font-size: 13px; font-weight: 600;">
-                                Do not share this code with anyone. 8==>
+                                Do not share this code with anyone.
                             </p>
                         </td>
                     </tr>
