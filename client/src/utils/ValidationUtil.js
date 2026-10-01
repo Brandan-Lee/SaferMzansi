@@ -109,6 +109,7 @@ export const validateLoginForm = (formData) => validateForm(formData);
 //Method that validates the Forgot Password form
 export const validateForgotPasswordForm = (formData) => validateForm(formData);
 
+//Method that validates the Reset Password form
 export const validateResetPasswordForm = (formData) => validateForm(formData);
 
 const normalizeOtpString = (otp) =>

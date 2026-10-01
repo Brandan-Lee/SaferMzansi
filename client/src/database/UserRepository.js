@@ -1,5 +1,7 @@
 import { decryptData } from "../utils/SecurityUtil";
 
+const normalizeEmail = (email) => String(email ?? "").trim().toLowerCase();
+
 //Helper to update local user fields by user id
 const updateLocalUserField = async (db, userId, fields) => {
 	const assignments = Object.keys(fields)
@@ -14,6 +16,7 @@ const updateLocalUserField = async (db, userId, fields) => {
 	);
 };
 
+//TODO: Remove this when project is complete
 // Method to log all local user records in full detail to the console
 export const logLocalUsersDatabase = async (db) => {
 	try {
@@ -78,6 +81,7 @@ export const insertLocalUser = async (db, user) => {
 		encryptedPhoneNum,
 	} = user;
 
+	//Data that has to be sent to the SQLite table
 	await db.runAsync(
 		`INSERT INTO Local_Users (
             user_id,
@@ -103,6 +107,7 @@ export const markUserAsSynched = async (db, userId) => {
 	await updateLocalUserField(db, userId, { is_synched: 1 });
 };
 
+//Method that helps to makrk the is_synched column to false
 export const markUserAsUnSynched = async (db, userId) => {
 	await updateLocalUserField(db, userId, { is_synched: 0});
 }
@@ -110,4 +115,24 @@ export const markUserAsUnSynched = async (db, userId) => {
 // Method that marks the user as verified on the local database by user_id
 export const markUserAsVerifiedLocally = async (db, userId) => {
 	await updateLocalUserField(db, userId, { is_verified: 1, is_synched: 0 });
+};
+
+//Method to find a local user id by matching the decrypted email
+export const getLocalUserIdByEmail = async (db, rawEmail) => {
+	if (!db || !rawEmail) {
+		return null;
+	}
+
+	const matchedUser = await findUserByEmail(db, rawEmail);
+	return matchedUser?.user_id || null;
+};
+
+//Helper method to find the user by their email
+export const findUserByEmail = async (db, targetEmail) => {
+	const normalizedEmail = normalizeEmail(targetEmail);
+	const localUsers = await findLocalUserEmails(db);
+
+	return localUsers.find(
+		(user) => normalizeEmail(decryptData(user.encrypted_email)) === normalizedEmail,
+	);
 };

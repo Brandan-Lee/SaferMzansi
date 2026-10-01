@@ -10,7 +10,7 @@ import { RESET_PASSWORD_FORM_FIELDS } from "../../constants/AuthFields";
 import PasswordStrengthMeter from "../../components/common/PasswordStrengthMeter";
 import { validateResetPasswordForm } from "../../utils/ValidationUtil";
 import { useSQLiteContext } from "expo-sqlite";
-import { resetPasswordUser } from "../../services/UserService";
+import { resetPasswordUser } from "../../services/auth/UserService";
 import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
 import { useNetInfo } from "@react-native-community/netinfo";
 
@@ -27,9 +27,11 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 	const db = useSQLiteContext();
 	const email = route?.params?.email || "";
-
+	const resetToken = route?.params?.resetToken;
 	const netInfo = useNetInfo();
-	const isOnline = Boolean(netInfo.isConnected && netInfo.isInternetReachable !== false);
+	const isOnline = Boolean(
+		netInfo.isConnected && netInfo.isInternetReachable !== false,
+	);
 
 	const handleResetPassword = async () => {
 		setBanner(null);
@@ -55,6 +57,7 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 				db,
 				formData.password,
 				normalEmail,
+				resetToken,
 			);
 
 			if (!result?.success) {
@@ -85,12 +88,6 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 		} finally {
 			setLoading(false);
 		}
-	};
-
-	const handleBackToLogin = () => {
-		setTimeout(() => {
-			navigation.replace("LoginScreen");
-		}, 800);
 	};
 
 	return (
@@ -135,7 +132,12 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 				loading={loading}
 			/>
 
-			<TouchableOpacity style={styles.backButton} onPress={handleBackToLogin}>
+			<TouchableOpacity
+				style={styles.backButton}
+				onPress={() => {
+					navigation.replace("LoginScreen");
+				}}
+			>
 				<Feather name="chevron-left" size={20} color="#6B21A8" />
 				<Text style={styles.backText}>Back to Login</Text>
 			</TouchableOpacity>
@@ -144,46 +146,6 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#FAF7FF",
-	},
-	scrollcontent: {
-		flexGrow: 1,
-	},
-	content: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		paddingHorizontal: 20,
-		paddingVertical: 30,
-	},
-	logoBadge: {
-		width: 56,
-		height: 56,
-		borderRadius: 28,
-		justifyContent: "center",
-		alignItems: "center",
-		marginBottom: 4,
-	},
-	logo: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "#6B21A8",
-		marginBottom: 28,
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-		color: "#111827",
-		marginBottom: 10,
-	},
-	subtitle: {
-		fontSize: 16,
-		color: "#374151",
-		textAlign: "center",
-		marginBottom: 28,
-	},
 	backButton: {
 		flexDirection: "row",
 		alignItems: "center",
