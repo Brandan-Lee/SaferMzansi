@@ -6,10 +6,10 @@ import {
 	useMemo,
 } from "react";
 import { useSQLiteContext } from "expo-sqlite";
-import { registerUser } from "../services/UserService";
-import { loginUser } from "../services/UserService";
-import { isTokenExpired } from "../utils/SecurityUtil";
+import { loginUser } from "../services/auth/UserService";
+import { isTokenExpired } from "../utils/auth/AuthTokenUtil";
 import * as SecureStore from "expo-secure-store";
+import { registerUser } from './../services/auth/UserService';
 
 const TOKEN_KEY = "user_jwt_token";
 

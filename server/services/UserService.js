@@ -32,6 +32,11 @@ const createUserInSupabase = async (userData) => {
 	return data[0];
 };
 
+// Fallback hash for password verification in case the user does not have a password hash stored
+//Avoids timing attacks by using a constant time comparison for password verification
+const FALLBACK_HASH =
+	"$argon2id$v=19$m=65536,t=3,p=1$c2FtcGxlc2FsdA$c2FtcGxlaGFzaA";
+
 // Method to verify a user's credentials in Supabase during login process
 const verifyUserInSupabase = async ({ encrypted_email, password }) => {
 	const { data: user, error } = await supabase
@@ -40,19 +45,11 @@ const verifyUserInSupabase = async ({ encrypted_email, password }) => {
 		.eq("encrypted_email", encrypted_email)
 		.maybeSingle();
 
-	// There was an error verifying the user's credentials on Supabase
-	if (error || !user) {
-		return null;
-	}
-
-	if (!user.password_hash) {
-		return null;
-	}
-
+	const passwordHashToVerify = user?.password_hash || FALLBACK_HASH;
 	//Verify the plain password against the stored password hash
-	const isPasswordValid = await verifyPassword(user.password_hash, password);
+	const isPasswordValid = await verifyPassword(passwordHashToVerify, password);
 
-	if (!isPasswordValid) {
+	if (error || !user || !isPasswordValid || !user.is_verified) {
 		return null;
 	}
 
@@ -94,7 +91,7 @@ const findUserInSupabase = async (userId) => {
 		throw new Error("findUserInSupabase requires a valid user_id");
 	}
 
-	const {data: user, error} = await supabase
+	const { data: user, error } = await supabase
 		.from("Users")
 		.select("*")
 		.eq("user_id", userId)
@@ -105,11 +102,53 @@ const findUserInSupabase = async (userId) => {
 	}
 
 	return user;
-} 
+};
+
+const findPasswordResetUserInSupabase = async (userId) => {
+	const { data: user, error } = await supabase
+		.from("Users")
+		.select("user_id, encrypted_email")
+		.eq("user_id", userId)
+		.maybeSingle();
+
+	if (error) {
+		throw error;
+	}
+
+	return user;
+};
+
+const updatePasswordInSupabase = async (userId, passwordHash) => {
+	if (!userId || !passwordHash) {
+		throw new Error("updatePasswordInSupabase");
+	}
+
+	const { data, error } = await supabase
+		.from("Users")
+		.update({ password_hash: passwordHash })
+		.eq("user_id", userId)
+		.select();
+
+	if (error) {
+		throw error;
+	}
+
+	if (!data || data.length === 0) {
+		console.warn(
+			"The password hash could not be updated in Supabase for user_id: ",
+			userId,
+		);
+		return null;
+	}
+
+	return data[0];
+};
 
 module.exports = {
 	createUserInSupabase,
 	verifyUserInSupabase,
 	updateUserVerificationInSupabase,
 	findUserInSupabase,
+	findPasswordResetUserInSupabase,
+	updatePasswordInSupabase,
 };

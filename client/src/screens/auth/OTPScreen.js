@@ -11,7 +11,8 @@ import {
 import { useNetStatus } from "../../utils/NetStatus";
 import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
 import { PrimaryButton } from "../../components/common/PrimaryButton";
-import { sendOtpEmail, verifyOtpCode } from "../../services/EmailService";
+import { sendOtpEmail, verifyOtpCode } from "../../services/auth/EmailService";
+import { forgotPasswordUser } from "../../services/auth/UserService";
 import { useSQLiteContext } from "expo-sqlite";
 import { useOtp } from "../../hooks/UseOtp";
 import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
@@ -30,18 +31,14 @@ const OTPScreen = ({ navigation, route }) => {
 	const [timer, setTimer] = useState(60);
 	const db = useSQLiteContext();
 	const { isOnline } = useNetStatus();
-
-	// Safe parameter extraction
 	const userEmail = route?.params?.email || "";
 	const isRegistration = route?.params?.isRegistration || false;
 	const pendingUserData = route?.params?.pendingUserData || null;
 	const isResetPassword = route?.params?.isResetPassword || false;
-
 	const { register, loading } = useAuth();
-
 	const [loadingSpinner, setLoadingSpinner] = useState(false);
-
 	const rawEmail = isRegistration ? pendingUserData?.email : userEmail;
+
 	const sanitizedEmail = String(rawEmail || "")
 		.trim()
 		.toLowerCase();
@@ -71,7 +68,9 @@ const OTPScreen = ({ navigation, route }) => {
 		setBanner(null);
 
 		try {
-			const response = await sendOtpEmail(sanitizedEmail);
+			const response = isResetPassword
+				? await forgotPasswordUser(db, sanitizedEmail)
+				: await sendOtpEmail(sanitizedEmail);
 
 			if (response?.error) {
 				throw new Error(response.error);
@@ -113,64 +112,71 @@ const OTPScreen = ({ navigation, route }) => {
 		setLoadingSpinner(true);
 
 		try {
-			const response = await verifyOtpCode(db, sanitizedEmail, otpString);
+			const response = await verifyOtpCode(
+				db,
+				sanitizedEmail,
+				otpString,
+				isResetPassword ? "password_reset" : "verification",
+			);
 
-			if (response) {
-				// Registration Flow
-				if (isRegistration && pendingUserData) {
-					const result = await register({
-						name: pendingUserData.name,
-						surname: pendingUserData.surname,
-						email: sanitizedEmail,
-						phoneNum: pendingUserData.phoneNum,
-						password: pendingUserData.password,
-					});
-
-					if (result?.token) {
-						setBanner({
-							message:
-								"Registration successful! Redirecting to login screen...",
-							type: "success",
-						});
-					} else {
-						setBanner({
-							message:
-								"Account created locally, but failed to sync with the server.",
-							type: "error",
-						});
-					}
-
-					setTimeout(() => {
-						navigation.navigate("LoginScreen");
-					}, 800);
-					return;
-				}
-
-				// Reset Password Flow
-				if (isResetPassword) {
-					setBanner({
-						message:
-							"OTP successfully verified. Redirecting to reset password screen...",
-						type: "success",
-					});
-
-					setTimeout(() => {
-						navigation.navigate("ResetPasswordScreen", {
-							email: sanitizedEmail,
-						});
-					}, 800);
-					return;
-				}
-
-				navigation.navigate("LoginScreen");
-			} else {
+			if (!response?.success) {
 				setBanner({
 					message:
-						(typeof response === "object" && response?.error) ||
+						response?.error ||
 						"There was a problem verifying your OTP code. Please try again.",
 					type: "error",
 				});
+				return;
 			}
+
+			// Registration Flow
+			if (isRegistration && pendingUserData) {
+				const result = await register({
+					name: pendingUserData.name,
+					surname: pendingUserData.surname,
+					email: sanitizedEmail,
+					phoneNum: pendingUserData.phoneNum,
+					password: pendingUserData.password,
+				});
+
+				if (result?.token) {
+					setBanner({
+						message:
+							"Registration successful! Redirecting to login screen...",
+						type: "success",
+					});
+				} else {
+					setBanner({
+						message:
+							"Account created locally, but failed to sync with the server.",
+						type: "error",
+					});
+				}
+
+				setTimeout(() => {
+					navigation.replace("LoginScreen");
+				}, 800);
+				return;
+			}
+
+			// Reset Password Flow
+			if (isResetPassword) {
+				setBanner({
+					message:
+						"OTP successfully verified. Redirecting to reset password screen...",
+					type: "success",
+				});
+
+				setTimeout(() => {
+					navigation.replace("ResetPasswordScreen", {
+						email: sanitizedEmail,
+						resetToken: response.data?.reset_token,
+					});
+				}, 800);
+				return;
+			}
+
+			navigation.replace("LoginScreen");
 		} catch (error) {
 			setBanner({
 				message: error.message || "Failed to verify OTP. Please try again.",

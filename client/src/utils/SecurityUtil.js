@@ -1,5 +1,4 @@
 import CryptoJS from "crypto-js";
-import { decode as base64Decode } from "base-64";
 const AES_SECRET_KEY = process.env.EXPO_PUBLIC_AES_256_SECRET_KEY;
 
 // Method to encrypt data with AES-256 encryption
@@ -29,51 +28,3 @@ export const encryptPayload = (payload) => {
 	}, {});
 };
 
-export const parseJwt = (token) => {
-    try {
-        if (!token || typeof token !== "string") {
-            return null;
-        }
-
-        const base64url = token.split(".")[1];
-
-        if (!base64url) {
-            return null;
-        }
-
-        // Convert Base64URL to standard Base64
-        let base64 = base64url.replace(/-/g, "+").replace(/_/g, "/");
-
-        // Pad string to a multiple of 4
-        while (base64.length % 4) {
-            base64 += "=";
-        }
-
-        // Decode Base64 string safely in Hermes / Expo environment
-        const decoded = base64Decode(base64);
-
-        // Escape and decode URI components safely
-        const jsonPayload = decodeURIComponent(
-            decoded
-                .split("")
-                .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-                .join("")
-        );
-
-        return JSON.parse(jsonPayload);
-    } catch (error) {
-        console.warn("Failed to parse JWT token:", error);
-        return null;
-    }
-};
-
-export const isTokenExpired = (token) => {
-	const decoded = parseJwt(token);
-
-	if (!decoded || !decoded.exp) {
-		return true;
-	}
-
-	const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-	return decoded.exp < currentTimeInSeconds;
-};

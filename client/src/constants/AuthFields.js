@@ -72,3 +72,20 @@ export const FORGOT_PASSWORD_FORM_FIELDS = [
 		autoCapitalize: "none",
 	},
 ];
+
+export const RESET_PASSWORD_FORM_FIELDS = [
+	{
+		key: "password",
+		label: "Password",
+		icon: "lock",
+		placeholder: "••••••••",
+		secureTextEntry: true,
+	},
+	{
+		key: "confirmPassword",
+		label: "Confirm Password",
+		icon: "lock",
+		placeholder: "••••••••",
+		secureTextEntry: true,
+	},
+];
