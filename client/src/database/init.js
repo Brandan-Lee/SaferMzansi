@@ -4,6 +4,7 @@ import { LOCAL_INCIDENT_LOCATIONS_SCHEMA } from "./schemas/LocalIncidentLocation
 import { LOCAL_EVIDENCE_VAULT_SCHEMA } from "./schemas/LocalEvidenceVaultSchema.js";
 import { LOCAL_EMERGENCY_CONTACTS_SCHEMA } from "./schemas/LocalEmergencyContactsSchema.js";
 import { DECOY_SCHEMA } from "./schemas/DecoySchema.js";
+import { logLocalUsersDatabase } from "./UserRepository.js";
 
 const TABLE_SCHEMAS = [
 	LOCAL_USERS_SCHEMA,
@@ -25,6 +26,8 @@ export const initDatabase = async (db) => {
 		}
 
 		console.log("Database initialized successfully.");
+		//show data in local SQLITE database
+		await logLocalUsersDatabase(db);
 	} catch (error) {
 		console.error("Error initializing database:", error);
 	}

@@ -7,7 +7,6 @@ export const LOCAL_USERS_SCHEMA = `
                 encrypted_surname TEXT NOT NULL,
                 encrypted_email TEXT NOT NULL,
                 encrypted_phone_num TEXT NOT NULL,
-                password_hash TEXT NOT NULL,
                 is_verified INTEGER NOT NULL DEFAULT 0,
                 ${COMMON_SYNC_COLUMNS}
             );

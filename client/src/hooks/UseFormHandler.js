@@ -28,6 +28,7 @@ export const useFormHandler = (initialState) => {
 		}));
 	};
 
+	//Data that has to be returned
 	return {
 		formData,
 		errors,

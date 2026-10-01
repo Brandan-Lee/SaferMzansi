@@ -61,3 +61,31 @@ export const REGISTRATION_FORM_FIELDS = [
 		secureTextEntry: true,
 	},
 ];
+
+export const FORGOT_PASSWORD_FORM_FIELDS = [
+	{
+		key: "email",
+		label: "Email",
+		icon: "mail",
+		placeholder: "john@example.com",
+		keyboardType: "email-address",
+		autoCapitalize: "none",
+	},
+];
+
+export const RESET_PASSWORD_FORM_FIELDS = [
+	{
+		key: "password",
+		label: "Password",
+		icon: "lock",
+		placeholder: "••••••••",
+		secureTextEntry: true,
+	},
+	{
+		key: "confirmPassword",
+		label: "Confirm Password",
+		icon: "lock",
+		placeholder: "••••••••",
+		secureTextEntry: true,
+	},
+];
