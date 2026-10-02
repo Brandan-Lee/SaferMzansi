@@ -38,11 +38,11 @@ const FALLBACK_HASH =
 	"$argon2id$v=19$m=65536,t=3,p=1$c2FtcGxlc2FsdA$c2FtcGxlaGFzaA";
 
 // Method to verify a user's credentials in Supabase during login process
-const verifyUserInSupabase = async ({ encrypted_email, password }) => {
+const verifyUserInSupabase = async ({ email_blind_index, password }) => {
 	const { data: user, error } = await supabase
 		.from("Users")
 		.select("*")
-		.eq("encrypted_email", encrypted_email)
+		.eq("email_blind_index", email_blind_index)
 		.maybeSingle();
 
 	const passwordHashToVerify = user?.password_hash || FALLBACK_HASH;
@@ -144,6 +144,26 @@ const updatePasswordInSupabase = async (userId, passwordHash) => {
 	return data[0];
 };
 
+const findUserByEmailBlindIndexInSupabase = async (emailBlindIndex) => {
+	if (!emailBlindIndex) {
+		throw new Error(
+			"findUserByEmailBlindIndexInSupabase requires a valid email_blind_index",
+		);
+	}
+
+	const { data: user, error } = await supabase
+		.from("Users")
+		.select("*")
+		.eq("email_blind_index", emailBlindIndex)
+		.maybeSingle();
+
+	if (error) {
+		throw error;
+	}
+
+	return user;
+};
+
 module.exports = {
 	createUserInSupabase,
 	verifyUserInSupabase,
@@ -151,4 +171,5 @@ module.exports = {
 	findUserInSupabase,
 	findPasswordResetUserInSupabase,
 	updatePasswordInSupabase,
+	findUserByEmailBlindIndexInSupabase,
 };

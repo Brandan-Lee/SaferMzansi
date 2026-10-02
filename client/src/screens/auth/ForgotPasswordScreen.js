@@ -12,7 +12,6 @@ import { FORGOT_PASSWORD_FORM_FIELDS } from "../../constants/AuthFields";
 import { CustomInput } from "../../components/common/CustomInput";
 import { PrimaryButton } from "../../components/common/PrimaryButton";
 import { forgotPasswordUser } from "../../services/auth/UserService";
-import { useSQLiteContext } from "expo-sqlite";
 
 const INITIAL_STATE = {
 	email: "",
@@ -26,7 +25,6 @@ const ForgotPasswordScreen = () => {
 		useFormHandler(INITIAL_STATE);
 	const [banner, setBanner] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const db = useSQLiteContext();
 
 	const handleSendOTP = async () => {
 		setBanner(null);
@@ -51,7 +49,7 @@ const ForgotPasswordScreen = () => {
 		try {
 			const sanitizedEmail = formData.email.trim().toLowerCase();
 
-			await forgotPasswordUser(db, sanitizedEmail);
+			await forgotPasswordUser(sanitizedEmail);
 			setBanner({
 				message: SUCCESS_MESSAGE,
 				type: "success",
