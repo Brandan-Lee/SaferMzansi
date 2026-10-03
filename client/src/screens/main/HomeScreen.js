@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { AppHeader } from "../../components/common/AppHeader";
 import { FloatingNavigationBar } from "../../components/common/FloatingNavigationBar";
 import { ProtectionRadar } from "../../components/home/ProtectionRadar";
@@ -58,7 +57,7 @@ const HomeScreen = ({ navigation, route }) => {
 	const decryptedName = rawName ? decryptData(rawName) : "User";
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<ScrollView style={styles.container}>
 			<AppHeader title={`Welcome Back ${decryptedName}`} />
 
 			<View style={styles.content}>
@@ -81,7 +80,7 @@ const HomeScreen = ({ navigation, route }) => {
 			</View>
 
 			<FloatingNavigationBar activeTab="Home" navigation={navigation} />
-		</SafeAreaView>
+		</ScrollView>
 	);
 };
 
