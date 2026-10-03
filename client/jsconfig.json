@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@config/*": ["./src/config/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@context/*": ["./src/context/*"],
+      "@database/*": ["./src/database/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@services/*": ["./src/services/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": ["src/**/*", "App.js", "index.js"],
+  "exclude": ["node_modules", ".expo", ".temp-export"]
+}

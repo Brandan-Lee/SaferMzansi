@@ -3,15 +3,15 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useNetStatus } from "../../utils/NetStatus";
-import { useFormHandler } from "../../hooks/UseFormHandler";
-import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
-import { validateForgotPasswordForm } from "../../utils/ValidationUtil";
-import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
-import { FORGOT_PASSWORD_FORM_FIELDS } from "../../constants/AuthFields";
-import { CustomInput } from "../../components/common/CustomInput";
-import { PrimaryButton } from "../../components/common/PrimaryButton";
-import { forgotPasswordUser } from "../../services/auth/UserService";
+import { useNetStatus } from "@utils/network/netStatus";
+import { useFormHandler } from "@hooks/useFormHandler";
+import { checkNetworkAndNotify } from "@utils/network/networkGuard";
+import { validateForgotPasswordForm } from "@utils/securityAndValidation/validationUtil";
+import { MainLayout } from "@components/layouts/MainLayout";
+import { FORGOT_PASSWORD_FORM_FIELDS } from "@constants/AuthFields";
+import { CustomInput } from "@components/forms/CustomInput";
+import { PrimaryButton } from "@components/forms/PrimaryButton";
+import { forgotPasswordUser } from "@services/auth/authService";
 
 const INITIAL_STATE = {
 	email: "",
@@ -74,10 +74,11 @@ const ForgotPasswordScreen = () => {
 	};
 
 	return (
-		<AuthScreenLayout
+		<MainLayout
 			title="Forgot Password?"
 			subtitle="Enter your email address and we'll send you a OTP to reset your password"
 			banner={banner}
+			scrollable={false}
 		>
 			{FORGOT_PASSWORD_FORM_FIELDS.map((field) => (
 				<CustomInput
@@ -112,7 +113,7 @@ const ForgotPasswordScreen = () => {
 
 				<Text style={styles.backText}>Back to Login</Text>
 			</TouchableOpacity>
-		</AuthScreenLayout>
+		</MainLayout>
 	);
 };
 

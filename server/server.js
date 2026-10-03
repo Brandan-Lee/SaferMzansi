@@ -12,9 +12,8 @@ app.use(cors());
 app.use(bodyParser.json()); //Email sending route requires body-parser to parse the request body
 app.use(express.json());
 
-
-const authRouter = require("./routes/auth");
-const otpRouter = require("./routes/otpRoutes");
+const authRouter = require("./src/routes/auth");
+const otpRouter = require("./src/routes/otpRoutes");
 
 app.use("/api/users", authRouter);
 app.use("/api/otp", otpRouter);

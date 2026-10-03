@@ -1,4 +1,4 @@
-import { createSyncIndex } from "../constants.js";
+import { createSyncIndex } from "../dbConstatns";
 
 export const LOCAL_INCIDENT_LOCATIONS_SCHEMA = `
     CREATE TABLE IF NOT EXISTS Local_Incident_Locations (

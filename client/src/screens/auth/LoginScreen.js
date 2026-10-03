@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "@context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
-import { validateLoginForm } from "../../utils/ValidationUtil";
-import { CustomInput } from "../../components/common/CustomInput";
-import { PrimaryButton } from "../../components/common/PrimaryButton";
-import { useFormHandler } from "../../hooks/UseFormHandler";
-import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
-import { LOGIN_FORM_FIELDS } from "../../constants/AuthFields";
+import { validateLoginForm } from "@utils/securityAndValidation/validationUtil";
+import { CustomInput } from "@components/forms/CustomInput";
+import { PrimaryButton } from "@components/forms/PrimaryButton";
+import { useFormHandler } from "@hooks/useFormHandler";
+import { MainLayout } from "@components/layouts/MainLayout";
+import { LOGIN_FORM_FIELDS } from "@constants/AuthFields";
 
 const INITIAL_STATE = {
 	email: "",
@@ -42,6 +41,8 @@ const LoginScreen = () => {
 				password: formData.password,
 			});
 
+			console.log("login result", result);
+
 			//Token has been found in the local hardware
 			if (result?.token) {
 				//User logged in offline
@@ -53,10 +54,13 @@ const LoginScreen = () => {
 					type: isOffline ? "warning" : "success",
 				});
 
-				//Navigate to the home screen
-				setTimeout(() => {
-					navigation.replace("HomeScreen", { userName: result.userName });
-				}, isOffline ? 1200 : 800);
+				// Navigate to the home screen
+				setTimeout(
+					() => {
+						navigation.replace("HomeScreen", { userName: result.userName });
+					},
+					isOffline ? 1200 : 800,
+				);
 			} else {
 				setBanner({
 					message:
@@ -75,13 +79,14 @@ const LoginScreen = () => {
 	};
 
 	return (
-		<AuthScreenLayout
+		<MainLayout
 			title="Welcome Back"
 			subtitle="Sign in to access your SaferMzansi account"
 			banner={banner}
 			navQuestion="Don't have an account"
 			navActionText="Register"
 			onNavPress={() => navigation.navigate("RegistrationScreen")}
+			scrollable={false}
 		>
 			{LOGIN_FORM_FIELDS.map((field) => (
 				<CustomInput
@@ -110,7 +115,7 @@ const LoginScreen = () => {
 
 			{/* Action Button */}
 			<PrimaryButton title="LOGIN" onPress={handleLogin} loading={loading} />
-		</AuthScreenLayout>
+		</MainLayout>
 	);
 };
 

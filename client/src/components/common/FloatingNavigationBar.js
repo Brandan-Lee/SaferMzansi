@@ -5,9 +5,17 @@ import { FontAwesome6 } from "@expo/vector-icons";
 export const FloatingNavigationBar = ({ activeTab = "Home", navigation }) => {
 	const tabs = [
 		{ name: "Home", route: "HomeScreen", icon: "house-user" },
-		{ name: "Contacts", route: "EmergencyContactScreen", icon: "address-book" },
+		{
+			name: "Contacts",
+			route: "EmergencyContactsScreen",
+			icon: "address-book",
+		},
 		{ name: "Vault", route: "VaultScreen", icon: "vault" },
-		{ name: "Support Hub", route: "SupportHubSreen", icon: "hand-holding-heart" },
+		{
+			name: "Support Hub",
+			route: "SupportHubSreen",
+			icon: "hand-holding-heart",
+		},
 		{ name: "Settings", route: "SettingsScreen", icon: "gear" },
 	];
 
@@ -33,10 +41,7 @@ export const FloatingNavigationBar = ({ activeTab = "Home", navigation }) => {
 								color={isActive ? "#6B21A8" : "#9CA3AF"}
 							/>
 							<Text
-								style={[
-									styles.tabLabel,
-									isActive && styles.tabLabelActive,
-								]}
+								style={[styles.tabLabel, isActive && styles.tabLabelActive]}
 							>
 								{tab.name}
 							</Text>

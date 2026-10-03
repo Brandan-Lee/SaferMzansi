@@ -1,10 +1,10 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { AppHeader } from "../../components/common/AppHeader";
-import { FloatingNavigationBar } from "../../components/common/FloatingNavigationBar";
-import { ProtectionRadar } from "../../components/home/ProtectionRadar";
-import { SafetyToolCard } from "../../components/home/SafetyToolCard";
-import { decryptData } from "../../utils/SecurityUtil";
+import { StyleSheet, Text, View } from "react-native";
+import { FloatingNavigationBar } from "@components/common/FloatingNavigationBar";
+import { ProtectionRadar } from "@components/home/ProtectionRadar";
+import { SafetyToolCard } from "@components/home/SafetyToolCard";
+import { decryptData } from "@utils/securityAndValidation/securityUtil";
+import { MainLayout } from "@components/layouts/MainLayout";
 
 const QUICK_ACTIONS = [
 	{
@@ -32,7 +32,7 @@ const QUICK_ACTIONS = [
 		icon: "users",
 		color: "#3B82F6",
 		bg: "#EFF6FF",
-		route: "EmergencyContactScreen",
+		route: "EmergencyContactsScreen",
 	},
 	{
 		id: "vault",
@@ -54,46 +54,51 @@ const RADIAL_ACTIONS = [
 
 const HomeScreen = ({ navigation, route }) => {
 	const rawName = route?.params?.userName;
-	const decryptedName = rawName ? decryptData(rawName) : "User";
+	const decryptedName = rawName ? decryptData(rawName) : "Brandan-Lee";
 
 	return (
-		<ScrollView style={styles.container}>
-			<AppHeader title={`Welcome Back ${decryptedName}`} />
+		<View style={styles.screenContainer}>
+			<MainLayout title={`Welcome back ${decryptedName}`}>
+				<View style={styles.content}>
+					{/* Protection Radar Component */}
+					<ProtectionRadar actions={RADIAL_ACTIONS} navigation={navigation} />
 
-			<View style={styles.content}>
-				{/* Protection Radar Component */}
-				<ProtectionRadar actions={RADIAL_ACTIONS} navigation={navigation} />
-
-				{/* Safety Tools Grid */}
-				<View style={styles.toolsSection}>
-					<Text style={styles.sectionTitle}>Safety Tools</Text>
-					<View style={styles.grid}>
-						{QUICK_ACTIONS.map((item) => (
-							<SafetyToolCard
-								key={item.id}
-								item={item}
-								onPress={() => item.route && navigation.navigate(item.route)}
-							/>
-						))}
+					{/* Safety Tools Grid */}
+					<View style={styles.toolsSection}>
+						<Text style={styles.sectionTitle}>Safety Tools</Text>
+						<View style={styles.grid}>
+							{QUICK_ACTIONS.map((item) => (
+								<SafetyToolCard
+									key={item.id}
+									item={item}
+									onPress={() => item.route && navigation.navigate(item.route)}
+								/>
+							))}
+						</View>
 					</View>
-				</View>
-			</View>
 
-			<FloatingNavigationBar activeTab="Home" navigation={navigation} />
-		</ScrollView>
+					<Text style={styles.footerTagline}>
+						Your safety. Your privacy. Our priority.
+					</Text>
+				</View>
+			</MainLayout>
+
+			{/* Fixed Floating Navigation Bar */}
+			<View style={styles.navWrapper}>
+				<FloatingNavigationBar activeTab="Home" navigation={navigation} />
+			</View>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
+	screenContainer: {
 		flex: 1,
-		backgroundColor: "#F8EEFF",
+		position: "relative",
 	},
 	content: {
-		flex: 1,
 		paddingHorizontal: 20,
-		paddingBottom: 90,
-		justifyContent: "space-between",
+		paddingBottom: 110,
 		alignItems: "center",
 	},
 	toolsSection: {
@@ -111,6 +116,21 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		rowGap: 10,
 		width: "100%",
+	},
+	footerTagline: {
+		marginTop: 20,
+		fontSize: 12,
+		fontWeight: "600",
+		color: "#6B21A8",
+		textAlign: "center",
+	},
+	navWrapper: {
+		position: "absolute",
+		bottom: 20,
+		left: 0,
+		right: 0,
+		alignItems: "center",
+		zIndex: 99,
 	},
 });
 

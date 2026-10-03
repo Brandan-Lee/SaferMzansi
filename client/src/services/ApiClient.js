@@ -1,8 +1,9 @@
 import * as SecureStore from "expo-secure-store";
-import { isTokenExpired } from "../utils/auth/AuthTokenUtil";
+import { isTokenExpired } from "../utils/auth/authTokenUtil";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const TOKEN_KEY = "user_jwt_token";
+const REQUEST_TIMEOUT_MS = 15000;
 
 //Helper service method that allows easier endpoint creation
 export const postApi = async (endpoint, body) => {
@@ -11,9 +12,14 @@ export const postApi = async (endpoint, body) => {
 	//Verify if the users offline JWT token has expired or not
 	if (token && !endpoint.includes("/users") && isTokenExpired(token)) {
 		await SecureStore.deleteItemAsync(TOKEN_KEY);
-		throw new Error("Your session has expired. Please log in again when online");
+		throw new Error(
+			"Your session has expired. Please log in again when online",
+		);
 	}
-	
+
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
 	try {
 		//POST Call
 		const response = await fetch(`${API_URL}${endpoint}`, {
@@ -22,8 +28,8 @@ export const postApi = async (endpoint, body) => {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(body),
+			signal: controller.signal,
 		});
-
 
 		const rawText = await response.text();
 		try {
@@ -55,8 +61,13 @@ export const postApi = async (endpoint, body) => {
 			ok: false,
 			status: 0,
 			data: null,
-			error: "Network connection failed",
+			error:
+				controller.signal.aborted
+					? "The request timed out. Please try again."
+					: "Network connection failed",
 		};
+	} finally {
+		clearTimeout(timeoutId);
 	}
 };
 
@@ -71,10 +82,7 @@ export const safeApiCall = async (apiFunction, fallbackErrorMessage) => {
 				success: false,
 				status: response?.status,
 				data: response?.data,
-				error:
-					response?.data?.error ||
-					response?.error ||
-					fallbackErrorMessage,
+				error: response?.data?.error || response?.error || fallbackErrorMessage,
 			};
 		}
 

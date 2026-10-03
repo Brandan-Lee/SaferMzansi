@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validateField } from "../utils/ValidationUtil";
+import { validateField } from "@utils/securityAndValidation/validationUtil";
 
 export const useFormHandler = (initialState) => {
 	const [formData, setFormData] = useState(initialState);

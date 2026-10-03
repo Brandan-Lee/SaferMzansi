@@ -1,10 +1,10 @@
-import { LOCAL_USERS_SCHEMA } from "./schemas/LocalUsersSchema.js";
-import { LOCAL_INCIDENTS_SCHEMA } from "./schemas/LocalIncidentsSchema.js";
-import { LOCAL_INCIDENT_LOCATIONS_SCHEMA } from "./schemas/LocalIncidentLocationsSchema.js";
-import { LOCAL_EVIDENCE_VAULT_SCHEMA } from "./schemas/LocalEvidenceVaultSchema.js";
-import { LOCAL_EMERGENCY_CONTACTS_SCHEMA } from "./schemas/LocalEmergencyContactsSchema.js";
-import { DECOY_SCHEMA } from "./schemas/DecoySchema.js";
-import { logLocalUsersDatabase } from "./UserRepository.js";
+import { logLocalUsersDatabase } from "./repositories/userRepository";
+import { DECOY_SCHEMA } from "./schemas/decoySchema";
+import { LOCAL_EMERGENCY_CONTACTS_SCHEMA } from "./schemas/localEmergencyContactsSchema";
+import { LOCAL_EVIDENCE_VAULT_SCHEMA } from "./schemas/localEvidenceVaultSchema";
+import { LOCAL_INCIDENT_LOCATIONS_SCHEMA } from "./schemas/localIncidentLocationsSchema";
+import { LOCAL_INCIDENTS_SCHEMA } from "./schemas/localIncidentsSchema";
+import { LOCAL_USERS_SCHEMA } from "./schemas/localUsersSchema";
 
 const TABLE_SCHEMAS = [
 	LOCAL_USERS_SCHEMA,

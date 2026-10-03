@@ -1,4 +1,4 @@
-import { COMMON_SYNC_COLUMNS, createSyncIndex } from "../constants";
+import { COMMON_SYNC_COLUMNS, createSyncIndex } from "../dbConstatns";
 
 export const LOCAL_EMERGENCY_CONTACTS_SCHEMA = `
     CREATE TABLE IF NOT EXISTS Local_Emergency_Contacts (

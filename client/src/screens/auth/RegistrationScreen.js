@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useNetStatus } from "../../utils/NetStatus";
+import { useNetStatus } from "@utils/network/netStatus";
 import Feather from "@expo/vector-icons/Feather";
-import { CustomInput } from "../../components/common/CustomInput";
-import { PrimaryButton } from "../../components/common/PrimaryButton";
-import { validateRegistrationForm } from "../../utils/ValidationUtil";
-import { useFormHandler } from "../../hooks/UseFormHandler";
-import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
-import { REGISTRATION_FORM_FIELDS } from "../../constants/AuthFields";
-import { sendOtpEmail } from "../../services/auth/EmailService";
-import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
-import PasswordStrengthMeter from "../../components/common/PasswordStrengthMeter";
+import { CustomInput } from "@components/forms/CustomInput";
+import { PrimaryButton } from "@components/forms/PrimaryButton";
+import { validateRegistrationForm } from "@utils/securityAndValidation/validationUtil";
+import { useFormHandler } from "@hooks/useFormHandler";
+import { MainLayout } from "@components/layouts/MainLayout";
+import { sendOtpEmail } from "@services/auth/otpService";
+import { checkNetworkAndNotify } from "@utils/network/networkGuard";
+import PasswordStrengthMeter from "@components/forms/PasswordStrengthMeter";
+import { REGISTRATION_FORM_FIELDS } from "@constants/AuthFields";
 
 const INITIAL_STATE = {
 	name: "",
@@ -101,7 +101,6 @@ const RegistrationScreen = () => {
 					},
 				});
 			}, 800);
-			
 		} catch (error) {
 			setBanner({
 				message:
@@ -114,7 +113,7 @@ const RegistrationScreen = () => {
 	};
 
 	return (
-		<AuthScreenLayout
+		<MainLayout
 			title="Create Account"
 			subtitle="Join SaferMzansi and take control of your safety"
 			banner={banner}
@@ -192,7 +191,7 @@ const RegistrationScreen = () => {
 				onPress={handleRegister}
 				loading={loading}
 			/>
-		</AuthScreenLayout>
+		</MainLayout>
 	);
 };
 

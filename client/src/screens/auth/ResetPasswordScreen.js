@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-import { CustomInput } from "../../components/common/CustomInput";
-import { PrimaryButton } from "../../components/common/PrimaryButton";
-import { useFormHandler } from "../../hooks/UseFormHandler";
-import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
-import { RESET_PASSWORD_FORM_FIELDS } from "../../constants/AuthFields";
-import PasswordStrengthMeter from "../../components/common/PasswordStrengthMeter";
-import { validateResetPasswordForm } from "../../utils/ValidationUtil";
+import { CustomInput } from "@components/forms/CustomInput";
+import { PrimaryButton } from "@components/forms/PrimaryButton";
+import { useFormHandler } from "@hooks/useFormHandler";
+import { MainLayout } from "@components/layouts/MainLayout";
+import { RESET_PASSWORD_FORM_FIELDS } from "@constants/AuthFields";
+import PasswordStrengthMeter from "@components/forms/PasswordStrengthMeter";
+import { validateResetPasswordForm } from "@utils/securityAndValidation/validationUtil";
 import { useSQLiteContext } from "expo-sqlite";
-import { resetPasswordUser } from "../../services/auth/UserService";
-import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
+import { resetPasswordUser } from "@services/auth/authService";
+import { checkNetworkAndNotify } from "@utils/network/networkGuard";
 import { useNetInfo } from "@react-native-community/netinfo";
 
 const INITIAL_STATE = {
@@ -91,10 +91,11 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 	};
 
 	return (
-		<AuthScreenLayout
+		<MainLayout
 			title="Reset Password"
 			subtitle="Create a new password for your account"
 			banner={banner}
+			scrollable={false}
 		>
 			{RESET_PASSWORD_FORM_FIELDS.map((field) => (
 				<View key={field.key}>
@@ -141,7 +142,7 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 				<Feather name="chevron-left" size={20} color="#6B21A8" />
 				<Text style={styles.backText}>Back to Login</Text>
 			</TouchableOpacity>
-		</AuthScreenLayout>
+		</MainLayout>
 	);
 };
 

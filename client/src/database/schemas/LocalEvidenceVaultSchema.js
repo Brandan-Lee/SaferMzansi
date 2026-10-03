@@ -1,4 +1,4 @@
-import { createSyncIndex } from "../constants";
+import { createSyncIndex } from "../dbConstatns";
 
 export const LOCAL_EVIDENCE_VAULT_SCHEMA = `
     CREATE TABLE IF NOT EXISTS Local_Evidence_Vault (
