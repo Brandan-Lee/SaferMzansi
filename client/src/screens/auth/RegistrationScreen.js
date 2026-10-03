@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth } from "../../context/AuthContext";
 import { useNetStatus } from "../../utils/NetStatus";
 import Feather from "@expo/vector-icons/Feather";
 import { CustomInput } from "../../components/common/CustomInput";
@@ -10,7 +9,7 @@ import { validateRegistrationForm } from "../../utils/ValidationUtil";
 import { useFormHandler } from "../../hooks/UseFormHandler";
 import { AuthScreenLayout } from "../../components/auth/AuthScreenLayout";
 import { REGISTRATION_FORM_FIELDS } from "../../constants/AuthFields";
-import { sendOtpEmail } from "../../services/EmailService";
+import { sendOtpEmail } from "../../services/auth/EmailService";
 import { checkNetworkAndNotify } from "../../utils/NetworkGuard";
 import PasswordStrengthMeter from "../../components/common/PasswordStrengthMeter";
 
@@ -31,8 +30,6 @@ const RegistrationScreen = () => {
 	const [banner, setBanner] = useState(null);
 	const [agreed, setAgreed] = useState(false);
 	const [loading, setIsLoading] = useState(false);
-
-	// State to track if the password field is focused for showing the password strength meter
 	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
 	//Method that helps to handle when the user agrees to the terms and conditions
@@ -67,39 +64,42 @@ const RegistrationScreen = () => {
 		}
 
 		//The user was not online when registering
-		checkNetworkAndNotify(isOnline, banner);
+		if (!checkNetworkAndNotify(isOnline, setBanner)) {
+			return;
+		}
 		setIsLoading(true);
 
 		try {
 			const sanitizedEmail = formData.email.trim().toLowerCase();
 			const otpResponse = await sendOtpEmail(sanitizedEmail);
 
-			if (otpResponse?.error) {
+			if (!otpResponse?.success) {
 				setBanner({
 					message:
 						otpResponse?.error ||
-						"Failed to send a verification code. Please request a new one on the next screen",
+						"Failed to send a verification code. Please try again.",
 					type: "error",
 				});
-			} else {
-				setBanner({
-					message: "Sending verification code...",
-					type: "success",
-				});
+				return;
 			}
+
+			setBanner({
+				message: "Sending verification code...",
+				type: "success",
+			});
 
 			setTimeout(() => {
 				navigation.navigate("OTPScreen", {
-				email: sanitizedEmail,
-				isRegistration: true,
-				pendingUserData: {
-					name: formData.name,
-					surname: formData.surname,
 					email: sanitizedEmail,
-					phoneNum: formData.phone,
-					password: formData.password,
-				},
-			});
+					isRegistration: true,
+					pendingUserData: {
+						name: formData.name,
+						surname: formData.surname,
+						email: sanitizedEmail,
+						phoneNum: formData.phone,
+						password: formData.password,
+					},
+				});
 			}, 800);
 			
 		} catch (error) {
@@ -120,7 +120,7 @@ const RegistrationScreen = () => {
 			banner={banner}
 			navQuestion="Already have an account? "
 			navActionText="Login"
-			onNavPress={() => navigation.navigate("LoginScreen")}
+			onNavPress={() => navigation.replace("LoginScreen")}
 		>
 			{REGISTRATION_FORM_FIELDS.map((field) => (
 				<View key={field.key}>

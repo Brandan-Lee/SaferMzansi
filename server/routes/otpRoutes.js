@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { sendOtpEmail, verifyOtpCode } = require("../services/OtpService");
-const { updateUserVerificationInSupabase } = require("../services/UserService");
 const { validateBody } = require("../middleware/ValidateRequest");
 
 const REQUIRED_SEND_OTP_FIELDS = ["email"];
@@ -9,7 +8,7 @@ const REQUIRED_SEND_OTP_FIELDS = ["email"];
 const REQUIRED_VERIFY_OTP_FIELDS = ["email", "otp"];
 
 const handleOtpError = (res, error, actionMessage) => {
-	console.error(`Error during ${actionMessage}. Please try again`);
+	console.error(`Error during ${actionMessage}.`, error);
 	return res.status(500).json({
 		success: false,
 		error: error?.message || `Error occurred while ${actionMessage}`,
@@ -43,7 +42,8 @@ router.post(
 		try {
 			const { email, otp } = req.body;
 			const sanitizedEmail = email.trim().toLowerCase();
-			const result = await verifyOtpCode(sanitizedEmail, otp);
+			const purpose = req.body.purpose || "verification";
+			const result = await verifyOtpCode(sanitizedEmail, otp, purpose);
 
 			if (!result || !result.success) {
 				return res.status(result?.status || 400).json({
@@ -56,6 +56,7 @@ router.post(
 				success: true,
 				message: "OTP verified successfully",
 				is_verified: true,
+				...(result.resetToken && { reset_token: result.resetToken }),
 			});
 		} catch (error) {
 			return handleOtpError(res, error, "verifying OTP");

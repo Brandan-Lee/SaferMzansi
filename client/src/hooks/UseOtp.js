@@ -17,6 +17,7 @@ export const useOtp = (length = 6) => {
 			const newOtp = Array(length)
 				.fill("")
 				.map((_, i) => pastedDigits[i] || "");
+
 			setOtp(newOtp);
 			const targetIndex = Math.min(digits.length, length - 1);
 			focusInput(targetIndex);
@@ -48,6 +49,7 @@ export const useOtp = (length = 6) => {
 	//Method to handle the reset of the OTP input
 	const resetOtp = () => setOtp(Array(length).fill(""));
 
+	//Data that has to be returned
 	return {
 		otp,
 		otpString: otp.join(""),

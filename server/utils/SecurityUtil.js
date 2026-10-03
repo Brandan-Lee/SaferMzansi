@@ -19,10 +19,14 @@ const hashPassword = async (plainPassword) => {
 
 //Method to verify the argon2id hashed password
 const verifyPassword = async (storedHash, plainPassword) => {
+
+    if (!storedHash || !plainPassword) {
+        return false;
+    }
+
     try {
         return await argon2.verify(storedHash, plainPassword);
     } catch (error) {
-        console.error("Error verifying password hash:", error);
         return false;
     }
 };
