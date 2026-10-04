@@ -29,7 +29,7 @@ export const AuthScreenLayout = ({
 			end={{ x: 0, y: 1 }}
 			style={styles.gradient}
 		>
-			<SafeAreaView style={styles.container}>
+			<SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
 				<KeyboardAvoidingView
 					style={styles.flexOne}
 					behavior={Platform.OS === "ios" ? "padding" : "height"}

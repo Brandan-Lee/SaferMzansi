@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const ForgotPasswordScreen = () => {
+const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.text}>this is the forgot Profile page</Text>
+        <Text style={styles.text}>this is the Profile page</Text>
       </View>
     </SafeAreaView>
   );

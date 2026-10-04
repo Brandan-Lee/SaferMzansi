@@ -116,7 +116,7 @@ const canRequestOtp = (email) => {
 
 const createOtpMailOptions = (email, purpose = "verification", userId = null) => {
 	const sanitizedEmail = sanitizeEmail(email);
-	const otp = crypto.randomInt(100000, 1000000).toString();
+	const otp = crypto.randomInt(100000, 999999).toString();
 
 	otpStore.set(sanitizedEmail, {
 		otp,
