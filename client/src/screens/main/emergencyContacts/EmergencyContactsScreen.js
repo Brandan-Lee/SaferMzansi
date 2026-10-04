@@ -25,7 +25,7 @@ export const MOCK_CONTACTS = [
     { id: 'mock-4', firstName: 'Jacques', surname: 'van Tonder', name: 'Jacques van Tonder', phone: '0615550123', email: 'jacquesvantond@gmail.com' },
 ];
 
-export default function EmergencyContactsScreen({ contacts = [], onAddPress, onBack, onContactPress }) {
+function EmergencyContactsScreen({ contacts = [], onAddPress, navigation, onContactPress }) {
     const renderItem = ({ item }) => (
         <TouchableOpacity
             style={styles.card}
@@ -49,7 +49,7 @@ export default function EmergencyContactsScreen({ contacts = [], onAddPress, onB
         <LinearGradient colors={['#D9D9D9', '#DCCBF3']} style={styles.container}>
             <SafeAreaView style={styles.safeArea}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={onBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                         <Ionicons name="chevron-back" size={24} color={PURPLE} />
                     </TouchableOpacity>
                     <Text style={styles.title}>Emergency contacts</Text>
@@ -124,3 +124,5 @@ const styles = StyleSheet.create({
     },
     buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
 });
+
+export default EmergencyContactsScreen;

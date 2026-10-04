@@ -59,6 +59,7 @@ const HomeScreen = ({ navigation, route }) => {
 	return (
 		<View style={styles.screenContainer}>
 			<MainLayout title={`Welcome back ${decryptedName}`}>
+
 				<View style={styles.content}>
 					{/* Protection Radar Component */}
 					<ProtectionRadar actions={RADIAL_ACTIONS} navigation={navigation} />
