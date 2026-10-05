@@ -49,7 +49,7 @@ const RADIAL_ACTIONS = [
 	{ id: "lock", icon: "shield-off", route: "DecoyScreen", angle: 225 },
 	{ id: "map", icon: "map-pin", route: "LocationScreen", angle: 315 },
 	{ id: "alert", icon: "alert-triangle", route: "SOSScreen", angle: 135 },
-	{ id: "user", icon: "users", route: "EmergencyContactScreen", angle: 45 },
+	{ id: "user", icon: "users", route: "EmergencyContactsScreen", angle: 45 },
 ];
 
 const HomeScreen = ({ navigation, route }) => {

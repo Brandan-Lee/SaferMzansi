@@ -57,7 +57,7 @@ const LoginScreen = () => {
 				// Navigate to the home screen
 				setTimeout(
 					() => {
-						navigation.replace("HomeScreen", { userName: result.userName });
+						navigation.replace("HomeScreen", { userName: result.userName, userId: result.userId });
 					},
 					isOffline ? 1200 : 800,
 				);

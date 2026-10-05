@@ -35,9 +35,11 @@ const register = async (req, res) => {
 		if (error.statusCode === 409 || error.code === "23505") {
 			console.error("Error during register user:", error);
 			return res.status(409).json({
-				error: "User alreayd exists the system",
+				error: "User already exists in the system",
 			});
 		}
+		console.error("Fatal exception during registration:", error);
+		return res.status(500).json({ error: "Failed to register user" });
 	}
 };
 

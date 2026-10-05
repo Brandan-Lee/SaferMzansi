@@ -11,17 +11,24 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useSQLiteContext } from 'expo-sqlite';
 
 const PURPLE = '#5E0A9E';
 const RED = '#C62828';
 
-export default function ContactDetailsScreen({ contact, onBack, onDelete }) {
+export default function ContactDetailsScreen() {
+    const navigation = useNavigation();
+    const route = useRoute();
+    const db = useSQLiteContext();
+    const contact = route.params?.contact;
+
     if (!contact) {
         return (
             <LinearGradient colors={['#D9D9D9', '#DCCBF3']} style={styles.container}>
                 <SafeAreaView style={styles.safe}>
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={onBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                             <Ionicons name="chevron-back" size={24} color={PURPLE} />
                         </TouchableOpacity>
                         <Text style={styles.title}>Contact details</Text>
@@ -32,11 +39,9 @@ export default function ContactDetailsScreen({ contact, onBack, onDelete }) {
         );
     }
 
-    // Older contacts may only have a full name, so split it if needed
-    const [fallbackFirst, ...rest] = (contact.name || '').split(' ');
-    const firstName = contact.firstName || fallbackFirst || '';
-    const surname = contact.surname || rest.join(' ');
-    const fullName = contact.name || `${firstName} ${surname}`.trim();
+    const firstName = contact.firstName || '';
+    const surname = contact.surname || '';
+    const fullName = contact.name || `${firstName} ${surname}`.trim() || 'Emergency Contact';
 
     const initials = [firstName, surname]
         .filter(Boolean)
@@ -51,16 +56,27 @@ export default function ContactDetailsScreen({ contact, onBack, onDelete }) {
         if (contact.email) Linking.openURL(`mailto:${contact.email}`);
     };
 
-    const handleDelete = () => {
-        Alert.alert('Delete contact', `Remove ${fullName} from your emergency contacts?`, [
-            { text: 'Cancel', style: 'cancel' },
-            {
-                text: 'Delete',
-                style: 'destructive',
-                onPress: () => onDelete && onDelete(contact.id),
-            },
-        ]);
-    };
+    // const handleDelete = () => {
+    //     Alert.alert('Delete contact', `Remove ${fullName} from your emergency contacts?`, [
+    //         { text: 'Cancel', style: 'cancel' },
+    //         {
+    //             text: 'Delete',
+    //             style: 'destructive',
+    //             onPress: async () => {
+    //                 try {
+    //                     const contactId = contact.contact_id || contact.id;
+    //                     await db.runAsync(
+    //                         `UPDATE Local_Emergency_Contacts SET is_deleted = 1, is_synched = 0 WHERE contact_id = ?`,
+    //                         [contactId]
+    //                     );
+    //                     navigation.goBack();
+    //                 } catch (error) {
+    //                     Alert.alert('Error', 'Failed to delete contact.');
+    //                 }
+    //             },
+    //         },
+    //     ]);
+    // };
 
     const renderRow = (icon, label, value) => (
         <View style={styles.row}>
@@ -81,7 +97,7 @@ export default function ContactDetailsScreen({ contact, onBack, onDelete }) {
             <SafeAreaView style={styles.safe}>
                 <ScrollView contentContainerStyle={styles.scroll}>
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={onBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                             <Ionicons name="chevron-back" size={24} color={PURPLE} />
                         </TouchableOpacity>
                         <Text style={styles.title}>Contact details</Text>
@@ -125,10 +141,10 @@ export default function ContactDetailsScreen({ contact, onBack, onDelete }) {
                             <Text style={styles.secondaryText}>Email</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.deleteButton} activeOpacity={0.7} onPress={handleDelete}>
+                    {/* <TouchableOpacity style={styles.deleteButton} activeOpacity={0.7} onPress={handleDelete}>
                         <Ionicons name="trash-outline" size={18} color={RED} />
                         <Text style={styles.deleteText}>Delete contact</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </SafeAreaView>
         </LinearGradient>
