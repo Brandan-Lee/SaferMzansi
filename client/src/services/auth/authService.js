@@ -72,8 +72,6 @@ export const registerUser = async (db, userData) => {
 		"Server registration failed. Please try again",
 	);
 
-	console.log("register post call", result);
-
 	if (!result?.success || !result?.data?.token) {
 		console.warn("[User Service] Backend register error:", result?.error);
 		throw new Error(result?.error || "Server registration failed.");
@@ -153,7 +151,6 @@ export const loginUser = async (db, email, password) => {
 			});
 
 			await markUserAsSynched(db, serverUser.user_id);
-			localUser = await findUserByEmail(db, email);
 		} else if (localUser?.user_id) {
 			await markUserAsUnSynched(db, localUser.user_id);
 		}

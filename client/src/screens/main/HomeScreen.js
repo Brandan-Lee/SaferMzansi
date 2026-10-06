@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { FloatingNavigationBar } from "@components/common/FloatingNavigationBar";
+import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
 import { SafetyToolCard } from "@components/home/SafetyToolCard";
 import { decryptData } from "@utils/securityAndValidation/securityUtil";
-import { MainLayout } from "@components/layouts/MainLayout";
+import { useAuth } from "@context/AuthContext";
+import AuthLayout from "@components/layouts/AuthLayout";
 
 const QUICK_ACTIONS = [
 	{
@@ -52,14 +53,26 @@ const RADIAL_ACTIONS = [
 	{ id: "user", icon: "users", route: "EmergencyContactsScreen", angle: 45 },
 ];
 
-const HomeScreen = ({ navigation, route }) => {
-	const rawName = route?.params?.userName;
-	const decryptedName = rawName ? decryptData(rawName) : "Brandan-Lee";
+const HomeScreen = ({ navigation }) => {
+	const { user } = useAuth();
+
+	const resolveDisplayName = (name) => {
+		if (!name) {
+			return "User";
+		}
+
+		try {
+			return decryptData(name);
+		} catch (error) {
+			return name;
+		}
+	};
+
+	const displayName = resolveDisplayName(user.userName);
 
 	return (
 		<View style={styles.screenContainer}>
-			<MainLayout title={`Welcome back ${decryptedName}`}>
-
+			<AuthLayout title={`Welcome back ${displayName}`}>
 				<View style={styles.content}>
 					{/* Protection Radar Component */}
 					<ProtectionRadar actions={RADIAL_ACTIONS} navigation={navigation} />
@@ -82,11 +95,11 @@ const HomeScreen = ({ navigation, route }) => {
 						Your safety. Your privacy. Our priority.
 					</Text>
 				</View>
-			</MainLayout>
+			</AuthLayout>
 
 			{/* Fixed Floating Navigation Bar */}
 			<View style={styles.navWrapper}>
-				<FloatingNavigationBar activeTab="Home" navigation={navigation} />
+				<NavigationBar activeTab="Home" navigation={navigation} />
 			</View>
 		</View>
 	);

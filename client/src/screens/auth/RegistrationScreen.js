@@ -7,7 +7,7 @@ import { CustomInput } from "@components/forms/CustomInput";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { validateRegistrationForm } from "@utils/securityAndValidation/validationUtil";
 import { useFormHandler } from "@hooks/useFormHandler";
-import { MainLayout } from "@components/layouts/MainLayout";
+import { MainLayout } from "@components/layouts/AuthLayout";
 import { sendOtpEmail } from "@services/auth/otpService";
 import { checkNetworkAndNotify } from "@utils/network/networkGuard";
 import PasswordStrengthMeter from "@components/forms/PasswordStrengthMeter";

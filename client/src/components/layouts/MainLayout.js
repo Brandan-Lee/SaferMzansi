@@ -1,135 +1,108 @@
 import React from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	TouchableOpacity,
-	ScrollView,
-	KeyboardAvoidingView,
-	Platform,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AppHeader } from "../common/AppHeader";
-import { AlertBadge } from "../common/AlertBadge";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { AlertBadge } from "@components/common/AlertBadge";
+import { NavigationBar } from "@components/common/NavigationBar";
 
-export const MainLayout = ({
+const PURPLE = "#5E0A9E";
+
+const MainLayout = ({
 	title,
-	subtitle,
-	banner,
+	onBack,
 	children,
-	navQuestion,
-	navActionText,
-	onNavPress,
-	scrollable = true,
+	banner,
+	tab,
+	navigation,
+	actionButton,
 }) => {
-	const ContainerView = scrollable ? ScrollView : View;
-
 	return (
-		<LinearGradient
-			colors={["#D9D9D9", "#DECDFA"]}
-			start={{ x: 0, y: 0 }}
-			end={{ x: 0, y: 1 }}
-			style={styles.gradient}
-		>
-			<SafeAreaView style={styles.container} edges={["top", "bottom"]}>
-				<KeyboardAvoidingView
-					style={styles.flexOne}
-					behavior={Platform.OS === "ios" ? "padding" : "height"}
-				>
-					<ContainerView
-						style={!scrollable && styles.flexOne}
-						contentContainerStyle={
-							scrollable ? styles.scrollContent : undefined
-						}
-						showsVerticalScrollIndicator={false}
-						keyboardShouldPersistTaps="handled"
-					>
-						<View style={scrollable ? styles.scrollBody : styles.nonScrollBody}>
-							<View style={styles.mainBlock}>
-								<AppHeader title={title} subtitle={subtitle} />
-
-								{banner?.message ? (
-									<AlertBadge message={banner.message} type={banner.type} />
-								) : null}
-
-								<View
-									style={
-										scrollable
-											? styles.contentContainer
-											: styles.nonScrollContent
-									}
+		<LinearGradient colors={["#D9D9D9", "#DCCBF3"]} style={styles.container}>
+			<SafeAreaView style={styles.safeArea} edges={["top"]}>
+				<View style={styles.innerContainer}>
+					{title && (
+						<View style={styles.header}>
+							{onBack && (
+								<TouchableOpacity
+									onPress={onBack}
+									hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
 								>
-									{children}
-								</View>
-
-								{navQuestion && navActionText ? (
-									<View style={styles.navRow}>
-										<Text style={styles.navText}>{navQuestion}</Text>
-										<TouchableOpacity onPress={onNavPress} activeOpacity={0.7}>
-											<Text style={styles.navLink}> {navActionText}</Text>
-										</TouchableOpacity>
-									</View>
-								) : null}
-							</View>
-
-							<Text style={styles.footerText}>
-								Your safety. Your privacy. Our priority.
-							</Text>
+									<Ionicons name="chevron-back" size={24} color={PURPLE} />
+								</TouchableOpacity>
+							)}
+							<Text style={styles.title}>{title}</Text>
 						</View>
-					</ContainerView>
-				</KeyboardAvoidingView>
+					)}
+
+					{banner?.message ? (
+						<AlertBadge message={banner.message} type={banner.type} />
+					) : null}
+
+					<View style={styles.content}>{children}</View>
+
+					{actionButton ? (
+						<TouchableOpacity
+							style={[styles.button, actionButton.style]}
+							activeOpacity={actionButton.activeOpacity || 0.8}
+							onPress={actionButton.onPress}
+						>
+							{actionButton.icon && (
+								<Ionicons
+									name={actionButton.icon}
+									size={24}
+									color={actionButton.iconColor || "#fff"}
+								/>
+							)}
+							<Text style={styles.buttonText}>{actionButton.label}</Text>
+						</TouchableOpacity>
+					) : null}
+				</View>
 			</SafeAreaView>
+
+			{/* Render navigation bar outside SafeAreaView to span full edge-to-edge width */}
+			<View style={styles.navWrapper}>
+				<NavigationBar activeTab={tab} navigation={navigation} />
+			</View>
 		</LinearGradient>
 	);
 };
 
-const PURPLE = "#6B21A8";
-const PURPLE_DARK = "#581C87";
-
 const styles = StyleSheet.create({
-	gradient: { flex: 1 },
-	container: { flex: 1, backgroundColor: "transparent" },
-	flexOne: { flex: 1 },
-	scrollContent: {
-		flexGrow: 1,
-		paddingHorizontal: 28,
-		paddingTop: 16,
-		paddingBottom: 24,
-	},
-	scrollBody: {
+	container: { flex: 1 },
+	safeArea: { flex: 1 },
+	innerContainer: {
 		flex: 1,
-		justifyContent: "space-between",
+		paddingHorizontal: 24,
+		paddingBottom: 70, // Leaves space so content isn't hidden behind the bottom bar
 	},
-	nonScrollBody: {
-		flex: 1,
-		justifyContent: "center", // Keeps the login form centered and footer near the actions
-		paddingHorizontal: 28,
-		paddingTop: 16,
-		paddingBottom: 24,
-	},
-	mainBlock: {
-		width: "100%",
-	},
-	contentContainer: { width: "100%" },
-	nonScrollContent: {
-		width: "100%",
-	},
-	navRow: {
+	header: {
 		flexDirection: "row",
-		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 20,
-		marginBottom: 12,
+		marginTop: 12,
+		marginBottom: 20,
+		gap: 10,
 	},
-	navText: { fontSize: 14, color: "#6B7280" },
-	navLink: { fontSize: 14, color: PURPLE, fontWeight: "700" },
-	footerText: {
-		fontSize: 12,
-		color: PURPLE_DARK,
-		textAlign: "center",
-		fontWeight: "600",
-		marginTop: 16,
-		paddingVertical: 8,
+	title: { fontSize: 22, fontWeight: "700", color: PURPLE },
+	content: { flex: 1 },
+	button: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: PURPLE,
+		borderRadius: 8,
+		paddingVertical: 12,
+		marginBottom: 16,
+		gap: 12,
+	},
+	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
+	navWrapper: {
+		position: "absolute",
+		bottom: 0,
+		left: 0,
+		right: 0,
+		width: "100%",
 	},
 });
+
+export default MainLayout;

@@ -7,7 +7,7 @@ import { useNetStatus } from "@utils/network/netStatus";
 import { useFormHandler } from "@hooks/useFormHandler";
 import { checkNetworkAndNotify } from "@utils/network/networkGuard";
 import { validateForgotPasswordForm } from "@utils/securityAndValidation/validationUtil";
-import { MainLayout } from "@components/layouts/MainLayout";
+import { MainLayout } from "@components/layouts/AuthLayout";
 import { FORGOT_PASSWORD_FORM_FIELDS } from "@constants/AuthFields";
 import { CustomInput } from "@components/forms/CustomInput";
 import { PrimaryButton } from "@components/forms/PrimaryButton";

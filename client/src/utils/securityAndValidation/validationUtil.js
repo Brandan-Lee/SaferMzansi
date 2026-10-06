@@ -83,7 +83,7 @@ export const getPasswordStrength = (password = "") => {
 	};
 
 	return Object.values(checks).filter(Boolean).length;
-}
+};
 
 //Method that helps to validate the form of the registration screen
 export const validateRegistrationForm = (formData, agreed) => {
@@ -92,7 +92,8 @@ export const validateRegistrationForm = (formData, agreed) => {
 
 	//Password strength check. User can only register if their password is very strong
 	if (strenth < 5) {
-		extraErrors.password = "Password must meet all security requirements below to register";
+		extraErrors.password =
+			"Password must meet all security requirements below to register";
 	}
 
 	if (!agreed) {
@@ -111,6 +112,8 @@ export const validateForgotPasswordForm = (formData) => validateForm(formData);
 
 //Method that validates the Reset Password form
 export const validateResetPasswordForm = (formData) => validateForm(formData);
+
+export const validateAddContactForm = (formData) => validateForm(formData);
 
 const normalizeOtpString = (otp) =>
 	Array.isArray(otp) ? otp.join("") : otp?.trim() || "";

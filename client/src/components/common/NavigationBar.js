@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { FontAwesome6 } from "@expo/vector-icons";
 
-export const FloatingNavigationBar = ({ activeTab = "Home", navigation }) => {
+export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 	const tabs = [
 		{ name: "Home", route: "HomeScreen", icon: "house-user" },
 		{

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNetStatus } from "@utils/network/netStatus";
-import { MainLayout } from "@components/layouts/MainLayout";
+import { MainLayout } from "@components/layouts/AuthLayout";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { sendOtpEmail, verifyOtpCode } from "@services/auth/otpService";
 import { forgotPasswordUser } from "@services/auth/authService";
@@ -188,8 +188,6 @@ const OTPScreen = ({ navigation, route }) => {
 				? await forgotPasswordUser(sanitizedEmail)
 				: await sendOtpEmail(sanitizedEmail);
 
-			console.log("OTP response:", response);
-
 			if (response?.error) {
 				throw new Error(response.error);
 			}
@@ -250,17 +248,14 @@ const OTPScreen = ({ navigation, route }) => {
 		}
 
 		setLoadingSpinner(true);
-		console.log("=== [1] OTP VERIFICATION STARTED ===");
 
 		try {
-			console.log("=== [2] CALLING verifyOtpCode ===");
 			const response = await verifyOtpCode(
 				db,
 				sanitizedEmail,
 				otpString,
 				isResetPassword ? "password_reset" : "verification",
 			);
-			console.log("=== [3] verifyOtpCode RESULT ===", response);
 
 			if (!response?.success) {
 				setBanner({
@@ -289,8 +284,6 @@ const OTPScreen = ({ navigation, route }) => {
 					return;
 				}
 
-				console.log("=== [4] CALLING register ===");
-
 				try {
 					const result = await register({
 						name: pendingUserData.name,
@@ -299,7 +292,6 @@ const OTPScreen = ({ navigation, route }) => {
 						phoneNum: pendingUserData.phoneNum,
 						password: pendingUserData.password,
 					});
-					console.log("=== [5] register RESULT ===", result);
 
 					if (result?.token || result?.success) {
 						setBanner({

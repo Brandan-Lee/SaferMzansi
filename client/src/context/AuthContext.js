@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
 				? {
 						userId: userData.userId,
 						email: userData.email,
+						userName: userData.userName,
 					}
 				: null,
 		);
@@ -57,11 +58,6 @@ export const AuthProvider = ({ children }) => {
 			setLoading(true);
 			try {
 				const result = await loginUser(db, email, password);
-
-				if (result?.token) {
-					await SecureStore.setItemAsync(TOKEN_KEY, result.token);
-					updateSession(result.token, result);
-				}
 
 				return result;
 			} finally {
@@ -111,6 +107,7 @@ export const AuthProvider = ({ children }) => {
 			register,
 			login,
 			logout,
+			updateSession,
 			checkAuthSession,
 			isAuthenticated: !!sessionToken,
 		}),

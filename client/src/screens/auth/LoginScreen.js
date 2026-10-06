@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useAuth } from "@context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { validateLoginForm } from "@utils/securityAndValidation/validationUtil";
 import { CustomInput } from "@components/forms/CustomInput";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { useFormHandler } from "@hooks/useFormHandler";
-import { MainLayout } from "@components/layouts/MainLayout";
 import { LOGIN_FORM_FIELDS } from "@constants/AuthFields";
+import AuthLayout from "@components/layouts/AuthLayout";
 
 const INITIAL_STATE = {
 	email: "",
@@ -15,7 +15,7 @@ const INITIAL_STATE = {
 };
 
 const LoginScreen = () => {
-	const { login, loading } = useAuth();
+	const { login, updateSession, loading } = useAuth();
 	const navigation = useNavigation();
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
@@ -41,12 +41,10 @@ const LoginScreen = () => {
 				password: formData.password,
 			});
 
-			console.log("login result", result);
-
 			//Token has been found in the local hardware
 			if (result?.token) {
 				//User logged in offline
-				const isOffline = result.isOffline;
+				const isOffline = result?.isOffline;
 				setBanner({
 					message: isOffline
 						? "Logged in locally (offline). Your data will sync once online."
@@ -57,7 +55,7 @@ const LoginScreen = () => {
 				// Navigate to the home screen
 				setTimeout(
 					() => {
-						navigation.replace("HomeScreen", { userName: result.userName, userId: result.userId });
+						updateSession(result.token, result);
 					},
 					isOffline ? 1200 : 800,
 				);
@@ -68,6 +66,7 @@ const LoginScreen = () => {
 						"User logged in, but failed to sync with the server",
 					type: "error",
 				});
+				return;
 			}
 		} catch (error) {
 			setBanner({
@@ -75,11 +74,12 @@ const LoginScreen = () => {
 					error.message || "An unexpected error occurred. Please try again.",
 				type: "error",
 			});
+			return;
 		}
 	};
 
 	return (
-		<MainLayout
+		<AuthLayout
 			title="Welcome Back"
 			subtitle="Sign in to access your SaferMzansi account"
 			banner={banner}
@@ -115,7 +115,7 @@ const LoginScreen = () => {
 
 			{/* Action Button */}
 			<PrimaryButton title="LOGIN" onPress={handleLogin} loading={loading} />
-		</MainLayout>
+		</AuthLayout>
 	);
 };
 

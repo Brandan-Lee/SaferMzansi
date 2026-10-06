@@ -3,12 +3,13 @@ const AES_SECRET_KEY = process.env.EXPO_PUBLIC_AES_256_SECRET_KEY;
 
 export const generateBlindIndex = (email) => {
 	if (!email) {
-		console.log("Here is an issue");
-		return null;
+		return new Error("An email is needed to generate a blind email index");
 	}
 
 	const normalizedEmail = email.trim().toLowerCase();
-	return CryptoJS.HmacSHA256(normalizedEmail, AES_SECRET_KEY).toString(CryptoJS.enc.Hex);
+	return CryptoJS.HmacSHA256(normalizedEmail, AES_SECRET_KEY).toString(
+		CryptoJS.enc.Hex,
+	);
 };
 
 // Method to encrypt data with AES-256 encryption
@@ -37,4 +38,3 @@ export const encryptPayload = (payload) => {
 		return acc;
 	}, {});
 };
-

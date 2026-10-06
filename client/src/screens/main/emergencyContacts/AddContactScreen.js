@@ -1,224 +1,213 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
+import {
+	StyleSheet,
+	Text,
+	View,
+	KeyboardAvoidingView,
+	ScrollView,
+	Platform,
+	Alert,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { CustomInput } from "@components/forms/CustomInput";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { useFormHandler } from "@hooks/useFormHandler";
 import { CONTACT_FORM_FIELDS } from "@constants/ContactFields";
 import { addEmergencyContact } from "@services/contactService";
 import { useSQLiteContext } from "expo-sqlite";
+import { validateAddContactForm } from "@utils/securityAndValidation/validationUtil";
 import { useAuth } from "@context/AuthContext";
+import MainLayout from "@components/layouts/MainLayout";
 
-const PURPLE = '#5E0A9E';
+const PURPLE = "#5E0A9E";
 
 const INITIAL_STATE = {
-    firstName: "",
-    surname: "",
-    phone: "",
-    email: "",
+	name: "",
+	surname: "",
+	phone: "",
+	email: "",
 };
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_REGEX = /^\+?\d{10,15}$/;
+const AddContactScreen = ({ navigation }) => {
+	const db = useSQLiteContext();
+	const { user } = useAuth();
 
-export default function AddContactScreen({ onSave }) {
-    const navigation = useNavigation();
-    const route = useRoute();
-    const db = useSQLiteContext();
-    const { user } = useAuth();
+	const [loading, setIsLoading] = useState(false);
+	const [banner, setBanner] = useState(null);
+	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
+		useFormHandler(INITIAL_STATE);
 
-    const [loading, setIsLoading] = useState(false);
-    const { formData, errors, setErrors, handleChange, handleFieldBlur } = useFormHandler(INITIAL_STATE);
+	const handleSave = async () => {
+		setBanner(null);
 
-    const validate = () => {
-        const e = {};
-        const cleanPhone = formData.phone ? formData.phone.replace(/[\s-]/g, "") : "";
+		const { isValid, errors: validationErrors } =
+			validateAddContactForm(formData);
 
-        if (!formData.firstName.trim()) e.firstName = "Please enter a name.";
-        if (!formData.surname.trim()) e.surname = "Please enter a surname.";
-        if (!cleanPhone && !formData.email.trim()) e.phone = "Please enter a phone number or email.";
-        if (cleanPhone && !PHONE_REGEX.test(cleanPhone)) e.phone = "Enter a valid phone number.";
-        if (formData.email.trim() && !EMAIL_REGEX.test(formData.email.trim())) e.email = "Enter a valid email address.";
+		if (!isValid) {
+			setErrors(validationErrors);
+			return;
+		}
 
-        setErrors(e);
-        return Object.keys(e).length === 0;
-    };
+		setIsLoading(true);
 
-    /**
-     * Resolves the current user ID from:
-     * 1. Navigation params
-     * 2. AuthContext user session
-     * 3. Local SQLite database fallback
-     */
-    const resolveUserId = async () => {
-        if (route.params?.userId) return route.params.userId;
-        if (user?.userId) return user.userId;
+		try {
+			if (!user.userId) {
+				setBanner({
+					message:
+						"A user session is required to add an emergency contact. Please log in again.",
+					type: "error",
+				});
+				return;
+			}
 
-        try {
-            const localUser = await db.getFirstAsync('SELECT id FROM users LIMIT 1');
-            if (localUser?.id) return localUser.id;
-        } catch (dbErr) {
-            // Ignore if table doesn't exist
-        }
+			const fullName = `${formData.name.trim()} ${formData.surname.trim()}`;
+			const contactPayload = {
+				firstName: formData.name.trim(),
+				surname: formData.surname.trim(),
+				phone: formData.phone,
+				email: formData.email,
+			};
 
-        return null;
-    };
+			const result = await addEmergencyContact(db, user.userId, contactPayload);
 
-    const handleSave = async () => {
-        if (!validate()) return;
+			if (!result.success) {
+				setBanner({
+					message: result?.error || "Failed to save contact.",
+					type: "error",
+				});
+				return;
+			}
 
-        setIsLoading(true);
-        try {
-            const activeUserId = await resolveUserId();
+			// //Reset form input values
+			// formData(INITIAL_STATE);
 
-            if (!activeUserId) {
-                throw new Error('A user session is required to add an emergency contact. Please log in again.');
-            }
+			setBanner({
+				message: `Saved! ${fullName} was added to your emergency contacts.`,
+				type: "success",
+			});
 
-            const fullName = `${formData.firstName.trim()} ${formData.surname.trim()}`;
-            const contactPayload = {
-                firstName: formData.firstName.trim(),
-                surname: formData.surname.trim(),
-                phone: formData.phone,
-                email: formData.email,
-            };
+			setTimeout(() => {
+				setBanner(null);
+				navigation.replace("EmergencyContactsScreen");
+			}, 2000);
+		} catch (error) {
+			setBanner({
+				message:
+					error.message ||
+					"There was an error creating the contact. Please try again.",
+				type: "error",
+			});
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
-            if (onSave) {
-                await onSave({
-                    id: Date.now().toString(),
-                    name: fullName,
-                    ...contactPayload,
-                });
-            } else {
-                await addEmergencyContact(db, activeUserId, contactPayload);
-            }
+	const handleBack = () => {
+		if (
+			formData.firstName ||
+			formData.surname ||
+			formData.phone ||
+			formData.email
+		) {
+			Alert.alert("Discard contact?", "Your changes will be lost.", [
+				{ text: "Keep editing", style: "cancel" },
+				{
+					text: "Discard",
+					style: "destructive",
+					onPress: () => navigation.goBack(),
+				},
+			]);
+		} else {
+			navigation.goBack();
+		}
+	};
 
-            Alert.alert(
-                'Saved',
-                `${fullName} was added to your emergency contacts.`,
-                [
-                    {
-                        text: 'OK',
-                        onPress: () => navigation.goBack()
-                    }
-                ]
-            );
-        } catch (error) {
-            Alert.alert('Error', error.message || 'Failed to save contact.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+	const initials = [formData.name.trim(), formData.surname.trim()]
+		.filter(Boolean)
+		.map((w) => w[0].toUpperCase())
+		.join("");
 
-    const handleBack = () => {
-        if (formData.firstName || formData.surname || formData.phone || formData.email) {
-            Alert.alert('Discard contact?', 'Your changes will be lost.', [
-                { text: 'Keep editing', style: 'cancel' },
-                { text: 'Discard', style: 'destructive', onPress: () => navigation.goBack() },
-            ]);
-        } else {
-            navigation.goBack();
-        }
-    };
+	return (
+		<MainLayout
+			title="Add contact"
+			onBack={handleBack}
+			banner={banner}
+			tab="Contacts"
+			navigation={navigation}
+			actionButton={{
+				label: "Save Contact",
+				icon: "person-add-outline",
+				onPress: () => handleSave,
+			}}
+		>
+			<KeyboardAvoidingView
+				style={{ flex: 1 }}
+				behavior={Platform.OS === "ios" ? "padding" : undefined}
+			>
+				<ScrollView
+					contentContainerStyle={styles.scroll}
+					keyboardShouldPersistTaps="handled"
+				>
+					<View style={styles.avatarFrame}>
+						<View style={styles.avatar}>
+							{initials ? (
+								<Text style={styles.initials}>{initials}</Text>
+							) : (
+								<Ionicons name="person-outline" size={52} color={PURPLE} />
+							)}
+						</View>
+					</View>
 
-    const initials = [formData.firstName.trim(), formData.surname.trim()]
-        .filter(Boolean)
-        .map((w) => w[0].toUpperCase())
-        .join('');
+					{CONTACT_FORM_FIELDS.map((field) => (
+						<View key={field.key}>
+							<CustomInput
+								key={field.key}
+								label={field.label}
+								icon={field.icon}
+								placeholder={field.placeholder}
+								value={formData[field.key]}
+								onChangeText={(val) => handleChange(field.key, val)}
+								onBlur={() => handleFieldBlur(field.key)}
+								secureTextEntry={field.secureTextEntry}
+								keyboardType={field.keyboardType}
+								autoCapitalize={field.autoCapitalize}
+								error={errors[field.key]}
+							/>
+						</View>
+					))}
+				</ScrollView>
 
-    return (
-        <LinearGradient colors={['#D9D9D9', '#DCCBF3']} style={styles.container}>
-            <SafeAreaView style={styles.safe}>
-                <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                >
-                    <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-                        {/* Header */}
-                        <View style={styles.header}>
-                            <TouchableOpacity onPress={handleBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                                <Ionicons name="chevron-back" size={24} color={PURPLE} />
-                            </TouchableOpacity>
-                            <Text style={styles.title}>Add contact</Text>
-                        </View>
-
-                        {/* Avatar Initials Preview */}
-                        <View style={styles.avatarFrame}>
-                            <View style={styles.avatar}>
-                                {initials ? (
-                                    <Text style={styles.initials}>{initials}</Text>
-                                ) : (
-                                    <Ionicons name="person-outline" size={52} color={PURPLE} />
-                                )}
-                            </View>
-                        </View>
-
-                        {/* Mapped Form Fields */}
-                        {CONTACT_FORM_FIELDS.map((field) => (
-                            <View key={field.key}>
-                                <CustomInput
-                                    label={field.label}
-                                    icon={field.icon}
-                                    placeholder={field.placeholder}
-                                    value={formData[field.key]}
-                                    onChangeText={(val) => handleChange(field.key, val)}
-                                    onBlur={() => {
-                                        if (field.key !== "email" || formData.email.trim().length > 0) {
-                                            handleFieldBlur(field.key);
-                                        }
-                                    }}
-                                    keyboardType={field.keyboardType}
-                                    autoCapitalize={field.autoCapitalize}
-                                    error={errors[field.key]}
-                                />
-                            </View>
-                        ))}
-                    </ScrollView>
-
-                    {/* Action Button */}
-                    <View style={styles.footerContainer}>
-                        <PrimaryButton
-                            title="SAVE CONTACT"
-                            onPress={handleSave}
-                            loading={loading}
-                        />
-                    </View>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
-        </LinearGradient>
-    );
-}
+				{/* <View style={styles.footerContainer}>
+					<PrimaryButton
+						title="SAVE CONTACT"
+						onPress={handleSave}
+						loading={loading}
+					/>
+				</View> */}
+			</KeyboardAvoidingView>
+		</MainLayout>
+	);
+};
 
 const styles = StyleSheet.create({
-    container: { flex: 1 },
-    safe: { flex: 1, paddingHorizontal: 24 },
-    scroll: { paddingBottom: 20 },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 40,
-        marginBottom: 10,
-        gap: 10,
-    },
-    title: { fontSize: 22, fontWeight: '700', color: PURPLE },
-    avatarFrame: {
-        alignSelf: 'center',
-        padding: 2,
-        marginBottom: 12,
-    },
-    avatar: {
-        width: 68,
-        height: 68,
-        borderRadius: 34,
-        backgroundColor: '#EFE3FA',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    initials: { fontSize: 26, fontWeight: '700', color: PURPLE },
-    footerContainer: {
-        paddingVertical: 10,
-    },
+	scroll: { paddingBottom: 20 },
+	avatarFrame: {
+		alignSelf: "center",
+		padding: 2,
+		marginBottom: 12,
+	},
+	avatar: {
+		width: 68,
+		height: 68,
+		borderRadius: 34,
+		backgroundColor: "#EFE3FA",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	initials: { fontSize: 26, fontWeight: "700", color: PURPLE },
+	footerContainer: {
+		paddingVertical: 10,
+	},
 });
+
+export default AddContactScreen;

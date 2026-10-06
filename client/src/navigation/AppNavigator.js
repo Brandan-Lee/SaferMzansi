@@ -13,13 +13,20 @@ import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetails
 
 const Stack = createNativeStackNavigator();
 
-function MainStack() {
+function MainStack({ user }) {
 	return (
 		<Stack.Navigator
 			screenOptions={{ headerShown: false }}
 			initialRouteName="HomeScreen"
 		>
-			<Stack.Screen name="HomeScreen" component={HomeScreen} />
+			<Stack.Screen
+				name="HomeScreen"
+				component={HomeScreen}
+				initialParams={{
+					userName: user?.userName,
+					userId: user?.userId,
+				}}
+			/>
 			<Stack.Screen
 				name="EmergencyContactsScreen"
 				component={EmergencyContactsScreen}
@@ -34,7 +41,7 @@ function MainStack() {
 }
 
 export default function AppNavigator() {
-	const { sessionToken, loading } = useContext(AuthContext);
+	const { sessionToken, user } = useContext(AuthContext);
 
 	// if (loading) {
 	// 	return (
@@ -46,7 +53,7 @@ export default function AppNavigator() {
 
 	return (
 		<NavigationContainer>
-			{sessionToken ? <MainStack /> : <AuthStack />}
+			{sessionToken ? <MainStack user={user} /> : <AuthStack />}
 		</NavigationContainer>
 	);
 }
