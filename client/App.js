@@ -18,6 +18,7 @@ import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
 import HomeScreen from "./src/screens/main/HomeScreen";
 import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';
+import ProfileScreen from './src/screens/main/ProfileScreen';
 
 import { NetStatusProvider } from "./src/utils/NetStatus";
 
@@ -68,7 +69,7 @@ export default function App() {
 						<NavigationContainer>
 							<Stack.Navigator
 
-								initialRouteName="LoginScreen"
+								initialRouteName="ProfileScreen"
 
 								screenOptions={{ headerShown: false }}
 							>
@@ -87,6 +88,7 @@ export default function App() {
 									component={ResetPasswordScreen}
 								/>
 								<Stack.Screen name="HomeScreen" component={HomeScreen} />
+								<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 							</Stack.Navigator>
 						</NavigationContainer>
 						<StatusBar style="auto" />
