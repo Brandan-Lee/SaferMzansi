@@ -6,7 +6,6 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 	Platform,
-	Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { CustomInput } from "@components/forms/CustomInput";
@@ -16,6 +15,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import { validateContactForm } from "@utils/securityAndValidation/validationUtil";
 import { useAuth } from "@context/AuthContext";
 import { updateEmergencyContact } from "@services/main/contactService";
+import ConfirmationModal from "@components/modals/ConfirmationModal";
 import MainLayout from "@components/layouts/MainLayout";
 
 const PURPLE = "#5E0A9E";
@@ -24,6 +24,17 @@ const EditContactScreen = ({ navigation, route }) => {
 	const db = useSQLiteContext();
 	const [loading, setIsLoading] = useState(false);
 	const [banner, setBanner] = useState(null);
+	const [modalConfig, setModalConfig] = useState({
+		visible: false,
+		title: "",
+		message: "",
+		confirmLabel: "Confirm",
+		cancelLabel: "Cancel",
+		isDestructive: false,
+		iconName: "alert-circle-outline",
+		onConfirm: () => {},
+	});
+
 	const contact = route?.params?.contact || null;
 	const { user } = useAuth();
 
@@ -36,6 +47,10 @@ const EditContactScreen = ({ navigation, route }) => {
 
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
+
+	const hideModal = () => {
+		setModalConfig((prev) => ({ ...prev, visible: false }));
+	};
 
 	const handleSave = async () => {
 		setBanner(null);
@@ -52,7 +67,8 @@ const EditContactScreen = ({ navigation, route }) => {
 
 		if (!contactId) {
 			setBanner({
-				message: "A contact must be selected from the Emergency Contacts Screen",
+				message:
+					"A contact must be selected from the Emergency Contacts Screen",
 				type: "error",
 			});
 			return;
@@ -84,7 +100,8 @@ const EditContactScreen = ({ navigation, route }) => {
 				return;
 			}
 
-			const fullName = `${contactPayload.firstName} ${contactPayload.surname}`.trim();
+			const fullName =
+				`${contactPayload.firstName} ${contactPayload.surname}`.trim();
 
 			setBanner({
 				message: `Saved! Contact ${fullName} was successfully updated.`,
@@ -113,22 +130,40 @@ const EditContactScreen = ({ navigation, route }) => {
 	};
 
 	const handleBack = () => {
-		if (
-			formData.name ||
-			formData.surname ||
-			formData.phone ||
-			formData.email
-		) {
-			Alert.alert("Discard contact?", "Your changes will be lost.", [
-				{ text: "Keep editing", style: "cancel" },
-				{
-					text: "Discard",
-					style: "destructive",
-					onPress: () => navigation.goBack(),
+		// Normalize values to safely compare strings even if null/undefined
+		const currentName = (formData.name || "").trim();
+		const currentSurname = (formData.surname || "").trim();
+		const currentPhone = (formData.phone || "").trim();
+		const currentEmail = (formData.email || "").trim();
+
+		const initialName = (INITIAL_STATE.name || "").trim();
+		const initialSurname = (INITIAL_STATE.surname || "").trim();
+		const initialPhone = (INITIAL_STATE.phone || "").trim();
+		const initialEmail = (INITIAL_STATE.email || "").trim();
+
+		const isFormDirty =
+			currentName !== initialName ||
+			currentSurname !== initialSurname ||
+			currentPhone !== initialPhone ||
+			currentEmail !== initialEmail;
+
+		if (isFormDirty) {
+			setModalConfig({
+				visible: true,
+				title: "Discard changes?",
+				message:
+					"You have unsaved changes. Are you sure you want to discard them?",
+				confirmLabel: "Discard",
+				cancelLabel: "Keep editing",
+				isDestructive: true,
+				iconName: "warning-outline",
+				onConfirm: () => {
+					hideModal();
+					navigation.replace("ContactDetailsScreen", { contact });
 				},
-			]);
+			});
 		} else {
-			navigation.replace("ContactDetailsScreen");
+			navigation.replace("ContactDetailsScreen", { contact });
 		}
 	};
 
@@ -186,6 +221,18 @@ const EditContactScreen = ({ navigation, route }) => {
 					))}
 				</ScrollView>
 			</KeyboardAvoidingView>
+
+			<ConfirmationModal
+				visible={modalConfig.visible}
+				title={modalConfig.title}
+				message={modalConfig.message}
+				confirmLabel={modalConfig.confirmLabel}
+				cancelLabel={modalConfig.cancelLabel}
+				isDestructive={modalConfig.isDestructive}
+				iconName={modalConfig.iconName}
+				onConfirm={modalConfig.onConfirm}
+				onCancel={hideModal}
+			/>
 		</MainLayout>
 	);
 };

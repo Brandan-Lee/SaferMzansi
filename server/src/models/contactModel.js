@@ -87,9 +87,35 @@ const updateContact = async (payload) => {
 	return contact;
 };
 
+const deleteContact = async (contactId, userId) => {
+	if (!contactId || !userId) {
+		throw new Error("Delete Contact requires both contact id and userId");
+	}
+
+	const now = new Date().toISOString();
+
+	const { data: contact, error } = await supabase
+		.from("Emergency_Contacts") // Fixed table name (plural)
+		.update({
+			is_deleted: 1, // Or true if boolean in Supabase
+			updated_at: now,
+			deleted_at: now,
+		})
+		.match({ contact_id: contactId, user_id: userId }) // Fixed column names
+		.select()
+		.maybeSingle();
+
+	if (error) {
+		throw error;
+	}
+
+	return contact;
+};
+
 module.exports = {
 	createEmergencyContact,
 	findContactById,
 	getEmergencyContacts,
 	updateContact,
+	deleteContact,
 };

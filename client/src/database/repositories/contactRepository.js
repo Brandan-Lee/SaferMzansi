@@ -193,3 +193,28 @@ export const logLocalEmergencyContactsDatabase = async (db) => {
 		console.error("Failed to log Local_Emergency_Contacts database:", error);
 	}
 };
+
+export const softDeleteLocalEmergencyContact = async (
+	db,
+	userId,
+	contactId,
+	isSynched = 1,
+) => {
+	if (!contactId || !userId) {
+		throw new Error(
+			"contactId and userId are required to soft delete an emergency contact.",
+		);
+	}
+
+	const now = new Date().toISOString();
+
+	const query = `
+		UPDATE Local_Emergency_Contacts 
+		SET is_deleted = 1,
+		    is_synched = ?,
+		    updated_at = ?
+		WHERE contact_id = ? AND user_id = ?
+	`;
+
+	await db.runAsync(query, [isSynched, now, contactId, userId]);
+};

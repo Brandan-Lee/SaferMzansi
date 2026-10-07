@@ -9,6 +9,7 @@ import {
 	saveOrUpdateLocalEmergencyContact,
 	getLocalEmergencyContacts,
 	markContactAsUnSynched,
+	softDeleteLocalEmergencyContact,
 } from "@database/repositories/contactRepository";
 
 // Service to handle adding or updating an emergency contact
@@ -210,7 +211,8 @@ export const updateEmergencyContact = async (
 
 	// Re-encrypt values that have changed, or encrypt fresh values
 	const encryptedContactName =
-		newFirstName !== existingFirstName || !existingContact.encrypted_contact_name
+		newFirstName !== existingFirstName ||
+		!existingContact.encrypted_contact_name
 			? encryptData(newFirstName)
 			: existingContact.encrypted_contact_name;
 
@@ -251,8 +253,6 @@ export const updateEmergencyContact = async (
 		"Server failed to update contact. Saving changes locally for offline sync.",
 	);
 
-	console.log(result);
-
 	let isSynched = 1;
 	if (!result.success) {
 		console.warn(
@@ -284,7 +284,57 @@ export const updateEmergencyContact = async (
 	return {
 		success: true,
 		contactId,
-		result,
+		// result,
 		message: "Contact Updated Successfully",
+	};
+};
+
+export const deleteEmergencyContact = async (db, contactId, userId) => {
+	if (!userId || !contactId) {
+		throw new Error(
+			"User Id or Contact Id is needed to delete the emergency contact",
+		);
+	}
+
+	const apiPayload = {
+		contact_id: contactId,
+		user_id: userId,
+	};
+
+	const result = await safeApiCall(
+		() => postApi("/contacts/delete", apiPayload),
+		"Server failed to delete emergency contact. Saving changes locally for offline sync",
+	);
+
+	console.log(result);
+
+	if (!result.success) {
+		console.warn(
+			"[Contact Service] Backend deletion failed, updating locally as offline:",
+			result?.error,
+		);
+
+		await markContactAsUnSynched(db, contactId);
+	}
+
+	const now = new Date().toISOString();
+
+	const localContactPayload = {
+		id: contactId,
+		userId: userId,
+		isDeleted: 1,
+		updatedAt: now,
+	};
+
+	try {
+		await softDeleteLocalEmergencyContact(db, userId, localContactPayload);
+	} catch (error) {
+		console.error("Contact Service failed to delete local sqlite db:", error);
+		throw new Error("Failed to delete Emergency contact locally");
+	}
+
+	return {
+		success: true,
+		message: "Contact deleted successfully",
 	};
 };

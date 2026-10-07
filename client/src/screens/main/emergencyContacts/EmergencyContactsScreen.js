@@ -44,7 +44,7 @@ export default function EmergencyContactsScreen({ navigation }) {
 	useFocusEffect(
 		useCallback(() => {
 			loadContacts();
-		}, [loadContacts])
+		}, [loadContacts]),
 	);
 
 	const getItemKey = (item, index) =>
@@ -56,7 +56,7 @@ export default function EmergencyContactsScreen({ navigation }) {
 	return (
 		<MainLayout
 			title="Emergency contacts"
-			onBack={() => navigation.goBack()}
+			onBack={() => navigation.replace("HomeScreen")}
 			banner={banner}
 			tab="Contacts"
 			navigation={navigation}

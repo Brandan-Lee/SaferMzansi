@@ -6,7 +6,7 @@ const addEmergencyContact = async (contactData) => {
 	const existingContact = await contactModel.findContactById(contact_id);
 
 	if (existingContact) {
-		return existingContact;
+		throw Error("This contact already exists");
 	}
 
 	const newContact = await contactModel.createEmergencyContact(contactData);
@@ -37,7 +37,7 @@ const getEmergencyContacts = async (payload) => {
 };
 
 const updateContact = async (payload) => {
-	const { contact_id } = payload;
+	//const { contact_id } = payload;
 
 	// const existingContact = await contactModel.findContactById(contact_id);
 	// console.log(existingContact, "This is giving me a hard time");
@@ -54,8 +54,26 @@ const updateContact = async (payload) => {
 	}
 };
 
+const deleteContact = async (contactId, userId) => {
+	const existingContact = await contactModel.findContactById(contactId);
+	console.log(existingContact, "This is giving me a hard time");
+
+	if (!existingContact) {
+		throw new Error("This contact does not exist");
+	}
+
+	const deletedContact = await contactModel.deleteContact(contactId, userId);
+
+	if (!deletedContact) {
+		throw new Error("Failed to delete emergency contact in database");
+	}
+
+	return deletedContact;
+};
+
 module.exports = {
 	addEmergencyContact,
 	getEmergencyContacts,
 	updateContact,
+	deleteContact,
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	View,
 	Text,
@@ -9,6 +9,10 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
+import { useSQLiteContext } from "expo-sqlite";
+import ConfirmationModal from "@components/modals/ConfirmationModal";
+import { useAuth } from "@context/AuthContext";
+import { deleteEmergencyContact } from "@services/main/contactService";
 
 const PURPLE = "#5E0A9E";
 
@@ -16,6 +20,20 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 	// const navigation = useNavigation();
 	// const route = useRoute();
 	const contact = route.params?.contact;
+	const db = useSQLiteContext();
+	const [banner, setBanner] = useState(null);
+	const [modalConfig, setModalConfig] = useState({
+		visible: false,
+		title: "",
+		message: "",
+		confirmLabel: "Confirm",
+		cancelLabel: "Cancel",
+		isDestructive: false,
+		iconName: "alert-circle-outline",
+		onConfirm: () => {},
+	});
+	const { user } = useAuth();
+	const [isLoading, setIsLoading] = useState(false);
 
 	if (!contact) {
 		return (
@@ -27,8 +45,7 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 
 	const firstName = contact.firstName || "";
 	const surname = contact.surname || "";
-	const fullName =
-		`${firstName} ${surname}`.trim() || "Emergency Contact";
+	const fullName = `${firstName} ${surname}`.trim() || "Emergency Contact";
 
 	const initials = [firstName, surname]
 		.filter(Boolean)
@@ -43,14 +60,56 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 		if (contact.email) Linking.openURL(`mailto:${contact.email}`);
 	};
 
+	const hideModal = () => {
+		setModalConfig((prev) => ({ ...prev, visible: false }));
+	};
+
 	const handleUpdate = () => {
 		console.log("Update contact:", contact);
 		navigation.navigate("EditContactScreen", { contact });
-	}
+	};
 
-	const handleDelete = () => {
-		console.log("Delete contact:", contact);
-	}
+	const handleDeleteContact = () => {
+		setBanner(null);
+		setModalConfig({
+			visible: true,
+			title: "Delete contact?",
+			message:
+				"Are you sure you want to delete this emergency contact? This action cannot be undone.",
+			confirmLabel: "Delete",
+			cancelLabel: "Cancel",
+			isDestructive: true,
+			iconName: "trash-outline",
+			onConfirm: async () => {
+				setIsLoading(true);
+				const contactId = contact?.contactId || contact?.contact_id;
+				const userId = user?.id || user?.userId || user?.user_id;
+
+				const result = await deleteEmergencyContact(db, contactId, userId);
+
+				if (!result.success) {
+					setBanner({
+						message: result?.error || "Failed to delete contact",
+						type: "error",
+					});
+					return;
+				}
+
+				// Show success banner inside the open modal
+				setBanner({
+					message: "Emergency contact has been successfully removed.",
+					type: "success",
+				});
+
+				// Hide modal and navigate away after 800ms
+				setTimeout(() => {
+					hideModal();
+					setIsLoading(false);
+					navigation.replace("EmergencyContactsScreen");
+				}, 800);
+			},
+		});
+	};
 
 	const renderRow = (icon, label, value) => (
 		<View style={styles.row}>
@@ -126,12 +185,26 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 				<TouchableOpacity
 					style={[styles.deleteButton]}
 					activeOpacity={0.8}
-					onPress={handleDelete}
+					onPress={handleDeleteContact}
 				>
 					<Ionicons name="trash-outline" size={20} color="#fff" />
 					<Text style={styles.primaryText}>Delete Contact</Text>
 				</TouchableOpacity>
 			</View>
+
+			<ConfirmationModal
+				visible={modalConfig.visible}
+				title={modalConfig.title}
+				message={modalConfig.message}
+				confirmLabel={modalConfig.confirmLabel}
+				cancelLabel={modalConfig.cancelLabel}
+				isDestructive={modalConfig.isDestructive}
+				iconName={modalConfig.iconName}
+				loading={isLoading}
+				onConfirm={modalConfig.onConfirm}
+				onCancel={hideModal}
+				banner={banner}
+			/>
 		</MainLayout>
 	);
 };

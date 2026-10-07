@@ -16,6 +16,8 @@ const REQUIRED_CONTACT_FIELDS = [
 
 const REQUIRED_GET_CONTACT_FIELDS = ["user_id"];
 
+const REQUIRED_DELETE_CONTACT_FIELDS = ["contact_id", "user_id"];
+
 router.post(
 	"/add",
 	validateBody(REQUIRED_CONTACT_FIELDS),
@@ -32,6 +34,12 @@ router.post(
 	"/update",
 	validateBody(REQUIRED_CONTACT_FIELDS),
 	contactController.updateContact,
+);
+
+router.post(
+	"/delete",
+	validateBody(REQUIRED_DELETE_CONTACT_FIELDS),
+	contactController.deleteContact,
 );
 
 module.exports = router;

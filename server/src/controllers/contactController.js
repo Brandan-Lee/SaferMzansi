@@ -53,8 +53,27 @@ const updateContact = async (req, res, next) => {
 	}
 };
 
+const deleteContact = async (req, res, next) => {
+	try {
+		const userId = req.body?.user_id || req.body?.userId || req.query?.user_id;
+		const contactId =
+			req.body?.contact_id || req.body?.contactId || req.query?.contact_id;
+
+		const contact = await contactService.deleteContact(contactId, userId);
+
+		return res.status(200).json({
+			success: true,
+			message: "Emergency contact deleted successfully",
+			data: contact,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 module.exports = {
 	addContact,
 	getContacts,
 	updateContact,
+	deleteContact,
 };
