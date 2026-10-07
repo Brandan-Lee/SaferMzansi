@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     },
     changePasswordText: {
         fontSize: 14,
-        color: '#000',
+        color: '#6a1b9a',
         fontWeight: '700',
         textAlign: 'center',
         marginRight: 'auto',
