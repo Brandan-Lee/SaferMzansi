@@ -37,7 +37,25 @@ const findContactById = async (contactId) => {
     return contact;
 };
 
+const getEmergencyContacts = async (userId) => {
+    if (!userId) {
+        throw new Error("getContacts requires a valid user_id");
+    }
+
+    const { data: contacts, error } = await supabase
+        .from("Emergency_Contacts")
+        .select("*")
+        .match({ "user_id": userId, "is_deleted": 0 });
+
+    if (error) {
+        throw error;
+    }
+
+    return contacts || [];
+};
+
 module.exports = {
     createEmergencyContact,
     findContactById,
+    getEmergencyContacts,
 };

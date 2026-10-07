@@ -10,6 +10,8 @@ import HomeScreen from "@screens/main/HomeScreen";
 import EmergencyContactsScreen from "@screens/main/emergencyContacts/EmergencyContactsScreen";
 import AddContactScreen from "@screens/main/emergencyContacts/AddContactScreen";
 import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetailsScreen";
+import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +37,10 @@ function MainStack({ user }) {
 			<Stack.Screen
 				name="ContactDetailsScreen"
 				component={ContactDetailsScreen}
+			/>
+			<Stack.Screen
+				name="EditContactScreen"
+				component={EditContactScreen}
 			/>
 		</Stack.Navigator>
 	);

@@ -6,7 +6,7 @@ const addEmergencyContact = async (contactData) => {
     const existingContact = await contactModel.findContactById(contact_id);
 
     if (existingContact) {
-        return existingContact; // Idempotent handling for offline sync retries
+        return existingContact;
     }
 
     const newContact = await contactModel.createEmergencyContact(contactData);
@@ -18,6 +18,23 @@ const addEmergencyContact = async (contactData) => {
     return newContact;
 };
 
+const getEmergencyContacts = async (payload) => {
+    const { user_id } = payload;
+
+    if (!user_id) {
+        throw new Error("user_id is required to fetch contacts");
+    }
+
+    const contacts = await contactModel.getEmergencyContacts(user_id);
+
+    if (!contacts) {
+        throw new Error("Failed to retrieve emergency contacts from database");
+    }
+
+    return contacts;
+};
+
 module.exports = {
     addEmergencyContact,
+    getEmergencyContacts,
 };

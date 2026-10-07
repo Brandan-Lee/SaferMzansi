@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
-import { getLocalEmergencyContacts } from "../../../database/repositories/contactRepository";
 import { useAuth } from "@context/AuthContext";
 import ContactCard from "@components/cards/ContactCard";
 import MainLayout from "@components/layouts/MainLayout";
+import { getEmergencyContacts } from "@services/main/contactService";
 
 const PURPLE = "#5E0A9E";
 
@@ -29,10 +29,13 @@ export default function EmergencyContactsScreen({ navigation }) {
 		if (!db || !userId) return setLoading(false);
 		try {
 			setLoading(true);
-			const localContacts = await getLocalEmergencyContacts(db, userId);
-			setContacts(localContacts);
+			const res = await getEmergencyContacts(db, userId);
+
+			// Safely set array directly
+			setContacts(Array.isArray(res?.contacts) ? res.contacts : []);
 		} catch (error) {
 			console.error("Failed to load emergency contacts:", error);
+			setContacts([]);
 		} finally {
 			setLoading(false);
 		}
@@ -41,11 +44,14 @@ export default function EmergencyContactsScreen({ navigation }) {
 	useFocusEffect(
 		useCallback(() => {
 			loadContacts();
-		}, [loadContacts]),
+		}, [loadContacts])
 	);
 
 	const getItemKey = (item, index) =>
-		item.contact_id?.toString() || item.id?.toString() || index.toString();
+		item.contactId?.toString() ||
+		item.contact_id?.toString() ||
+		item.id?.toString() ||
+		index.toString();
 
 	return (
 		<MainLayout
@@ -58,7 +64,7 @@ export default function EmergencyContactsScreen({ navigation }) {
 				label: "Add contact",
 				icon: "person-add-outline",
 				onPress: () =>
-					navigation.replace("AddContactScreen", { userId: user.userId }),
+					navigation.replace("AddContactScreen", { userId: user?.userId }),
 			}}
 		>
 			{loading ? (

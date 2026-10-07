@@ -42,11 +42,6 @@ const findUserByEmailBlindIndex = async (emailBlindIndex) => {
 	return user;
 };
 
-// // Fallback hash for password verification in case the user does not have a password hash stored
-// //Avoids timing attacks by using a constant time comparison for password verification
-// const FALLBACK_HASH =
-// 	"$argon2id$v=19$m=65536,t=3,p=1$c2FtcGxlc2FsdA$c2FtcGxlaGFzaA";
-
 const findUserById = async (userId) => {
 	if (!userId) {
 		throw new Error("findUserById requires a valid user_id");

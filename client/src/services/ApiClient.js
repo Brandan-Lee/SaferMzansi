@@ -86,10 +86,12 @@ export const safeApiCall = async (apiFunction, fallbackErrorMessage) => {
 			};
 		}
 
+		const payload = response.data?.data !== undefined ? response.data.data : response.data;
+
 		//Successful response
 		return {
 			success: true,
-			data: response.data || response,
+			data: response.data || payload,
 		};
 	} catch (err) {
 		//All around error

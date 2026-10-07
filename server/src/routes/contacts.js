@@ -12,10 +12,20 @@ const REQUIRED_CONTACT_FIELDS = [
     "encrypted_contact_phone_num",
 ];
 
+const REQUIRED_GET_CONTACT_FIELDS = [
+    "user_id",
+];
+
 router.post(
     "/add",
     validateBody(REQUIRED_CONTACT_FIELDS),
     contactController.addContact,
+);
+
+router.post(
+    "/get-contacts",
+    validateBody(REQUIRED_GET_CONTACT_FIELDS),
+    contactController.getContacts,
 );
 
 module.exports = router;

@@ -10,10 +10,9 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { CustomInput } from "@components/forms/CustomInput";
-import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { useFormHandler } from "@hooks/useFormHandler";
 import { CONTACT_FORM_FIELDS } from "@constants/ContactFields";
-import { addEmergencyContact } from "@services/contactService";
+import { addEmergencyContact } from "@services/main/contactService";
 import { useSQLiteContext } from "expo-sqlite";
 import { validateAddContactForm } from "@utils/securityAndValidation/validationUtil";
 import { useAuth } from "@context/AuthContext";
@@ -48,19 +47,20 @@ const AddContactScreen = ({ navigation }) => {
 			return;
 		}
 
+		const currentUserId = user?.userId;
+		if (!currentUserId) {
+			setBanner({
+				message:
+					"A user session is required to add an emergency contact. Please log in again.",
+				type: "error",
+			});
+			return;
+		}
+
 		setIsLoading(true);
 
 		try {
-			if (!user.userId) {
-				setBanner({
-					message:
-						"A user session is required to add an emergency contact. Please log in again.",
-					type: "error",
-				});
-				return;
-			}
-
-			const fullName = `${formData.name.trim()} ${formData.surname.trim()}`;
+			// const fullName = `${formData.name.trim()} ${formData.surname.trim()}`;
 			const contactPayload = {
 				firstName: formData.name.trim(),
 				surname: formData.surname.trim(),
@@ -68,9 +68,9 @@ const AddContactScreen = ({ navigation }) => {
 				email: formData.email,
 			};
 
-			const result = await addEmergencyContact(db, user.userId, contactPayload);
+			const result = await addEmergencyContact(db, currentUserId, contactPayload);
 
-			if (!result.success) {
+			if (!result?.success) {
 				setBanner({
 					message: result?.error || "Failed to save contact.",
 					type: "error",
@@ -78,18 +78,14 @@ const AddContactScreen = ({ navigation }) => {
 				return;
 			}
 
-			// //Reset form input values
-			// formData(INITIAL_STATE);
-
 			setBanner({
-				message: `Saved! ${fullName} was added to your emergency contacts.`,
+				message: `Saved! ${formData.name, formData.surname} was added to your emergency contacts.`,
 				type: "success",
 			});
 
 			setTimeout(() => {
-				setBanner(null);
 				navigation.replace("EmergencyContactsScreen");
-			}, 2000);
+			}, 800);
 		} catch (error) {
 			setBanner({
 				message:
@@ -103,8 +99,9 @@ const AddContactScreen = ({ navigation }) => {
 	};
 
 	const handleBack = () => {
+		// Updated to use formData.name instead of formData.firstName
 		if (
-			formData.firstName ||
+			formData.name ||
 			formData.surname ||
 			formData.phone ||
 			formData.email
@@ -137,7 +134,8 @@ const AddContactScreen = ({ navigation }) => {
 			actionButton={{
 				label: "Save Contact",
 				icon: "person-add-outline",
-				onPress: () => handleSave,
+				onPress: handleSave,
+				loading: loading,
 			}}
 		>
 			<KeyboardAvoidingView
@@ -159,31 +157,21 @@ const AddContactScreen = ({ navigation }) => {
 					</View>
 
 					{CONTACT_FORM_FIELDS.map((field) => (
-						<View key={field.key}>
-							<CustomInput
-								key={field.key}
-								label={field.label}
-								icon={field.icon}
-								placeholder={field.placeholder}
-								value={formData[field.key]}
-								onChangeText={(val) => handleChange(field.key, val)}
-								onBlur={() => handleFieldBlur(field.key)}
-								secureTextEntry={field.secureTextEntry}
-								keyboardType={field.keyboardType}
-								autoCapitalize={field.autoCapitalize}
-								error={errors[field.key]}
-							/>
-						</View>
+						<CustomInput
+							key={field.key}
+							label={field.label}
+							icon={field.icon}
+							placeholder={field.placeholder}
+							value={formData[field.key]}
+							onChangeText={(val) => handleChange(field.key, val)}
+							onBlur={() => handleFieldBlur(field.key)}
+							secureTextEntry={field.secureTextEntry}
+							keyboardType={field.keyboardType}
+							autoCapitalize={field.autoCapitalize}
+							error={errors[field.key]}
+						/>
 					))}
 				</ScrollView>
-
-				{/* <View style={styles.footerContainer}>
-					<PrimaryButton
-						title="SAVE CONTACT"
-						onPress={handleSave}
-						loading={loading}
-					/>
-				</View> */}
 			</KeyboardAvoidingView>
 		</MainLayout>
 	);
@@ -205,9 +193,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	initials: { fontSize: 26, fontWeight: "700", color: PURPLE },
-	footerContainer: {
-		paddingVertical: 10,
-	},
 });
 
 export default AddContactScreen;

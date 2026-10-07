@@ -91,9 +91,6 @@ const HomeScreen = ({ navigation }) => {
 						</View>
 					</View>
 
-					<Text style={styles.footerTagline}>
-						Your safety. Your privacy. Our priority.
-					</Text>
 				</View>
 			</AuthLayout>
 
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		paddingHorizontal: 20,
-		paddingBottom: 110,
+		paddingBottom: 10,
 		alignItems: "center",
 	},
 	toolsSection: {

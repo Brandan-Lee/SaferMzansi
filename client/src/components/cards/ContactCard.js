@@ -6,7 +6,7 @@ const PURPLE = "#5E0A9E";
 const CARD = "#CDBBE0";
 const AVATAR_BACKGROUND = "#EFE3FA";
 
-export default function ContactCard({ item, onPress }) {
+const ContactCard = ({ item, onPress }) => {
 	const name =
 		item.name ||
 		`${item.firstName || ""} ${item.surname || ""}`.trim() ||
@@ -53,3 +53,5 @@ const styles = StyleSheet.create({
 	name: { fontSize: 16, fontWeight: "600", color: "#111" },
 	info: { fontSize: 12, color: "#222" },
 });
+
+export default ContactCard;

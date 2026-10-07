@@ -13,6 +13,29 @@ const addContact = async (req, res, next) => {
     }
 };
 
+const getContacts = async (req, res) => {
+    try {
+        const contacts = await contactService.getEmergencyContacts(req.body);
+
+        return res.status(200).json({
+            success: true,
+            message: "All emergency contacts retrieved",
+            data: {
+                contacts,
+            },
+        });
+    } catch (error) {
+        console.error("Error retrieving emergency contacts:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to retrieve contacts",
+            error: error.message || "Internal server error",
+        });
+    }
+};
+
 module.exports = {
     addContact,
+    getContacts,
 };

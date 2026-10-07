@@ -8,21 +8,20 @@ import {
 	Linking,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import MainLayout from "@components/layouts/MainLayout";
 
 const PURPLE = "#5E0A9E";
 
-const ContactDetailsScreen = () => {
-	const navigation = useNavigation();
-	const route = useRoute();
+const ContactDetailsScreen = ({ navigation, route }) => {
+	// const navigation = useNavigation();
+	// const route = useRoute();
 	const contact = route.params?.contact;
 
 	if (!contact) {
 		return (
-			<ScreenLayout title="Contact details" onBack={() => navigation.goBack()}>
+			<MainLayout title="Contact details" onBack={() => navigation.goBack()}>
 				<Text style={styles.empty}>Contact not found.</Text>
-			</ScreenLayout>
+			</MainLayout>
 		);
 	}
 
@@ -43,6 +42,15 @@ const ContactDetailsScreen = () => {
 	const handleEmail = () => {
 		if (contact.email) Linking.openURL(`mailto:${contact.email}`);
 	};
+
+	const handleUpdate = () => {
+		console.log("Update contact:", contact);
+		navigation.navigate("EditContactScreen", { contact });
+	}
+
+	const handleDelete = () => {
+		console.log("Delete contact:", contact);
+	}
 
 	const renderRow = (icon, label, value) => (
 		<View style={styles.row}>
@@ -107,6 +115,22 @@ const ContactDetailsScreen = () => {
 						<Text style={styles.secondaryText}>Email</Text>
 					</TouchableOpacity>
 				</View>
+				<TouchableOpacity
+					style={[styles.editButton]}
+					activeOpacity={0.8}
+					onPress={handleUpdate}
+				>
+					<Ionicons name="create-outline" size={20} color="#fff" />
+					<Text style={styles.primaryText}>Edit Contact</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={[styles.deleteButton]}
+					activeOpacity={0.8}
+					onPress={handleDelete}
+				>
+					<Ionicons name="trash-outline" size={20} color="#fff" />
+					<Text style={styles.primaryText}>Delete Contact</Text>
+				</TouchableOpacity>
 			</View>
 		</MainLayout>
 	);
@@ -189,6 +213,35 @@ const styles = StyleSheet.create({
 		gap: 8,
 	},
 	secondaryText: { color: PURPLE, fontSize: 16, fontWeight: "600" },
+
+	editText: { color: "#fff", fontSize: 16, fontWeight: "600" },
+	editButton: {
+		// remove flex: 1
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: PURPLE,
+		borderWidth: 1.5,
+		borderColor: PURPLE,
+		borderRadius: 8,
+		paddingVertical: 12,
+		gap: 8,
+		marginTop: 12,
+	},
+	deleteButton: {
+		// remove flex: 1
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "#ff3b3b",
+		borderWidth: 1.5,
+		borderColor: "#b30000",
+		borderRadius: 8,
+		paddingVertical: 12,
+		gap: 8,
+		marginTop: 12,
+	},
+	deleteText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 	disabled: { opacity: 0.4 },
 });
 

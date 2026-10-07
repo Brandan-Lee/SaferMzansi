@@ -113,6 +113,7 @@ export const getLocalEmergencyContacts = async (db, userId) => {
             name: `${firstName} ${surname}`.trim(),
             phone: decryptField(contact.encrypted_contact_phone_num),
             email: decryptField(contact.encrypted_contact_email),
+            contactId: contact.contact_id
         };
     });
 };
@@ -138,9 +139,27 @@ export const logLocalEmergencyContactsDatabase = async (db) => {
             console.log("No contact records found in Local_Emergency_Contacts.");
         } else {
             console.log(`Total Contacts: ${contacts.length}\n`);
+
             contacts.forEach((contact, index) => {
+                const decryptField = (value) => {
+                    if (!value) return value;
+                    try {
+                        return decryptData(value) || value;
+                    } catch {
+                        return `[Decryption Failed: ${value}]`;
+                    }
+                };
+
+                const decryptedContact = {
+                    ...contact,
+                    _decrypted_contact_name: decryptField(contact.encrypted_contact_name),
+                    _decrypted_contact_surname: decryptField(contact.encrypted_contact_surname),
+                    _decrypted_contact_email: decryptField(contact.encrypted_contact_email),
+                    _decrypted_contact_phone_num: decryptField(contact.encrypted_contact_phone_num),
+                };
+
                 console.log(`--- Contact #${index + 1} ---`);
-                console.log(JSON.stringify(contact, null, 2));
+                console.log(JSON.stringify(decryptedContact, null, 2));
                 console.log("----------------------------------------\n");
             });
         }
