@@ -1,46 +1,54 @@
 import {
-    encryptData,
-    decryptData,
-    generateBlindIndex,
+	encryptData,
+	decryptData,
+	generateBlindIndex,
 } from "@utils/securityAndValidation/securityUtil";
 
 // Method to save or update an emergency contact in local SQLite
-export const saveOrUpdateLocalEmergencyContact = async (db, userId, contactData) => {
-    const {
-        id,
-        contactId, // Support both naming conventions
-        firstName,
-        surname,
-        phone,
-        email,
-        createdAt,
-        updatedAt,
-        isSynched = 0,
-        isDeleted = 0,
-    } = contactData;
+export const saveOrUpdateLocalEmergencyContact = async (
+	db,
+	userId,
+	contactData,
+) => {
+	const {
+		id,
+		contactId, // Support both naming conventions
+		firstName,
+		surname,
+		phone,
+		email,
+		createdAt,
+		updatedAt,
+		isSynched = 0,
+		isDeleted = 0,
+	} = contactData;
 
-    const resolvedContactId = id || contactId;
+	const resolvedContactId = id || contactId;
 
-    if (!resolvedContactId || !userId) {
-        throw new Error(
-            "contactId and userId are required to save or update an emergency contact.",
-        );
-    }
+	if (!resolvedContactId || !userId) {
+		throw new Error(
+			"contactId and userId are required to save or update an emergency contact.",
+		);
+	}
 
-    const cleanEmail = email ? email.trim().toLowerCase() : null;
-    const contactEmailBlindIndex = cleanEmail ? generateBlindIndex(cleanEmail) : null;
+	const cleanEmail = email ? email.trim().toLowerCase() : null;
+	const contactEmailBlindIndex = cleanEmail
+		? generateBlindIndex(cleanEmail)
+		: null;
 
-    // Encrypt sensitive PII fields locally
-    const encryptedContactName = encryptData(firstName.trim());
-    const encryptedContactSurname = encryptData(surname.trim());
-    const encryptedContactPhoneNum = encryptData(phone ? phone.replace(/[\s-]/g, "") : "");
-    const encryptedContactEmail = cleanEmail ? encryptData(cleanEmail) : null;
+	// Encrypt sensitive PII fields locally
+	const encryptedContactName = encryptData(firstName.trim());
+	const encryptedContactSurname = encryptData(surname.trim());
+	const encryptedContactPhoneNum = encryptData(
+		phone ? phone.replace(/[\s-]/g, "") : "",
+	);
+	const encryptedContactEmail = cleanEmail ? encryptData(cleanEmail) : null;
 
-    const now = new Date().toISOString();
-    const resolvedCreatedAt = createdAt || now;
-    const resolvedUpdatedAt = updatedAt || now;
+	const now = new Date().toISOString();
+	const resolvedCreatedAt = createdAt || now;
+	const resolvedUpdatedAt = updatedAt || now;
 
-    const query = `
+	const query = `
         INSERT INTO Local_Emergency_Contacts (
             contact_id,
             user_id,
@@ -65,108 +73,123 @@ export const saveOrUpdateLocalEmergencyContact = async (db, userId, contactData)
             updated_at = excluded.updated_at
     `;
 
-    const params = [
-        resolvedContactId,
-        userId,
-        contactEmailBlindIndex,
-        encryptedContactName,
-        encryptedContactSurname,
-        encryptedContactPhoneNum,
-        encryptedContactEmail,
-        isSynched,
-        isDeleted,
-        resolvedCreatedAt,
-        resolvedUpdatedAt,
-    ];
+	const params = [
+		resolvedContactId,
+		userId,
+		contactEmailBlindIndex,
+		encryptedContactName,
+		encryptedContactSurname,
+		encryptedContactPhoneNum,
+		encryptedContactEmail,
+		isSynched,
+		isDeleted,
+		resolvedCreatedAt,
+		resolvedUpdatedAt,
+	];
 
-    await db.runAsync(query, params);
+	await db.runAsync(query, params);
 };
 
 // Method to fetch all active emergency contacts for a specific user
 export const getLocalEmergencyContacts = async (db, userId) => {
-    if (!db || !userId) return [];
+	if (!db || !userId) return [];
 
-    const query = `
+	const query = `
         SELECT * FROM Local_Emergency_Contacts 
         WHERE user_id = ? AND is_deleted = 0
     `;
-    const rows = await db.getAllAsync(query, [userId]);
+	const rows = await db.getAllAsync(query, [userId]);
 
-    // Decrypt fields for client-side consumption when needed
-    return rows.map((contact) => {
-        const decryptField = (value) => {
-            if (!value) return "";
-            try {
-                return decryptData(value) || value;
-            } catch {
-                return "[Decryption Failed]";
-            }
-        };
+	// Decrypt fields for client-side consumption when needed
+	return rows.map((contact) => {
+		const decryptField = (value) => {
+			if (!value) return "";
+			try {
+				return decryptData(value) || value;
+			} catch {
+				return "[Decryption Failed]";
+			}
+		};
 
-        const firstName = decryptField(contact.encrypted_contact_name);
-        const surname = decryptField(contact.encrypted_contact_surname);
+		const firstName = decryptField(contact.encrypted_contact_name);
+		const surname = decryptField(contact.encrypted_contact_surname);
 
-        return {
-            ...contact,
-            firstName,
-            surname,
-            name: `${firstName} ${surname}`.trim(),
-            phone: decryptField(contact.encrypted_contact_phone_num),
-            email: decryptField(contact.encrypted_contact_email),
-            contactId: contact.contact_id
-        };
-    });
+		return {
+			...contact,
+			firstName,
+			surname,
+			name: `${firstName} ${surname}`.trim(),
+			phone: decryptField(contact.encrypted_contact_phone_num),
+			email: decryptField(contact.encrypted_contact_email),
+			contactId: contact.contact_id,
+		};
+	});
 };
 
 // Method to mark a local emergency contact as synched with the server
 export const markContactAsSynched = async (db, contactId) => {
-    await db.runAsync(
-        `UPDATE Local_Emergency_Contacts SET is_synched = 1 WHERE contact_id = ?`,
-        [contactId],
-    );
+	await db.runAsync(
+		`UPDATE Local_Emergency_Contacts SET is_synched = 1 WHERE contact_id = ?`,
+		[contactId],
+	);
+};
+
+export const markContactAsUnSynched = async (db, contactId) => {
+	await db.runAsync(
+		`UPDATE Local_Emergency_Contacts SET is_synced = 0 WHERE contact_id = ?`,
+		[contactId],
+	);
 };
 
 // Debugging helper to log local emergency contacts in full detail
 export const logLocalEmergencyContactsDatabase = async (db) => {
-    try {
-        const contacts = await db.getAllAsync("SELECT * FROM Local_Emergency_Contacts");
+	try {
+		const contacts = await db.getAllAsync(
+			"SELECT * FROM Local_Emergency_Contacts",
+		);
 
-        console.log(
-            "\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================",
-        );
+		console.log(
+			"\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================",
+		);
 
-        if (!contacts || contacts.length === 0) {
-            console.log("No contact records found in Local_Emergency_Contacts.");
-        } else {
-            console.log(`Total Contacts: ${contacts.length}\n`);
+		if (!contacts || contacts.length === 0) {
+			console.log("No contact records found in Local_Emergency_Contacts.");
+		} else {
+			console.log(`Total Contacts: ${contacts.length}\n`);
 
-            contacts.forEach((contact, index) => {
-                const decryptField = (value) => {
-                    if (!value) return value;
-                    try {
-                        return decryptData(value) || value;
-                    } catch {
-                        return `[Decryption Failed: ${value}]`;
-                    }
-                };
+			contacts.forEach((contact, index) => {
+				const decryptField = (value) => {
+					if (!value) return value;
+					try {
+						return decryptData(value) || value;
+					} catch {
+						return `[Decryption Failed: ${value}]`;
+					}
+				};
 
-                const decryptedContact = {
-                    ...contact,
-                    _decrypted_contact_name: decryptField(contact.encrypted_contact_name),
-                    _decrypted_contact_surname: decryptField(contact.encrypted_contact_surname),
-                    _decrypted_contact_email: decryptField(contact.encrypted_contact_email),
-                    _decrypted_contact_phone_num: decryptField(contact.encrypted_contact_phone_num),
-                };
+				const decryptedContact = {
+					...contact,
+					_decrypted_contact_name: decryptField(contact.encrypted_contact_name),
+					_decrypted_contact_surname: decryptField(
+						contact.encrypted_contact_surname,
+					),
+					_decrypted_contact_email: decryptField(
+						contact.encrypted_contact_email,
+					),
+					_decrypted_contact_phone_num: decryptField(
+						contact.encrypted_contact_phone_num,
+					),
+				};
 
-                console.log(`--- Contact #${index + 1} ---`);
-                console.log(JSON.stringify(decryptedContact, null, 2));
-                console.log("----------------------------------------\n");
-            });
-        }
-        console.log(
-            "========================================================================\n",
-        );
-    } catch (error) {
-        console.error("Failed to log Local_Emergency_Contacts database:", error);
-    }
+				console.log(`--- Contact #${index + 1} ---`);
+				console.log(JSON.stringify(decryptedContact, null, 2));
+				console.log("----------------------------------------\n");
+			});
+		}
+		console.log(
+			"========================================================================\n",
+		);
+	} catch (error) {
+		console.error("Failed to log Local_Emergency_Contacts database:", error);
+	}
 };

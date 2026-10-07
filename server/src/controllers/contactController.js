@@ -1,41 +1,62 @@
 const contactService = require("#services/contactService.js");
 
 const addContact = async (req, res, next) => {
-    try {
-        const contact = await contactService.addEmergencyContact(req.body);
-        return res.status(201).json({
-            success: true,
-            message: "Emergency contact added successfully",
-            data: contact,
-        });
-    } catch (error) {
-        next(error);
-    }
+	try {
+		const contact = await contactService.addEmergencyContact(req.body);
+		return res.status(201).json({
+			success: true,
+			message: "Emergency contact added successfully",
+			data: contact,
+		});
+	} catch (error) {
+		next(error);
+	}
 };
 
 const getContacts = async (req, res) => {
-    try {
-        const contacts = await contactService.getEmergencyContacts(req.body);
+	try {
+		const contacts = await contactService.getEmergencyContacts(req.body);
 
-        return res.status(200).json({
-            success: true,
-            message: "All emergency contacts retrieved",
-            data: {
-                contacts,
-            },
-        });
-    } catch (error) {
-        console.error("Error retrieving emergency contacts:", error);
+		return res.status(200).json({
+			success: true,
+			message: "All emergency contacts retrieved",
+			data: {
+				contacts,
+			},
+		});
+	} catch (error) {
+		console.error("Error retrieving emergency contacts:", error);
 
-        return res.status(500).json({
-            success: false,
-            message: "Failed to retrieve contacts",
-            error: error.message || "Internal server error",
-        });
-    }
+		return res.status(500).json({
+			success: false,
+			message: "Failed to retrieve contacts",
+			error: error.message || "Internal server error",
+		});
+	}
+};
+
+const updateContact = async (req, res) => {
+	try {
+		const contact = await contactService.updateContact(req.body);
+
+		return res.status(201).json({
+			success: true,
+			message: "Emergency contact added successfully",
+			data: contact,
+		});
+	} catch (error) {
+		console.error("Error updating emergency contact:", error);
+
+		return res.status(500).json({
+			success: false,
+			message: "Failed to update contact",
+			error: error.message || "Internal server error",
+		});
+	}
 };
 
 module.exports = {
-    addContact,
-    getContacts,
+	addContact,
+	getContacts,
+	updateContact,
 };

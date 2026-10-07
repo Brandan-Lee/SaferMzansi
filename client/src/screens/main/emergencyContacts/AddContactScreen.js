@@ -14,7 +14,7 @@ import { useFormHandler } from "@hooks/useFormHandler";
 import { CONTACT_FORM_FIELDS } from "@constants/ContactFields";
 import { addEmergencyContact } from "@services/main/contactService";
 import { useSQLiteContext } from "expo-sqlite";
-import { validateAddContactForm } from "@utils/securityAndValidation/validationUtil";
+import { validateContactForm } from "@utils/securityAndValidation/validationUtil";
 import { useAuth } from "@context/AuthContext";
 import MainLayout from "@components/layouts/MainLayout";
 
@@ -39,8 +39,7 @@ const AddContactScreen = ({ navigation }) => {
 	const handleSave = async () => {
 		setBanner(null);
 
-		const { isValid, errors: validationErrors } =
-			validateAddContactForm(formData);
+		const { isValid, errors: validationErrors } = validateContactForm(formData);
 
 		if (!isValid) {
 			setErrors(validationErrors);
@@ -68,7 +67,11 @@ const AddContactScreen = ({ navigation }) => {
 				email: formData.email,
 			};
 
-			const result = await addEmergencyContact(db, currentUserId, contactPayload);
+			const result = await addEmergencyContact(
+				db,
+				currentUserId,
+				contactPayload,
+			);
 
 			if (!result?.success) {
 				setBanner({
@@ -79,7 +82,7 @@ const AddContactScreen = ({ navigation }) => {
 			}
 
 			setBanner({
-				message: `Saved! ${formData.name, formData.surname} was added to your emergency contacts.`,
+				message: `Saved! ${(formData.name, formData.surname)} was added to your emergency contacts.`,
 				type: "success",
 			});
 
@@ -100,12 +103,7 @@ const AddContactScreen = ({ navigation }) => {
 
 	const handleBack = () => {
 		// Updated to use formData.name instead of formData.firstName
-		if (
-			formData.name ||
-			formData.surname ||
-			formData.phone ||
-			formData.email
-		) {
+		if (formData.name || formData.surname || formData.phone || formData.email) {
 			Alert.alert("Discard contact?", "Your changes will be lost.", [
 				{ text: "Keep editing", style: "cancel" },
 				{
