@@ -7656,3 +7656,280 @@
 {"_e":"metro:config","_t":1791274986497,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
 {"_e":"expo:dev-tools-plugin:load","_t":1791274986748,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
 {"_e":"metro:instantiate","_t":1791274990415,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"root:init","_t":1791362878636,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791362878637,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791362878641,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.143.11.200:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791362879979,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791362882527,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791362883623,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791362888666,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791362895460,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791362895461,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791362895463,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1791362895752,"id":"1","message":"index.js: Cannot find module 'C:\\GitHub\\SaferMzansi\\client\\node_modules\\expo\\node_modules\\babel-preset-expo\\build\\index.js'. Please verify that the package.json has a valid \"main\" entry","importStack":null,"filename":null,"targetModuleName":null,"originModulePath":null}
+{"_e":"root:init","_t":1791363366667,"format":"v0-jsonl","version":"57.0.27"}
+{"_e":"env:mode","_t":1791363366668,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791363366673,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.143.11.200:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791363367228,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791363367707,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791363368154,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791363374718,"atlas":false,"workers":8,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791363384316,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791363384316,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791363384320,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791363391080,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791363391180,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791363391427,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791363391529,"id":"1","progress":0.04000000000000001,"total":22,"current":3}
+{"_e":"metro:bundling:progress","_t":1791363391648,"id":"1","progress":0.04000000000000001,"total":29,"current":5}
+{"_e":"metro:bundling:progress","_t":1791363391749,"id":"1","progress":0.04000000000000001,"total":35,"current":7}
+{"_e":"metro:bundling:progress","_t":1791363391853,"id":"1","progress":0.05224489795918367,"total":35,"current":8}
+{"_e":"metro:bundling:progress","_t":1791363391953,"id":"1","progress":0.06925207756232686,"total":38,"current":10}
+{"_e":"metro:bundling:progress","_t":1791363392073,"id":"1","progress":0.10562500000000001,"total":40,"current":13}
+{"_e":"metro:bundling:progress","_t":1791363392179,"id":"1","progress":0.10562500000000001,"total":46,"current":14}
+{"_e":"metro:bundling:progress","_t":1791363392279,"id":"1","progress":0.11560000000000002,"total":50,"current":17}
+{"_e":"metro:bundling:progress","_t":1791363392388,"id":"1","progress":0.17639999999999997,"total":50,"current":21}
+{"_e":"metro:bundling:progress","_t":1791363392489,"id":"1","progress":0.17639999999999997,"total":57,"current":23}
+{"_e":"metro:bundling:progress","_t":1791363392590,"id":"1","progress":0.17639999999999997,"total":79,"current":28}
+{"_e":"metro:bundling:progress","_t":1791363392694,"id":"1","progress":0.17639999999999997,"total":80,"current":31}
+{"_e":"metro:bundling:progress","_t":1791363392799,"id":"1","progress":0.17639999999999997,"total":80,"current":33}
+{"_e":"metro:bundling:progress","_t":1791363392900,"id":"1","progress":0.17937716262975778,"total":85,"current":36}
+{"_e":"metro:bundling:progress","_t":1791363393000,"id":"1","progress":0.18230021461936624,"total":89,"current":38}
+{"_e":"metro:bundling:progress","_t":1791363393112,"id":"1","progress":0.18230021461936624,"total":116,"current":42}
+{"_e":"metro:bundling:progress","_t":1791363393212,"id":"1","progress":0.18230021461936624,"total":125,"current":47}
+{"_e":"metro:bundling:progress","_t":1791363393319,"id":"1","progress":0.18230021461936624,"total":145,"current":59}
+{"_e":"metro:bundling:progress","_t":1791363393455,"id":"1","progress":0.18230021461936624,"total":177,"current":71}
+{"_e":"metro:bundling:progress","_t":1791363393555,"id":"1","progress":0.19700305985301267,"total":187,"current":83}
+{"_e":"metro:bundling:progress","_t":1791363393660,"id":"1","progress":0.23201118390395,"total":191,"current":92}
+{"_e":"metro:bundling:progress","_t":1791363393760,"id":"1","progress":0.23201118390395,"total":233,"current":105}
+{"_e":"metro:bundling:progress","_t":1791363393860,"id":"1","progress":0.23201118390395,"total":266,"current":121}
+{"_e":"metro:bundling:progress","_t":1791363393966,"id":"1","progress":0.23201118390395,"total":316,"current":137}
+{"_e":"metro:bundling:progress","_t":1791363394065,"id":"1","progress":0.23201118390395,"total":329,"current":144}
+{"_e":"metro:bundling:progress","_t":1791363394165,"id":"1","progress":0.23201118390395,"total":417,"current":145}
+{"_e":"metro:bundling:progress","_t":1791363394180,"id":"1","progress":0.23201118390395,"total":417,"current":146}
+{"_e":"metro:bundling:progress","_t":1791363394280,"id":"1","progress":0.23201118390395,"total":419,"current":174}
+{"_e":"metro:bundling:progress","_t":1791363394381,"id":"1","progress":0.23201118390395,"total":464,"current":195}
+{"_e":"metro:bundling:progress","_t":1791363394482,"id":"1","progress":0.23201118390395,"total":470,"current":214}
+{"_e":"metro:bundling:progress","_t":1791363394582,"id":"1","progress":0.23201118390395,"total":489,"current":225}
+{"_e":"metro:bundling:progress","_t":1791363394683,"id":"1","progress":0.24319759804841432,"total":511,"current":252}
+{"_e":"metro:bundling:progress","_t":1791363394783,"id":"1","progress":0.2696005917159764,"total":520,"current":270}
+{"_e":"metro:bundling:progress","_t":1791363394887,"id":"1","progress":0.278768239028737,"total":536,"current":283}
+{"_e":"metro:bundling:progress","_t":1791363394987,"id":"1","progress":0.30588932929683843,"total":537,"current":297}
+{"_e":"metro:bundling:progress","_t":1791363395099,"id":"1","progress":0.3126372991097236,"total":558,"current":312}
+{"_e":"metro:bundling:progress","_t":1791363395218,"id":"1","progress":0.32333717800845824,"total":561,"current":319}
+{"_e":"metro:bundling:progress","_t":1791363395328,"id":"1","progress":0.3234147448015123,"total":575,"current":327}
+{"_e":"metro:bundling:progress","_t":1791363395433,"id":"1","progress":0.33215549782428977,"total":583,"current":336}
+{"_e":"metro:bundling:progress","_t":1791363395548,"id":"1","progress":0.33215549782428977,"total":594,"current":341}
+{"_e":"metro:bundling:progress","_t":1791363395662,"id":"1","progress":0.3357857111530196,"total":604,"current":350}
+{"_e":"metro:bundling:progress","_t":1791363395762,"id":"1","progress":0.3357857111530196,"total":631,"current":365}
+{"_e":"metro:bundling:progress","_t":1791363395868,"id":"1","progress":0.350897966318979,"total":655,"current":388}
+{"_e":"metro:bundling:progress","_t":1791363395968,"id":"1","progress":0.36539318333704607,"total":670,"current":405}
+{"_e":"metro:bundling:progress","_t":1791363396070,"id":"1","progress":0.38132878682934634,"total":685,"current":423}
+{"_e":"metro:bundling:progress","_t":1791363396171,"id":"1","progress":0.3977281687889605,"total":685,"current":432}
+{"_e":"metro:bundling:progress","_t":1791363396272,"id":"1","progress":0.41072193510575944,"total":685,"current":439}
+{"_e":"metro:bundling:progress","_t":1791363396372,"id":"1","progress":0.43540732058181036,"total":685,"current":452}
+{"_e":"metro:bundling:progress","_t":1791363396472,"id":"1","progress":0.46740941274468967,"total":686,"current":469}
+{"_e":"metro:bundling:progress","_t":1791363396582,"id":"1","progress":0.5004481226521234,"total":687,"current":486}
+{"_e":"metro:bundling:progress","_t":1791363396684,"id":"1","progress":0.5125258264462811,"total":704,"current":504}
+{"_e":"metro:bundling:progress","_t":1791363396801,"id":"1","progress":0.5487745668450915,"total":706,"current":523}
+{"_e":"metro:bundling:progress","_t":1791363396901,"id":"1","progress":0.5763162071017655,"total":710,"current":539}
+{"_e":"metro:bundling:progress","_t":1791363397005,"id":"1","progress":0.5938696268766199,"total":715,"current":551}
+{"_e":"metro:bundling:progress","_t":1791363397105,"id":"1","progress":0.6133226244620128,"total":724,"current":567}
+{"_e":"metro:bundling:progress","_t":1791363397205,"id":"1","progress":0.6133226244620128,"total":761,"current":590}
+{"_e":"metro:bundling:progress","_t":1791363397305,"id":"1","progress":0.6174917793964619,"total":775,"current":609}
+{"_e":"metro:bundling:progress","_t":1791363397407,"id":"1","progress":0.6346572717229088,"total":777,"current":619}
+{"_e":"metro:bundling:progress","_t":1791363397506,"id":"1","progress":0.6346572717229088,"total":798,"current":633}
+{"_e":"metro:bundling:progress","_t":1791363397606,"id":"1","progress":0.6346572717229088,"total":834,"current":655}
+{"_e":"metro:bundling:progress","_t":1791363397707,"id":"1","progress":0.6346572717229088,"total":852,"current":674}
+{"_e":"metro:bundling:progress","_t":1791363397808,"id":"1","progress":0.6447740474381634,"total":873,"current":701}
+{"_e":"metro:bundling:progress","_t":1791363397925,"id":"1","progress":0.658765715894164,"total":876,"current":711}
+{"_e":"metro:bundling:progress","_t":1791363398025,"id":"1","progress":0.6665766273029787,"total":888,"current":725}
+{"_e":"metro:bundling:progress","_t":1791363398125,"id":"1","progress":0.6762535501388846,"total":895,"current":736}
+{"_e":"metro:bundling:progress","_t":1791363398232,"id":"1","progress":0.6928934802284572,"total":895,"current":745}
+{"_e":"metro:bundling:progress","_t":1791363398352,"id":"1","progress":0.7009194159004868,"total":903,"current":756}
+{"_e":"metro:bundling:progress","_t":1791363398447,"id":"1","progress":0.7185649752203851,"total":906,"current":768}
+{"_e":"metro:bundling:progress","_t":1791363398551,"id":"1","progress":0.7553120548578511,"total":909,"current":790}
+{"_e":"metro:bundling:progress","_t":1791363398656,"id":"1","progress":0.7589529185179534,"total":916,"current":798}
+{"_e":"metro:bundling:progress","_t":1791363398756,"id":"1","progress":0.7767560503602229,"total":927,"current":817}
+{"_e":"metro:bundling:progress","_t":1791363398856,"id":"1","progress":0.7998505641998749,"total":937,"current":838}
+{"_e":"metro:bundling:progress","_t":1791363398961,"id":"1","progress":0.8217104601905632,"total":941,"current":853}
+{"_e":"metro:bundling:progress","_t":1791363399061,"id":"1","progress":0.8217104601905632,"total":963,"current":866}
+{"_e":"metro:bundling:progress","_t":1791363399164,"id":"1","progress":0.8310392942436536,"total":973,"current":887}
+{"_e":"metro:bundling:progress","_t":1791363399265,"id":"1","progress":0.8473005452215956,"total":981,"current":903}
+{"_e":"metro:bundling:progress","_t":1791363399380,"id":"1","progress":0.8672147924438796,"total":989,"current":921}
+{"_e":"metro:bundling:progress","_t":1791363399480,"id":"1","progress":0.8739814297934546,"total":998,"current":933}
+{"_e":"metro:bundling:progress","_t":1791363399582,"id":"1","progress":0.8759040105193951,"total":1014,"current":949}
+{"_e":"metro:bundling:progress","_t":1791363399682,"id":"1","progress":0.8759040105193951,"total":1044,"current":969}
+{"_e":"metro:bundling:progress","_t":1791363399782,"id":"1","progress":0.8759040105193951,"total":1065,"current":986}
+{"_e":"metro:bundling:progress","_t":1791363399884,"id":"1","progress":0.8759040105193951,"total":1076,"current":1003}
+{"_e":"metro:bundling:progress","_t":1791363399990,"id":"1","progress":0.8823563202854671,"total":1088,"current":1022}
+{"_e":"metro:bundling:progress","_t":1791363400097,"id":"1","progress":0.8887347107438017,"total":1100,"current":1037}
+{"_e":"metro:bundling:progress","_t":1791363400209,"id":"1","progress":0.9048185603807257,"total":1107,"current":1053}
+{"_e":"metro:bundling:progress","_t":1791363400314,"id":"1","progress":0.920702376947363,"total":1112,"current":1067}
+{"_e":"metro:bundling:progress","_t":1791363400414,"id":"1","progress":0.9279363687585609,"total":1117,"current":1076}
+{"_e":"metro:bundling:progress","_t":1791363400514,"id":"1","progress":0.9384224552593476,"total":1119,"current":1084}
+{"_e":"metro:bundling:progress","_t":1791363400622,"id":"1","progress":0.9474699026634302,"total":1127,"current":1097}
+{"_e":"metro:bundling:progress","_t":1791363400730,"id":"1","progress":0.9581198734637888,"total":1134,"current":1110}
+{"_e":"metro:bundling:progress","_t":1791363400830,"id":"1","progress":0.9754610577655844,"total":1134,"current":1120}
+{"_e":"metro:bundling:progress","_t":1791363400938,"id":"1","progress":0.9894645159690537,"total":1136,"current":1130}
+{"_e":"metro:bundling:progress","_t":1791363401042,"id":"1","progress":0.9964850642303458,"total":1137,"current":1135}
+{"_e":"metro:bundling:progress","_t":1791363401824,"id":"1","progress":0.9982417585817729,"total":1137,"current":1136}
+{"_e":"metro:bundling:progress","_t":1791363401924,"id":"1","progress":0.9982463835026162,"total":1140,"current":1139}
+{"_e":"metro:bundling:progress","_t":1791363402108,"id":"1","progress":0.999,"total":1140,"current":1140}
+{"_e":"metro:bundling:progress","_t":1791363402223,"id":"1","progress":0.999,"total":1150,"current":1150}
+{"_e":"metro:bundling:done","_t":1791363402561,"id":"1","total":1150,"ms":18244.7107}
+{"_e":"metro:client_log","_t":1791363408665,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791363408666,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791363408666,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791363408667,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:failed","_t":1791363482141,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363482357,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363488056,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363488138,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363488187,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363488220,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363488250,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363488273,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:bundling:failed","_t":1791363488441,"id":null,"message":"Unable to resolve \"./src/screens/main/ProfileScreen\" from \"App.js\"\n  19 | import HomeScreen from \"./src/screens/main/HomeScreen\";\n  20 | import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';\n> 21 | import ProfileScreen from './src/screens/main/ProfileScreen';\n     |                            ^\n  22 |\n  23 | import { NetStatusProvider } from \"./src/utils/NetStatus\";\n  24 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/screens/main/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"./src/screens/main/ProfileScreen","originModulePath":"App.js"}
+{"_e":"metro:client_log","_t":1791363758418,"level":"error","data":["The action 'NAVIGATE' with payload {\"name\":\"EditProfileScreen\"} was not handled by any navigator.\n\nDo you have a screen named 'EditProfileScreen'?\n\nIf you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.\n\nIf you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791363820133,"level":"error","data":["The action 'NAVIGATE' with payload {\"name\":\"EditProfileScreen\"} was not handled by any navigator.\n\nDo you have a screen named 'EditProfileScreen'?\n\nIf you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.\n\nIf you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791363968466,"level":"error","data":["The action 'NAVIGATE' with payload {\"name\":\"EditProfileScreen\"} was not handled by any navigator.\n\nDo you have a screen named 'EditProfileScreen'?\n\nIf you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.\n\nIf you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:bundling:started","_t":1791364001829,"id":"9","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791364001829,"id":"9","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791364001928,"id":"9","total":1,"ms":98.7013}
+{"_e":"metro:client_log","_t":1791364004957,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791364004958,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791364004958,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791364004958,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791364410789,"level":"error","data":["[ReferenceError: Property 'Icon' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791364448608,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791364448618,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791364448620,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791364448620,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791364448651,"level":"error","data":["[ReferenceError: Property 'useNavigation' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791364467917,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791364467920,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791364467922,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791364467922,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791364467940,"level":"error","data":["[ReferenceError: Property 'title' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791364487940,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791364487943,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791364487943,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791364487943,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791364880697,"level":"error","data":["[ReferenceError: Property 'title' doesn't exist]"]}
+{"_e":"metro:server_log","_t":1791366303869,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.exponent","sdk_gphone16k_x86_64 - 17 - API 37","60"]}
+{"_e":"metro:server_log","_t":1791366303870,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.exponent","sdk_gphone16k_x86_64 - 17 - API 37","60"]}
+{"_e":"metro:client_log","_t":1791366316953,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791366316964,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791366316974,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791366316974,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791366579979,"level":"warn","data":["\"arrow-left\" is not a valid icon name for family \"ionicons\""]}
+{"_e":"metro:client_log","_t":1791366645470,"level":"warn","data":["\"arrow-left\" is not a valid icon name for family \"ionicons\""]}
+{"_e":"metro:client_log","_t":1791366655302,"level":"warn","data":["\"arrow-left\" is not a valid icon name for family \"ionicons\""]}
+{"_e":"metro:server_log","_t":1791370262007,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.exponent","sdk_gphone16k_x86_64 - 17 - API 37","60"]}
+{"_e":"metro:server_log","_t":1791371572643,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.exponent","sdk_gphone16k_x86_64 - 17 - API 37","60"]}
+{"_e":"metro:server_log","_t":1791378091071,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.exponent","sdk_gphone16k_x86_64 - 17 - API 37","60"]}
+{"_e":"metro:bundling:failed","_t":1791381684724,"id":null,"message":"SyntaxError: C:\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\Profile\\EditProfileScreen.js: Unexpected token (128:8)\n\n  126 |         fontWeight: 'bold',\n  127 |         color: '#000',\n> 128 |         ,\n      |         ^\n  129 |         alignItems: 'center',\n  130 |\n  131 |","importStack":null,"filename":"src\\screens\\main\\Profile\\EditProfileScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1791384392795,"id":"o","platform":"ios","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791384392796,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791384392798,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791384392898,"id":"o","progress":0.02972651605231867,"total":29,"current":5}
+{"_e":"metro:bundling:progress","_t":1791384393014,"id":"o","progress":0.03461330448891292,"total":43,"current":8}
+{"_e":"metro:bundling:progress","_t":1791384393114,"id":"o","progress":0.052517361111111105,"total":48,"current":11}
+{"_e":"metro:bundling:progress","_t":1791384393215,"id":"o","progress":0.07840000000000001,"total":75,"current":21}
+{"_e":"metro:bundling:progress","_t":1791384393322,"id":"o","progress":0.07840000000000001,"total":187,"current":28}
+{"_e":"metro:bundling:progress","_t":1791384393438,"id":"o","progress":0.07840000000000001,"total":263,"current":42}
+{"_e":"metro:bundling:progress","_t":1791384393543,"id":"o","progress":0.07840000000000001,"total":265,"current":55}
+{"_e":"metro:bundling:progress","_t":1791384393643,"id":"o","progress":0.07840000000000001,"total":274,"current":63}
+{"_e":"metro:bundling:progress","_t":1791384393752,"id":"o","progress":0.07840000000000001,"total":274,"current":63}
+{"_e":"metro:bundling:progress","_t":1791384393854,"id":"o","progress":0.07840000000000001,"total":290,"current":81}
+{"_e":"metro:bundling:progress","_t":1791384393964,"id":"o","progress":0.08053323593864134,"total":296,"current":84}
+{"_e":"metro:bundling:progress","_t":1791384394063,"id":"o","progress":0.08499859752314087,"total":343,"current":100}
+{"_e":"metro:bundling:progress","_t":1791384394166,"id":"o","progress":0.08499859752314087,"total":343,"current":100}
+{"_e":"metro:bundling:progress","_t":1791384394266,"id":"o","progress":0.12017777777777779,"total":375,"current":130}
+{"_e":"metro:bundling:progress","_t":1791384394375,"id":"o","progress":0.15214084043748802,"total":382,"current":149}
+{"_e":"metro:bundling:progress","_t":1791384394478,"id":"o","progress":0.15214084043748802,"total":382,"current":149}
+{"_e":"metro:bundling:progress","_t":1791384394578,"id":"o","progress":0.1904527956915691,"total":401,"current":175}
+{"_e":"metro:bundling:progress","_t":1791384394678,"id":"o","progress":0.19528748813050992,"total":439,"current":194}
+{"_e":"metro:bundling:progress","_t":1791384394782,"id":"o","progress":0.20932120124738346,"total":459,"current":210}
+{"_e":"metro:bundling:progress","_t":1791384394883,"id":"o","progress":0.20932120124738346,"total":513,"current":229}
+{"_e":"metro:bundling:progress","_t":1791384394983,"id":"o","progress":0.22571600534343303,"total":522,"current":248}
+{"_e":"metro:bundling:progress","_t":1791384395083,"id":"o","progress":0.23901234567901233,"total":540,"current":264}
+{"_e":"metro:bundling:progress","_t":1791384395183,"id":"o","progress":0.23901234567901233,"total":597,"current":287}
+{"_e":"metro:bundling:progress","_t":1791384395283,"id":"o","progress":0.24035461291954802,"total":616,"current":302}
+{"_e":"metro:bundling:progress","_t":1791384395384,"id":"o","progress":0.2492229996928279,"total":643,"current":321}
+{"_e":"metro:bundling:progress","_t":1791384395496,"id":"o","progress":0.2766695657866435,"total":654,"current":344}
+{"_e":"metro:bundling:progress","_t":1791384395596,"id":"o","progress":0.2936731327763634,"total":668,"current":362}
+{"_e":"metro:bundling:progress","_t":1791384395696,"id":"o","progress":0.32846274182955915,"total":677,"current":388}
+{"_e":"metro:bundling:progress","_t":1791384395797,"id":"o","progress":0.3498817764191653,"total":683,"current":404}
+{"_e":"metro:bundling:progress","_t":1791384395898,"id":"o","progress":0.37542183166828164,"total":692,"current":424}
+{"_e":"metro:bundling:progress","_t":1791384395998,"id":"o","progress":0.39464168310322156,"total":702,"current":441}
+{"_e":"metro:bundling:progress","_t":1791384396098,"id":"o","progress":0.4112326486138074,"total":722,"current":463}
+{"_e":"metro:bundling:progress","_t":1791384396205,"id":"o","progress":0.43423802280245744,"total":736,"current":485}
+{"_e":"metro:bundling:progress","_t":1791384396305,"id":"o","progress":0.43423802280245744,"total":736,"current":485}
+{"_e":"metro:bundling:progress","_t":1791384396405,"id":"o","progress":0.4857667584940313,"total":759,"current":529}
+{"_e":"metro:bundling:progress","_t":1791384396509,"id":"o","progress":0.4963429760665972,"total":775,"current":546}
+{"_e":"metro:bundling:progress","_t":1791384396614,"id":"o","progress":0.49754442402677046,"total":801,"current":565}
+{"_e":"metro:bundling:progress","_t":1791384396715,"id":"o","progress":0.5368101166552298,"total":808,"current":592}
+{"_e":"metro:bundling:progress","_t":1791384396819,"id":"o","progress":0.5588474122546103,"total":820,"current":613}
+{"_e":"metro:bundling:progress","_t":1791384396921,"id":"o","progress":0.5737026726294076,"total":841,"current":637}
+{"_e":"metro:bundling:progress","_t":1791384397021,"id":"o","progress":0.5737026726294076,"total":841,"current":637}
+{"_e":"metro:bundling:progress","_t":1791384397121,"id":"o","progress":0.5737026726294076,"total":841,"current":637}
+{"_e":"metro:bundling:progress","_t":1791384397225,"id":"o","progress":0.6407426747272033,"total":862,"current":690}
+{"_e":"metro:bundling:progress","_t":1791384397345,"id":"o","progress":0.6407426747272033,"total":862,"current":690}
+{"_e":"metro:bundling:progress","_t":1791384397448,"id":"o","progress":0.6714631836734694,"total":875,"current":717}
+{"_e":"metro:bundling:progress","_t":1791384397548,"id":"o","progress":0.6865843555654046,"total":881,"current":730}
+{"_e":"metro:bundling:progress","_t":1791384397648,"id":"o","progress":0.6865843555654046,"total":897,"current":743}
+{"_e":"metro:bundling:progress","_t":1791384397757,"id":"o","progress":0.7002755731788405,"total":907,"current":759}
+{"_e":"metro:bundling:progress","_t":1791384397859,"id":"o","progress":0.711567927066924,"total":914,"current":771}
+{"_e":"metro:bundling:progress","_t":1791384397961,"id":"o","progress":0.711567927066924,"total":914,"current":771}
+{"_e":"metro:bundling:progress","_t":1791384398062,"id":"o","progress":0.7391580960066763,"total":934,"current":803}
+{"_e":"metro:bundling:progress","_t":1791384398163,"id":"o","progress":0.755819871703754,"total":934,"current":812}
+{"_e":"metro:bundling:progress","_t":1791384398265,"id":"o","progress":0.7674957995470816,"total":936,"current":820}
+{"_e":"metro:bundling:progress","_t":1791384398369,"id":"o","progress":0.7674957995470816,"total":936,"current":820}
+{"_e":"metro:bundling:progress","_t":1791384398478,"id":"o","progress":0.7735960550762425,"total":963,"current":847}
+{"_e":"metro:bundling:progress","_t":1791384398648,"id":"o","progress":0.7845949131359792,"total":963,"current":853}
+{"_e":"metro:bundling:progress","_t":1791384398748,"id":"o","progress":0.8163609872419553,"total":964,"current":871}
+{"_e":"metro:bundling:progress","_t":1791384398849,"id":"o","progress":0.8259382978366031,"total":976,"current":887}
+{"_e":"metro:bundling:progress","_t":1791384398949,"id":"o","progress":0.8412153261319584,"total":978,"current":897}
+{"_e":"metro:bundling:progress","_t":1791384399050,"id":"o","progress":0.8627842223544187,"total":984,"current":914}
+{"_e":"metro:bundling:progress","_t":1791384399152,"id":"o","progress":0.870732901580732,"total":987,"current":921}
+{"_e":"metro:bundling:progress","_t":1791384399256,"id":"o","progress":0.8826905567117587,"total":992,"current":932}
+{"_e":"metro:bundling:progress","_t":1791384399358,"id":"o","progress":0.8826905567117587,"total":1021,"current":949}
+{"_e":"metro:bundling:progress","_t":1791384399458,"id":"o","progress":0.8826905567117587,"total":1048,"current":972}
+{"_e":"metro:bundling:progress","_t":1791384399558,"id":"o","progress":0.8826905567117587,"total":1060,"current":988}
+{"_e":"metro:bundling:progress","_t":1791384399658,"id":"o","progress":0.8855021461936624,"total":1068,"current":1005}
+{"_e":"metro:bundling:progress","_t":1791384399762,"id":"o","progress":0.8949089534589363,"total":1074,"current":1016}
+{"_e":"metro:bundling:progress","_t":1791384399861,"id":"o","progress":0.8949089534589363,"total":1074,"current":1016}
+{"_e":"metro:bundling:progress","_t":1791384399962,"id":"o","progress":0.9150107113205163,"total":1082,"current":1035}
+{"_e":"metro:bundling:progress","_t":1791384400063,"id":"o","progress":0.9365819453347307,"total":1086,"current":1051}
+{"_e":"metro:bundling:progress","_t":1791384400163,"id":"o","progress":0.9365819453347307,"total":1086,"current":1051}
+{"_e":"metro:bundling:progress","_t":1791384400275,"id":"o","progress":0.9451676084377326,"total":1115,"current":1084}
+{"_e":"metro:bundling:progress","_t":1791384400378,"id":"o","progress":0.9561265036858461,"total":1127,"current":1102}
+{"_e":"metro:bundling:progress","_t":1791384400477,"id":"o","progress":0.9719558241910617,"total":1133,"current":1117}
+{"_e":"metro:bundling:progress","_t":1791384400577,"id":"o","progress":0.9719558241910617,"total":1133,"current":1117}
+{"_e":"metro:bundling:progress","_t":1791384400677,"id":"o","progress":0.9930131218287128,"total":1143,"current":1139}
+{"_e":"metro:bundling:progress","_t":1791384400790,"id":"o","progress":0.9982509841562892,"total":1143,"current":1142}
+{"_e":"metro:bundling:progress","_t":1791384400902,"id":"o","progress":0.9982509841562892,"total":1143,"current":1142}
+{"_e":"metro:bundling:progress","_t":1791384401013,"id":"o","progress":0.9982509841562892,"total":1143,"current":1142}
+{"_e":"metro:bundling:progress","_t":1791384401467,"id":"o","progress":0.999,"total":1143,"current":1143}
+{"_e":"metro:bundling:progress","_t":1791384401578,"id":"o","progress":0.999,"total":1153,"current":1153}
+{"_e":"metro:bundling:progress","_t":1791384401676,"id":"o","progress":0.999,"total":1153,"current":1153}
+{"_e":"metro:bundling:progress","_t":1791384401783,"id":"o","progress":0.999,"total":1153,"current":1153}
+{"_e":"metro:bundling:done","_t":1791384401855,"id":"o","total":1153,"ms":9058.385}
+{"_e":"metro:client_log","_t":1791384404275,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791384404661,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791384404661,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791384404661,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791384421590,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:server_log","_t":1791384720317,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.Exponent","iPhone","60"]}
+{"_e":"metro:client_log","_t":1791384904243,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384905457,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384906207,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384906906,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384907705,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384908511,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384909021,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384909473,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384909755,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791384909942,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
