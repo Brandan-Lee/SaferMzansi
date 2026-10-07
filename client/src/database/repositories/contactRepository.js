@@ -136,7 +136,7 @@ export const markContactAsSynched = async (db, contactId) => {
 
 export const markContactAsUnSynched = async (db, contactId) => {
 	await db.runAsync(
-		`UPDATE Local_Emergency_Contacts SET is_synced = 0 WHERE contact_id = ?`,
+		`UPDATE Local_Emergency_Contacts SET is_synched = 0 WHERE contact_id = ?`,
 		[contactId],
 	);
 };

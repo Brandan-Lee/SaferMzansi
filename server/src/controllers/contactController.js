@@ -13,9 +13,12 @@ const addContact = async (req, res, next) => {
 	}
 };
 
-const getContacts = async (req, res) => {
+const getContacts = async (req, res, next) => {
 	try {
-		const contacts = await contactService.getEmergencyContacts(req.body);
+		// Support both user_id and userId from body or query
+		const userId = req.body?.user_id || req.body?.userId || req.query?.user_id;
+
+		const contacts = await contactService.getEmergencyContacts(userId);
 
 		return res.status(200).json({
 			success: true,
@@ -25,33 +28,28 @@ const getContacts = async (req, res) => {
 			},
 		});
 	} catch (error) {
-		console.error("Error retrieving emergency contacts:", error);
-
-		return res.status(500).json({
-			success: false,
-			message: "Failed to retrieve contacts",
-			error: error.message || "Internal server error",
-		});
+		next(error);
 	}
 };
 
-const updateContact = async (req, res) => {
+const updateContact = async (req, res, next) => {
 	try {
-		const contact = await contactService.updateContact(req.body);
+		// Ensure contact_id and user_id are normalized for service consumption
+		const payload = {
+			...req.body,
+			contact_id: req.body.contact_id || req.body.contactId,
+			user_id: req.body.user_id || req.body.userId,
+		};
 
-		return res.status(201).json({
+		const contact = await contactService.updateContact(payload);
+
+		return res.status(200).json({
 			success: true,
-			message: "Emergency contact added successfully",
+			message: "Emergency contact updated successfully",
 			data: contact,
 		});
 	} catch (error) {
-		console.error("Error updating emergency contact:", error);
-
-		return res.status(500).json({
-			success: false,
-			message: "Failed to update contact",
-			error: error.message || "Internal server error",
-		});
+		next(error);
 	}
 };
 

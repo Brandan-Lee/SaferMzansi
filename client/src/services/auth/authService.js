@@ -2,6 +2,7 @@ import * as Crypto from "expo-crypto";
 import {
 	encryptPayload,
 	generateBlindIndex,
+	decryptData,
 } from "@utils/securityAndValidation/securityUtil";
 import { postApi, safeApiCall } from "@services/ApiClient";
 import {
@@ -12,6 +13,10 @@ import {
 	markUserAsVerifiedLocally,
 	saveOrUpdateLocalUser,
 } from "@database/repositories/userRepository";
+import {
+	saveOrUpdateLocalEmergencyContact,
+	markContactAsSynched,
+} from "@database/repositories/contactRepository";
 import { getAuthToken, saveToken } from "@utils/auth/authTokenUtil";
 
 const normalizeEmail = (email) =>
@@ -19,18 +24,13 @@ const normalizeEmail = (email) =>
 		.trim()
 		.toLowerCase();
 
-//Method that ensures that users exist locally before authorization services can be performed
-const requireLocalUser = async (db, email) => {
-	const normalEmail = normalizeEmail(email);
-	const blindIndex = generateBlindIndex(normalEmail);
-	const user = await findUserByEmail(db, normalEmail);
-
-	//User was not found
-	if (!user) {
-		throw new Error("User record not found on the device");
+const safeDecrypt = (val) => {
+	if (!val) return "";
+	try {
+		return decryptData(val) || val;
+	} catch (err) {
+		return val;
 	}
-
-	return { normalEmail, blindIndex, user };
 };
 
 // Service to handle user registration
@@ -133,8 +133,11 @@ export const loginUser = async (db, email, password) => {
 	if (response.success && response.data?.token) {
 		token = response.data.token;
 		await saveToken(token);
-		const serverUser = response.data.user;
 
+		const serverUser = response.data.user;
+		const serverContacts = response.data.contacts || [];
+
+		// 1. Sync User Record to local SQLite
 		if (serverUser) {
 			await saveOrUpdateLocalUser(db, {
 				userId: serverUser.user_id,
@@ -151,8 +154,39 @@ export const loginUser = async (db, email, password) => {
 			});
 
 			await markUserAsSynched(db, serverUser.user_id);
-		} else if (localUser?.user_id) {
-			await markUserAsUnSynched(db, localUser.user_id);
+		}
+
+		// 2. Sync all retrieved Supabase Emergency Contacts to local SQLite
+		if (Array.isArray(serverContacts) && serverContacts.length > 0) {
+			for (const contact of serverContacts) {
+				const contactId = contact.contact_id || contact.id;
+
+				const localContactPayload = {
+					id: contactId,
+					firstName: safeDecrypt(contact.encrypted_contact_name) || contact.firstName || "",
+					surname: safeDecrypt(contact.encrypted_contact_surname) || contact.surname || "",
+					phone: safeDecrypt(contact.encrypted_contact_phone_num) || contact.phone || "",
+					email: safeDecrypt(contact.encrypted_contact_email) || contact.email || "",
+					createdAt: contact.created_at || new Date().toISOString(),
+					updatedAt: contact.updated_at || new Date().toISOString(),
+					isSynched: 1,
+					isDeleted: contact.is_deleted ? 1 : 0,
+				};
+
+				try {
+					await saveOrUpdateLocalEmergencyContact(
+						db,
+						serverUser.user_id,
+						localContactPayload,
+					);
+					await markContactAsSynched(db, contactId);
+				} catch (contactErr) {
+					console.error(
+						`[Auth Service] Failed to sync contact ${contactId} to SQLite:`,
+						contactErr,
+					);
+				}
+			}
 		}
 	} else if (response.status === 0) {
 		isOffline = true;

@@ -1,5 +1,6 @@
 // authService_2.js
 const userModel = require("#models/userModel.js");
+const contactModel = require("#models/contactModel.js");
 const {
 	queueOtpEmail,
 	isPasswordResetTokenValid,
@@ -48,6 +49,8 @@ const registerUser = async (userData) => {
 const authenticateUser = async ({ email_blind_index, password }) => {
 	// Added missing await on findUserByEmailBlindIndex
 	const user = await userModel.findUserByEmailBlindIndex(email_blind_index);
+	console.log("User found in the Server Auth:", user.user_id);
+	const contacts = await contactModel.getEmergencyContacts(user.user_id);
 
 	if (!user) {
 		return null;
@@ -65,7 +68,7 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 		email: user.encrypted_email,
 	});
 
-	return { user: safeUser, token };
+	return { user: safeUser, contacts, token };
 };
 
 const requestForgotPassword = async (email, email_blind_index) => {

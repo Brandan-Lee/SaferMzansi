@@ -15,6 +15,7 @@ import { CONTACT_FORM_FIELDS } from "@constants/ContactFields";
 import { useSQLiteContext } from "expo-sqlite";
 import { validateContactForm } from "@utils/securityAndValidation/validationUtil";
 import { useAuth } from "@context/AuthContext";
+import { updateEmergencyContact } from "@services/main/contactService";
 import MainLayout from "@components/layouts/MainLayout";
 
 const PURPLE = "#5E0A9E";
@@ -27,10 +28,10 @@ const EditContactScreen = ({ navigation, route }) => {
 	const { user } = useAuth();
 
 	const INITIAL_STATE = {
-		name: contact.firstName || "",
-		surname: contact.surname || "",
-		phone: contact.phone || "",
-		email: contact.email || "",
+		name: contact?.firstName || contact?.name || "",
+		surname: contact?.surname || "",
+		phone: contact?.phone || "",
+		email: contact?.email || "",
 	};
 
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
@@ -46,38 +47,44 @@ const EditContactScreen = ({ navigation, route }) => {
 			return;
 		}
 
+		const contactId = contact?.contactId || contact?.contact_id;
+		const userId = user?.id || user?.user_id || contact?.user_id;
+
+		if (!contactId) {
+			setBanner({
+				message: "A contact must be selected from the Emergency Contacts Screen",
+				type: "error",
+			});
+			return;
+		}
+
 		setIsLoading(true);
 
 		try {
-			if (!contact.contactId) {
-				setBanner({
-					message:
-						"A contact must be selected from the Emergency Contacts Screen",
-					type: "error",
-				});
-				return;
-			}
-
 			const contactPayload = {
-				firstName: formData.name.trim(),
-				surname: formData.surname.trim(),
-				phone: formData.phone,
-				email: formData.email,
+				firstName: formData.name ? formData.name.trim() : "",
+				surname: formData.surname ? formData.surname.trim() : "",
+				phone: formData.phone ? formData.phone.trim() : "",
+				email: formData.email ? formData.email.trim() : "",
 			};
 
 			const result = await updateEmergencyContact(
 				db,
+				userId,
 				contactId,
 				contactPayload,
+				contact,
 			);
 
-			if (!result.success) {
+			if (!result?.success) {
 				setBanner({
-					message: result?.error || "Failed to updated contact.",
+					message: result?.error || "Failed to update contact.",
 					type: "error",
 				});
 				return;
 			}
+
+			const fullName = `${contactPayload.firstName} ${contactPayload.surname}`.trim();
 
 			setBanner({
 				message: `Saved! Contact ${fullName} was successfully updated.`,
@@ -85,13 +92,19 @@ const EditContactScreen = ({ navigation, route }) => {
 			});
 
 			setTimeout(() => {
-				navigation.replace("ContactDetailsScreen");
+				navigation.replace("ContactDetailsScreen", {
+					contact: {
+						...contact,
+						...contactPayload,
+						contactId,
+					},
+				});
 			}, 800);
 		} catch (error) {
 			setBanner({
 				message:
 					error.message ||
-					"There was an error creating the contact. Please try again.",
+					"There was an error updating the contact. Please try again.",
 				type: "error",
 			});
 		} finally {
@@ -101,7 +114,7 @@ const EditContactScreen = ({ navigation, route }) => {
 
 	const handleBack = () => {
 		if (
-			formData.firstName ||
+			formData.name ||
 			formData.surname ||
 			formData.phone ||
 			formData.email
@@ -115,11 +128,11 @@ const EditContactScreen = ({ navigation, route }) => {
 				},
 			]);
 		} else {
-			navigation.repalce("ContactDetailsScreen");
+			navigation.replace("ContactDetailsScreen");
 		}
 	};
 
-	const initials = [formData.name.trim(), formData.surname.trim()]
+	const initials = [formData.name?.trim(), formData.surname?.trim()]
 		.filter(Boolean)
 		.map((w) => w[0].toUpperCase())
 		.join("");
@@ -132,9 +145,9 @@ const EditContactScreen = ({ navigation, route }) => {
 			tab="Contacts"
 			navigation={navigation}
 			actionButton={{
-				label: "Save Contact",
+				label: loading ? "Saving..." : "Save Contact",
 				icon: "person-add-outline",
-				onPress: () => handleSave,
+				onPress: handleSave,
 			}}
 		>
 			<KeyboardAvoidingView
@@ -158,7 +171,6 @@ const EditContactScreen = ({ navigation, route }) => {
 					{CONTACT_FORM_FIELDS.map((field) => (
 						<View key={field.key}>
 							<CustomInput
-								key={field.key}
 								label={field.label}
 								icon={field.icon}
 								placeholder={field.placeholder}
@@ -173,14 +185,6 @@ const EditContactScreen = ({ navigation, route }) => {
 						</View>
 					))}
 				</ScrollView>
-
-				{/* <View style={styles.footerContainer}>
-					<PrimaryButton
-						title="SAVE CONTACT"
-						onPress={handleSave}
-						loading={loading}
-					/>
-				</View> */}
 			</KeyboardAvoidingView>
 		</MainLayout>
 	);
@@ -202,9 +206,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	initials: { fontSize: 26, fontWeight: "700", color: PURPLE },
-	footerContainer: {
-		paddingVertical: 10,
-	},
 });
 
 export default EditContactScreen;

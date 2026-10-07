@@ -25,7 +25,6 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 		);
 	}
 
-	// 1. Generate unique contact ID & encrypt sensitive PII
 	const contactId = Crypto.randomUUID();
 	const cleanEmail = email ? email.trim().toLowerCase() : null;
 	const contactEmailBlindIndex = cleanEmail
@@ -41,7 +40,6 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 
 	const now = new Date().toISOString();
 
-	// 2. Prepare payload for Node.js backend API
 	const apiPayload = {
 		contact_id: contactId,
 		user_id: userId,
@@ -52,7 +50,6 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 		encrypted_contact_email: encryptedContactEmail,
 	};
 
-	// 3. Attempt posting to backend server using safeApiCall
 	let isSynched = 1;
 	const result = await safeApiCall(
 		() => postApi("/contacts/add", apiPayload),
@@ -67,7 +64,6 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 		isSynched = 0;
 	}
 
-	// 4. Save to local SQLite database repository
 	const localContactPayload = {
 		id: contactId,
 		firstName: firstName.trim(),
@@ -101,13 +97,11 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 export const getEmergencyContacts = async (db, userId) => {
 	if (!userId) throw new Error("User ID is required.");
 
-	// 1. Try Server Call
 	const res = await safeApiCall(
 		() => postApi("/contacts/get-contacts", { user_id: userId }),
 		"Could not load server contacts.",
 	);
 
-	// Unpack contacts array regardless of nesting structure
 	const serverContacts = Array.isArray(res.data)
 		? res.data
 		: Array.isArray(res.data?.contacts)
@@ -118,17 +112,10 @@ export const getEmergencyContacts = async (db, userId) => {
 
 	const isFromServer = res.success && Boolean(serverContacts);
 
-	// 2. Resolve Raw Array (Server vs Local SQLite Repository)
 	const rawList = isFromServer
 		? serverContacts
 		: (await getLocalEmergencyContacts(db, userId).catch(() => [])) || [];
 
-	console.log(
-		`=== [DEBUG] RAW LIST ITEMS (${isFromServer ? "SERVER" : "OFFLINE SQLITE"}) ===`,
-		JSON.stringify(rawList, null, 2),
-	);
-
-	// Helper to safely decrypt value or return as-is if already plain text
 	const safeDecrypt = (val, fieldName) => {
 		if (!val) return "";
 		try {
@@ -141,11 +128,9 @@ export const getEmergencyContacts = async (db, userId) => {
 		}
 	};
 
-	// 3. Normalize items directly into a clean Array
 	const contacts = rawList.map((c, index) => {
 		const contactId = c.contactId || c.contact_id || c.id;
 
-		// Try decrypting or reading plain properties
 		const firstName =
 			safeDecrypt(c.encrypted_contact_name, "firstName") ||
 			c.firstName ||
@@ -166,15 +151,6 @@ export const getEmergencyContacts = async (db, userId) => {
 
 		const normalizedName =
 			`${firstName} ${surname}`.trim() || c.name || "Unnamed Contact";
-
-		console.log(`=== [DEBUG] CONTACT #${index + 1} PROCESSED ===`, {
-			contactId,
-			firstName,
-			surname,
-			normalizedName,
-			phone,
-			email,
-		});
 
 		return {
 			...c,
@@ -206,15 +182,19 @@ export const updateEmergencyContact = async (
 		throw new Error("Contact ID is required for update operations");
 	}
 
+	if (!contactPayload) {
+		throw new Error("Contact payload is required for update operations");
+	}
+
 	const { firstName, surname, phone, email } = contactPayload;
 
-	//Normalise the new inputs
+	// Normalize input data
 	const newFirstName = firstName ? firstName.trim() : "";
 	const newSurname = surname ? surname.trim() : "";
 	const newPhone = phone ? phone.replace(/[\s-]/g, "") : "";
 	const newEmail = email ? email.trim().toLowerCase() : "";
 
-	//extract existing contact data
+	// Extract existing contact safely
 	const existingFirstName = existingContact.firstName
 		? existingContact.firstName.trim()
 		: "";
@@ -225,28 +205,29 @@ export const updateEmergencyContact = async (
 		? existingContact.phone.replace(/[\s-]/g, "")
 		: "";
 	const existingEmail = existingContact.email
-		? existingContact.email.trim().toLowerCase
+		? existingContact.email.trim().toLowerCase() // Added ()
 		: "";
 
-	//Check to see which data has changed for encryption
+	// Re-encrypt values that have changed, or encrypt fresh values
 	const encryptedContactName =
-		newFirstName !== existingFirstName
+		newFirstName !== existingFirstName || !existingContact.encrypted_contact_name
 			? encryptData(newFirstName)
 			: existingContact.encrypted_contact_name;
+
 	const encryptedContactSurname =
-		newSurname !== existingSurname
+		newSurname !== existingSurname || !existingContact.encrypted_contact_surname
 			? encryptData(newSurname)
 			: existingContact.encrypted_contact_surname;
+
 	const encryptedContactPhone =
-		newPhone !== existingPhone
+		newPhone !== existingPhone || !existingContact.encrypted_contact_phone_num
 			? encryptData(newPhone)
 			: existingContact.encrypted_contact_phone_num;
 
-	//Email and EmailBlindIndex
 	let emailBlindIndex = existingContact.contact_email_blind_index || null;
 	let encryptedContactEmail = existingContact.encrypted_contact_email || null;
 
-	if (newEmail !== existingEmail) {
+	if (newEmail !== existingEmail || !encryptedContactEmail) {
 		if (newEmail) {
 			emailBlindIndex = generateBlindIndex(newEmail);
 			encryptedContactEmail = encryptData(newEmail);
@@ -255,7 +236,6 @@ export const updateEmergencyContact = async (
 
 	const now = new Date().toISOString();
 
-	//Payload that has to be sent to the server
 	const apiPayload = {
 		contact_id: contactId,
 		user_id: userId,
@@ -267,15 +247,19 @@ export const updateEmergencyContact = async (
 	};
 
 	const result = await safeApiCall(
-		() => postApi("contacts/update", apiPayload),
+		() => postApi("/contacts/update", apiPayload), // Added leading slash
 		"Server failed to update contact. Saving changes locally for offline sync.",
 	);
 
+	console.log(result);
+
+	let isSynched = 1;
 	if (!result.success) {
 		console.warn(
 			"[Contact Service] Backend update failed, updating locally as offline:",
 			result?.error,
 		);
+		isSynched = 0;
 		await markContactAsUnSynched(db, contactId);
 	}
 
@@ -286,20 +270,21 @@ export const updateEmergencyContact = async (
 		phone: newPhone,
 		email: newEmail,
 		updatedAt: now,
-		isSynched: 0,
+		isSynched,
 		isDeleted: 0,
 	};
 
 	try {
 		await saveOrUpdateLocalEmergencyContact(db, userId, localContactPayload);
 	} catch (error) {
-		console.error("Contact Service failed to update local sqlite db");
+		console.error("Contact Service failed to update local sqlite db:", error);
 		throw new Error("Failed to update Emergency contact locally");
 	}
 
 	return {
 		success: true,
 		contactId,
+		result,
 		message: "Contact Updated Successfully",
 	};
 };

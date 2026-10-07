@@ -43,6 +43,8 @@ const register = async (req, res) => {
 	}
 };
 
+// #controllers/authController.js
+
 const login = async (req, res) => {
 	try {
 		const result = await authService.authenticateUser(req.body);
@@ -54,18 +56,13 @@ const login = async (req, res) => {
 			});
 		}
 
-		const { user, token } = result;
-		const resolvedUserId = user.user_id;
+		const { user, contacts, token } = result;
 
-		return formatAuthSuccess(
-			res,
-			200,
-			"Login Successfull",
-			resolvedUserId,
-			user.encrypted_email,
+		return res.status(200).json({
+			message: "Login Successful",
 			token,
-			{
-				user_id: resolvedUserId,
+			user: {
+				user_id: user.user_id,
 				email_blind_index: user.email_blind_index,
 				encrypted_name: user.encrypted_name,
 				encrypted_surname: user.encrypted_surname,
@@ -77,7 +74,8 @@ const login = async (req, res) => {
 				is_deleted: user.is_deleted,
 				is_verified: user.is_verified,
 			},
-		);
+			contacts: contacts || [], // Send all retrieved contacts from Supabase
+		});
 	} catch (error) {
 		console.error("Error during login process:", error);
 		return res.status(500).json({ error: "Failed to authenticate user" });

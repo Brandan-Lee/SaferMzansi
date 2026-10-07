@@ -10,13 +10,14 @@ const createEmergencyContact = async (payload) => {
 	const { data, error } = await supabase
 		.from("Emergency_Contacts")
 		.insert([cleanPayload])
-		.select();
+		.select()
+		.single();
 
 	if (error) {
 		throw error;
 	}
 
-	return data?.[0] || null;
+	return data;
 };
 
 const findContactById = async (contactId) => {
@@ -55,17 +56,29 @@ const getEmergencyContacts = async (userId) => {
 };
 
 const updateContact = async (payload) => {
-	const cleanPayload = Object.fromEntries(
-		Object.entries(payload).filter(
+	// 1. Separate target IDs from the fields being updated
+	const { contact_id, user_id, ...updateFields } = payload;
+
+	if (!contact_id || !user_id) {
+		throw new Error("updateContact requires both contact_id and user_id");
+	}
+
+	// 2. Clean only the fields that need updating
+	const cleanFields = Object.fromEntries(
+		Object.entries(updateFields).filter(
 			([_, value]) => value !== null && value !== undefined,
 		),
 	);
 
+	cleanFields.updated_at = new Date().toISOString();
+
+	// 3. Update using clean fields and match using extracted IDs
 	const { data: contact, error } = await supabase
 		.from("Emergency_Contacts")
-		.update(cleanPayload)
-		.match({ contact_id: payload.contact_id, user_id: payload.user_id })
-		.select();
+		.update(cleanFields)
+		.match({ contact_id, user_id })
+		.select()
+		.maybeSingle();
 
 	if (error) {
 		throw error;

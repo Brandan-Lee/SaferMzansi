@@ -28,7 +28,7 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 	const firstName = contact.firstName || "";
 	const surname = contact.surname || "";
 	const fullName =
-		contact.name || `${firstName} ${surname}`.trim() || "Emergency Contact";
+		`${firstName} ${surname}`.trim() || "Emergency Contact";
 
 	const initials = [firstName, surname]
 		.filter(Boolean)
