@@ -17,6 +17,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import { validateContactForm } from "@utils/securityAndValidation/validationUtil";
 import { useAuth } from "@context/AuthContext";
 import MainLayout from "@components/layouts/MainLayout";
+import ConfirmationModal from "@components/modals/ConfirmationModal";
 
 const PURPLE = "#5E0A9E";
 
@@ -33,10 +34,24 @@ const AddContactScreen = ({ navigation }) => {
 
 	const [loading, setIsLoading] = useState(false);
 	const [banner, setBanner] = useState(null);
+	const [modalConfig, setModalConfig] = useState({
+		visible: false,
+		title: "",
+		message: "",
+		confirmLabel: "Confirm",
+		cancelLabel: "Cancel",
+		isDestructive: false,
+		iconName: "alert-circle-outline",
+		onConfirm: () => {},
+	});
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
 
-	const handleSave = async () => {
+	const hideModal = () => {
+		setModalConfig((prev) => ({ ...prev, visible: false }));
+	};
+
+	const handleAdd = async () => {
 		setBanner(null);
 
 		const { isValid, errors: validationErrors } = validateContactForm(formData);
@@ -63,7 +78,7 @@ const AddContactScreen = ({ navigation }) => {
 			const contactPayload = {
 				firstName: formData.name.trim(),
 				surname: formData.surname.trim(),
-				phone: formData.phone,
+				phoneNum: formData.phone,
 				email: formData.email,
 			};
 
@@ -87,7 +102,7 @@ const AddContactScreen = ({ navigation }) => {
 			});
 
 			setTimeout(() => {
-				navigation.replace("EmergencyContactsScreen");
+				navigation.replace("EmergencyContactsScreen", {});
 			}, 800);
 		} catch (error) {
 			setBanner({
@@ -102,18 +117,31 @@ const AddContactScreen = ({ navigation }) => {
 	};
 
 	const handleBack = () => {
-		// Updated to use formData.name instead of formData.firstName
-		if (formData.name || formData.surname || formData.phone || formData.email) {
-			Alert.alert("Discard contact?", "Your changes will be lost.", [
-				{ text: "Keep editing", style: "cancel" },
-				{
-					text: "Discard",
-					style: "destructive",
-					onPress: () => navigation.goBack(),
+		const isFormDirty =
+			formData.name.trim() ||
+			formData.surname.trim() ||
+			formData.email.trim() ||
+			formData.phone.trim();
+
+		if (isFormDirty) {
+			setModalConfig({
+				visible: true,
+				title: "Discard changes?",
+				message:
+					"You have unsaved changes. Are you sure you want to discard them?",
+				confirmLabel: "Discard",
+				cancelLabel: "Keep editing",
+				isDestructive: true,
+				iconName: "warning-outline",
+				onConfirm: () => {
+					hideModal();
+					navigation.replace("EmergencyContactsScreen", {
+						userId: user.userId,
+					});
 				},
-			]);
+			});
 		} else {
-			navigation.goBack();
+			navigation.replace("EmergencyContactsScreen", { userId: user.userId });
 		}
 	};
 
@@ -130,9 +158,9 @@ const AddContactScreen = ({ navigation }) => {
 			tab="Contacts"
 			navigation={navigation}
 			actionButton={{
-				label: "Save Contact",
+				label: loading ? "Adding..." : "Add Contact",
 				icon: "person-add-outline",
-				onPress: handleSave,
+				onPress: handleAdd,
 				loading: loading,
 			}}
 		>
@@ -171,6 +199,18 @@ const AddContactScreen = ({ navigation }) => {
 					))}
 				</ScrollView>
 			</KeyboardAvoidingView>
+
+			<ConfirmationModal
+				visible={modalConfig.visible}
+				title={modalConfig.title}
+				message={modalConfig.message}
+				confirmLabel={modalConfig.confirmLabel}
+				cancelLabel={modalConfig.cancelLabel}
+				isDestructive={modalConfig.isDestructive}
+				iconName={modalConfig.iconName}
+				onConfirm={modalConfig.onConfirm}
+				onCancel={hideModal}
+			/>
 		</MainLayout>
 	);
 };

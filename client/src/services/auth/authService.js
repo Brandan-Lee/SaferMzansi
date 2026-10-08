@@ -9,7 +9,6 @@ import {
 	findUserByEmail,
 	insertLocalUser,
 	markUserAsSynched,
-	markUserAsUnSynched,
 	markUserAsVerifiedLocally,
 	saveOrUpdateLocalUser,
 } from "@database/repositories/userRepository";
@@ -161,12 +160,25 @@ export const loginUser = async (db, email, password) => {
 			for (const contact of serverContacts) {
 				const contactId = contact.contact_id || contact.id;
 
+				const emailBlindIndex =
+					contact.contact_email_blind_index ||
+					contact.email_blind_index ||
+					contact.emailBlindIndex;
+
 				const localContactPayload = {
-					id: contactId,
-					firstName: safeDecrypt(contact.encrypted_contact_name) || contact.firstName || "",
-					surname: safeDecrypt(contact.encrypted_contact_surname) || contact.surname || "",
-					phone: safeDecrypt(contact.encrypted_contact_phone_num) || contact.phone || "",
-					email: safeDecrypt(contact.encrypted_contact_email) || contact.email || "",
+					contactId,
+					userId: serverUser.user_id,
+					emailBlindIndex,
+					encryptedName:
+						contact.encrypted_contact_name || contact.encryptedName,
+					encryptedSurname:
+						contact.encrypted_contact_surname || contact.encryptedSurname,
+					encryptedPhoneNum:
+						contact.encrypted_contact_phone_num ||
+						contact.encryptedPhoneNum ||
+						contact.encryptedPhone,
+					encryptedEmail:
+						contact.encrypted_contact_email || contact.encryptedEmail,
 					createdAt: contact.created_at || new Date().toISOString(),
 					updatedAt: contact.updated_at || new Date().toISOString(),
 					isSynched: 1,
@@ -276,7 +288,6 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 			isVerified: serverUser.is_verified ? 1 : 0,
 		});
 
-		await markUserAsUnSynched(db, serverUser.user_id);
 		await markUserAsSynched(db, serverUser.user_id);
 	}
 

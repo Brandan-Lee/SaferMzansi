@@ -3,6 +3,7 @@ import {
 	encryptData,
 	decryptData,
 	generateBlindIndex,
+	encryptPayload,
 } from "@utils/securityAndValidation/securityUtil";
 import { postApi, safeApiCall } from "@services/ApiClient";
 import {
@@ -11,17 +12,29 @@ import {
 	markContactAsUnSynched,
 	softDeleteLocalEmergencyContact,
 	getLocalContactTotal,
+	markContactAsSynched,
 } from "@database/repositories/contactRepository";
 
 // Service to handle adding or updating an emergency contact
 export const addEmergencyContact = async (db, userId, contactData) => {
-	const { firstName, surname, phone, email } = contactData;
+	const { firstName, surname, phoneNum, email } = contactData;
 
 	if (!userId) {
 		throw new Error("User session is required to add an emergency contact.");
 	}
 
-	if (!firstName || !surname || (!phone && !email)) {
+	let existingContact = null;
+	try {
+		existingContact = await findContactByEmail(db, email);
+	} catch (error) {
+		console.warn("[Contact Service] Local DB check error");
+	}
+
+	if (existingContact) {
+		throw new Error("A contact with this email has already been registered");
+	}
+
+	if (!firstName || !surname || (!phoneNum && !email)) {
 		throw new Error(
 			"Name, surname, and at least a phone number or email are required.",
 		);
@@ -34,55 +47,48 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 	}
 
 	const contactId = Crypto.randomUUID();
-	const cleanEmail = email ? email.trim().toLowerCase() : null;
-	const contactEmailBlindIndex = cleanEmail
-		? generateBlindIndex(cleanEmail)
-		: null;
-
-	const encryptedContactName = encryptData(firstName.trim());
-	const encryptedContactSurname = encryptData(surname.trim());
-	const encryptedContactPhoneNum = encryptData(
-		phone ? phone.replace(/[\s-]/g, "") : "",
-	);
-	const encryptedContactEmail = cleanEmail ? encryptData(cleanEmail) : null;
-
-	const now = new Date().toISOString();
+	const emailBlindIndex = generateBlindIndex(email);
+	const encryptedData = encryptPayload({ firstName, surname, email, phoneNum });
 
 	const apiPayload = {
 		contact_id: contactId,
 		user_id: userId,
-		contact_email_blind_index: contactEmailBlindIndex,
-		encrypted_contact_name: encryptedContactName,
-		encrypted_contact_surname: encryptedContactSurname,
-		encrypted_contact_phone_num: encryptedContactPhoneNum,
-		encrypted_contact_email: encryptedContactEmail,
+		contact_email_blind_index: emailBlindIndex,
+		encrypted_contact_name: encryptedData.firstName,
+		encrypted_contact_surname: encryptedData.surname,
+		encrypted_contact_phone_num: encryptedData.phoneNum,
+		encrypted_contact_email: encryptedData.email,
 	};
 
-	let isSynched = 1;
 	const result = await safeApiCall(
 		() => postApi("/contacts/add", apiPayload),
 		"Server failed to save contact. Saving locally for offline sync.",
 	);
 
-	if (!result?.success) {
+	if (result?.success) {
+		await markContactAsSynched(db, contactId);
+	} else {
 		console.warn(
 			"[Contact Service] Backend sync failed, saving locally as offline:",
 			result?.error,
 		);
-		isSynched = 0;
+
+		throw new Error(
+			result.error || "A contact with this email already exists on the server.",
+		);
 	}
 
 	const localContactPayload = {
-		id: contactId,
-		firstName: firstName.trim(),
-		surname: surname.trim(),
-		phone: phone ? phone.replace(/[\s-]/g, "") : "",
-		email: cleanEmail || "",
-		createdAt: now,
-		updatedAt: now,
-		isSynched: isSynched,
-		isDeleted: 0,
+		contactId,
+		userId,
+		emailBlindIndex,
+		encryptedName: encryptedData.firstName,
+		encryptedSurname: encryptedData.surname,
+		encryptedPhone: encryptedData.phoneNum,
+		encryptedEmail: encryptedData.email,
 	};
+
+	console.log(localContactPayload);
 
 	try {
 		await saveOrUpdateLocalEmergencyContact(db, userId, localContactPayload);
@@ -97,8 +103,8 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 	return {
 		success: true,
 		contactId,
-		isSynched: isSynched === 1,
 		message: "Contact added successfully.",
+		result: result.data,
 	};
 };
 
@@ -189,7 +195,7 @@ export const getTotalContacts = async (db, userId) => {
 	console.log("From the service: ", count);
 
 	return count;
-}
+};
 
 export const updateEmergencyContact = async (
 	db,
@@ -231,7 +237,7 @@ export const updateEmergencyContact = async (
 	// Re-encrypt values that have changed, or encrypt fresh values
 	const encryptedContactName =
 		newFirstName !== existingFirstName ||
-			!existingContact.encrypted_contact_name
+		!existingContact.encrypted_contact_name
 			? encryptData(newFirstName)
 			: existingContact.encrypted_contact_name;
 
@@ -255,8 +261,6 @@ export const updateEmergencyContact = async (
 		}
 	}
 
-	const now = new Date().toISOString();
-
 	const apiPayload = {
 		contact_id: contactId,
 		user_id: userId,
@@ -272,25 +276,25 @@ export const updateEmergencyContact = async (
 		"Server failed to update contact. Saving changes locally for offline sync.",
 	);
 
-	let isSynched = 1;
-	if (!result.success) {
+	if (result?.success) {
+		await markContactAsSynched(db, userId);
+	} else {
 		console.warn(
 			"[Contact Service] Backend update failed, updating locally as offline:",
 			result?.error,
 		);
-		isSynched = 0;
 		await markContactAsUnSynched(db, contactId);
+		throw new Error(result?.error || "Server update contact failed.");
 	}
 
 	const localContactPayload = {
-		id: contactId,
-		firstName: newFirstName,
-		surname: newSurname,
-		phone: newPhone,
-		email: newEmail,
-		updatedAt: now,
-		isSynched,
-		isDeleted: 0,
+		contactId,
+		userId,
+		emailBlindIndex,
+		encryptedName: encryptedContactName,
+		encryptedSurname: encryptedContactSurname,
+		encryptedPhone: encryptedContactPhone,
+		encryptedEmail: encryptedContactEmail,
 	};
 
 	try {
@@ -334,11 +338,12 @@ export const deleteEmergencyContact = async (db, contactId, userId) => {
 		);
 
 		await markContactAsUnSynched(db, contactId);
+	} else {
+		await markContactAsSynched(db, contactId);
 	}
 
 	try {
 		await softDeleteLocalEmergencyContact(db, userId, contactId);
-
 	} catch (error) {
 		console.error("Contact Service failed to delete local sqlite db:", error);
 		throw new Error("Failed to delete Emergency contact locally");

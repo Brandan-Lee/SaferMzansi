@@ -38,6 +38,26 @@ const findContactById = async (contactId) => {
 	return contact;
 };
 
+const findContactByEmailBlindIndex = async (emailBlindIndex) => {
+	if (!emailBlindIndex) {
+		throw new Error(
+			"findContactByEmailBlindIndex requires a valid email_blind_index",
+		);
+	}
+
+	const { data: contact, error } = await supabase
+		.from("Emergency_Contacts")
+		.select("*")
+		.eq("contact_email_blind_index", emailBlindIndex)
+		.maybeSingle();
+
+	if (error) {
+		throw error;
+	}
+
+	return contact;
+};
+
 const getEmergencyContacts = async (userId) => {
 	if (!userId) {
 		throw new Error("getContacts requires a valid user_id");
@@ -115,6 +135,7 @@ const deleteContact = async (contactId, userId) => {
 module.exports = {
 	createEmergencyContact,
 	findContactById,
+	findContactByEmailBlindIndex,
 	getEmergencyContacts,
 	updateContact,
 	deleteContact,

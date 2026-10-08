@@ -11,80 +11,71 @@ export const saveOrUpdateLocalEmergencyContact = async (
 	contactData,
 ) => {
 	const {
-		id,
-		contactId, // Support both naming conventions
-		firstName,
-		surname,
-		phone,
-		email,
+		contactId,
+		emailBlindIndex,
+		encryptedName,
+		encryptedSurname,
+		encryptedPhoneNum,
+		encryptedPhone,
+		encryptedEmail,
 		createdAt,
 		updatedAt,
+		deletedAt = null,
 		isSynched = 0,
 		isDeleted = 0,
 	} = contactData;
 
-	const resolvedContactId = id || contactId;
-
-	if (!resolvedContactId || !userId) {
+	if (!contactId || !emailBlindIndex || !userId) {
 		throw new Error(
-			"contactId and userId are required to save or update an emergency contact.",
+			"contactId, emailBlindIndex, and userId are required to save or update an emergency contact.",
 		);
 	}
-
-	const cleanEmail = email ? email.trim().toLowerCase() : null;
-	const contactEmailBlindIndex = cleanEmail
-		? generateBlindIndex(cleanEmail)
-		: null;
-
-	// Encrypt sensitive PII fields locally
-	const encryptedContactName = encryptData(firstName.trim());
-	const encryptedContactSurname = encryptData(surname.trim());
-	const encryptedContactPhoneNum = encryptData(
-		phone ? phone.replace(/[\s-]/g, "") : "",
-	);
-	const encryptedContactEmail = cleanEmail ? encryptData(cleanEmail) : null;
 
 	const now = new Date().toISOString();
 	const resolvedCreatedAt = createdAt || now;
 	const resolvedUpdatedAt = updatedAt || now;
+	const resolvedPhone = encryptedPhoneNum || encryptedPhone || "";
 
 	const query = `
-        INSERT INTO Local_Emergency_Contacts (
-            contact_id,
-            user_id,
-            contact_email_blind_index,
-            encrypted_contact_name,
-            encrypted_contact_surname,
-            encrypted_contact_phone_num,
-            encrypted_contact_email,
-            is_synched,
-            is_deleted,
-            created_at,
-            updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON CONFLICT(contact_id) DO UPDATE SET
-            contact_email_blind_index = excluded.contact_email_blind_index,
-            encrypted_contact_name = excluded.encrypted_contact_name,
-            encrypted_contact_surname = excluded.encrypted_contact_surname,
-            encrypted_contact_phone_num = excluded.encrypted_contact_phone_num,
-            encrypted_contact_email = excluded.encrypted_contact_email,
-            is_synched = excluded.is_synched,
-            is_deleted = excluded.is_deleted,
-            updated_at = excluded.updated_at
-    `;
+		INSERT INTO Local_Emergency_Contacts (
+			contact_id,
+			user_id,
+			contact_email_blind_index,
+			encrypted_contact_name,
+			encrypted_contact_surname,
+			encrypted_contact_phone_num,
+			encrypted_contact_email,
+			is_synched,
+			is_deleted,
+			created_at,
+			updated_at,
+			deleted_at
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		ON CONFLICT(contact_id) DO UPDATE SET
+			contact_email_blind_index = excluded.contact_email_blind_index,
+			encrypted_contact_name = excluded.encrypted_contact_name,
+			encrypted_contact_surname = excluded.encrypted_contact_surname,
+			encrypted_contact_phone_num = excluded.encrypted_contact_phone_num,
+			encrypted_contact_email = excluded.encrypted_contact_email,
+			is_synched = excluded.is_synched,
+			is_deleted = excluded.is_deleted,
+			updated_at = excluded.updated_at,
+			deleted_at = excluded.deleted_at
+	`;
 
 	const params = [
-		resolvedContactId,
+		contactId,
 		userId,
-		contactEmailBlindIndex,
-		encryptedContactName,
-		encryptedContactSurname,
-		encryptedContactPhoneNum,
-		encryptedContactEmail,
+		emailBlindIndex,
+		encryptedName,
+		encryptedSurname,
+		resolvedPhone,
+		encryptedEmail,
 		isSynched,
 		isDeleted,
 		resolvedCreatedAt,
 		resolvedUpdatedAt,
+		deletedAt,
 	];
 
 	await db.runAsync(query, params);
@@ -228,4 +219,17 @@ export const getLocalContactTotal = async (db, userId) => {
 	const result = await db.getFirstAsync(countQuery, [userId]);
 	console.log("From the Repository: ", result?.total_contacts ?? 0);
 	return result?.total_contacts ?? 0;
+};
+
+export const findContactByEmail = async (db, targetEmail) => {
+	if (!targetEmail) {
+		throw new Error(
+			"contactId is required to find an emergency contact by their email index.",
+		);
+	}
+
+	const blindIndex = generateBlindIndex(targetEmail);
+	const query = `SELECT * FROM Local_Emergency_Contacts WHERE contact_email_blind_index = ? AND is_deleted = 0 LIMIT 1`;
+	const results = await db.getAllAsync(query, [blindIndex]);
+	return results.length > 0 ? results[0] : null;
 };

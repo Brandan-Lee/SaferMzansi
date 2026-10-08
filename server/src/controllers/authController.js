@@ -1,4 +1,4 @@
-const authService = require("#services/auth/authService.js");
+const authService = require("#services/auth/authServiceServer.js");
 
 const formatAuthSuccess = (
 	res,

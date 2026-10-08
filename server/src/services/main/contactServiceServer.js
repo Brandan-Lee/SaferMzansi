@@ -1,21 +1,35 @@
 const contactModel = require("#models/contactModel.js");
 
 const addEmergencyContact = async (contactData) => {
-	const { contact_id } = contactData;
+	const { contact_email_blind_index } = contactData;
 
-	const existingContact = await contactModel.findContactById(contact_id);
+	// Check if contact ID already exists
+	const existingContact = await contactModel.findContactByEmailBlindIndex(
+		contact_email_blind_index,
+	);
 
 	if (existingContact) {
-		throw Error("This contact already exists");
+		const err = new Error("This contact already exists.");
+		err.status = 400;
+		throw err;
 	}
 
-	const newContact = await contactModel.createEmergencyContact(contactData);
-
-	if (!newContact) {
-		throw new Error("Failed to create emergency contact in database");
+	try {
+		const newContact = await contactModel.createEmergencyContact(contactData);
+		if (!newContact) {
+			throw new Error("Failed to create emergency contact in database.");
+		}
+		return newContact;
+	} catch (error) {
+		if (error.code === "23505") {
+			const duplicateErr = new Error(
+				"A contact with this email has already been registered on the server.",
+			);
+			duplicateErr.status = 409; // Conflict
+			throw duplicateErr;
+		}
+		throw error;
 	}
-
-	return newContact;
 };
 
 const getEmergencyContacts = async (payload) => {
@@ -52,6 +66,8 @@ const updateContact = async (payload) => {
 	if (!updatedContact) {
 		throw new Error("Failed to update emergency contact in database");
 	}
+
+	return updatedContact;
 };
 
 const deleteContact = async (contactId, userId) => {

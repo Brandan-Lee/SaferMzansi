@@ -1,7 +1,8 @@
-const contactService = require("#services/contactService.js");
+const contactService = require("#services/main/contactServiceServer.js");
 
 const addContact = async (req, res, next) => {
 	try {
+		console.log("[Backend Body Received]:", req.body);
 		const contact = await contactService.addEmergencyContact(req.body);
 		return res.status(201).json({
 			success: true,
@@ -9,13 +10,13 @@ const addContact = async (req, res, next) => {
 			data: contact,
 		});
 	} catch (error) {
+		console.error("[Backend Add Contact Error]:", error);
 		next(error);
 	}
 };
 
 const getContacts = async (req, res, next) => {
 	try {
-		// Support both user_id and userId from body or query
 		const userId = req.body?.user_id || req.body?.userId || req.query?.user_id;
 
 		const contacts = await contactService.getEmergencyContacts(userId);

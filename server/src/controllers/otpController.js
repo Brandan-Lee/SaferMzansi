@@ -1,4 +1,7 @@
-const { sendOtpEmail, verifyOtpCode } = require("#services/auth/otpService.js");
+const {
+	sendOtpEmail,
+	verifyOtpCode,
+} = require("#services/auth/otpServiceServer.js");
 
 const sendOtp = async (req, res) => {
 	try {

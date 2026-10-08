@@ -1,11 +1,11 @@
 // authService_2.js
-const userModel = require("#models/userModel.js");
 const contactModel = require("#models/contactModel.js");
+const userModel = require("#models/userModel.js");
 const {
 	queueOtpEmail,
 	isPasswordResetTokenValid,
 	consumePasswordResetToken,
-} = require("#services/auth/otpService.js");
+} = require("#services/auth/otpServiceServer.js");
 const { hashPassword, verifyPassword } = require("#utils/securityUtil.js");
 const { generateToken } = require("#utils/tokenUtil.js");
 
@@ -49,7 +49,6 @@ const registerUser = async (userData) => {
 const authenticateUser = async ({ email_blind_index, password }) => {
 	// Added missing await on findUserByEmailBlindIndex
 	const user = await userModel.findUserByEmailBlindIndex(email_blind_index);
-	console.log("User found in the Server Auth:", user.user_id);
 	const contacts = await contactModel.getEmergencyContacts(user.user_id);
 
 	if (!user) {

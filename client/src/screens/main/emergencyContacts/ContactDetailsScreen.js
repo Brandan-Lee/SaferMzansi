@@ -17,8 +17,6 @@ import { deleteEmergencyContact } from "@services/main/contactService";
 const PURPLE = "#5E0A9E";
 
 const ContactDetailsScreen = ({ navigation, route }) => {
-	// const navigation = useNavigation();
-	// const route = useRoute();
 	const contact = route.params?.contact;
 	const db = useSQLiteContext();
 	const [banner, setBanner] = useState(null);
@@ -260,7 +258,7 @@ const styles = StyleSheet.create({
 	rowLabel: { fontSize: 12, color: "#666" },
 	rowValue: { fontSize: 15, fontWeight: "600", color: "#111" },
 	rowValueEmpty: { color: "#999", fontWeight: "400", fontStyle: "italic" },
-	actions: { marginBottom: 20 },
+	actions: { marginBottom: 50 },
 	actionRow: { flexDirection: "row", gap: 12 },
 	primaryButton: {
 		flex: 1,

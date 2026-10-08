@@ -170,6 +170,11 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 		);
 	}
 
+	const now = new Date().toISOString();
+	const resolvedCreatedAt = createdAt || now;
+	const resolvedUpdatedAt = updatedAt || now;
+	const resolvedPhone = encryptedPhoneNum || encryptedPhone || "";
+
 	const query = `
 		INSERT INTO Local_Users (
 			user_id,
@@ -208,8 +213,8 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 		isVerified,
 		isSynched,
 		isDeleted,
-		createdAt,
-		updatedAt,
+		resolvedCreatedAt,
+		resolvedUpdatedAt,
 		deletedAt,
 	];
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
@@ -7,8 +7,11 @@ import { decryptData } from "@utils/securityAndValidation/securityUtil";
 import { useAuth } from "@context/AuthContext";
 import AuthLayout from "@components/layouts/AuthLayout";
 import { useShake } from "@hooks/useShake";
+import { useFocusEffect } from "@react-navigation/native";
+import { useSQLiteContext } from "expo-sqlite";
+import { getLocalContactTotal } from "@database/repositories/contactRepository";
 
-const QUICK_ACTIONS = [
+const INITIAL_QUICK_ACTIONS = [
 	{
 		id: "decoy",
 		title: "Decoy Mode",
@@ -30,7 +33,7 @@ const QUICK_ACTIONS = [
 	{
 		id: "contacts",
 		title: "Emergency Contacts",
-		subtitle: "4 user saved emergency contacts",
+		subtitle: "Loading contacts...",
 		icon: "users",
 		color: "#3B82F6",
 		bg: "#EFF6FF",
@@ -60,6 +63,8 @@ const HomeScreen = ({ navigation }) => {
 	// useShake(() => {
 	// 	console.log("This bitch been shaken!!")
 	// });
+	const db = useSQLiteContext();
+	const [contactCount, setContactCount] = useState(0);
 
 	const resolveDisplayName = (name) => {
 		if (!name) {
@@ -75,6 +80,50 @@ const HomeScreen = ({ navigation }) => {
 
 	const displayName = resolveDisplayName(user.userName);
 
+	//Fetch data whenever the screen gains focus
+	useFocusEffect(
+		useCallback(() => {
+			let isMounted = true;
+
+			//Fetch the total emergency contact count
+			const contactFetchCount = async () => {
+				const userId = user?.userId;
+
+				if (!userId || !db) {
+					return;
+				}
+
+				//Add code to fetch the emergency contact count
+				const contactResult = await getLocalContactTotal(db, userId); //
+
+				if (isMounted) {
+					setContactCount(contactResult);
+				}
+			};
+
+			//Methods to invoke
+			contactFetchCount();
+
+			return () => {
+				isMounted = false;
+			};
+		}, [db, user]),
+	);
+
+	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
+		if (item.id === "contacts") {
+			return {
+				...item,
+				subtitle:
+					contactCount === 0
+						? "No emergency contacts saved"
+						: `${contactCount} user saved emergency contact${contactCount === 1 ? "" : "s"}`,
+			};
+		}
+
+		return item;
+	});
+
 	return (
 		<View style={styles.screenContainer}>
 			<AuthLayout title={`Welcome back ${displayName}`}>
@@ -86,7 +135,7 @@ const HomeScreen = ({ navigation }) => {
 					<View style={styles.toolsSection}>
 						<Text style={styles.sectionTitle}>Safety Tools</Text>
 						<View style={styles.grid}>
-							{QUICK_ACTIONS.map((item) => (
+							{quickActions.map((item) => (
 								<SafetyToolCard
 									key={item.id}
 									item={item}
@@ -95,7 +144,6 @@ const HomeScreen = ({ navigation }) => {
 							))}
 						</View>
 					</View>
-
 				</View>
 			</AuthLayout>
 

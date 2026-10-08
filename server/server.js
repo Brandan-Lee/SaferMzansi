@@ -1,8 +1,8 @@
 //Load environment variables at the top
 require("dotenv").config();
 
-const express = require("express");
 const cors = require("cors");
+const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -12,8 +12,16 @@ app.use(express.json()); // Built-in Express JSON parser
 
 // Import Routers
 const authRouter = require("./src/routes/auth");
-const otpRouter = require("./src/routes/otpRoutes");
 const contactRouter = require("./src/routes/contacts"); // <-- Added contact routes
+const otpRouter = require("./src/routes/otpRoutes");
+
+app.use((err, req, res, next) => {
+	const statusCode = err.status || 500;
+	return res.status(statusCode).json({
+		success: false,
+		error: err.message || "An unexpected server error occurred.",
+	});
+});
 
 // Mount API Endpoints
 app.use("/api/users", authRouter);
