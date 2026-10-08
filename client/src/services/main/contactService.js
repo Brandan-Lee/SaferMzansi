@@ -10,6 +10,7 @@ import {
 	getLocalEmergencyContacts,
 	markContactAsUnSynched,
 	softDeleteLocalEmergencyContact,
+	getLocalContactTotal,
 } from "@database/repositories/contactRepository";
 
 // Service to handle adding or updating an emergency contact
@@ -24,6 +25,12 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 		throw new Error(
 			"Name, surname, and at least a phone number or email are required.",
 		);
+	}
+
+	const contactCount = await getLocalContactTotal(db, userId);
+
+	if (contactCount >= 5) {
+		throw new Error("Maximum number of contacts added.");
 	}
 
 	const contactId = Crypto.randomUUID();
@@ -172,6 +179,18 @@ export const getEmergencyContacts = async (db, userId) => {
 	};
 };
 
+export const getTotalContacts = async (db, userId) => {
+	if (!userId) {
+		throw new Error("Valid user Id required to get the total contacts.");
+	}
+
+	const count = await getLocalContactTotal(db, userId);
+
+	console.log("From the service: ", count);
+
+	return count;
+}
+
 export const updateEmergencyContact = async (
 	db,
 	userId,
@@ -212,7 +231,7 @@ export const updateEmergencyContact = async (
 	// Re-encrypt values that have changed, or encrypt fresh values
 	const encryptedContactName =
 		newFirstName !== existingFirstName ||
-		!existingContact.encrypted_contact_name
+			!existingContact.encrypted_contact_name
 			? encryptData(newFirstName)
 			: existingContact.encrypted_contact_name;
 
@@ -317,17 +336,9 @@ export const deleteEmergencyContact = async (db, contactId, userId) => {
 		await markContactAsUnSynched(db, contactId);
 	}
 
-	const now = new Date().toISOString();
-
-	const localContactPayload = {
-		id: contactId,
-		userId: userId,
-		isDeleted: 1,
-		updatedAt: now,
-	};
-
 	try {
-		await softDeleteLocalEmergencyContact(db, userId, localContactPayload);
+		await softDeleteLocalEmergencyContact(db, userId, contactId);
+
 	} catch (error) {
 		console.error("Contact Service failed to delete local sqlite db:", error);
 		throw new Error("Failed to delete Emergency contact locally");

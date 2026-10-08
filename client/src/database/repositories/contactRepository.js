@@ -198,7 +198,6 @@ export const softDeleteLocalEmergencyContact = async (
 	db,
 	userId,
 	contactId,
-	isSynched = 1,
 ) => {
 	if (!contactId || !userId) {
 		throw new Error(
@@ -211,10 +210,22 @@ export const softDeleteLocalEmergencyContact = async (
 	const query = `
 		UPDATE Local_Emergency_Contacts 
 		SET is_deleted = 1,
-		    is_synched = ?,
-		    updated_at = ?
+		    is_synched = 0,
+		    deleted_at = ?
 		WHERE contact_id = ? AND user_id = ?
 	`;
 
-	await db.runAsync(query, [isSynched, now, contactId, userId]);
+	await db.runAsync(query, [now, contactId, userId]);
+};
+
+export const getLocalContactTotal = async (db, userId) => {
+
+	if (!userId) {
+		throw new Error("There is no User Id to search the database");
+	}
+
+	const countQuery = `SELECT COUNT(*) AS total_contacts FROM Local_Emergency_Contacts WHERE user_id = ? AND (is_deleted = 0 OR deleted_at IS NULL)`;
+	const result = await db.getFirstAsync(countQuery, [userId]);
+	console.log("From the Repository: ", result?.total_contacts ?? 0);
+	return result?.total_contacts ?? 0;
 };

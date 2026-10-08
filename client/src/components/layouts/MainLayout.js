@@ -18,7 +18,10 @@ const MainLayout = ({
 	actionButton,
 }) => {
 	return (
-		<LinearGradient colors={["#D9D9D9", "#DCCBF3"]} style={styles.container}>
+		<LinearGradient colors={["#D9D9D9", "#DECDFA"]}
+			start={{ x: 0, y: 0 }}
+			end={{ x: 0, y: 1 }}
+			style={styles.gradient}>
 			<SafeAreaView style={styles.safeArea} edges={["top"]}>
 				<View style={styles.innerContainer}>
 					{title && (
@@ -69,7 +72,7 @@ const MainLayout = ({
 };
 
 const styles = StyleSheet.create({
-	container: { flex: 1 },
+	gradient: { flex: 1 },
 	safeArea: { flex: 1 },
 	innerContainer: {
 		flex: 1,
@@ -92,13 +95,13 @@ const styles = StyleSheet.create({
 		backgroundColor: PURPLE,
 		borderRadius: 8,
 		paddingVertical: 12,
-		marginBottom: 16,
+		marginBottom: 50,
 		gap: 12,
 	},
 	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 	navWrapper: {
 		position: "absolute",
-		bottom: 0,
+		bottom: 20,
 		left: 0,
 		right: 0,
 		width: "100%",

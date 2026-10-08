@@ -6,6 +6,7 @@ import { SafetyToolCard } from "@components/home/SafetyToolCard";
 import { decryptData } from "@utils/securityAndValidation/securityUtil";
 import { useAuth } from "@context/AuthContext";
 import AuthLayout from "@components/layouts/AuthLayout";
+import { useShake } from "@hooks/useShake";
 
 const QUICK_ACTIONS = [
 	{
@@ -55,6 +56,10 @@ const RADIAL_ACTIONS = [
 
 const HomeScreen = ({ navigation }) => {
 	const { user } = useAuth();
+
+	// useShake(() => {
+	// 	console.log("This bitch been shaken!!")
+	// });
 
 	const resolveDisplayName = (name) => {
 		if (!name) {
