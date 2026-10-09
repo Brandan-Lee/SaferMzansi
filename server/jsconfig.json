@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "#controllers/*": ["./src/controllers/*"],
+      "#models/*": ["./src/models/*"],
+      "#routes/*": ["./src/routes/*"],
+      "#services/*": ["./src/services/*"],
+      "#middleware/*": ["./src/middleware/*"],
+      "#config/*": ["./src/config/*"],
+      "#utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": ["src/**/*", "index.js", "server.js"],
+  "exclude": ["node_modules"]
+}

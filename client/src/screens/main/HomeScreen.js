@@ -1,33 +1,214 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useCallback, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { NavigationBar } from "@components/common/NavigationBar";
+import { ProtectionRadar } from "@components/home/ProtectionRadar";
+import { SafetyToolCard } from "@components/home/SafetyToolCard";
+import { decryptData } from "@utils/securityAndValidation/securityUtil";
+import { useAuth } from "@context/AuthContext";
+import AuthLayout from "@components/layouts/AuthLayout";
+import { useShake } from "@hooks/useShake";
+import { useFocusEffect } from "@react-navigation/native";
+import { useSQLiteContext } from "expo-sqlite";
+import { getLocalContactTotal } from "@database/repositories/contactRepository";
+import { Ionicons } from "@expo/vector-icons";
 
-const HomeScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.text}>this is the Home page</Text>
-      </View>
-    </SafeAreaView>
-  );
+const INITIAL_QUICK_ACTIONS = [
+	{
+		id: "decoy",
+		title: "Decoy Mode",
+		subtitle: "Decoy Mode is active",
+		icon: "shield-off",
+		color: "#8B5CF6",
+		bg: "#F5F3FF",
+		route: "DecoyScreen",
+	},
+	{
+		id: "location",
+		title: "Live Location",
+		subtitle: "You have activated the monitoring of your live location",
+		icon: "map-pin",
+		color: "#10B981",
+		bg: "#ECFDF5",
+		route: "LocationScreen",
+	},
+	{
+		id: "contacts",
+		title: "Emergency Contacts",
+		subtitle: "Loading contacts...",
+		icon: "users",
+		color: "#3B82F6",
+		bg: "#EFF6FF",
+		route: "EmergencyContactsScreen",
+	},
+	{
+		id: "vault",
+		title: "Secure Vault",
+		subtitle: "5 Cases include encrypted evidence",
+		icon: "lock",
+		color: "#F59E0B",
+		bg: "#FFFBEB",
+		route: "VaultScreen",
+	},
+];
+
+const RADIAL_ACTIONS = [
+	{ id: "lock", icon: "shield-off", route: "DecoyScreen", angle: 225 },
+	{ id: "map", icon: "map-pin", route: "LocationScreen", angle: 315 },
+	{ id: "alert", icon: "alert-triangle", route: "SOSScreen", angle: 135 },
+	{ id: "user", icon: "users", route: "EmergencyContactsScreen", angle: 45 },
+];
+
+const HomeScreen = ({ navigation }) => {
+	const { user } = useAuth();
+
+	// useShake(() => {
+	// 	console.log("This bitch been shaken!!")
+	// });
+	const db = useSQLiteContext();
+	const [contactCount, setContactCount] = useState(0);
+
+	const resolveDisplayName = (name) => {
+		if (!name) {
+			return "User";
+		}
+
+		try {
+			return decryptData(name);
+		} catch (error) {
+			return name;
+		}
+	};
+
+	const displayName = resolveDisplayName(user.userName);
+
+	//Fetch data whenever the screen gains focus
+	useFocusEffect(
+		useCallback(() => {
+			let isMounted = true;
+
+			//Fetch the total emergency contact count
+			const contactFetchCount = async () => {
+				const userId = user?.userId;
+
+				if (!userId || !db) {
+					return;
+				}
+
+				//Add code to fetch the emergency contact count
+				const contactResult = await getLocalContactTotal(db, userId); //
+
+				if (isMounted) {
+					setContactCount(contactResult);
+				}
+			};
+
+			//Methods to invoke
+			contactFetchCount();
+
+			return () => {
+				isMounted = false;
+			};
+		}, [db, user]),
+	);
+
+	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
+		if (item.id === "contacts") {
+			return {
+				...item,
+				subtitle:
+					contactCount === 0
+						? "No emergency contacts saved"
+						: `${contactCount} user saved emergency contact${contactCount === 1 ? "" : "s"}`,
+			};
+		}
+
+		return item;
+	});
+
+	return (
+		<View style={styles.screenContainer}>
+			<AuthLayout title={`Welcome back ${displayName}`}>
+				<View style={styles.content}>
+					{/* Protection Radar Component */}
+					<ProtectionRadar actions={RADIAL_ACTIONS} navigation={navigation} />
+
+					{/* Safety Tools Grid */}
+					<View style={styles.toolsSection}>
+						<Text style={styles.sectionTitle}>Safety Tools</Text>
+						<View style={styles.grid}>
+							{quickActions.map((item) => (
+								<SafetyToolCard
+									key={item.id}
+									item={item}
+									onPress={() => item.route && navigation.navigate(item.route)}
+								/>
+							))}
+						</View>
+					</View>
+
+					{/* Temporary until the settings screen has been implemented */}
+					<TouchableOpacity
+						style={[styles.primaryButton]}
+						activeOpacity={0.8}
+						onPress={() => {
+							navigation.replace("ProfileScreen");
+						}}
+					>
+						<Ionicons name="call-outline" size={20} color="#fff" />
+						<Text style={styles.primaryText}>Profile Screen</Text>
+					</TouchableOpacity>
+				</View>
+			</AuthLayout>
+
+			{/* Fixed Floating Navigation Bar */}
+			<View style={styles.navWrapper}>
+				<NavigationBar activeTab="Home" navigation={navigation} />
+			</View>
+		</View>
+	);
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: '#000000',
-  },
+	screenContainer: {
+		flex: 1,
+		position: "relative",
+	},
+	content: {
+		paddingHorizontal: 20,
+		paddingBottom: 10,
+		alignItems: "center",
+	},
+	toolsSection: {
+		width: "100%",
+	},
+	sectionTitle: {
+		fontSize: 16,
+		fontWeight: "700",
+		color: "#581C87",
+		marginBottom: 10,
+	},
+	grid: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+		justifyContent: "space-between",
+		rowGap: 10,
+		width: "100%",
+	},
+	footerTagline: {
+		marginTop: 20,
+		fontSize: 12,
+		fontWeight: "600",
+		color: "#6B21A8",
+		textAlign: "center",
+	},
+	navWrapper: {
+		position: "absolute",
+		bottom: 20,
+		left: 0,
+		right: 0,
+		alignItems: "center",
+		zIndex: 99,
+	},
 });
 
 export default HomeScreen;
