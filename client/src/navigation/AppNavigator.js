@@ -11,7 +11,7 @@ import EmergencyContactsScreen from "@screens/main/emergencyContacts/EmergencyCo
 import AddContactScreen from "@screens/main/emergencyContacts/AddContactScreen";
 import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetailsScreen";
 import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
-
+import DecoyScreen from "@screens/main/DecoyScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +19,7 @@ function MainStack({ user }) {
 	return (
 		<Stack.Navigator
 			screenOptions={{ headerShown: false }}
+			//Change this to the screen name that you wish to work on... so HomeScreen to SettingsScreen for instance
 			initialRouteName="HomeScreen"
 		>
 			<Stack.Screen
@@ -38,10 +39,8 @@ function MainStack({ user }) {
 				name="ContactDetailsScreen"
 				component={ContactDetailsScreen}
 			/>
-			<Stack.Screen
-				name="EditContactScreen"
-				component={EditContactScreen}
-			/>
+			<Stack.Screen name="EditContactScreen" component={EditContactScreen} />
+			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />
 		</Stack.Navigator>
 	);
 }
@@ -59,7 +58,9 @@ export default function AppNavigator() {
 
 	return (
 		<NavigationContainer>
+			{/* Change the following line to use the second commented one rather than this one */}
 			{sessionToken ? <MainStack user={user} /> : <AuthStack />}
+			{/* <MainStack /> */}
 		</NavigationContainer>
 	);
 }
