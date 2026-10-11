@@ -130,7 +130,7 @@ export default function SupportHubScreen({ onBack, services}) {
     const [rawLocation, setRawLocation] = useState(null);
     const [locationShared, setLocationShared] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [hiddenCategories, setHiddenCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedId, setSelectedId] = useState(null);
     const [expandedId, setExpandedId] = useState(null);
 
@@ -254,11 +254,37 @@ export default function SupportHubScreen({ onBack, services}) {
         );
     }, [userLocation]);
  
-    const toggleCategory = (cat) => {
-        setHiddenCategories((prev) =>
-            prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    // Tap a legend key to select that category; tap it again to show all
+const selectCategory = (cat) => {
+    const next = selectedCategory === cat ? null : cat;
+    setSelectedCategory(next);
+    setSelectedId(null);
+    setExpandedId(null);
+
+    if (!next) {
+        mapRef.current?.animateToRegion(
+            { ...userLocation, latitudeDelta: 0.12, longitudeDelta: 0.12 },
+            500
         );
-    };
+        return;
+    }
+
+    
+    const coords = places
+        .filter((p) => p.category === next)
+        .map((p) => ({ latitude: p.latitude, longitude: p.longitude }));
+    mapRef.current?.fitToCoordinates([userLocation, ...coords], {
+        edgePadding: { top: 60, right: 60, bottom: 60, left: 60 },
+        animated: true,
+    });
+};
+
+
+const visiblePlaces = selectedCategory
+    ? places
+          .filter((p) => p.category === selectedCategory)
+          .sort((a, b) => a.distance - b.distance)
+    : nearest;
  
     const focusPlace = (place) => {
         setSelectedId(place.id);
@@ -312,7 +338,7 @@ export default function SupportHubScreen({ onBack, services}) {
                             )}
  
                             {places
-                                .filter((p) => !hiddenCategories.includes(p.category))
+                                .filter((p) => !selectedCategory || p.category === selectedCategory)
                                 .map((p) => (
                                     <Marker
                                         key={p.id}
@@ -359,25 +385,35 @@ export default function SupportHubScreen({ onBack, services}) {
                     <Text style={styles.sectionTitle}>Legend</Text>
                     <View style={styles.legend}>
                         {Object.entries(CATEGORIES).map(([key, cat]) => {
-                            const hidden = hiddenCategories.includes(key);
-                            return (
-                                <TouchableOpacity
-                                    key={key}
-                                    style={[styles.legendChip, hidden && styles.legendChipHidden]}
-                                    activeOpacity={0.7}
-                                    onPress={() => toggleCategory(key)}
-                                >
-                                    <MaterialCommunityIcons name="map-marker" size={18} color={cat.color} />
-                                    <Text style={styles.legendText} numberOfLines={1}>
-                                        {cat.label}
-                                    </Text>
-                                </TouchableOpacity>
-                            );
+                            const selected = selectedCategory === key;
+return (
+    <TouchableOpacity
+        key={key}
+        style={[
+            styles.legendChip,
+            selected && { backgroundColor: cat.color, borderColor: cat.color },
+        ]}
+        activeOpacity={0.7}
+        onPress={() => selectCategory(key)}
+    >
+        <MaterialCommunityIcons
+            name={selected ? 'check-circle' : 'map-marker'}
+            size={18}
+            color={selected ? '#fff' : cat.color}
+        />
+        <Text
+            style={[styles.legendText, selected && styles.legendTextSelected]}
+            numberOfLines={1}
+        >
+            {cat.label}
+        </Text>
+    </TouchableOpacity>
+);
                         })}
                     </View>
  
                     {/* Nearest service in each category */}
-                    {nearest.map((place) => {
+                    {visiblePlaces.map((place) => {
                         const cat = CATEGORIES[place.category];
                         const expanded = expandedId === place.id;
                         return (
@@ -558,7 +594,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         gap: 4,
     },
-    legendChipHidden: { opacity: 0.4 },
+    legendTextSelected: {color: '#fff'},
     legendText: { flex: 1, fontSize: 12, fontWeight: '600', color: TITLE },
  
     card: {
