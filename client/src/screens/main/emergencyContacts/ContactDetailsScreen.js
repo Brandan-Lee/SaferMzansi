@@ -13,6 +13,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { useAuth } from "@context/AuthContext";
 import { deleteEmergencyContact } from "@services/main/contactService";
+import ProfileDetailCard from "@components/cards/ProfileDetailCard";
 
 const PURPLE = "#5E0A9E";
 
@@ -63,7 +64,6 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 	};
 
 	const handleUpdate = () => {
-		console.log("Update contact:", contact);
 		navigation.navigate("EditContactScreen", { contact });
 	};
 
@@ -93,13 +93,11 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 					return;
 				}
 
-				// Show success banner inside the open modal
 				setBanner({
 					message: "Emergency contact has been successfully removed.",
 					type: "success",
 				});
 
-				// Hide modal and navigate away after 800ms
 				setTimeout(() => {
 					hideModal();
 					setIsLoading(false);
@@ -108,23 +106,6 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 			},
 		});
 	};
-
-	const renderRow = (icon, label, value) => (
-		<View style={styles.row}>
-			<View style={styles.rowIcon}>
-				<Ionicons name={icon} size={18} color={PURPLE} />
-			</View>
-			<View style={{ flex: 1 }}>
-				<Text style={styles.rowLabel}>{label}</Text>
-				<Text
-					style={[styles.rowValue, !value && styles.rowValueEmpty]}
-					numberOfLines={1}
-				>
-					{value || "Not provided"}
-				</Text>
-			</View>
-		</View>
-	);
 
 	return (
 		<MainLayout
@@ -145,10 +126,26 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 				</View>
 				<Text style={styles.fullName}>{fullName}</Text>
 
-				{renderRow("person-outline", "Name", firstName)}
-				{renderRow("people-outline", "Surname", surname)}
-				{renderRow("call-outline", "Phone number", contact.phone)}
-				{renderRow("mail-outline", "Email address", contact.email)}
+				<ProfileDetailCard
+					icon="person-outline"
+					label="Name"
+					value={firstName}
+				/>
+				<ProfileDetailCard
+					icon="people-outline"
+					label="Surname"
+					value={surname}
+				/>
+				<ProfileDetailCard
+					icon="call-outline"
+					label="Phone number"
+					value={contact.phone}
+				/>
+				<ProfileDetailCard
+					icon="mail-outline"
+					label="Email address"
+					value={contact.email}
+				/>
 			</ScrollView>
 
 			<View style={styles.actions}>
@@ -173,7 +170,7 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 					</TouchableOpacity>
 				</View>
 				<TouchableOpacity
-					style={[styles.editButton]}
+					style={styles.editButton}
 					activeOpacity={0.8}
 					onPress={handleUpdate}
 				>
@@ -181,7 +178,7 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 					<Text style={styles.primaryText}>Edit Contact</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					style={[styles.deleteButton]}
+					style={styles.deleteButton}
 					activeOpacity={0.8}
 					onPress={handleDeleteContact}
 				>
@@ -232,32 +229,6 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginBottom: 20,
 	},
-	row: {
-		flexDirection: "row",
-		alignItems: "center",
-		backgroundColor: "#FFFFFF",
-		borderRadius: 10,
-		paddingVertical: 10,
-		paddingHorizontal: 12,
-		marginBottom: 12,
-		shadowColor: "#000",
-		shadowOpacity: 0.06,
-		shadowRadius: 4,
-		shadowOffset: { width: 0, height: 2 },
-		elevation: 1,
-	},
-	rowIcon: {
-		width: 32,
-		height: 32,
-		borderRadius: 16,
-		backgroundColor: "#EFE3FA",
-		alignItems: "center",
-		justifyContent: "center",
-		marginRight: 12,
-	},
-	rowLabel: { fontSize: 12, color: "#666" },
-	rowValue: { fontSize: 15, fontWeight: "600", color: "#111" },
-	rowValueEmpty: { color: "#999", fontWeight: "400", fontStyle: "italic" },
 	actions: { marginBottom: 50 },
 	actionRow: { flexDirection: "row", gap: 12 },
 	primaryButton: {
@@ -284,10 +255,7 @@ const styles = StyleSheet.create({
 		gap: 8,
 	},
 	secondaryText: { color: PURPLE, fontSize: 16, fontWeight: "600" },
-
-	editText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 	editButton: {
-		// remove flex: 1
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
@@ -300,7 +268,6 @@ const styles = StyleSheet.create({
 		marginTop: 12,
 	},
 	deleteButton: {
-		// remove flex: 1
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
@@ -312,7 +279,6 @@ const styles = StyleSheet.create({
 		gap: 8,
 		marginTop: 12,
 	},
-	deleteText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 	disabled: { opacity: 0.4 },
 });
 

@@ -12,7 +12,10 @@ import AddContactScreen from "@screens/main/emergencyContacts/AddContactScreen";
 import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetailsScreen";
 import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
 import DecoyScreen from "@screens/main/DecoyScreen";
-import ProfileScreen from "@screens/main/settings/ProfileScreen";
+import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
+import OTPScreen from "@screens/auth/OTPScreen";
+import ResetPasswordScreen from "@screens/auth/ResetPasswordScreen";
+import LoginScreen from "@screens/auth/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -48,7 +51,8 @@ function MainStack({ user }) {
 }
 
 export default function AppNavigator() {
-	const { sessionToken, user } = useContext(AuthContext);
+	const { sessionToken, user, pendingAuthRoute, pendingAuthParams } =
+		useContext(AuthContext);
 
 	// if (loading) {
 	// 	return (
@@ -61,7 +65,14 @@ export default function AppNavigator() {
 	return (
 		<NavigationContainer>
 			{/* Change the following line to use the second commented one rather than this one */}
-			{sessionToken ? <MainStack user={user} /> : <AuthStack />}
+			{sessionToken ? (
+				<MainStack user={user} />
+			) : (
+				<AuthStack
+					initialRoute={pendingAuthRoute || "LoginScreen"}
+					initialParams={pendingAuthParams}
+				/>
+			)}
 			{/* <MainStack /> */}
 		</NavigationContainer>
 	);

@@ -220,3 +220,13 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 
 	await db.runAsync(query, params);
 };
+
+export const getUserDetails = async (db, userId) => {
+	if (!userId) {
+		throw new Error("User ID is needed to get user details");
+	}
+
+	const query = `SELECT * FROM Local_Users WHERE user_id = ? AND is_deleted = 0`;
+	const result = await db.getAllAsync(query, [userId]);
+	return result[0] || null;
+};

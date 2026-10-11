@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { CustomInput } from "@components/forms/CustomInput";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { useFormHandler } from "@hooks/useFormHandler";
-import { MainLayout } from "@components/layouts/AuthLayout";
+import AuthLayout, { MainLayout } from "@components/layouts/AuthLayout";
 import { RESET_PASSWORD_FORM_FIELDS } from "@constants/AuthFields";
 import PasswordStrengthMeter from "@components/forms/PasswordStrengthMeter";
 import { validateResetPasswordForm } from "@utils/securityAndValidation/validationUtil";
@@ -91,7 +91,7 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 	};
 
 	return (
-		<MainLayout
+		<AuthLayout
 			title="Reset Password"
 			subtitle="Create a new password for your account"
 			banner={banner}
@@ -142,7 +142,7 @@ const ResetPasswordScreen = ({ navigation, route }) => {
 				<Feather name="chevron-left" size={20} color="#6B21A8" />
 				<Text style={styles.backText}>Back to Login</Text>
 			</TouchableOpacity>
-		</MainLayout>
+		</AuthLayout>
 	);
 };
 
