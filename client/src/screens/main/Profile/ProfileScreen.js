@@ -1,213 +1,356 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
-import { Feather } from '@expo/vector-icons';
+import React, { useCallback, useState } from "react";
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+	ScrollView,
+	Platform,
+} from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
+import MainLayout from "@components/layouts/MainLayout";
+import { KeyboardAvoidingView } from "react-native";
+import ProfileDetailCard from "@components/cards/ProfileDetailCard";
+import { useAuth } from "@context/AuthContext";
+import ConfirmationModal from "@components/modals/ConfirmationModal";
+import { useSQLiteContext } from "expo-sqlite";
+import { useFocusEffect } from "@react-navigation/native";
+import { getLocalUserDetails } from "@services/main/userService";
+import { forgotPasswordUser } from "@services/auth/authService";
+import { checkNetworkAndNotify } from "@utils/network/networkGuard";
+import { useNetStatus } from "@utils/network/netStatus";
 
-const ProfileScreen = () => {
-  const navigation = useNavigation();
+const PURPLE = "#5E0A9E";
 
-  return (
-    <SafeAreaView style={styles.container}>
+const ProfileScreen = ({ navigation }) => {
+	const [modalConfig, setModalConfig] = useState({
+		visible: false,
+		title: "",
+		message: "",
+		confirmLabel: "Confirm",
+		cancelLabel: "Cancel",
+		isDestructive: false,
+		iconName: "alert-circle-outline",
+		onConfirm: () => {},
+	});
+	const [banner, setBanner] = useState(null);
+	const { user, logOut } = useAuth();
+	const [userDetails, setUserDetails] = useState(null);
+	const db = useSQLiteContext();
+	const [loading, setLoading] = useState(false);
+	const { isOnline } = useNetStatus();
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
+	const firstName = userDetails?.firstName || user?.name || "";
+	const surname = userDetails?.surname || user?.surname || "";
+	const fullName =
+		`${firstName} ${surname}`.trim() || user?.userName || "User Profile";
 
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Feather name="arrow-left" size={24} color="#000" />
-          </TouchableOpacity>
+	const loadUser = useCallback(async () => {
+		try {
+			setLoading(true);
+			const userRecord = await getLocalUserDetails(db, user.userId);
+			setUserDetails(userRecord);
+		} catch (error) {
+			console.error("Failed to load user profile:", error);
+		} finally {
+			setLoading(false);
+		}
+	}, [db, user.userId]);
 
-          <Text style={styles.headerTitle}>Profile </Text>
+	// Fetch data whenever the screen gains focus
+	useFocusEffect(
+		useCallback(() => {
+			let isMounted = true;
+			loadUser();
+			return () => {
+				isMounted = false;
+			};
+		}, [loadUser]),
+	);
 
-          <View style={{ width: 35 }} /> 
-        </View>
-        <View style={styles.profileSection}>
-          <View style={styles.profileCircle}>
-            <Feather name="user" size={50} color="#000" />
+	const initials = [firstName, surname]
+		.filter(Boolean)
+		.map((w) => w[0].toUpperCase())
+		.join("");
 
-          </View>
-          <Text style={styles.profileName}>Brian Steel</Text>
-          <Text style={styles.profileEmail}>briansteel7@example.com</Text>
-          </View>
-          <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('EditProfileScreen')} >
-            <Text style={styles.editButtonText}>Edit Profile</Text>
-          </TouchableOpacity>
-          <Text style={styles.sectionTitle}>Personal Information</Text>
-          <View style={styles.infoSection}>
-            <Text style={styles.infoLabel}>Name</Text>
-            <Text style={styles.infoValue}>Brian </Text>
-          </View>
-          <View style={styles.infoSection}>
-            <Text style={styles.infoLabel}>Surname</Text>
-            <Text style={styles.infoValue}>Steel</Text>
-          </View>
-          <View style={styles.infoSection}>
-            <Text style={styles.infoLabel}>email:</Text>
-            <Text style={styles.infoValue}>briansteel7@example.com</Text>
-          </View>
-          <View style={styles.infoSection}>
-            <Text style={styles.infoLabel}>phone:</Text>
-            <Text style={styles.infoValue}>+27 63 456 7890</Text>
-          </View>
-        
-        
-        
-        <Text style={styles.sectionTitle}>Security</Text>
-          
-        <TouchableOpacity style={styles.optionButton} onPress={() => navigation.navigate('ResetPasswordScreen')}> 
-          <Feather name="lock" size={24} color="#000" style={{ marginRight: 'auto' }} />
-          <Text style={styles.changePasswordText}>Change Password</Text>
-          
-        </TouchableOpacity> 
+	const handleEditScreen = () => {
+		navigation.replace("EditProfileScreen", { userDetails });
+	};
 
-        <TouchableOpacity style={styles.logoutButton} onPress={() =>{ console.log(' Log out')}}>
-          <Feather name="log-out" size={24} color="#000" />
-          <Text style={styles.logoutText}>Log Out</Text>
-        </TouchableOpacity>
-          
+	const handleSendOTP = async () => {
+		setBanner(null);
 
+		if (!checkNetworkAndNotify(isOnline, setBanner)) {
+			return;
+		}
 
+		setLoading(true);
 
+		try {
+			const sanitizedEmail =
+				userDetails?.email?.trim().toLowerCase() ||
+				user?.email?.trim().toLowerCase();
 
+			await forgotPasswordUser(sanitizedEmail);
+			setBanner({
+				message: "Password reset code sent successfully.",
+				type: "success",
+			});
 
-      </ScrollView>
-    </SafeAreaView>
-  );
+			await logOut("OTPScreen", {
+				email: sanitizedEmail,
+				isResetPassword: true,
+			});
+		} catch (error) {
+			setBanner({
+				message:
+					error.message ||
+					"An error occurred while sending the OTP. Please try again.",
+				type: "error",
+			});
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const hideModal = () => {
+		setModalConfig((prev) => ({ ...prev, visible: false }));
+	};
+
+	return (
+		<MainLayout
+			title="Profile"
+			onBack={() => navigation.replace("HomeScreen")}
+			tab="Settings"
+			navigation={navigation}
+			banner={banner}
+			scrollable={true}
+		>
+			<KeyboardAvoidingView
+				style={{ flex: 1 }}
+				behavior={Platform.OS === "ios" ? "padding" : undefined}
+			>
+				<ScrollView
+					contentContainerStyle={styles.scroll}
+					keyboardShouldPersistTaps="handled"
+				>
+					{/* Avatar Section */}
+					<View style={styles.avatarFrame}>
+						<View style={styles.avatar}>
+							{initials ? (
+								<Text style={styles.initials}>{initials}</Text>
+							) : (
+								<Ionicons name="person-outline" size={32} color={PURPLE} />
+							)}
+						</View>
+					</View>
+
+					<View style={styles.profileSection}>
+						<Text style={styles.profileName}>{fullName}</Text>
+						<Text style={styles.profileEmail}>
+							{userDetails?.email || user?.email}
+						</Text>
+					</View>
+
+					{/* Personal Information */}
+					<Text style={styles.sectionTitle}>Personal Information</Text>
+					<ProfileDetailCard
+						icon="person-outline"
+						label="Name"
+						value={firstName}
+					/>
+					<ProfileDetailCard
+						icon="people-outline"
+						label="Surname"
+						value={surname}
+					/>
+					<ProfileDetailCard
+						icon="mail-outline"
+						label="Email address"
+						value={userDetails?.email || user?.email}
+					/>
+					<ProfileDetailCard
+						icon="call-outline"
+						label="Phone number"
+						value={userDetails?.userNumber}
+					/>
+
+					{/* Security Section */}
+					<Text style={styles.sectionTitle}>Security & Actions</Text>
+					<TouchableOpacity
+						style={styles.optionButton}
+						onPress={handleSendOTP}
+						activeOpacity={0.8}
+					>
+						<Feather
+							name="lock"
+							size={20}
+							color={PURPLE}
+							style={styles.optionIcon}
+						/>
+						<Text style={styles.optionButtonText}>Change Password</Text>
+						<Ionicons name="chevron-forward" size={18} color="#999" />
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						style={styles.primaryActionButton}
+						onPress={handleEditScreen}
+						activeOpacity={0.8}
+					>
+						<Ionicons name="create-outline" size={20} color="#FFFFFF" />
+						<Text style={styles.primaryActionText}>Edit Profile</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						style={styles.logoutButton}
+						onPress={() => {
+							setModalConfig({
+								visible: true,
+								title: "Log out",
+								message: "Are you sure you want to log out of your account?",
+								confirmLabel: "Log Out",
+								cancelLabel: "Cancel",
+								isDestructive: true,
+								iconName: "log-out-outline",
+								onConfirm: () => {
+									// Handle log out logic here
+									hideModal();
+								},
+							});
+						}}
+						activeOpacity={0.8}
+					>
+						<Feather name="log-out" size={20} color="#DC2626" />
+						<Text style={styles.logoutText}>Log Out</Text>
+					</TouchableOpacity>
+				</ScrollView>
+			</KeyboardAvoidingView>
+
+			<ConfirmationModal
+				visible={modalConfig.visible}
+				title={modalConfig.title}
+				message={modalConfig.message}
+				confirmLabel={modalConfig.confirmLabel}
+				cancelLabel={modalConfig.cancelLabel}
+				isDestructive={modalConfig.isDestructive}
+				iconName={modalConfig.iconName}
+				onConfirm={modalConfig.onConfirm}
+				onCancel={hideModal}
+			/>
+		</MainLayout>
+	);
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8eeff',
-  },
-  content: {
-    paddingHorizontal: 30,
-    paddingBottom: 20,
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: '#000000',
-  },
-  header: {
-    height: 55,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 5,
-  },
-  backButton: {
-    width: 35,
-    height: 35,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    
-  },
-  headerTitle: {
-    fontSize: 20, 
-    fontWeight: 'bold',
-    color : '#000',
-  },
-  profileSection: { 
-    alignItems: 'center',
-    marginTop: 5,
-    marginBottom: 10,
-  },
-  profileCircle: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
-    backgroundColor: '#e7d5fa',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  profileName: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    color: '#000',
-    marginTop: 1,
-  },
-  profileEmail: {
-    fontSize: 13,
-    color: '#555',
-    marginTop: 1,
-    fontWeight: '700',
-  },
-  editButton: {
-    backgroundColor: '#6a1b9a',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 0,
-    marginBottom: 18,
-    height: 46,
-  },
-  editButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#000',
-    marginBottom: 5,
-    marginTop: 0,
-  },
-  infoSection: {
-    height: 52,
-    borderRadius: 10,
-    backgroundColor: '#e7d5fa',
-    justifyContent: 'center',
-    paddingHorizontal: 14,
-    marginBottom: 6,
-  },
-  infoLabel: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#000',
-  },
-  infoValue: {
-    fontSize: 14,
-    color: '#555',
-    marginTop: 2,
-    fontWeight: '700',
-  },
-  optionButton: {
-    height: 38,
-    borderRadius: 10,
-    backgroundColor: '#e7d5fa',
-    justifyContent: 'center',
-    paddingHorizontal: 18,
-    marginBottom: 0,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  changePasswordText: {
-    fontSize: 14,
-    color: '#6a1b9a',
-    fontWeight: '700',
-    marginRight: 'center',
-    height: 20,
-  },
-  logoutButton: {
-    height: 46, 
-    borderRadius: 8,
-    backgroundColor: '#6a1b9a',
-    justifyContent: 'center',
-    marginTop: 60,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logoutText: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: '700',
-    marginLeft: 15,
-  },
-
-
+	scroll: {
+		paddingBottom: 30,
+	},
+	avatarFrame: {
+		alignSelf: "center",
+		marginTop: 8,
+		marginBottom: 8,
+	},
+	avatar: {
+		width: 76,
+		height: 76,
+		borderRadius: 38,
+		backgroundColor: "#EFE3FA",
+		alignItems: "center",
+		justifyContent: "center",
+		borderWidth: 2,
+		borderColor: "#D8B4FE",
+	},
+	initials: {
+		fontSize: 28,
+		fontWeight: "700",
+		color: PURPLE,
+	},
+	profileSection: {
+		alignItems: "center",
+		marginBottom: 24,
+	},
+	profileName: {
+		fontSize: 18,
+		fontWeight: "700",
+		color: "#111",
+		marginTop: 4,
+	},
+	profileEmail: {
+		fontSize: 13,
+		color: "#666",
+		marginTop: 2,
+		fontWeight: "500",
+	},
+	sectionTitle: {
+		fontSize: 15,
+		fontWeight: "700",
+		color: "#1F2937",
+		marginBottom: 10,
+		marginTop: 12,
+	},
+	optionButton: {
+		height: 50,
+		borderRadius: 10,
+		backgroundColor: "#FFFFFF",
+		justifyContent: "space-between",
+		paddingHorizontal: 16,
+		marginBottom: 12,
+		alignItems: "center",
+		flexDirection: "row",
+		borderWidth: 1,
+		borderColor: "#E5E7EB",
+		shadowColor: "#000",
+		shadowOpacity: 0.03,
+		shadowRadius: 2,
+		shadowOffset: { width: 0, height: 1 },
+		elevation: 1,
+	},
+	optionIcon: {
+		marginRight: 12,
+	},
+	optionButtonText: {
+		fontSize: 15,
+		color: "#1F2937",
+		fontWeight: "600",
+		flex: 1,
+	},
+	primaryActionButton: {
+		height: 50,
+		borderRadius: 10,
+		backgroundColor: PURPLE,
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "row",
+		marginBottom: 12,
+		gap: 8,
+		shadowColor: "#000",
+		shadowOpacity: 0.1,
+		shadowRadius: 3,
+		shadowOffset: { width: 0, height: 2 },
+		elevation: 2,
+	},
+	primaryActionText: {
+		fontSize: 15,
+		color: "#FFFFFF",
+		fontWeight: "600",
+	},
+	logoutButton: {
+		height: 50,
+		borderRadius: 10,
+		backgroundColor: "#FEF2F2",
+		borderWidth: 1,
+		borderColor: "#FCA5A5",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "row",
+		gap: 8,
+		marginTop: 8,
+	},
+	logoutText: {
+		fontSize: 15,
+		color: "#DC2626",
+		fontWeight: "600",
+	},
 });
 
 export default ProfileScreen;
