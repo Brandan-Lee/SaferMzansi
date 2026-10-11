@@ -101,10 +101,40 @@ const updateUserPassword = async (userId, passwordHash) => {
 	return data?.[0] || null;
 };
 
+const updateUser = async (payload) => {
+	if (!payload) {
+		throw new Error("Update user in supabase");
+	}
+
+	const { user_id, ...updateFields } = payload;
+
+	const cleanFields = Object.fromEntries(
+		Object.entries(updateFields).filter(
+			([_, value]) => value !== null && value !== undefined,
+		),
+	);
+
+	cleanFields.updated_at = new Date().toISOString();
+
+	const { data: user, error } = await supabase
+		.from("Users")
+		.update(cleanFields)
+		.eq("user_id", user_id)
+		.select()
+		.maybeSingle();
+
+	if (error) {
+		throw error;
+	}
+
+	return user;
+};
+
 module.exports = {
 	createUser,
 	findUserByEmailBlindIndex,
 	findUserById,
 	updateUserVerification,
 	updateUserPassword,
+	updateUser,
 };

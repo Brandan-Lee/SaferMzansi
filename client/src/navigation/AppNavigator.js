@@ -13,9 +13,7 @@ import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetails
 import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
 import DecoyScreen from "@screens/main/DecoyScreen";
 import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
-import OTPScreen from "@screens/auth/OTPScreen";
-import ResetPasswordScreen from "@screens/auth/ResetPasswordScreen";
-import LoginScreen from "@screens/auth/LoginScreen";
+import EditProfileScreen from "@screens/main/Profile/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +44,7 @@ function MainStack({ user }) {
 			<Stack.Screen name="EditContactScreen" component={EditContactScreen} />
 			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />
 			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
 		</Stack.Navigator>
 	);
 }
