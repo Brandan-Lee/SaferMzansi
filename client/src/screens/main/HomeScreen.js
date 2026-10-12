@@ -145,18 +145,6 @@ const HomeScreen = ({ navigation }) => {
 							))}
 						</View>
 					</View>
-
-					{/* Temporary until the settings screen has been implemented */}
-					<TouchableOpacity
-						style={[styles.primaryButton]}
-						activeOpacity={0.8}
-						onPress={() => {
-							navigation.replace("ProfileScreen");
-						}}
-					>
-						<Ionicons name="call-outline" size={20} color="#fff" />
-						<Text style={styles.primaryText}>Profile Screen</Text>
-					</TouchableOpacity>
 				</View>
 			</AuthLayout>
 
