@@ -20279,3 +20279,1073 @@
 {"_e":"metro:client_log","_t":1791814145629,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
 {"_e":"metro:client_log","_t":1791814145658,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
 {"_e":"metro:client_log","_t":1791814145659,"level":"log","data":["========================================================================\n"]}
+{"_e":"root:init","_t":1791814206612,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791814206612,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791814206616,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.0.127:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791814206964,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791814207284,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791814207527,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791814210026,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791814223874,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791814223874,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791814223877,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791814224466,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791814224573,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791814224685,"id":"1","progress":0.1111111111111111,"total":27,"current":9}
+{"_e":"metro:bundling:progress","_t":1791814224796,"id":"1","progress":0.11890606420927469,"total":29,"current":10}
+{"_e":"metro:bundling:progress","_t":1791814224816,"id":"1","progress":0.14387633769322233,"total":29,"current":11}
+{"_e":"metro:bundling:progress","_t":1791814224918,"id":"1","progress":0.20661157024793386,"total":33,"current":15}
+{"_e":"metro:bundling:progress","_t":1791814225026,"id":"1","progress":0.20661157024793386,"total":61,"current":24}
+{"_e":"metro:bundling:progress","_t":1791814225133,"id":"1","progress":0.2293195794485221,"total":71,"current":34}
+{"_e":"metro:bundling:progress","_t":1791814225233,"id":"1","progress":0.3441777777777778,"total":75,"current":44}
+{"_e":"metro:bundling:progress","_t":1791814225333,"id":"1","progress":0.4918198684432451,"total":77,"current":54}
+{"_e":"metro:bundling:progress","_t":1791814225433,"id":"1","progress":0.5987811791383221,"total":84,"current":65}
+{"_e":"metro:bundling:progress","_t":1791814225534,"id":"1","progress":0.5987811791383221,"total":104,"current":74}
+{"_e":"metro:bundling:progress","_t":1791814225649,"id":"1","progress":0.5987811791383221,"total":117,"current":81}
+{"_e":"metro:bundling:progress","_t":1791814225751,"id":"1","progress":0.5987811791383221,"total":132,"current":91}
+{"_e":"metro:bundling:progress","_t":1791814225851,"id":"1","progress":0.5987811791383221,"total":159,"current":110}
+{"_e":"metro:bundling:progress","_t":1791814225951,"id":"1","progress":0.5987811791383221,"total":183,"current":130}
+{"_e":"metro:bundling:progress","_t":1791814226056,"id":"1","progress":0.5987811791383221,"total":215,"current":152}
+{"_e":"metro:bundling:progress","_t":1791814226156,"id":"1","progress":0.5987811791383221,"total":326,"current":190}
+{"_e":"metro:bundling:progress","_t":1791814226256,"id":"1","progress":0.5987811791383221,"total":341,"current":219}
+{"_e":"metro:bundling:progress","_t":1791814226356,"id":"1","progress":0.5987811791383221,"total":367,"current":243}
+{"_e":"metro:bundling:progress","_t":1791814226456,"id":"1","progress":0.5987811791383221,"total":402,"current":279}
+{"_e":"metro:bundling:progress","_t":1791814226556,"id":"1","progress":0.5987811791383221,"total":462,"current":332}
+{"_e":"metro:bundling:progress","_t":1791814226657,"id":"1","progress":0.5987811791383221,"total":547,"current":397}
+{"_e":"metro:bundling:progress","_t":1791814226756,"id":"1","progress":0.5987811791383221,"total":598,"current":431}
+{"_e":"metro:bundling:progress","_t":1791814226858,"id":"1","progress":0.5987811791383221,"total":617,"current":476}
+{"_e":"metro:bundling:progress","_t":1791814226958,"id":"1","progress":0.6975892640430524,"total":619,"current":517}
+{"_e":"metro:bundling:progress","_t":1791814227058,"id":"1","progress":0.8238616186774621,"total":639,"current":580}
+{"_e":"metro:bundling:progress","_t":1791814227160,"id":"1","progress":0.8238616186774621,"total":688,"current":622}
+{"_e":"metro:bundling:progress","_t":1791814227260,"id":"1","progress":0.8238616186774621,"total":728,"current":658}
+{"_e":"metro:bundling:progress","_t":1791814227360,"id":"1","progress":0.833438920642435,"total":758,"current":692}
+{"_e":"metro:bundling:progress","_t":1791814227460,"id":"1","progress":0.8442879608978165,"total":801,"current":736}
+{"_e":"metro:bundling:progress","_t":1791814227561,"id":"1","progress":0.9092485099921688,"total":818,"current":780}
+{"_e":"metro:bundling:progress","_t":1791814227660,"id":"1","progress":0.9596959374663846,"total":835,"current":818}
+{"_e":"metro:bundling:progress","_t":1791814227763,"id":"1","progress":0.9952324263361452,"total":838,"current":836}
+{"_e":"metro:bundling:progress","_t":1791814228136,"id":"1","progress":0.9976147891616021,"total":838,"current":837}
+{"_e":"metro:bundling:progress","_t":1791814228245,"id":"1","progress":0.997623292581025,"total":841,"current":840}
+{"_e":"metro:bundling:progress","_t":1791814228346,"id":"1","progress":0.999,"total":841,"current":841}
+{"_e":"metro:bundling:failed","_t":1791814228372,"id":"1","message":"Unable to resolve \"../screens/main/settings/Profile/ProfileScreen\" from \"src\\navigation\\AppNavigator.js\"\n  12 | import EditContactScreen from \"@screens/main/emergencyContacts/EditContactScreen\";\n  13 | import DecoyScreen from \"@screens/main/DecoyScreen\";\n> 14 | import ProfileScreen from \"@screens/main/settings/Profile/ProfileScreen\";\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  15 | import EditProfileScreen from \"@screens/main/settings/Profile/EditProfileScreen\";\n  16 | import SettingsScreen from \"@screens/main/settings/SettingsScreen\";\n  17 |","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\navigation\\AppNavigator.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../screens/main/settings/Profile/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/navigation/AppNavigator\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"../screens/main/settings/Profile/ProfileScreen","originModulePath":"src\\navigation\\AppNavigator.js"}
+{"_e":"root:init","_t":1791814257001,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791814257002,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791814257005,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.0.127:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791814257380,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791814257730,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791814257941,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791814260394,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791814274855,"id":"4","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791814274855,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791814274858,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791814275412,"id":"4","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791814275516,"id":"4","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791814275519,"id":"4","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791814275618,"id":"4","progress":0.07438016528925619,"total":22,"current":6}
+{"_e":"metro:bundling:progress","_t":1791814275719,"id":"4","progress":0.07438016528925619,"total":77,"current":14}
+{"_e":"metro:bundling:progress","_t":1791814275828,"id":"4","progress":0.07438016528925619,"total":110,"current":19}
+{"_e":"metro:bundling:progress","_t":1791814275936,"id":"4","progress":0.07438016528925619,"total":115,"current":22}
+{"_e":"metro:bundling:progress","_t":1791814276046,"id":"4","progress":0.07438016528925619,"total":122,"current":26}
+{"_e":"metro:bundling:progress","_t":1791814276151,"id":"4","progress":0.07787993510005409,"total":129,"current":36}
+{"_e":"metro:bundling:progress","_t":1791814276255,"id":"4","progress":0.13371574961015817,"total":134,"current":49}
+{"_e":"metro:bundling:progress","_t":1791814276355,"id":"4","progress":0.1898469387755102,"total":140,"current":61}
+{"_e":"metro:bundling:progress","_t":1791814276461,"id":"4","progress":0.1924661810613944,"total":155,"current":68}
+{"_e":"metro:bundling:progress","_t":1791814276561,"id":"4","progress":0.2195591836734694,"total":175,"current":82}
+{"_e":"metro:bundling:progress","_t":1791814276661,"id":"4","progress":0.2195591836734694,"total":238,"current":101}
+{"_e":"metro:bundling:progress","_t":1791814276761,"id":"4","progress":0.23279686293509366,"total":257,"current":124}
+{"_e":"metro:bundling:progress","_t":1791814276861,"id":"4","progress":0.23279686293509366,"total":378,"current":151}
+{"_e":"metro:bundling:progress","_t":1791814276965,"id":"4","progress":0.23279686293509366,"total":435,"current":184}
+{"_e":"metro:bundling:progress","_t":1791814277065,"id":"4","progress":0.23279686293509366,"total":530,"current":227}
+{"_e":"metro:bundling:progress","_t":1791814277165,"id":"4","progress":0.23279686293509366,"total":562,"current":257}
+{"_e":"metro:bundling:progress","_t":1791814277266,"id":"4","progress":0.23279686293509366,"total":583,"current":277}
+{"_e":"metro:bundling:progress","_t":1791814277365,"id":"4","progress":0.23818136031684256,"total":627,"current":306}
+{"_e":"metro:bundling:progress","_t":1791814277465,"id":"4","progress":0.2805541124778769,"total":674,"current":357}
+{"_e":"metro:bundling:progress","_t":1791814277566,"id":"4","progress":0.3260669550619835,"total":704,"current":402}
+{"_e":"metro:bundling:progress","_t":1791814277668,"id":"4","progress":0.39105086532678984,"total":734,"current":459}
+{"_e":"metro:bundling:progress","_t":1791814277768,"id":"4","progress":0.46151346880907373,"total":736,"current":500}
+{"_e":"metro:bundling:progress","_t":1791814277868,"id":"4","progress":0.5665178443764477,"total":748,"current":563}
+{"_e":"metro:bundling:progress","_t":1791814277968,"id":"4","progress":0.6057995468425533,"total":803,"current":625}
+{"_e":"metro:bundling:progress","_t":1791814278068,"id":"4","progress":0.6272040865371181,"total":846,"current":670}
+{"_e":"metro:bundling:progress","_t":1791814278170,"id":"4","progress":0.6514028937910827,"total":902,"current":728}
+{"_e":"metro:bundling:progress","_t":1791814278271,"id":"4","progress":0.6980566331215682,"total":924,"current":772}
+{"_e":"metro:bundling:progress","_t":1791814278370,"id":"4","progress":0.7766941335357672,"total":952,"current":839}
+{"_e":"metro:bundling:progress","_t":1791814278472,"id":"4","progress":0.806517512658971,"total":981,"current":881}
+{"_e":"metro:bundling:progress","_t":1791814278573,"id":"4","progress":0.8560400553076564,"total":1003,"current":928}
+{"_e":"metro:bundling:progress","_t":1791814278685,"id":"4","progress":0.8560400553076564,"total":1052,"current":969}
+{"_e":"metro:bundling:progress","_t":1791814278808,"id":"4","progress":0.871344387165796,"total":1067,"current":996}
+{"_e":"metro:bundling:progress","_t":1791814278908,"id":"4","progress":0.8890788166146062,"total":1086,"current":1024}
+{"_e":"metro:bundling:progress","_t":1791814279008,"id":"4","progress":0.8904979170799444,"total":1136,"current":1072}
+{"_e":"metro:bundling:progress","_t":1791814279108,"id":"4","progress":0.9123543400713436,"total":1160,"current":1108}
+{"_e":"metro:bundling:progress","_t":1791814279208,"id":"4","progress":0.9364182747929104,"total":1176,"current":1138}
+{"_e":"metro:bundling:progress","_t":1791814279309,"id":"4","progress":0.9634278861312554,"total":1192,"current":1170}
+{"_e":"metro:bundling:progress","_t":1791814279427,"id":"4","progress":0.9966611041667103,"total":1197,"current":1195}
+{"_e":"metro:bundling:progress","_t":1791814279852,"id":"4","progress":0.998329854153624,"total":1197,"current":1196}
+{"_e":"metro:bundling:progress","_t":1791814279953,"id":"4","progress":0.9983340277777777,"total":1200,"current":1199}
+{"_e":"metro:bundling:progress","_t":1791814280125,"id":"4","progress":0.999,"total":1200,"current":1200}
+{"_e":"metro:bundling:progress","_t":1791814280232,"id":"4","progress":0.999,"total":1210,"current":1210}
+{"_e":"metro:bundling:done","_t":1791814280368,"id":"4","total":1210,"ms":5513.5042}
+{"_e":"metro:client_log","_t":1791814281925,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791814281974,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791814281974,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791814281974,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791814281974,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791814281974,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791814281974,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791814285756,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791814285822,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791814288009,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791814288775,"level":"log","data":["Background Task Triggered:","-26.2283096","28.3874676"]}
+{"_e":"metro:client_log","_t":1791814289187,"level":"log","data":["GPS COORDINATES:","-26.2283403","28.3874814"]}
+{"_e":"metro:client_log","_t":1791814294185,"level":"log","data":["Background Task Triggered:","-26.2283403","28.3874814"]}
+{"_e":"metro:client_log","_t":1791814296659,"level":"log","data":["Background Task Triggered:","-26.2283905","28.3875096"]}
+{"_e":"metro:client_log","_t":1791814304546,"level":"log","data":["Background Task Triggered:","-26.2283117","28.3874683"]}
+{"_e":"metro:client_log","_t":1791814312441,"level":"log","data":["Background Task Triggered:","-26.2283096","28.3874671"]}
+{"_e":"metro:client_log","_t":1791814320314,"level":"log","data":["Background Task Triggered:","-26.228388","28.3875084"]}
+{"_e":"metro:client_log","_t":1791814328235,"level":"log","data":["Background Task Triggered:","-26.2282095","28.3875505"]}
+{"_e":"metro:client_log","_t":1791814336078,"level":"log","data":["Background Task Triggered:","-26.228313","28.3874657"]}
+{"_e":"metro:client_log","_t":1791814341003,"level":"warn","data":["Network request failed:","fetch failed: java.net.NoRouteToHostException: Host unreachable"]}
+{"_e":"metro:client_log","_t":1791814343962,"level":"log","data":["Background Task Triggered:","-26.2283105","28.3874671"]}
+{"_e":"metro:client_log","_t":1791814351852,"level":"log","data":["Background Task Triggered:","-26.2282036","28.3875497"]}
+{"_e":"root:init","_t":1791814376494,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791814376495,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791814376498,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.0.108:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791814376871,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791814377193,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791814377389,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791814379732,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791814387274,"id":"2","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791814387275,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791814390713,"id":"2","total":1,"ms":3438.5453}
+{"_e":"metro:bundling:started","_t":1791814407709,"id":"4","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791814407710,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791814407739,"id":"4","total":1,"ms":29.4967}
+{"_e":"metro:client_log","_t":1791814409431,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791814409491,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791814410373,"level":"log","data":["Background Task Triggered:","-26.2283097","28.3874676"]}
+{"_e":"metro:client_log","_t":1791814413696,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791814415198,"level":"log","data":["GPS COORDINATES:","-26.2283231","28.3875005"]}
+{"_e":"metro:client_log","_t":1791814415253,"level":"log","data":["Background Task Triggered:","-26.2283231","28.3875005"]}
+{"_e":"metro:client_log","_t":1791814425289,"level":"log","data":["Background Task Triggered:","-26.2283232","28.3875008"]}
+{"_e":"metro:client_log","_t":1791814433161,"level":"log","data":["Background Task Triggered:","-26.2283232","28.3875007"]}
+{"_e":"metro:client_log","_t":1791814441052,"level":"log","data":["Background Task Triggered:","-26.2283292","28.3874817"]}
+{"_e":"metro:client_log","_t":1791814448940,"level":"log","data":["Background Task Triggered:","-26.2283101","28.3874675"]}
+{"_e":"metro:client_log","_t":1791814476690,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791814478162,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791814478214,"level":"log","data":["From the service: ","0"]}
+{"_e":"metro:client_log","_t":1791814480662,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791814480799,"level":"log","data":["Background Task Triggered:","-26.2283101","28.3874675"]}
+{"_e":"metro:client_log","_t":1791814481504,"level":"log","data":["GPS COORDINATES:","-26.2283193","28.387479"]}
+{"_e":"metro:client_log","_t":1791814481559,"level":"log","data":["Background Task Triggered:","-26.2283193","28.387479"]}
+{"_e":"metro:client_log","_t":1791814498990,"level":"warn","data":["[Contact Service] Local DB check error"]}
+{"_e":"metro:client_log","_t":1791814499050,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791814499905,"level":"log","data":["{\"contactId\": \"6f216157-6d6e-4e41-9c4d-dc12aa9cdd63\", \"emailBlindIndex\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\", \"encryptedEmail\": \"U2FsdGVkX1/HDOohyRBxg4ZvXQ5U/szBvvqZPF570hJuY3SPXTFbAQLJAybJy+6y\", \"encryptedName\": \"U2FsdGVkX19yWVy9xz+BBh/J10gkdcDoDWb/AfKS7EI=\", \"encryptedPhone\": \"U2FsdGVkX18rVntsiCWFxACQcmiGeRbBptU5Mp483lw=\", \"encryptedSurname\": \"U2FsdGVkX1+4gkOrVw2NyOoq09jsemsOYt3brbB27BQ=\", \"userId\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\"}"]}
+{"_e":"metro:client_log","_t":1791814500739,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791814500789,"level":"log","data":["From the service: ","1"]}
+{"_e":"metro:client_log","_t":1791814567843,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791814568387,"level":"log","data":["Background Task Triggered:","-26.2283193","28.387479"]}
+{"_e":"metro:client_log","_t":1791814568890,"level":"log","data":["GPS COORDINATES:","-26.2283762","28.3874117"]}
+{"_e":"metro:client_log","_t":1791814568994,"level":"log","data":["Background Task Triggered:","-26.2283762","28.3874117"]}
+{"_e":"metro:client_log","_t":1791814614171,"level":"warn","data":["[Contact Service] Local DB check error"]}
+{"_e":"metro:client_log","_t":1791814614218,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791814615023,"level":"log","data":["{\"contactId\": \"f300fe31-0110-43f4-97f7-7352bf8cebd5\", \"emailBlindIndex\": \"6283311e639de60cb2aa83cab15bf862a725cadefc16ad9a19c3fd87135cce19\", \"encryptedEmail\": \"U2FsdGVkX19LXU67UWVJ3pmD3BUVtTcRXDkzu/7hxHTRaJWcioLhxgddT70ij73h\", \"encryptedName\": \"U2FsdGVkX18lLsNeAZP2NG0Prvxa65zKMlx9SZa3ObI=\", \"encryptedPhone\": \"U2FsdGVkX19roh3Y/eBZIyQcWpE3MGAPubwNgY4/MDo=\", \"encryptedSurname\": \"U2FsdGVkX18XxffY0ZG/PYx+5AskC/FerNVnCyMK2RQ=\", \"userId\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\"}"]}
+{"_e":"metro:client_log","_t":1791814615894,"level":"log","data":["From the Repository: ","2"]}
+{"_e":"metro:client_log","_t":1791814615998,"level":"log","data":["From the service: ","2"]}
+{"_e":"metro:client_log","_t":1791814645315,"level":"warn","data":["[Contact Service] Local DB check error"]}
+{"_e":"metro:client_log","_t":1791814645370,"level":"log","data":["From the Repository: ","2"]}
+{"_e":"metro:client_log","_t":1791814645850,"level":"log","data":["{\"contactId\": \"a767f484-6e04-4e8b-9024-0d86281f3494\", \"emailBlindIndex\": \"33193172a3c7556fcf91ffe1cd5e9cecf1d7214112313bdf2e3e5fde456dbad1\", \"encryptedEmail\": \"U2FsdGVkX19x3N/AAYTUC965KRZ37YZUPnpDvTlsvK5i1S7B0JHHIZou7dN6HcKb\", \"encryptedName\": \"U2FsdGVkX1/T/fMXAZwp8ubtH6gaanevhgw76WF7SOA=\", \"encryptedPhone\": \"U2FsdGVkX19fzUIH73ZmBP5M8dyY7oa29Yys7jXk2d0=\", \"encryptedSurname\": \"U2FsdGVkX1+2lpUdJhpfixZ1MZ5rvyFKa9CkWEoe5D8=\", \"userId\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\"}"]}
+{"_e":"metro:client_log","_t":1791814646736,"level":"log","data":["From the Repository: ","3"]}
+{"_e":"metro:client_log","_t":1791814646840,"level":"log","data":["From the service: ","3"]}
+{"_e":"metro:client_log","_t":1791814647986,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791814648042,"level":"log","data":["Background Task Triggered:","-26.2283762","28.3874117"]}
+{"_e":"metro:client_log","_t":1791814649049,"level":"log","data":["GPS COORDINATES:","-26.2282981","28.387479"]}
+{"_e":"metro:client_log","_t":1791814649112,"level":"log","data":["Background Task Triggered:","-26.2282981","28.387479"]}
+{"_e":"metro:client_log","_t":1791814683730,"level":"warn","data":["[Contact Service] Local DB check error"]}
+{"_e":"metro:client_log","_t":1791814683779,"level":"log","data":["From the Repository: ","3"]}
+{"_e":"metro:client_log","_t":1791814684658,"level":"log","data":["{\"contactId\": \"8790c9d0-b7d8-490b-abb9-2082d5c8781b\", \"emailBlindIndex\": \"d34082f189c0a6149387ccf265ab990bd2ecd474dfa70de46ad71539eb1e0ec7\", \"encryptedEmail\": \"U2FsdGVkX19+8vv/jPrGsUmIitO/vm+2rYTUE7KD6v6rWA9EPSXO+iI0vUIpd4k0\", \"encryptedName\": \"U2FsdGVkX19bWKhhdYzWy0gxs0FPJcgV9ZZmUTOT1ec=\", \"encryptedPhone\": \"U2FsdGVkX1+j1iOIH1QxDRaXA/7d8hs22qcrO1NgQWE=\", \"encryptedSurname\": \"U2FsdGVkX1+piNd98jd4pcg8SWWbKn6qdsVu9HIfIe4=\", \"userId\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\"}"]}
+{"_e":"metro:client_log","_t":1791814685533,"level":"log","data":["From the Repository: ","4"]}
+{"_e":"metro:client_log","_t":1791814685598,"level":"log","data":["From the service: ","4"]}
+{"_e":"metro:client_log","_t":1791814688728,"level":"error","data":["The action 'NAVIGATE' with payload {\"name\":\"VaultScreen\"} was not handled by any navigator.\n\nDo you have a screen named 'VaultScreen'?\n\nIf you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.\n\nIf you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791814690271,"level":"error","data":["The action 'NAVIGATE' with payload {\"name\":\"SupportHubSreen\"} was not handled by any navigator.\n\nDo you have a screen named 'SupportHubSreen'?\n\nIf you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.\n\nIf you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791814700160,"level":"log","data":["From the Repository: ","4"]}
+{"_e":"metro:client_log","_t":1791814704173,"level":"log","data":["From the Repository: ","4"]}
+{"_e":"metro:client_log","_t":1791814709462,"level":"log","data":["Background Task Triggered:","-26.2282981","28.387479"]}
+{"_e":"metro:client_log","_t":1791814709941,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791814710040,"level":"log","data":["GPS COORDINATES:","-26.2282981","28.387479"]}
+{"_e":"metro:client_log","_t":1791814710602,"level":"log","data":["Background Task Triggered:","-26.2283102","28.3874675"]}
+{"_e":"metro:bundling:started","_t":1791814723807,"id":"i","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791814723807,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791814723837,"id":"i","total":1,"ms":29.6737}
+{"_e":"metro:client_log","_t":1791814724784,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791814724784,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791814724824,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791814724824,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791814724824,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791814724824,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791814724824,"level":"log","data":["{\n  \"user_id\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX18jJ+65zZb43VHChcT7pn+QLuZEMIHINWQ=\",\n  \"encrypted_surname\": \"U2FsdGVkX1+452Szp6s/nA6izGcS7TF+vha3BUd0cIA=\",\n  \"encrypted_email\": \"U2FsdGVkX18OM3MSccrM8HK/gj+MkjzMTY67WBgXIvcCXhNCHUH+G7HrbSUXzPlb\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+V/zwnC6Cz9E1hNjcXMqJr4JpVJa/KKxs=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 16:14:23.568\",\n  \"updated_at\": \"2026-10-12T16:14:23.484759+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791814724824,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791814724824,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791814724826,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791814724826,"level":"log","data":["Total Contacts: 4\n"]}
+{"_e":"metro:client_log","_t":1791814724826,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791814724826,"level":"log","data":["{\n  \"contact_id\": \"6f216157-6d6e-4e41-9c4d-dc12aa9cdd63\",\n  \"user_id\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\",\n  \"contact_email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19yWVy9xz+BBh/J10gkdcDoDWb/AfKS7EI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX1+4gkOrVw2NyOoq09jsemsOYt3brbB27BQ=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX18rVntsiCWFxACQcmiGeRbBptU5Mp483lw=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX1/HDOohyRBxg4ZvXQ5U/szBvvqZPF570hJuY3SPXTFbAQLJAybJy+6y\",\n  \"created_at\": \"2026-10-12T14:14:59.714Z\",\n  \"updated_at\": \"2026-10-12T14:14:59.714Z\",\n  \"deleted_at\": null,\n  \"is_synched\": 0,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Brandan\",\n  \"_decrypted_contact_surname\": \"Sherbrooke\",\n  \"_decrypted_contact_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0623125468\"\n}"]}
+{"_e":"metro:client_log","_t":1791814724826,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791814724827,"level":"log","data":["--- Contact #2 ---"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["{\n  \"contact_id\": \"f300fe31-0110-43f4-97f7-7352bf8cebd5\",\n  \"user_id\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\",\n  \"contact_email_blind_index\": \"6283311e639de60cb2aa83cab15bf862a725cadefc16ad9a19c3fd87135cce19\",\n  \"encrypted_contact_name\": \"U2FsdGVkX18lLsNeAZP2NG0Prvxa65zKMlx9SZa3ObI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18XxffY0ZG/PYx+5AskC/FerNVnCyMK2RQ=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX19roh3Y/eBZIyQcWpE3MGAPubwNgY4/MDo=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX19LXU67UWVJ3pmD3BUVtTcRXDkzu/7hxHTRaJWcioLhxgddT70ij73h\",\n  \"created_at\": \"2026-10-12T14:16:54.827Z\",\n  \"updated_at\": \"2026-10-12T14:16:54.827Z\",\n  \"deleted_at\": null,\n  \"is_synched\": 0,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Mike\",\n  \"_decrypted_contact_surname\": \"Wazowski\",\n  \"_decrypted_contact_email\": \"mike.wa@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0112345678\"\n}"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["--- Contact #3 ---"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["{\n  \"contact_id\": \"a767f484-6e04-4e8b-9024-0d86281f3494\",\n  \"user_id\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\",\n  \"contact_email_blind_index\": \"33193172a3c7556fcf91ffe1cd5e9cecf1d7214112313bdf2e3e5fde456dbad1\",\n  \"encrypted_contact_name\": \"U2FsdGVkX1/T/fMXAZwp8ubtH6gaanevhgw76WF7SOA=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX1+2lpUdJhpfixZ1MZ5rvyFKa9CkWEoe5D8=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX19fzUIH73ZmBP5M8dyY7oa29Yys7jXk2d0=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX19x3N/AAYTUC965KRZ37YZUPnpDvTlsvK5i1S7B0JHHIZou7dN6HcKb\",\n  \"created_at\": \"2026-10-12T14:17:25.649Z\",\n  \"updated_at\": \"2026-10-12T14:17:25.649Z\",\n  \"deleted_at\": null,\n  \"is_synched\": 0,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"John\",\n  \"_decrypted_contact_surname\": \"Doe\",\n  \"_decrypted_contact_email\": \"johndoe@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0827457986\"\n}"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["--- Contact #4 ---"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["{\n  \"contact_id\": \"8790c9d0-b7d8-490b-abb9-2082d5c8781b\",\n  \"user_id\": \"bb3cae01-3974-4fc3-bf6f-5d8d3b16dba0\",\n  \"contact_email_blind_index\": \"d34082f189c0a6149387ccf265ab990bd2ecd474dfa70de46ad71539eb1e0ec7\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19bWKhhdYzWy0gxs0FPJcgV9ZZmUTOT1ec=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX1+piNd98jd4pcg8SWWbKn6qdsVu9HIfIe4=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+j1iOIH1QxDRaXA/7d8hs22qcrO1NgQWE=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX19+8vv/jPrGsUmIitO/vm+2rYTUE7KD6v6rWA9EPSXO+iI0vUIpd4k0\",\n  \"created_at\": \"2026-10-12T14:18:04.460Z\",\n  \"updated_at\": \"2026-10-12T14:18:04.460Z\",\n  \"deleted_at\": null,\n  \"is_synched\": 0,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Connor\",\n  \"_decrypted_contact_surname\": \"McGregor\",\n  \"_decrypted_contact_email\": \"conman@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0693916447\"\n}"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791814724829,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791814737103,"level":"log","data":["From the Repository: ","4"]}
+{"_e":"metro:client_log","_t":1791814739165,"level":"log","data":["From the Repository: ","4"]}
+{"_e":"metro:client_log","_t":1791814739268,"level":"log","data":["From the service: ","4"]}
+{"_e":"metro:client_log","_t":1791814739601,"level":"log","data":["Background Task Triggered:","-26.2283102","28.3874675"]}
+{"_e":"root:init","_t":1791821493910,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791821493940,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791821493968,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791821504384,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791821515428,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791821520866,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791821533862,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791821563361,"id":"3","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791821563362,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791821563368,"id":"3","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791821569104,"id":"3","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791821569204,"id":"3","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791821569240,"id":"3","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791821569344,"id":"3","progress":0.09,"total":9,"current":3}
+{"_e":"metro:bundling:progress","_t":1791821570348,"id":"3","progress":0.16000000000000003,"total":9,"current":4}
+{"_e":"metro:bundling:progress","_t":1791821570448,"id":"3","progress":0.16000000000000003,"total":31,"current":8}
+{"_e":"metro:bundling:progress","_t":1791821570549,"id":"3","progress":0.16000000000000003,"total":78,"current":19}
+{"_e":"metro:bundling:progress","_t":1791821570650,"id":"3","progress":0.20821943632764636,"total":103,"current":47}
+{"_e":"metro:bundling:progress","_t":1791821570750,"id":"3","progress":0.3280165289256199,"total":110,"current":63}
+{"_e":"metro:bundling:progress","_t":1791821570853,"id":"3","progress":0.3280165289256199,"total":128,"current":69}
+{"_e":"metro:bundling:progress","_t":1791821570953,"id":"3","progress":0.3564268211182891,"total":134,"current":80}
+{"_e":"metro:bundling:progress","_t":1791821571053,"id":"3","progress":0.48698307541017544,"total":139,"current":97}
+{"_e":"metro:bundling:progress","_t":1791821571154,"id":"3","progress":0.48698307541017544,"total":168,"current":115}
+{"_e":"metro:bundling:progress","_t":1791821571254,"id":"3","progress":0.5067509336397586,"total":177,"current":126}
+{"_e":"metro:bundling:progress","_t":1791821571359,"id":"3","progress":0.5067509336397586,"total":220,"current":140}
+{"_e":"metro:bundling:progress","_t":1791821571468,"id":"3","progress":0.5067509336397586,"total":228,"current":154}
+{"_e":"metro:bundling:progress","_t":1791821571705,"id":"3","progress":0.5067509336397586,"total":228,"current":155}
+{"_e":"metro:bundling:progress","_t":1791821571811,"id":"3","progress":0.5067509336397586,"total":236,"current":158}
+{"_e":"metro:bundling:progress","_t":1791821571838,"id":"3","progress":0.5067509336397586,"total":236,"current":159}
+{"_e":"metro:bundling:progress","_t":1791821571938,"id":"3","progress":0.5067509336397586,"total":243,"current":168}
+{"_e":"metro:bundling:progress","_t":1791821572044,"id":"3","progress":0.5067509336397586,"total":261,"current":173}
+{"_e":"metro:bundling:progress","_t":1791821572146,"id":"3","progress":0.5067509336397586,"total":264,"current":181}
+{"_e":"metro:bundling:progress","_t":1791821572246,"id":"3","progress":0.6152623650861652,"total":269,"current":211}
+{"_e":"metro:bundling:progress","_t":1791821572346,"id":"3","progress":0.6280832060715442,"total":294,"current":233}
+{"_e":"metro:bundling:progress","_t":1791821572449,"id":"3","progress":0.6280832060715442,"total":335,"current":251}
+{"_e":"metro:bundling:progress","_t":1791821572550,"id":"3","progress":0.6280832060715442,"total":374,"current":265}
+{"_e":"metro:bundling:progress","_t":1791821572661,"id":"3","progress":0.6280832060715442,"total":465,"current":269}
+{"_e":"metro:bundling:progress","_t":1791821573533,"id":"3","progress":0.6280832060715442,"total":465,"current":270}
+{"_e":"metro:bundling:progress","_t":1791821573633,"id":"3","progress":0.6280832060715442,"total":521,"current":290}
+{"_e":"metro:bundling:progress","_t":1791821573737,"id":"3","progress":0.6280832060715442,"total":543,"current":318}
+{"_e":"metro:bundling:progress","_t":1791821573837,"id":"3","progress":0.6280832060715442,"total":580,"current":349}
+{"_e":"metro:bundling:progress","_t":1791821573939,"id":"3","progress":0.6280832060715442,"total":609,"current":371}
+{"_e":"metro:bundling:progress","_t":1791821574041,"id":"3","progress":0.6280832060715442,"total":632,"current":394}
+{"_e":"metro:bundling:progress","_t":1791821574140,"id":"3","progress":0.6280832060715442,"total":669,"current":444}
+{"_e":"metro:bundling:progress","_t":1791821574242,"id":"3","progress":0.6280832060715442,"total":716,"current":464}
+{"_e":"metro:bundling:progress","_t":1791821574350,"id":"3","progress":0.6280832060715442,"total":723,"current":465}
+{"_e":"metro:bundling:progress","_t":1791821575099,"id":"3","progress":0.6280832060715442,"total":723,"current":466}
+{"_e":"metro:bundling:progress","_t":1791821575199,"id":"3","progress":0.6280832060715442,"total":734,"current":474}
+{"_e":"metro:bundling:progress","_t":1791821575309,"id":"3","progress":0.6280832060715442,"total":746,"current":491}
+{"_e":"metro:bundling:progress","_t":1791821575410,"id":"3","progress":0.6280832060715442,"total":773,"current":531}
+{"_e":"metro:bundling:progress","_t":1791821575511,"id":"3","progress":0.6280832060715442,"total":844,"current":589}
+{"_e":"metro:bundling:progress","_t":1791821575611,"id":"3","progress":0.6280832060715442,"total":905,"current":642}
+{"_e":"metro:bundling:progress","_t":1791821575713,"id":"3","progress":0.6280832060715442,"total":945,"current":681}
+{"_e":"metro:bundling:progress","_t":1791821575814,"id":"3","progress":0.6280832060715442,"total":972,"current":710}
+{"_e":"metro:bundling:progress","_t":1791821575915,"id":"3","progress":0.6280832060715442,"total":1015,"current":743}
+{"_e":"metro:bundling:progress","_t":1791821576015,"id":"3","progress":0.6280832060715442,"total":1028,"current":748}
+{"_e":"metro:bundling:progress","_t":1791821576567,"id":"3","progress":0.6280832060715442,"total":1028,"current":749}
+{"_e":"metro:bundling:progress","_t":1791821576682,"id":"3","progress":0.6280832060715442,"total":1028,"current":752}
+{"_e":"metro:bundling:progress","_t":1791821576787,"id":"3","progress":0.6280832060715442,"total":1029,"current":753}
+{"_e":"metro:bundling:progress","_t":1791821576908,"id":"3","progress":0.6280832060715442,"total":1029,"current":754}
+{"_e":"metro:bundling:progress","_t":1791821577012,"id":"3","progress":0.6280832060715442,"total":1031,"current":755}
+{"_e":"metro:bundling:progress","_t":1791821577034,"id":"3","progress":0.6280832060715442,"total":1031,"current":756}
+{"_e":"metro:bundling:progress","_t":1791821577135,"id":"3","progress":0.6280832060715442,"total":1038,"current":769}
+{"_e":"metro:bundling:progress","_t":1791821577244,"id":"3","progress":0.6280832060715442,"total":1051,"current":829}
+{"_e":"metro:bundling:progress","_t":1791821577347,"id":"3","progress":0.6609200986488779,"total":1064,"current":865}
+{"_e":"metro:bundling:progress","_t":1791821577444,"id":"3","progress":0.7127013602695478,"total":1072,"current":905}
+{"_e":"metro:bundling:progress","_t":1791821577546,"id":"3","progress":0.7414683357467909,"total":1087,"current":936}
+{"_e":"metro:bundling:progress","_t":1791821577649,"id":"3","progress":0.7542374807239672,"total":1110,"current":964}
+{"_e":"metro:bundling:progress","_t":1791821577750,"id":"3","progress":0.8053083436156397,"total":1111,"current":997}
+{"_e":"metro:bundling:progress","_t":1791821577851,"id":"3","progress":0.855501009854164,"total":1119,"current":1035}
+{"_e":"metro:bundling:progress","_t":1791821577951,"id":"3","progress":0.879725934031004,"total":1144,"current":1073}
+{"_e":"metro:bundling:progress","_t":1791821578051,"id":"3","progress":0.9190901792564898,"total":1162,"current":1114}
+{"_e":"metro:bundling:progress","_t":1791821578151,"id":"3","progress":0.9223932859542424,"total":1162,"current":1116}
+{"_e":"metro:bundling:progress","_t":1791821578200,"id":"3","progress":0.9240470611237672,"total":1162,"current":1117}
+{"_e":"metro:bundling:progress","_t":1791821578301,"id":"3","progress":0.9356342338182964,"total":1192,"current":1153}
+{"_e":"metro:bundling:progress","_t":1791821578409,"id":"3","progress":0.9438130643337884,"total":1193,"current":1159}
+{"_e":"metro:bundling:progress","_t":1791821578667,"id":"3","progress":0.945442434879631,"total":1193,"current":1160}
+{"_e":"metro:bundling:progress","_t":1791821578767,"id":"3","progress":0.9917253148299409,"total":1206,"current":1201}
+{"_e":"metro:bundling:progress","_t":1791821578877,"id":"3","progress":0.998343685584436,"total":1207,"current":1206}
+{"_e":"metro:bundling:progress","_t":1791821578989,"id":"3","progress":0.999,"total":1207,"current":1207}
+{"_e":"metro:bundling:progress","_t":1791821579107,"id":"3","progress":0.999,"total":1210,"current":1210}
+{"_e":"metro:bundling:done","_t":1791821579756,"id":"3","total":1210,"ms":16394.9438}
+{"_e":"metro:client_log","_t":1791821584711,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791821584723,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791821584723,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791821584723,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791821584728,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791821584729,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791821584729,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:started","_t":1791821596138,"id":"6","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791821596138,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791821596181,"id":"6","total":1,"ms":43.3938}
+{"_e":"metro:client_log","_t":1791821598120,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791821598169,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791821598171,"level":"log","data":["No user records found in Local_Users."]}
+{"_e":"metro:client_log","_t":1791821598174,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791821598174,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791821598174,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791821598174,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791821600166,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791821600260,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791821670831,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821672952,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821672955,"level":"log","data":["From the service: ","0"]}
+{"_e":"metro:client_log","_t":1791821674605,"level":"log","data":["[TypeError: Cannot read property 'getItem' of undefined]"]}
+{"_e":"metro:client_log","_t":1791821677742,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821678885,"level":"log","data":["[TypeError: Cannot read property 'getItem' of undefined]"]}
+{"_e":"metro:client_log","_t":1791821685471,"level":"log","data":["[TypeError: Cannot read property 'getItem' of undefined]"]}
+{"_e":"metro:client_log","_t":1791821685475,"level":"log","data":["[TypeError: Cannot read property 'getItem' of undefined]"]}
+{"_e":"metro:client_log","_t":1791821794711,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821907460,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821911262,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821915873,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821919223,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821924191,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821927345,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:started","_t":1791821930697,"id":"c","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791821930697,"id":"c","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791821930726,"id":"c","total":1,"ms":28.6678}
+{"_e":"metro:client_log","_t":1791821932489,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791821932489,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791821932490,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791821944580,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791821952348,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822102903,"level":"error","data":["[ReferenceError: Property 'smsEmailTrigger' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791822140034,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791822140065,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791822140072,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791822140073,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791822140076,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791822140077,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791822140077,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791822140077,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791822140077,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791822140077,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791822140077,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791822157765,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822159986,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822159986,"level":"log","data":["From the service: ","0"]}
+{"_e":"metro:client_log","_t":1791822164771,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:started","_t":1791822171056,"id":"g","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791822171057,"id":"g","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791822171099,"id":"g","total":1,"ms":42.0192}
+{"_e":"metro:client_log","_t":1791822172940,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791822172940,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791822186177,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822193041,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822196060,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822200446,"level":"log","data":["Background Task Triggered:","37.4219983","-122.084"]}
+{"_e":"metro:client_log","_t":1791822262331,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822265634,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822269659,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822274845,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822504286,"level":"log","data":["Background Task Triggered:","37.4219983","-122.084"]}
+{"_e":"metro:client_log","_t":1791822530990,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822534070,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822534071,"level":"log","data":["From the service: ","0"]}
+{"_e":"metro:client_log","_t":1791822535583,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822537975,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791822537977,"level":"log","data":["From the service: ","0"]}
+{"_e":"metro:client_log","_t":1791823704063,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791823710792,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791823715751,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791823825410,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791823892764,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791823907896,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824002635,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002711,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002726,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002743,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002747,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002759,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002769,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002781,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002794,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002801,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002811,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002822,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002836,"level":"warn","data":["\"map-pin-off\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824002900,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"root:init","_t":1791824225948,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791824225949,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791824225951,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791824226359,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791824226719,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791824226947,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791824229659,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791824289123,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791824289124,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791824289128,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791824289857,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791824289962,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791824290010,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791824290113,"id":"1","progress":0.0877914951989026,"total":27,"current":8}
+{"_e":"metro:bundling:progress","_t":1791824290226,"id":"1","progress":0.09765625,"total":32,"current":10}
+{"_e":"metro:bundling:progress","_t":1791824290271,"id":"1","progress":0.1181640625,"total":32,"current":11}
+{"_e":"metro:bundling:progress","_t":1791824290381,"id":"1","progress":0.22145328719723184,"total":34,"current":16}
+{"_e":"metro:bundling:progress","_t":1791824290485,"id":"1","progress":0.22145328719723184,"total":43,"current":20}
+{"_e":"metro:bundling:progress","_t":1791824290584,"id":"1","progress":0.22145328719723184,"total":72,"current":26}
+{"_e":"metro:bundling:progress","_t":1791824290687,"id":"1","progress":0.22145328719723184,"total":81,"current":37}
+{"_e":"metro:bundling:progress","_t":1791824290787,"id":"1","progress":0.2908723646004292,"total":89,"current":48}
+{"_e":"metro:bundling:progress","_t":1791824290890,"id":"1","progress":0.37869822485207105,"total":91,"current":56}
+{"_e":"metro:bundling:progress","_t":1791824290998,"id":"1","progress":0.5420842893370367,"total":91,"current":67}
+{"_e":"metro:bundling:progress","_t":1791824291104,"id":"1","progress":0.5993756503642039,"total":93,"current":72}
+{"_e":"metro:bundling:progress","_t":1791824291204,"id":"1","progress":0.6459952834308673,"total":107,"current":86}
+{"_e":"metro:bundling:progress","_t":1791824291304,"id":"1","progress":0.6459952834308673,"total":133,"current":96}
+{"_e":"metro:bundling:progress","_t":1791824291410,"id":"1","progress":0.6459952834308673,"total":172,"current":113}
+{"_e":"metro:bundling:progress","_t":1791824291513,"id":"1","progress":0.6459952834308673,"total":180,"current":125}
+{"_e":"metro:bundling:progress","_t":1791824291617,"id":"1","progress":0.6459952834308673,"total":208,"current":149}
+{"_e":"metro:bundling:progress","_t":1791824291718,"id":"1","progress":0.6459952834308673,"total":341,"current":162}
+{"_e":"metro:bundling:progress","_t":1791824291818,"id":"1","progress":0.6459952834308673,"total":375,"current":180}
+{"_e":"metro:bundling:progress","_t":1791824291918,"id":"1","progress":0.6459952834308673,"total":402,"current":213}
+{"_e":"metro:bundling:progress","_t":1791824292023,"id":"1","progress":0.6459952834308673,"total":461,"current":240}
+{"_e":"metro:bundling:progress","_t":1791824292123,"id":"1","progress":0.6459952834308673,"total":486,"current":264}
+{"_e":"metro:bundling:progress","_t":1791824292223,"id":"1","progress":0.6459952834308673,"total":545,"current":309}
+{"_e":"metro:bundling:progress","_t":1791824292331,"id":"1","progress":0.6459952834308673,"total":575,"current":345}
+{"_e":"metro:bundling:progress","_t":1791824292432,"id":"1","progress":0.6459952834308673,"total":592,"current":382}
+{"_e":"metro:bundling:progress","_t":1791824292536,"id":"1","progress":0.6459952834308673,"total":708,"current":414}
+{"_e":"metro:bundling:progress","_t":1791824292636,"id":"1","progress":0.6459952834308673,"total":733,"current":443}
+{"_e":"metro:bundling:progress","_t":1791824292743,"id":"1","progress":0.6459952834308673,"total":782,"current":487}
+{"_e":"metro:bundling:progress","_t":1791824292843,"id":"1","progress":0.6459952834308673,"total":824,"current":531}
+{"_e":"metro:bundling:progress","_t":1791824292943,"id":"1","progress":0.6459952834308673,"total":878,"current":563}
+{"_e":"metro:bundling:progress","_t":1791824293048,"id":"1","progress":0.6459952834308673,"total":916,"current":599}
+{"_e":"metro:bundling:progress","_t":1791824293148,"id":"1","progress":0.6459952834308673,"total":930,"current":629}
+{"_e":"metro:bundling:progress","_t":1791824293248,"id":"1","progress":0.6459952834308673,"total":972,"current":671}
+{"_e":"metro:bundling:progress","_t":1791824293351,"id":"1","progress":0.6459952834308673,"total":997,"current":707}
+{"_e":"metro:bundling:progress","_t":1791824293456,"id":"1","progress":0.6459952834308673,"total":1007,"current":750}
+{"_e":"metro:bundling:progress","_t":1791824293556,"id":"1","progress":0.6459952834308673,"total":1020,"current":782}
+{"_e":"metro:bundling:progress","_t":1791824293687,"id":"1","progress":0.6459952834308673,"total":1022,"current":811}
+{"_e":"metro:bundling:progress","_t":1791824293788,"id":"1","progress":0.6459952834308673,"total":2902,"current":812}
+{"_e":"metro:bundling:progress","_t":1791824293888,"id":"1","progress":0.6459952834308673,"total":2921,"current":850}
+{"_e":"metro:bundling:progress","_t":1791824294063,"id":"1","progress":0.6459952834308673,"total":2921,"current":851}
+{"_e":"metro:bundling:progress","_t":1791824294164,"id":"1","progress":0.6459952834308673,"total":2941,"current":915}
+{"_e":"metro:bundling:progress","_t":1791824294265,"id":"1","progress":0.6459952834308673,"total":2971,"current":963}
+{"_e":"metro:bundling:progress","_t":1791824294366,"id":"1","progress":0.6459952834308673,"total":2987,"current":1012}
+{"_e":"metro:bundling:progress","_t":1791824294466,"id":"1","progress":0.6459952834308673,"total":2993,"current":1090}
+{"_e":"metro:bundling:progress","_t":1791824294566,"id":"1","progress":0.6459952834308673,"total":2993,"current":1189}
+{"_e":"metro:bundling:progress","_t":1791824294666,"id":"1","progress":0.6459952834308673,"total":2993,"current":1286}
+{"_e":"metro:bundling:progress","_t":1791824294766,"id":"1","progress":0.6459952834308673,"total":2993,"current":1380}
+{"_e":"metro:bundling:progress","_t":1791824294867,"id":"1","progress":0.6459952834308673,"total":2993,"current":1489}
+{"_e":"metro:bundling:progress","_t":1791824294967,"id":"1","progress":0.6459952834308673,"total":2993,"current":1597}
+{"_e":"metro:bundling:progress","_t":1791824295067,"id":"1","progress":0.6459952834308673,"total":2993,"current":1700}
+{"_e":"metro:bundling:progress","_t":1791824295167,"id":"1","progress":0.6459952834308673,"total":2993,"current":1809}
+{"_e":"metro:bundling:progress","_t":1791824295267,"id":"1","progress":0.6459952834308673,"total":2993,"current":1914}
+{"_e":"metro:bundling:progress","_t":1791824295367,"id":"1","progress":0.6459952834308673,"total":2993,"current":2025}
+{"_e":"metro:bundling:progress","_t":1791824295467,"id":"1","progress":0.6459952834308673,"total":2993,"current":2127}
+{"_e":"metro:bundling:progress","_t":1791824295568,"id":"1","progress":0.6459952834308673,"total":2993,"current":2238}
+{"_e":"metro:bundling:progress","_t":1791824295667,"id":"1","progress":0.6459952834308673,"total":2993,"current":2333}
+{"_e":"metro:bundling:progress","_t":1791824295813,"id":"1","progress":0.6613444512303963,"total":2993,"current":2434}
+{"_e":"metro:bundling:progress","_t":1791824295913,"id":"1","progress":0.7039400555731816,"total":2994,"current":2512}
+{"_e":"metro:bundling:progress","_t":1791824296014,"id":"1","progress":0.7477570371203329,"total":2994,"current":2589}
+{"_e":"metro:bundling:progress","_t":1791824296113,"id":"1","progress":0.7911134002585443,"total":2994,"current":2663}
+{"_e":"metro:bundling:progress","_t":1791824296213,"id":"1","progress":0.8411965324548005,"total":2994,"current":2746}
+{"_e":"metro:bundling:progress","_t":1791824296313,"id":"1","progress":0.8921856181746703,"total":2994,"current":2828}
+{"_e":"metro:bundling:progress","_t":1791824296414,"id":"1","progress":0.9388807907650788,"total":2996,"current":2903}
+{"_e":"metro:bundling:progress","_t":1791824296516,"id":"1","progress":0.9466069775294362,"total":3030,"current":2948}
+{"_e":"metro:bundling:progress","_t":1791824296617,"id":"1","progress":0.9533441547970976,"total":3050,"current":2978}
+{"_e":"metro:bundling:progress","_t":1791824296718,"id":"1","progress":0.9639205155564875,"total":3076,"current":3020}
+{"_e":"metro:bundling:progress","_t":1791824296820,"id":"1","progress":0.9794349965613712,"total":3096,"current":3064}
+{"_e":"metro:bundling:progress","_t":1791824296920,"id":"1","progress":0.9794349965613712,"total":3185,"current":3104}
+{"_e":"metro:bundling:progress","_t":1791824297020,"id":"1","progress":0.9794349965613712,"total":3198,"current":3153}
+{"_e":"metro:bundling:progress","_t":1791824297120,"id":"1","progress":0.9975101161231329,"total":3211,"current":3207}
+{"_e":"metro:bundling:progress","_t":1791824297223,"id":"1","progress":0.999,"total":3211,"current":3210}
+{"_e":"metro:bundling:progress","_t":1791824297617,"id":"1","progress":0.999,"total":3211,"current":3211}
+{"_e":"metro:bundling:progress","_t":1791824297717,"id":"1","progress":0.999,"total":3214,"current":3214}
+{"_e":"metro:bundling:done","_t":1791824297953,"id":"1","total":3214,"ms":8829.7432}
+{"_e":"metro:client_log","_t":1791824303311,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791824303312,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791824315945,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824315951,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824315952,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824315952,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824315960,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824315961,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824315961,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824315961,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824316111,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824323758,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323759,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323763,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323764,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323767,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323771,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323771,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323773,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323796,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323796,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323797,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323798,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323802,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323804,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323804,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323805,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824323824,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824421418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421419,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421421,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421423,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421424,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421428,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421431,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421431,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421431,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421431,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421456,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421477,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421477,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421477,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421477,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421477,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421477,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421477,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824421495,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824426188,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426189,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426195,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426196,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426196,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426196,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426196,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426199,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426209,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426209,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426209,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426216,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426219,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426224,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426224,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824426304,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824431293,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431294,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431295,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431295,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431300,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431301,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431302,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431303,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431313,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431313,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431313,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431315,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431318,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431321,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431326,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431328,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824431382,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824483160,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483173,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483173,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483173,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483173,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483173,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483173,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483173,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483208,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824483219,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824589690,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:started","_t":1791824942827,"id":"b","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791824942828,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791824942832,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791824942932,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791824943293,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791824943505,"id":"b","total":1,"ms":677.6131}
+{"_e":"metro:client_log","_t":1791824951442,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791824951714,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791824952133,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791824952190,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791824952193,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791824952290,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791824952290,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791824952290,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791824952290,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791824952314,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791824952315,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791824952315,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791824970175,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970183,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970185,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970186,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970402,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970408,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970409,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970410,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824970466,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791824988624,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824988626,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824988628,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824988629,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791824988721,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825006796,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825006798,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825006806,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825006807,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825006866,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825006871,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825006871,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825006871,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825007011,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825007012,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825007014,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825007020,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825007109,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825011782,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825011784,"level":"log","data":["From the service: ","0"]}
+{"_e":"metro:client_log","_t":1791825013048,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825013048,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825013048,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825013049,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825013049,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825040975,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825040981,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825040982,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825040982,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041039,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041042,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041053,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041054,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041103,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041104,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041108,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041112,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825041244,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825056180,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056181,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056181,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056181,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056506,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056509,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056511,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056514,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825056662,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825123987,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825123989,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825123990,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825123992,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124055,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124061,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124061,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124069,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124106,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124109,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124113,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124115,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124153,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124155,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124157,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124158,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124245,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124263,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124263,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124263,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124304,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124322,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124322,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124322,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124374,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124376,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124378,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124386,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825124493,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825134252,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134253,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134256,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134259,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134407,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134410,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134415,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134418,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134474,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134479,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134480,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134481,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134516,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134517,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134519,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134520,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825134679,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825141758,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825141760,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825141767,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825141768,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825141864,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"root:init","_t":1791825837761,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791825837762,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791825837765,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791825838270,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791825838787,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791825839058,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791825842702,"atlas":false,"workers":10,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791825855459,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791825855459,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791825855467,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791825856216,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791825856324,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791825856341,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791825856449,"id":"1","progress":0.04000000000000001,"total":20,"current":3}
+{"_e":"metro:bundling:progress","_t":1791825856560,"id":"1","progress":0.08163265306122448,"total":35,"current":10}
+{"_e":"metro:bundling:progress","_t":1791825856667,"id":"1","progress":0.09467455621301776,"total":39,"current":12}
+{"_e":"metro:bundling:progress","_t":1791825856771,"id":"1","progress":0.09467455621301776,"total":63,"current":13}
+{"_e":"metro:bundling:progress","_t":1791825856821,"id":"1","progress":0.09467455621301776,"total":63,"current":14}
+{"_e":"metro:bundling:progress","_t":1791825856927,"id":"1","progress":0.09467455621301776,"total":65,"current":20}
+{"_e":"metro:bundling:progress","_t":1791825857027,"id":"1","progress":0.125207100591716,"total":65,"current":23}
+{"_e":"metro:bundling:progress","_t":1791825857130,"id":"1","progress":0.15059033192247717,"total":67,"current":26}
+{"_e":"metro:bundling:progress","_t":1791825857237,"id":"1","progress":0.18699780861943027,"total":74,"current":32}
+{"_e":"metro:bundling:progress","_t":1791825857338,"id":"1","progress":0.22501643655489809,"total":78,"current":37}
+{"_e":"metro:bundling:progress","_t":1791825857441,"id":"1","progress":0.3102066976446082,"total":79,"current":44}
+{"_e":"metro:bundling:progress","_t":1791825857541,"id":"1","progress":0.3964334705075446,"total":81,"current":51}
+{"_e":"metro:bundling:progress","_t":1791825857649,"id":"1","progress":0.5150173010380623,"total":85,"current":61}
+{"_e":"metro:bundling:progress","_t":1791825857757,"id":"1","progress":0.5955812854442344,"total":92,"current":71}
+{"_e":"metro:bundling:progress","_t":1791825857858,"id":"1","progress":0.5955812854442344,"total":133,"current":78}
+{"_e":"metro:bundling:progress","_t":1791825857964,"id":"1","progress":0.5955812854442344,"total":141,"current":86}
+{"_e":"metro:bundling:progress","_t":1791825858065,"id":"1","progress":0.5955812854442344,"total":161,"current":94}
+{"_e":"metro:bundling:progress","_t":1791825858164,"id":"1","progress":0.5955812854442344,"total":161,"current":108}
+{"_e":"metro:bundling:progress","_t":1791825858274,"id":"1","progress":0.5955812854442344,"total":171,"current":122}
+{"_e":"metro:bundling:progress","_t":1791825858376,"id":"1","progress":0.5955812854442344,"total":193,"current":139}
+{"_e":"metro:bundling:progress","_t":1791825858494,"id":"1","progress":0.5955812854442344,"total":298,"current":148}
+{"_e":"metro:bundling:progress","_t":1791825858594,"id":"1","progress":0.5955812854442344,"total":310,"current":165}
+{"_e":"metro:bundling:progress","_t":1791825858694,"id":"1","progress":0.5955812854442344,"total":366,"current":178}
+{"_e":"metro:bundling:progress","_t":1791825858803,"id":"1","progress":0.5955812854442344,"total":394,"current":196}
+{"_e":"metro:bundling:progress","_t":1791825858904,"id":"1","progress":0.5955812854442344,"total":409,"current":216}
+{"_e":"metro:bundling:progress","_t":1791825859005,"id":"1","progress":0.5955812854442344,"total":440,"current":232}
+{"_e":"metro:bundling:progress","_t":1791825859105,"id":"1","progress":0.5955812854442344,"total":469,"current":264}
+{"_e":"metro:bundling:progress","_t":1791825859207,"id":"1","progress":0.5955812854442344,"total":503,"current":304}
+{"_e":"metro:bundling:progress","_t":1791825859309,"id":"1","progress":0.5955812854442344,"total":552,"current":330}
+{"_e":"metro:bundling:progress","_t":1791825859409,"id":"1","progress":0.5955812854442344,"total":567,"current":346}
+{"_e":"metro:bundling:progress","_t":1791825859511,"id":"1","progress":0.5955812854442344,"total":607,"current":379}
+{"_e":"metro:bundling:progress","_t":1791825859611,"id":"1","progress":0.5955812854442344,"total":634,"current":419}
+{"_e":"metro:bundling:progress","_t":1791825859711,"id":"1","progress":0.5955812854442344,"total":677,"current":459}
+{"_e":"metro:bundling:progress","_t":1791825859812,"id":"1","progress":0.5955812854442344,"total":727,"current":500}
+{"_e":"metro:bundling:progress","_t":1791825859912,"id":"1","progress":0.5955812854442344,"total":732,"current":515}
+{"_e":"metro:bundling:progress","_t":1791825860013,"id":"1","progress":0.5955812854442344,"total":764,"current":545}
+{"_e":"metro:bundling:progress","_t":1791825860113,"id":"1","progress":0.5955812854442344,"total":845,"current":572}
+{"_e":"metro:bundling:progress","_t":1791825860221,"id":"1","progress":0.5955812854442344,"total":862,"current":589}
+{"_e":"metro:bundling:progress","_t":1791825860363,"id":"1","progress":0.5955812854442344,"total":887,"current":598}
+{"_e":"metro:bundling:progress","_t":1791825860468,"id":"1","progress":0.5955812854442344,"total":2779,"current":609}
+{"_e":"metro:bundling:progress","_t":1791825860568,"id":"1","progress":0.5955812854442344,"total":2790,"current":640}
+{"_e":"metro:bundling:progress","_t":1791825860670,"id":"1","progress":0.5955812854442344,"total":2814,"current":702}
+{"_e":"metro:bundling:progress","_t":1791825860771,"id":"1","progress":0.5955812854442344,"total":2826,"current":736}
+{"_e":"metro:bundling:progress","_t":1791825860879,"id":"1","progress":0.5955812854442344,"total":2836,"current":772}
+{"_e":"metro:bundling:progress","_t":1791825860989,"id":"1","progress":0.5955812854442344,"total":2841,"current":783}
+{"_e":"metro:bundling:progress","_t":1791825861093,"id":"1","progress":0.5955812854442344,"total":2843,"current":795}
+{"_e":"metro:bundling:progress","_t":1791825861195,"id":"1","progress":0.5955812854442344,"total":2888,"current":838}
+{"_e":"metro:bundling:progress","_t":1791825861300,"id":"1","progress":0.5955812854442344,"total":2925,"current":884}
+{"_e":"metro:bundling:progress","_t":1791825861400,"id":"1","progress":0.5955812854442344,"total":2925,"current":982}
+{"_e":"metro:bundling:progress","_t":1791825861501,"id":"1","progress":0.5955812854442344,"total":2925,"current":1072}
+{"_e":"metro:bundling:progress","_t":1791825861601,"id":"1","progress":0.5955812854442344,"total":2925,"current":1165}
+{"_e":"metro:bundling:progress","_t":1791825861701,"id":"1","progress":0.5955812854442344,"total":2925,"current":1250}
+{"_e":"metro:bundling:progress","_t":1791825861802,"id":"1","progress":0.5955812854442344,"total":2925,"current":1346}
+{"_e":"metro:bundling:progress","_t":1791825861902,"id":"1","progress":0.5955812854442344,"total":2925,"current":1448}
+{"_e":"metro:bundling:progress","_t":1791825862002,"id":"1","progress":0.5955812854442344,"total":2925,"current":1554}
+{"_e":"metro:bundling:progress","_t":1791825862105,"id":"1","progress":0.5955812854442344,"total":2925,"current":1644}
+{"_e":"metro:bundling:progress","_t":1791825862206,"id":"1","progress":0.5955812854442344,"total":2925,"current":1736}
+{"_e":"metro:bundling:progress","_t":1791825862306,"id":"1","progress":0.5955812854442344,"total":2925,"current":1833}
+{"_e":"metro:bundling:progress","_t":1791825862407,"id":"1","progress":0.5955812854442344,"total":2925,"current":1921}
+{"_e":"metro:bundling:progress","_t":1791825862508,"id":"1","progress":0.5955812854442344,"total":2925,"current":2024}
+{"_e":"metro:bundling:progress","_t":1791825862608,"id":"1","progress":0.5955812854442344,"total":2925,"current":2120}
+{"_e":"metro:bundling:progress","_t":1791825862710,"id":"1","progress":0.5955812854442344,"total":2925,"current":2228}
+{"_e":"metro:bundling:progress","_t":1791825862808,"id":"1","progress":0.6350863905325445,"total":2925,"current":2331}
+{"_e":"metro:bundling:progress","_t":1791825862908,"id":"1","progress":0.6788633209146029,"total":2925,"current":2410}
+{"_e":"metro:bundling:progress","_t":1791825863008,"id":"1","progress":0.721192899408284,"total":2925,"current":2484}
+{"_e":"metro:bundling:progress","_t":1791825863115,"id":"1","progress":0.7517038205858719,"total":2925,"current":2536}
+{"_e":"metro:bundling:progress","_t":1791825863214,"id":"1","progress":0.7816373438527283,"total":2925,"current":2586}
+{"_e":"metro:bundling:progress","_t":1791825863318,"id":"1","progress":0.8035513477975016,"total":2925,"current":2622}
+{"_e":"metro:bundling:progress","_t":1791825863419,"id":"1","progress":0.8307465556286069,"total":2925,"current":2666}
+{"_e":"metro:bundling:progress","_t":1791825863520,"id":"1","progress":0.853333800862006,"total":2925,"current":2702}
+{"_e":"metro:bundling:progress","_t":1791825863619,"id":"1","progress":0.8930153143412608,"total":2927,"current":2766}
+{"_e":"metro:bundling:progress","_t":1791825863719,"id":"1","progress":0.8990610202117862,"total":2953,"current":2800}
+{"_e":"metro:bundling:progress","_t":1791825863825,"id":"1","progress":0.9073043566982961,"total":2970,"current":2829}
+{"_e":"metro:bundling:progress","_t":1791825863928,"id":"1","progress":0.9145145116870278,"total":2975,"current":2845}
+{"_e":"metro:bundling:progress","_t":1791825864039,"id":"1","progress":0.9229673301547366,"total":2978,"current":2861}
+{"_e":"metro:bundling:progress","_t":1791825864139,"id":"1","progress":0.9281598694498052,"total":2979,"current":2870}
+{"_e":"metro:bundling:progress","_t":1791825864239,"id":"1","progress":0.9347253162939526,"total":2983,"current":2884}
+{"_e":"metro:bundling:progress","_t":1791825864356,"id":"1","progress":0.9363161404091221,"total":2997,"current":2900}
+{"_e":"metro:bundling:progress","_t":1791825864457,"id":"1","progress":0.9391804940613521,"total":3011,"current":2918}
+{"_e":"metro:bundling:progress","_t":1791825864564,"id":"1","progress":0.943967002873095,"total":3026,"current":2940}
+{"_e":"metro:bundling:progress","_t":1791825864665,"id":"1","progress":0.9461052041704786,"total":3038,"current":2955}
+{"_e":"metro:bundling:progress","_t":1791825864769,"id":"1","progress":0.9488510661276338,"total":3049,"current":2970}
+{"_e":"metro:bundling:progress","_t":1791825864876,"id":"1","progress":0.9515028621481246,"total":3055,"current":2980}
+{"_e":"metro:bundling:progress","_t":1791825864976,"id":"1","progress":0.9548882437033499,"total":3068,"current":2998}
+{"_e":"metro:bundling:progress","_t":1791825865079,"id":"1","progress":0.9594310837976625,"total":3074,"current":3011}
+{"_e":"metro:bundling:progress","_t":1791825865181,"id":"1","progress":0.9646500872248044,"total":3084,"current":3029}
+{"_e":"metro:bundling:progress","_t":1791825865290,"id":"1","progress":0.969810642955143,"total":3090,"current":3043}
+{"_e":"metro:bundling:progress","_t":1791825865406,"id":"1","progress":0.9743188894485608,"total":3095,"current":3055}
+{"_e":"metro:bundling:progress","_t":1791825865512,"id":"1","progress":0.9839256756165393,"total":3098,"current":3073}
+{"_e":"metro:bundling:progress","_t":1791825865612,"id":"1","progress":0.9839256756165393,"total":3175,"current":3082}
+{"_e":"metro:bundling:progress","_t":1791825865768,"id":"1","progress":0.9839256756165393,"total":3180,"current":3101}
+{"_e":"metro:bundling:progress","_t":1791825865868,"id":"1","progress":0.9839256756165393,"total":3190,"current":3140}
+{"_e":"metro:bundling:progress","_t":1791825865973,"id":"1","progress":0.9906411371084414,"total":3198,"current":3183}
+{"_e":"metro:bundling:progress","_t":1791825866080,"id":"1","progress":0.9981282175370675,"total":3204,"current":3201}
+{"_e":"metro:bundling:progress","_t":1791825866187,"id":"1","progress":0.999,"total":3204,"current":3203}
+{"_e":"metro:bundling:progress","_t":1791825866341,"id":"1","progress":0.999,"total":3204,"current":3204}
+{"_e":"metro:bundling:progress","_t":1791825866445,"id":"1","progress":0.999,"total":3214,"current":3214}
+{"_e":"metro:bundling:done","_t":1791825866790,"id":"1","total":3214,"ms":11331.4971}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791825873138,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791825892733,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825892751,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825892754,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825892755,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825893034,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791825902222,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902223,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902228,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902230,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902320,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902321,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902323,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902324,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791825902400,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:started","_t":1791826053622,"id":"4","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826053623,"id":"4","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826053692,"id":"4","total":1,"ms":69.3426}
+{"_e":"metro:client_log","_t":1791826058473,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791826058628,"level":"log","data":["Background tracking task started successfully."]}
+{"_e":"metro:client_log","_t":1791826058700,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791826058720,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791826058720,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791826058749,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791826058749,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791826058750,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791826058750,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826058753,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791826058753,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791826058753,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826073271,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073276,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073278,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073280,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073454,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073455,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073456,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073456,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826073531,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791826085287,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826085290,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826085290,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826085292,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826085374,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791826091194,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091196,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091198,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091200,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091305,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091314,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091316,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091317,"level":"warn","data":["\"[object Object]\" is not a valid icon name for family \"feather\""]}
+{"_e":"metro:client_log","_t":1791826091385,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:started","_t":1791826125136,"id":"9","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826125136,"id":"9","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791826125137,"id":"9","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826125199,"id":"9","total":1,"ms":62.1512}
+{"_e":"metro:client_log","_t":1791826131001,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791826131001,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791826131001,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791826131001,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791826131001,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791826131001,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791826131001,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826131002,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791826131002,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791826131004,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826173323,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791826188442,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791826192223,"level":"error","data":["The action 'NAVIGATE' with payload {\"name\":\"LocationScreen\"} was not handled by any navigator.\n\nDo you have a screen named 'LocationScreen'?\n\nIf you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.\n\nIf you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791826202164,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:failed","_t":1791826219706,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826219882,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826220989,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826233122,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826248924,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826250145,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826250429,"id":null,"message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791826251934,"level":"error","data":["[TypeError: undefined is not a function]"]}
+{"_e":"metro:client_log","_t":1791826251938,"level":"error","data":["[TypeError: An error was thrown when attempting to render log messages via LogBox.\n\nundefined is not a function]"]}
+{"_e":"metro:bundling:started","_t":1791826267226,"id":"h","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826267226,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791826267228,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:failed","_t":1791826267233,"id":"h","message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\screens\\main\\HomeScreen.js: Identifier 'React' has already been declared. (58:7)\n\n  56 | ];\n  57 |\n> 58 | import React, { useMemo } from \"react\";\n     |        ^\n  59 | import {\n  60 | \tShield,\n  61 | \tShieldOff,","importStack":null,"filename":"src\\screens\\main\\HomeScreen.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1791826313291,"id":"i","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826313291,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791826313292,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826313405,"id":"i","total":1,"ms":113.5055}
+{"_e":"metro:bundling:started","_t":1791826343205,"id":"j","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826343205,"id":"j","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826343289,"id":"j","total":1,"ms":83.5073}
+{"_e":"metro:bundling:started","_t":1791826369566,"id":"k","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826369566,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791826369567,"id":"k","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826369677,"id":"k","total":1,"ms":111.4553}
+{"_e":"metro:bundling:started","_t":1791826425469,"id":"l","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826425469,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791826425471,"id":"l","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826425601,"id":"l","total":1,"ms":131.7353}
+{"_e":"metro:client_log","_t":1791826430197,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791826430216,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791826430216,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791826430241,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791826430242,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791826430242,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791826430243,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826430246,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791826430246,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791826430246,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826443375,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791826458017,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791826463401,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:started","_t":1791826560877,"id":"m","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826560877,"id":"m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826560972,"id":"m","total":1,"ms":94.8819}
+{"_e":"metro:client_log","_t":1791826565515,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791826565531,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791826565531,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791826565557,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791826565557,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791826565557,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791826565557,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826565560,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791826565560,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791826565560,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826581781,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:bundling:failed","_t":1791826613658,"id":"h","message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\hooks\\useShake.js: Unexpected token (7:18)\n\n   5 | export function useShake(\n   6 |     onShake,\n>  7 |     sensitivity = ,\n     |                   ^\n   8 |     timeout = 500,\n   9 |     coolDownMs = 60000,\n  10 | ) {","importStack":null,"filename":"src\\hooks\\useShake.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826614809,"id":"h","message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\hooks\\useShake.js: Unexpected token (7:18)\n\n   5 | export function useShake(\n   6 |     onShake,\n>  7 |     sensitivity = ,\n     |                   ^\n   8 |     timeout = 500,\n   9 |     coolDownMs = 60000,\n  10 | ) {","importStack":null,"filename":"src\\hooks\\useShake.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791826615060,"id":"h","message":"SyntaxError: C:\\Users\\ewald\\OneDrive\\Documents\\GitHub\\SaferMzansi\\client\\src\\hooks\\useShake.js: Unexpected token (7:18)\n\n   5 | export function useShake(\n   6 |     onShake,\n>  7 |     sensitivity = ,\n     |                   ^\n   8 |     timeout = 500,\n   9 |     coolDownMs = 60000,\n  10 | ) {","importStack":null,"filename":"src\\hooks\\useShake.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:started","_t":1791826619309,"id":"o","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826619309,"id":"o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826619386,"id":"o","total":1,"ms":76.5421}
+{"_e":"metro:client_log","_t":1791826624433,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791826624434,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791826624436,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826626484,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791826635571,"level":"log","data":["GPS COORDINATES:","37.4219983","-122.084"]}
+{"_e":"metro:client_log","_t":1791826635602,"level":"warn","data":["TaskManager: Execution of \"BACKGROUND_SHAKE_TASK\" was requested but looks like it is not defined. Available tasks: [BACKGROUND_LOCATION_TASK]. Make sure that \"TaskManager.defineTask\" is called during initialization phase."]}
+{"_e":"metro:bundling:started","_t":1791826910145,"id":"q","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826910145,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826910199,"id":"q","total":1,"ms":53.705}
+{"_e":"metro:client_log","_t":1791826915231,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791826915249,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791826915253,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791826915281,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791826915282,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791826915282,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791826915282,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826915285,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791826915285,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791826915285,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826924700,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791826924751,"level":"log","data":["Background Location Update Saved/Processed:","37.4219983","-122.084"]}
+{"_e":"metro:client_log","_t":1791826928733,"level":"log","data":["GPS COORDINATES:","37.4219983","-122.084"]}
+{"_e":"metro:client_log","_t":1791826928744,"level":"log","data":["Background Location Update Saved/Processed:","37.4219983","-122.084"]}
+{"_e":"metro:bundling:started","_t":1791826950394,"id":"r","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791826950394,"id":"r","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791826950451,"id":"r","total":1,"ms":56.8144}
+{"_e":"metro:client_log","_t":1791826955022,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791826955046,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791826955046,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791826955076,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791826955077,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791826955079,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791826955079,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826955082,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791826955083,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791826955083,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791826968674,"level":"log","data":["From the Repository: ","0"]}
+{"_e":"metro:client_log","_t":1791826974815,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791826974851,"level":"log","data":["Background location received, but sharing is disabled by user setting."]}
+{"_e":"metro:client_log","_t":1791826974859,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1791826978761,"level":"log","data":["GPS COORDINATES:","37.4219983","-122.084"]}
+{"_e":"metro:bundling:started","_t":1791827003822,"id":"t","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791827003822,"id":"t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791827003871,"id":"t","total":1,"ms":48.9216}
+{"_e":"metro:client_log","_t":1791827008500,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791827008517,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791827008518,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791827008546,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791827008548,"level":"log","data":["{\n  \"user_id\": \"c7a80c98-bba4-4275-8113-e52fbc1ba2cb\",\n  \"email_blind_index\": \"fc991b791bbd03870c7c48c904996a23802491b67737fa8be06551985e35fba4\",\n  \"encrypted_name\": \"U2FsdGVkX19F3hnyLbJ/SE4YxE6TdaHLLD4fhGdkO+Y=\",\n  \"encrypted_surname\": \"U2FsdGVkX1/ONdFxIWVabb762ZnPtm6WPFlOu18FbsU=\",\n  \"encrypted_email\": \"U2FsdGVkX19MyPs9vTHAkcEadVEtFmE5sYCym2K2gVXyx9Nm4xer6p3Vg5N92Lrt\",\n  \"encrypted_phone_num\": \"U2FsdGVkX19Io247i6ziUSzFZDvMiqAkJflJW51kxFg=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-12 18:14:15.622\",\n  \"updated_at\": \"2026-10-12T18:14:16.6812+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Ewald\",\n  \"_decrypted_surname\": \"De Wit\",\n  \"_decrypted_email\": \"ewalddewitsa@gmail.com\",\n  \"_decrypted_phone_num\": \"0662482443\"\n}"]}
+{"_e":"metro:client_log","_t":1791827008548,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791827008548,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791827008550,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791827008550,"level":"log","data":["No contact records found in Local_Emergency_Contacts."]}
+{"_e":"metro:client_log","_t":1791827008550,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791827017613,"level":"log","data":["Emergency shake triggered!"]}
+{"_e":"metro:client_log","_t":1791827021812,"level":"log","data":["GPS COORDINATES:","37.4219983","-122.084"]}
