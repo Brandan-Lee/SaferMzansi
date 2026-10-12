@@ -22,7 +22,15 @@
     },
     "plugins": [
       "expo-sqlite",
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow SaferMzansi to access your location to share with your emergency contacts.",
+          "locationAlwaysAndWhenInUsePermission": "Allow SaferMzansi to continuously track your location in the background during emergencies.",
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ]
     ]
   }
 }

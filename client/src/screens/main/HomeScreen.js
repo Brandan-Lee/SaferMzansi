@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View, Button, Alert } from "react-native";
 import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
 import { SafetyToolCard } from "@components/home/SafetyToolCard";
 import { decryptData } from "@utils/securityAndValidation/securityUtil";
 import { useAuth } from "@context/AuthContext";
 import AuthLayout from "@components/layouts/AuthLayout";
-import { useShake } from "@hooks/useShake";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { getLocalContactTotal } from "@database/repositories/contactRepository";
@@ -60,10 +59,6 @@ const RADIAL_ACTIONS = [
 
 const HomeScreen = ({ navigation }) => {
 	const { user } = useAuth();
-
-	// useShake(() => {
-	// 	console.log("This bitch been shaken!!")
-	// });
 	const db = useSQLiteContext();
 	const [contactCount, setContactCount] = useState(0);
 
