@@ -6,22 +6,23 @@ import {
 	useMemo,
 } from "react";
 import { useSQLiteContext } from "expo-sqlite";
-import { loginUser } from "../services/auth/UserService";
-import { isTokenExpired } from "../utils/auth/AuthTokenUtil";
 import * as SecureStore from "expo-secure-store";
-import { registerUser } from './../services/auth/UserService';
+import { loginUser, registerUser } from "@services/auth/authService";
+import { isTokenExpired } from "@utils/auth/authTokenUtil";
 
 const TOKEN_KEY = "user_jwt_token";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
 	const db = useSQLiteContext();
 	const [user, setUser] = useState(null);
 	const [sessionToken, setSessionToken] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [pendingAuthRoute, setPendingAuthRoute] = useState(null);
+	const [pendingAuthParams, setPendingAuthParams] = useState(null);
 
-	//Helper method to persist the authentication session
+	// Helper method to persist the authentication session upon successful login
 	const updateSession = useCallback((token, userData) => {
 		setSessionToken(token || null);
 		setUser(
@@ -29,21 +30,22 @@ export const AuthProvider = ({ children }) => {
 				? {
 						userId: userData.userId,
 						email: userData.email,
+						userName: userData.userName,
+						userSurname: userData.userSurname,
+						userNumber: userData.userNumber,
 					}
 				: null,
 		);
 	}, []);
 
-	//Method to help with the authentication action
-	const handleAuthAction = useCallback(
-		async (actionFn) => {
+	const register = useCallback(
+		async (userData) => {
 			setLoading(true);
-
 			try {
-				const result = await actionFn();
+				const result = await registerUser(db, userData);
 
 				if (result?.token) {
-					updateSession(result.token, result);
+					await SecureStore.setItemAsync(TOKEN_KEY, result.token);
 				}
 
 				return result;
@@ -51,40 +53,57 @@ export const AuthProvider = ({ children }) => {
 				setLoading(false);
 			}
 		},
-		[updateSession],
+		[db],
 	);
 
-	// Async function to register the user
-	const register = useCallback(
-		(userData) => handleAuthAction(() => registerUser(db, userData)),
-		[db, handleAuthAction],
-	);
-
-	//Async function to log in the user
+	// Async function to log in the user
 	const login = useCallback(
-		({ email, password }) =>
-			handleAuthAction(() => loginUser(db, email, password)),
-		[db, handleAuthAction],
+		async ({ email, password }) => {
+			setLoading(true);
+			try {
+				const result = await loginUser(db, email, password);
+
+				return result;
+			} finally {
+				setLoading(false);
+			}
+		},
+		[db, updateSession],
 	);
 
-	const checkAuthSession = async () => {
-		const token = await SecureStore.getItemAsync(TOKEN_KEY);
+	// Optional manually triggered method if needed elsewhere in the app
+	const checkAuthSession = useCallback(async () => {
+		try {
+			const token = await SecureStore.getItemAsync(TOKEN_KEY);
 
-		//The token doesn't exist or it has expired
-		if (!token || isTokenExpired(token)) {
-			console.log("Token is missing or expired. Clearing session.");
-			await SecureStore.deleteItemAsync(TOKEN_KEY);
-			return {
-				isAuthenticated: false,
-				user: null,
-			};
+			if (!token || isTokenExpired(token)) {
+				await SecureStore.deleteItemAsync(TOKEN_KEY);
+				setSessionToken(null);
+				setUser(null);
+				return { isAuthenticated: false, user: null };
+			}
+
+			setSessionToken(token);
+			return { isAuthenticated: true, token };
+		} catch (error) {
+			console.error("Error checking auth session:", error);
+			return { isAuthenticated: false, user: null };
 		}
+	}, []);
 
-		return {
-			isAuthenticated: true,
-			token,
-		};
-	};
+	// Logout clears state and SecureStore
+	const logOut = useCallback(async (nextRoute = null, nextParams = null) => {
+		setLoading(true);
+		try {
+			await SecureStore.deleteItemAsync(TOKEN_KEY);
+			setPendingAuthRoute(nextRoute);
+			setPendingAuthParams(nextParams);
+			setSessionToken(null);
+			setUser(null);
+		} finally {
+			setLoading(false);
+		}
+	}, []);
 
 	const value = useMemo(
 		() => ({
@@ -93,10 +112,14 @@ export const AuthProvider = ({ children }) => {
 			loading,
 			register,
 			login,
+			logOut,
+			updateSession,
 			checkAuthSession,
-			isAuthenticated: !!user,
+			isAuthenticated: !!sessionToken,
+			pendingAuthParams,
+			pendingAuthRoute,
 		}),
-		[user, sessionToken, loading, register],
+		[user, sessionToken, loading, register, login, logOut, checkAuthSession],
 	);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
