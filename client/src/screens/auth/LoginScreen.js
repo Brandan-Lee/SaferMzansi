@@ -85,7 +85,7 @@ const LoginScreen = () => {
 			banner={banner}
 			navQuestion="Don't have an account"
 			navActionText="Register"
-			onNavPress={() => navigation.navigate("RegistrationScreen")}
+			onNavPress={() => navigation.replace("RegistrationScreen")}
 			scrollable={false}
 		>
 			{LOGIN_FORM_FIELDS.map((field) => (

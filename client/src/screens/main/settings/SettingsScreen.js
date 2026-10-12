@@ -11,12 +11,14 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
+import { useAuth } from "@context/AuthContext";
 
 const SettingsScreen = ({ navigation }) => {
 	const [shareLocation, setShareLocation] = useState(false);
 	const [autoRecord, setAutoRecord] = useState(false);
 	const [smsEmailTrigger, setSmsEmailTrigger] = useState(false);
 	const [cloudBackup, setCloudBackup] = useState(false);
+	const { logOut } = useAuth();
 
 	const showTemporaryAlert = (title) => {
 		Alert.alert(title, "This function will be connected later.");
@@ -88,6 +90,10 @@ const SettingsScreen = ({ navigation }) => {
 		);
 	};
 
+	const handleLogout = async () => {
+		await logOut("LoginScreen");
+	};
+
 	return (
 		<MainLayout
 			title="Settings"
@@ -154,11 +160,7 @@ const SettingsScreen = ({ navigation }) => {
 					onPress={() => setCloudBackup((prev) => !prev)}
 				/>
 
-				<SettingRow
-					icon="log-out"
-					title="Logout"
-					onPress={() => showTemporaryAlert("Logout")}
-				/>
+				<SettingRow icon="log-out" title="Logout" onPress={handleLogout} />
 
 				<SettingRow
 					icon="trash-2"

@@ -1,66 +1,3 @@
-// import "react-native-get-random-values";
-
-// import React from "react";
-// import { StatusBar } from "expo-status-bar";
-// import { StyleSheet, View } from "react-native";
-// import { SQLiteProvider } from "expo-sqlite";
-// import { SafeAreaProvider } from "react-native-safe-area-context";
-
-// import { initDatabase } from "@database/init";
-// import { AuthProvider } from "@context/AuthContext";
-// import { NetStatusProvider } from "@utils/network/netStatus";
-// import AppNavigator from "@navigation/AppNavigator";
-
-// //Import for running Background services
-// import * as TaskManager from 'expo-task-manager';
-
-// const DATABASE_NAME = "safer_mzansi.db";
-// export const BACKGROUND_LOCATION_TASK = 'BACKGROUND_SAFETY_TRACKING';
-
-// TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
-// 	if (error) {
-// 		console.error("SaferMzansi Background Tracking Exception:", error);
-// 		return;
-// 	}
-// 	if (data) {
-// 		const { locations } = data;
-// 		const [latestLocation] = locations;
-// 		const { latitude, longitude } = latestLocation.coords;
-
-// 		console.log(`Background Managed Coordinates: ${latitude}, ${longitude}`);
-// 	}
-// });
-
-// export default function App() {
-// 	return (
-// 		<SafeAreaProvider>
-// 			<SQLiteProvider
-// 				databaseName={DATABASE_NAME}
-// 				onInit={initDatabase}
-// 				useNewConnection={false}
-// 			>
-// 				<NetStatusProvider>
-// 					<AuthProvider>
-// 						<View style={styles.container}>
-// 							<AppNavigator />
-// 							<StatusBar style="auto" />
-// 						</View>
-// 					</AuthProvider>
-// 				</NetStatusProvider>
-// 			</SQLiteProvider>
-// 		</SafeAreaProvider>
-// 	);
-// }
-
-// const styles = StyleSheet.create({
-// 	container: {
-// 		flex: 1,
-// 		backgroundColor: "#fff",
-// 	},
-// });
-
-
-
 import "react-native-get-random-values";
 
 import React, { useEffect } from "react";
@@ -68,17 +5,17 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Alert } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 import { initDatabase } from "@database/init";
 import { AuthProvider } from "@context/AuthContext";
 import { NetStatusProvider } from "@utils/network/netStatus";
 import AppNavigator from "@navigation/AppNavigator";
-import * as TaskManager from 'expo-task-manager';
+import * as TaskManager from "expo-task-manager";
 import { useShake } from "@hooks/useShake";
 import { useLocation } from "@hooks/useLocation";
 
 const DATABASE_NAME = "safer_mzansi.db";
-export const BACKGROUND_SHAKE_TASK = 'BACKGROUND_SHAKE_TASK';
+export const BACKGROUND_SHAKE_TASK = "BACKGROUND_SHAKE_TASK";
 
 TaskManager.defineTask(BACKGROUND_SHAKE_TASK, async ({ data, error }) => {
 	if (error) {
@@ -86,7 +23,11 @@ TaskManager.defineTask(BACKGROUND_SHAKE_TASK, async ({ data, error }) => {
 		return;
 	}
 	if (data) {
-		console.log("Background Task Triggered:", data?.locations?.[0]?.coords?.latitude, data?.locations?.[0]?.coords?.longitude);
+		console.log(
+			"Background Task Triggered:",
+			data?.locations?.[0]?.coords?.latitude,
+			data?.locations?.[0]?.coords?.longitude,
+		);
 	}
 });
 export default function App() {
@@ -95,11 +36,16 @@ export default function App() {
 	//Method to ask permissions or background configurations manually if needed
 	const runBackgroundLocationTracking = async () => {
 		try {
-			const { status: fgStatus } = await Location.requestForegroundPermissionsAsync();
-			const { status: bgStatus } = await Location.requestBackgroundPermissionsAsync();
+			const { status: fgStatus } =
+				await Location.requestForegroundPermissionsAsync();
+			const { status: bgStatus } =
+				await Location.requestBackgroundPermissionsAsync();
 
-			if (fgStatus !== 'granted' || bgStatus !== 'granted') {
-				Alert.alert("Permissions Missing", "Please accept both foreground and background tracking settings.");
+			if (fgStatus !== "granted" || bgStatus !== "granted") {
+				Alert.alert(
+					"Permissions Missing",
+					"Please accept both foreground and background tracking settings.",
+				);
 				return;
 			}
 
@@ -122,8 +68,11 @@ export default function App() {
 		const result = await getLocation();
 
 		if (result.success) {
-			await runBackgroundLocationTracking();
-			console.log("GPS COORDINATES:", result.location.latitude, result.location.longitude);
+			console.log(
+				"GPS COORDINATES:",
+				result.location.latitude,
+				result.location.longitude,
+			);
 		} else {
 			console.log("Location capture failed:", result.error);
 		}
@@ -134,7 +83,6 @@ export default function App() {
 	useEffect(() => {
 		runBackgroundLocationTracking();
 	}, []);
-
 
 	return (
 		<SafeAreaProvider>
