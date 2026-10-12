@@ -23,7 +23,6 @@ const DecoyScreen = () => {
 			navigation.navigate("HomeScreen");
 			return;
 		}
-
 		try {
 			const result = evaluate(pin);
 			setPin(result.toString());
