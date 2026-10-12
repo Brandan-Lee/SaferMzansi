@@ -1,6 +1,6 @@
 import "react-native-get-random-values";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Alert } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
@@ -13,27 +13,51 @@ import AppNavigator from "@navigation/AppNavigator";
 import * as TaskManager from "expo-task-manager";
 import { useShake } from "@hooks/useShake";
 import { useLocation } from "@hooks/useLocation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DATABASE_NAME = "safer_mzansi.db";
-export const BACKGROUND_SHAKE_TASK = "BACKGROUND_SHAKE_TASK";
+export const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
 
-TaskManager.defineTask(BACKGROUND_SHAKE_TASK, async ({ data, error }) => {
+const KEYS = {
+	SHARE_LOCATION: "@setting_share_location",
+};
+
+TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 	if (error) {
-		console.error("SaferMzansi Background Shake Task Exception:", error);
+		console.error("SaferMzansi Background Location Task Exception:", error);
 		return;
 	}
-	if (data) {
-		console.log(
-			"Background Task Triggered:",
-			data?.locations?.[0]?.coords?.latitude,
-			data?.locations?.[0]?.coords?.longitude,
-		);
+
+	try {
+		// Always check persistent storage inside the background thread
+		const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+		const isSharingEnabled = savedShare === "true";
+
+		if (!isSharingEnabled) {
+			console.log("Background location received, but sharing is disabled by user setting.");
+			// Optionally stop location updates here if user turned it off
+			await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
+			return;
+		}
+
+		if (data) {
+			const { locations } = data;
+			if (locations && locations.length > 0) {
+				const { latitude, longitude } = locations[0].coords;
+				console.log("Background Location :", latitude, longitude);
+
+			}
+		}
+	} catch (err) {
+		console.error("Error reading storage inside background task:", err);
 	}
 });
+
 export default function App() {
 	const { getLocation, loading: locationLoading } = useLocation();
+	const [shareLiveLocation, setShareLiveLocation] = useState(false);
 
-	//Method to ask permissions or background configurations manually if needed
+	// Method to ask permissions and start background location tracking
 	const runBackgroundLocationTracking = async () => {
 		try {
 			const { status: fgStatus } =
@@ -44,21 +68,32 @@ export default function App() {
 			if (fgStatus !== "granted" || bgStatus !== "granted") {
 				Alert.alert(
 					"Permissions Missing",
-					"Please accept both foreground and background tracking settings.",
+					"Please accept both foreground and background tracking settings to share your live location."
 				);
 				return;
 			}
 
-			// Actually start the background task
-			await Location.startLocationUpdatesAsync(BACKGROUND_SHAKE_TASK, {
-				accuracy: Location.Accuracy.Balanced, //low , balanced, high
-				timeInterval: 5000, //ms
-				distanceInterval: 1, //Meter
-			});
+			// Check if task is already running to avoid duplication errors
+			const isRegistered = await TaskManager.isTaskRegisteredAsync(
+				BACKGROUND_LOCATION_TASK
+			);
 
-			console.log("Background tracking task started successfully.");
+			if (!isRegistered) {
+				await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
+					accuracy: Location.Accuracy.Balanced,
+					timeInterval: 5000,
+					distanceInterval: 1,
+					showsBackgroundLocationIndicator: true, // Required for iOS background tracking visibility
+					foregroundService: {
+						notificationTitle: "Safer Mzansi Active",
+						notificationBody: "Live location sharing is running in the background.",
+						notificationColor: "#FF0000",
+					},
+				});
+				console.log("Background tracking task started successfully.");
+			}
 		} catch (error) {
-			console.log("Initialization Error", error.message);
+			console.log("Background Tracking Initialization Error:", error.message);
 		}
 	};
 
@@ -71,7 +106,7 @@ export default function App() {
 			console.log(
 				"GPS COORDINATES:",
 				result.location.latitude,
-				result.location.longitude,
+				result.location.longitude
 			);
 		} else {
 			console.log("Location capture failed:", result.error);
@@ -80,8 +115,26 @@ export default function App() {
 
 	useShake(handleEmergencyShake);
 
+	// Load saved setting and initialize background tracking if enabled
 	useEffect(() => {
-		runBackgroundLocationTracking();
+		const initializeSettings = async () => {
+			try {
+				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+
+				if (savedShare !== null) {
+					const isShared = savedShare === "true";
+					setShareLiveLocation(isShared);
+
+					if (isShared) {
+						runBackgroundLocationTracking();
+					}
+				}
+			} catch (error) {
+				console.error("Error reading location sharing preference: ", error);
+			}
+		};
+
+		initializeSettings();
 	}, []);
 
 	return (

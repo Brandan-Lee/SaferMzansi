@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -12,17 +12,66 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
 import { useAuth } from "@context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const KEYS = {
+	SHARE_LOCATION: "@setting_share_location",
+	AUTO_RECORD: "@setting_auto_record",
+	EMAIL: "@setting_email",
+};
 
 const SettingsScreen = ({ navigation }) => {
 	const [shareLocation, setShareLocation] = useState(false);
 	const [autoRecord, setAutoRecord] = useState(false);
-	const [smsEmailTrigger, setSmsEmailTrigger] = useState(false);
+	const [EmailTrigger, setEmailTrigger] = useState(false);
 	const [cloudBackup, setCloudBackup] = useState(false);
 	const { logOut } = useAuth();
+
+	useEffect(() => {
+		const loadSettings = async () => {
+			try {
+				//For location Sharing
+				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+
+				if (savedShare !== null) {
+					setShareLocation(savedShare === "true")
+				}
+
+				//For auto-recording
+				const savedRecord = await AsyncStorage.getItem(KEYS.AUTO_RECORD);
+
+				if (savedRecord !== null) {
+					setAutoRecord(savedRecord === "true")
+				}
+
+				//For Emailing with event details
+				const savedEmail = await AsyncStorage.getItem(KEYS.EMAIL);
+
+				if (savedEmail !== null) {
+					setEmailTrigger(savedEmail === "true")
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+
+		loadSettings();
+	}, []);
+
+	const toggleSetting = async (key, currentValue, stateSetter) => {
+		try {
+			const newValue = !currentValue;
+			stateSetter(newValue);
+			await AsyncStorage.setItem(key, String(newValue));
+		} catch (error) {
+			console.error(`Failed to save setting for key: ${key}`, error);
+		}
+	};
 
 	const showTemporaryAlert = (title) => {
 		Alert.alert(title, "This function will be connected later.");
 	};
+
 
 	const SettingRow = ({
 		icon,
@@ -126,21 +175,21 @@ const SettingsScreen = ({ navigation }) => {
 					icon="map-pin"
 					title="Share live location"
 					value={shareLocation}
-					onPress={() => setShareLocation((prev) => !prev)}
+					onPress={() => toggleSetting(KEYS.SHARE_LOCATION, shareLocation, setShareLocation)}
 				/>
 
 				<ToggleRow
 					icon="mic"
 					title="Auto-record on trigger"
 					value={autoRecord}
-					onPress={() => setAutoRecord((prev) => !prev)}
+					onPress={() => toggleSetting(KEYS.AUTO_RECORD, autoRecord, setAutoRecord)}
 				/>
 
 				<ToggleRow
 					icon="message-square"
-					title="SMS/Email trigger"
-					value={smsEmailTrigger}
-					onPress={() => setSmsEmailTrigger((prev) => !prev)}
+					title="Email trigger"
+					value={EmailTrigger}
+					onPress={() => toggleSetting(KEYS.EMAIL, EmailTrigger, setEmailTrigger)}
 				/>
 
 				{/* SECURITY */}
