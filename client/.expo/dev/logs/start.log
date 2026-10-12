@@ -18763,3 +18763,757 @@
 {"_e":"metro:client_log","_t":1791752343892,"level":"warn","data":["[User Service] Backend update failed, updating locally as offline","column Users.0 does not exist"]}
 {"_e":"metro:client_log","_t":1791752562540,"level":"log","data":["7907b864-dfa5-41e7-9cae-459584c37fc0"]}
 {"_e":"metro:client_log","_t":1791752639794,"level":"log","data":["7907b864-dfa5-41e7-9cae-459584c37fc0"]}
+{"_e":"root:init","_t":1791753408447,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791753408448,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791753408452,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791753408861,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791753409374,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791753409832,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791753418212,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791753921716,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791753921717,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791753921723,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791753922611,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791753922715,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791753922729,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791753922829,"id":"1","progress":0.04000000000000001,"total":16,"current":3}
+{"_e":"metro:bundling:progress","_t":1791753922953,"id":"1","progress":0.12249999999999998,"total":20,"current":7}
+{"_e":"metro:bundling:progress","_t":1791753923212,"id":"1","progress":0.16000000000000003,"total":20,"current":8}
+{"_e":"metro:bundling:progress","_t":1791753923315,"id":"1","progress":0.16000000000000003,"total":119,"current":9}
+{"_e":"metro:bundling:progress","_t":1791753923449,"id":"1","progress":0.16000000000000003,"total":121,"current":10}
+{"_e":"metro:bundling:progress","_t":1791753923471,"id":"1","progress":0.16000000000000003,"total":121,"current":11}
+{"_e":"metro:bundling:progress","_t":1791753923573,"id":"1","progress":0.16000000000000003,"total":136,"current":13}
+{"_e":"metro:bundling:progress","_t":1791753923675,"id":"1","progress":0.16000000000000003,"total":143,"current":16}
+{"_e":"metro:bundling:progress","_t":1791753923777,"id":"1","progress":0.16000000000000003,"total":143,"current":18}
+{"_e":"metro:bundling:progress","_t":1791753923886,"id":"1","progress":0.16000000000000003,"total":144,"current":20}
+{"_e":"metro:bundling:progress","_t":1791753923951,"id":"1","progress":0.16000000000000003,"total":144,"current":21}
+{"_e":"metro:bundling:progress","_t":1791753924058,"id":"1","progress":0.16000000000000003,"total":151,"current":22}
+{"_e":"metro:bundling:progress","_t":1791753924168,"id":"1","progress":0.16000000000000003,"total":160,"current":25}
+{"_e":"metro:bundling:progress","_t":1791753924273,"id":"1","progress":0.16000000000000003,"total":166,"current":29}
+{"_e":"metro:bundling:progress","_t":1791753924386,"id":"1","progress":0.16000000000000003,"total":169,"current":31}
+{"_e":"metro:bundling:progress","_t":1791753924488,"id":"1","progress":0.16000000000000003,"total":206,"current":37}
+{"_e":"metro:bundling:progress","_t":1791753924591,"id":"1","progress":0.16000000000000003,"total":206,"current":38}
+{"_e":"metro:bundling:progress","_t":1791753924613,"id":"1","progress":0.16000000000000003,"total":206,"current":39}
+{"_e":"metro:bundling:progress","_t":1791753924725,"id":"1","progress":0.16000000000000003,"total":210,"current":43}
+{"_e":"metro:bundling:progress","_t":1791753924836,"id":"1","progress":0.16000000000000003,"total":214,"current":46}
+{"_e":"metro:bundling:progress","_t":1791753924938,"id":"1","progress":0.16000000000000003,"total":227,"current":54}
+{"_e":"metro:bundling:progress","_t":1791753925040,"id":"1","progress":0.16000000000000003,"total":247,"current":69}
+{"_e":"metro:bundling:progress","_t":1791753925141,"id":"1","progress":0.16000000000000003,"total":261,"current":85}
+{"_e":"metro:bundling:progress","_t":1791753925241,"id":"1","progress":0.16000000000000003,"total":278,"current":102}
+{"_e":"metro:bundling:progress","_t":1791753925344,"id":"1","progress":0.18157556004298483,"total":291,"current":124}
+{"_e":"metro:bundling:progress","_t":1791753925447,"id":"1","progress":0.20219809918472142,"total":298,"current":134}
+{"_e":"metro:bundling:progress","_t":1791753925556,"id":"1","progress":0.2451691959656895,"total":309,"current":153}
+{"_e":"metro:bundling:progress","_t":1791753925657,"id":"1","progress":0.2825257690122555,"total":333,"current":177}
+{"_e":"metro:bundling:progress","_t":1791753925757,"id":"1","progress":0.33284023668639046,"total":338,"current":195}
+{"_e":"metro:bundling:progress","_t":1791753925869,"id":"1","progress":0.33284023668639046,"total":364,"current":210}
+{"_e":"metro:bundling:progress","_t":1791753925970,"id":"1","progress":0.3568071111111112,"total":375,"current":224}
+{"_e":"metro:bundling:progress","_t":1791753926073,"id":"1","progress":0.35688986338336987,"total":385,"current":230}
+{"_e":"metro:bundling:progress","_t":1791753926178,"id":"1","progress":0.35688986338336987,"total":421,"current":247}
+{"_e":"metro:bundling:progress","_t":1791753926282,"id":"1","progress":0.37051039697542537,"total":437,"current":266}
+{"_e":"metro:bundling:progress","_t":1791753926388,"id":"1","progress":0.3803683362766598,"total":454,"current":280}
+{"_e":"metro:bundling:progress","_t":1791753926493,"id":"1","progress":0.3856223835223235,"total":467,"current":290}
+{"_e":"metro:bundling:progress","_t":1791753926625,"id":"1","progress":0.3856223835223235,"total":487,"current":296}
+{"_e":"metro:bundling:progress","_t":1791753926743,"id":"1","progress":0.3856223835223235,"total":493,"current":302}
+{"_e":"metro:bundling:progress","_t":1791753926893,"id":"1","progress":0.3856223835223235,"total":494,"current":305}
+{"_e":"metro:bundling:progress","_t":1791753926997,"id":"1","progress":0.39125784720287166,"total":494,"current":309}
+{"_e":"metro:bundling:progress","_t":1791753927096,"id":"1","progress":0.4035686603668258,"total":499,"current":317}
+{"_e":"metro:bundling:progress","_t":1791753927196,"id":"1","progress":0.4035686603668258,"total":513,"current":322}
+{"_e":"metro:bundling:progress","_t":1791753927299,"id":"1","progress":0.4060698273289592,"total":521,"current":332}
+{"_e":"metro:bundling:progress","_t":1791753927401,"id":"1","progress":0.43097721577996617,"total":524,"current":344}
+{"_e":"metro:bundling:progress","_t":1791753927505,"id":"1","progress":0.4477924133642377,"total":532,"current":356}
+{"_e":"metro:bundling:progress","_t":1791753927612,"id":"1","progress":0.4559986928282566,"total":542,"current":366}
+{"_e":"metro:bundling:progress","_t":1791753927713,"id":"1","progress":0.4775391114572089,"total":547,"current":378}
+{"_e":"metro:bundling:progress","_t":1791753927813,"id":"1","progress":0.4854618201722947,"total":554,"current":386}
+{"_e":"metro:bundling:progress","_t":1791753927915,"id":"1","progress":0.5036420395421437,"total":558,"current":396}
+{"_e":"metro:bundling:progress","_t":1791753928014,"id":"1","progress":0.5405800672680899,"total":559,"current":411}
+{"_e":"metro:bundling:progress","_t":1791753928115,"id":"1","progress":0.5757817149375125,"total":568,"current":431}
+{"_e":"metro:bundling:progress","_t":1791753928219,"id":"1","progress":0.5958756540473992,"total":570,"current":440}
+{"_e":"metro:bundling:progress","_t":1791753928319,"id":"1","progress":0.6299696806689814,"total":572,"current":454}
+{"_e":"metro:bundling:progress","_t":1791753928422,"id":"1","progress":0.6561279795729041,"total":579,"current":469}
+{"_e":"metro:bundling:progress","_t":1791753928524,"id":"1","progress":0.6561279795729041,"total":605,"current":484}
+{"_e":"metro:bundling:progress","_t":1791753928625,"id":"1","progress":0.6561279795729041,"total":622,"current":495}
+{"_e":"metro:bundling:progress","_t":1791753928726,"id":"1","progress":0.6637303636864723,"total":626,"current":510}
+{"_e":"metro:bundling:progress","_t":1791753928826,"id":"1","progress":0.6852596402696355,"total":633,"current":524}
+{"_e":"metro:bundling:progress","_t":1791753928928,"id":"1","progress":0.7221009940708414,"total":639,"current":543}
+{"_e":"metro:bundling:progress","_t":1791753929028,"id":"1","progress":0.7350736133645813,"total":645,"current":553}
+{"_e":"metro:bundling:progress","_t":1791753929131,"id":"1","progress":0.7559113829368028,"total":651,"current":566}
+{"_e":"metro:bundling:progress","_t":1791753929240,"id":"1","progress":0.7559113829368028,"total":669,"current":581}
+{"_e":"metro:bundling:progress","_t":1791753929340,"id":"1","progress":0.7636789088571706,"total":674,"current":589}
+{"_e":"metro:bundling:progress","_t":1791753929441,"id":"1","progress":0.7662666299739425,"total":682,"current":597}
+{"_e":"metro:bundling:progress","_t":1791753929542,"id":"1","progress":0.771031827115295,"total":689,"current":605}
+{"_e":"metro:bundling:progress","_t":1791753929643,"id":"1","progress":0.7921257599778838,"total":691,"current":615}
+{"_e":"metro:bundling:progress","_t":1791753929747,"id":"1","progress":0.7921257599778838,"total":701,"current":621}
+{"_e":"metro:bundling:progress","_t":1791753929847,"id":"1","progress":0.7921257599778838,"total":707,"current":627}
+{"_e":"metro:bundling:progress","_t":1791753929947,"id":"1","progress":0.7921257599778838,"total":746,"current":638}
+{"_e":"metro:bundling:progress","_t":1791753930051,"id":"1","progress":0.7921257599778838,"total":750,"current":644}
+{"_e":"metro:bundling:progress","_t":1791753930155,"id":"1","progress":0.7921257599778838,"total":753,"current":648}
+{"_e":"metro:bundling:progress","_t":1791753930255,"id":"1","progress":0.7921257599778838,"total":758,"current":654}
+{"_e":"metro:bundling:progress","_t":1791753930358,"id":"1","progress":0.7921257599778838,"total":762,"current":664}
+{"_e":"metro:bundling:progress","_t":1791753930458,"id":"1","progress":0.7921257599778838,"total":771,"current":675}
+{"_e":"metro:bundling:progress","_t":1791753930563,"id":"1","progress":0.7921257599778838,"total":772,"current":680}
+{"_e":"metro:bundling:progress","_t":1791753930664,"id":"1","progress":0.7921257599778838,"total":778,"current":691}
+{"_e":"metro:bundling:progress","_t":1791753930771,"id":"1","progress":0.8056269171307675,"total":781,"current":701}
+{"_e":"metro:bundling:progress","_t":1791753930875,"id":"1","progress":0.8226605541806971,"total":785,"current":712}
+{"_e":"metro:bundling:progress","_t":1791753930981,"id":"1","progress":0.838915980364315,"total":785,"current":719}
+{"_e":"metro:bundling:progress","_t":1791753931081,"id":"1","progress":0.8435895979552923,"total":785,"current":721}
+{"_e":"metro:bundling:progress","_t":1791753931192,"id":"1","progress":0.8506243661000447,"total":785,"current":724}
+{"_e":"metro:bundling:progress","_t":1791753931313,"id":"1","progress":0.8838395066736987,"total":785,"current":738}
+{"_e":"metro:bundling:progress","_t":1791753931417,"id":"1","progress":0.900685626191732,"total":785,"current":745}
+{"_e":"metro:bundling:progress","_t":1791753931525,"id":"1","progress":0.9063424650545862,"total":792,"current":754}
+{"_e":"metro:bundling:progress","_t":1791753931625,"id":"1","progress":0.913993649150274,"total":796,"current":761}
+{"_e":"metro:bundling:progress","_t":1791753931726,"id":"1","progress":0.9407541409915767,"total":798,"current":774}
+{"_e":"metro:bundling:progress","_t":1791753931830,"id":"1","progress":0.9530640624999999,"total":800,"current":781}
+{"_e":"metro:bundling:progress","_t":1791753931930,"id":"1","progress":0.9631255041284658,"total":806,"current":791}
+{"_e":"metro:bundling:progress","_t":1791753932035,"id":"1","progress":0.9827483212430154,"total":808,"current":801}
+{"_e":"metro:bundling:progress","_t":1791753932145,"id":"1","progress":0.9950617359403864,"total":809,"current":807}
+{"_e":"metro:bundling:progress","_t":1791753932832,"id":"1","progress":0.9975293400419568,"total":809,"current":808}
+{"_e":"metro:bundling:progress","_t":1791753932942,"id":"1","progress":0.9975384624717901,"total":812,"current":811}
+{"_e":"metro:bundling:progress","_t":1791753933044,"id":"1","progress":0.999,"total":812,"current":812}
+{"_e":"metro:bundling:failed","_t":1791753933099,"id":"1","message":"Unable to resolve \"../screens/main/settings/ProfileScreen\" from \"src\\navigation\\AppNavigator.js\"\n  13 | import EditContactScreen from \"@screens/main/emergencyContacts/EditContactScreen\";\n  14 | import DecoyScreen from \"@screens/main/DecoyScreen\";\n> 15 | import ProfileScreen from \"@screens/main/settings/ProfileScreen\";\n     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  16 | import EditProfileScreen from \"@screens/main/settings/Profile/EditProfileScreen\";\n  17 |\n  18 | const Stack = createNativeStackNavigator();","importStack":"\u001b[1mImport stack:\u001b[22m\n\n\u001b[90m \u001b[39msrc\\navigation\\AppNavigator.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"../screens/main/settings/ProfileScreen\"\u001b[39m\n\n\u001b[90m \u001b[39mApp.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./src/navigation/AppNavigator\"\u001b[39m\n\n\u001b[90m \u001b[39mindex.js\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./App\"\u001b[39m\n\n\u001b[90m \u001b[39m\n\u001b[90m |\u001b[39m \u001b[36mimport\u001b[39m \u001b[32m\"./index\"\u001b[39m\n","filename":null,"targetModuleName":"../screens/main/settings/ProfileScreen","originModulePath":"src\\navigation\\AppNavigator.js"}
+{"_e":"root:init","_t":1791753987904,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791753987905,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791753987908,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791753988270,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791753988687,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791753989063,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791753996095,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791754007096,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791754007096,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791754007100,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791754007995,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791754008097,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791754008114,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791754008214,"id":"1","progress":0.08650519031141869,"total":17,"current":5}
+{"_e":"metro:bundling:progress","_t":1791754008372,"id":"1","progress":0.09,"total":20,"current":6}
+{"_e":"metro:bundling:progress","_t":1791754008487,"id":"1","progress":0.12249999999999998,"total":20,"current":7}
+{"_e":"metro:bundling:progress","_t":1791754008595,"id":"1","progress":0.12249999999999998,"total":120,"current":9}
+{"_e":"metro:bundling:progress","_t":1791754008708,"id":"1","progress":0.12249999999999998,"total":122,"current":12}
+{"_e":"metro:bundling:progress","_t":1791754008818,"id":"1","progress":0.12249999999999998,"total":136,"current":13}
+{"_e":"metro:bundling:progress","_t":1791754008831,"id":"1","progress":0.12249999999999998,"total":136,"current":14}
+{"_e":"metro:bundling:progress","_t":1791754008936,"id":"1","progress":0.12249999999999998,"total":143,"current":18}
+{"_e":"metro:bundling:progress","_t":1791754009037,"id":"1","progress":0.12249999999999998,"total":144,"current":19}
+{"_e":"metro:bundling:progress","_t":1791754009144,"id":"1","progress":0.12249999999999998,"total":147,"current":21}
+{"_e":"metro:bundling:progress","_t":1791754009252,"id":"1","progress":0.12249999999999998,"total":151,"current":22}
+{"_e":"metro:bundling:progress","_t":1791754009353,"id":"1","progress":0.12249999999999998,"total":159,"current":25}
+{"_e":"metro:bundling:progress","_t":1791754009453,"id":"1","progress":0.12249999999999998,"total":165,"current":28}
+{"_e":"metro:bundling:progress","_t":1791754009565,"id":"1","progress":0.12249999999999998,"total":169,"current":32}
+{"_e":"metro:bundling:progress","_t":1791754009703,"id":"1","progress":0.12249999999999998,"total":169,"current":33}
+{"_e":"metro:bundling:progress","_t":1791754009805,"id":"1","progress":0.12249999999999998,"total":212,"current":37}
+{"_e":"metro:bundling:progress","_t":1791754009942,"id":"1","progress":0.12249999999999998,"total":212,"current":41}
+{"_e":"metro:bundling:progress","_t":1791754010045,"id":"1","progress":0.12249999999999998,"total":221,"current":44}
+{"_e":"metro:bundling:progress","_t":1791754010144,"id":"1","progress":0.12249999999999998,"total":222,"current":53}
+{"_e":"metro:bundling:progress","_t":1791754010255,"id":"1","progress":0.12249999999999998,"total":239,"current":66}
+{"_e":"metro:bundling:progress","_t":1791754010355,"id":"1","progress":0.12249999999999998,"total":260,"current":84}
+{"_e":"metro:bundling:progress","_t":1791754010460,"id":"1","progress":0.1296,"total":275,"current":99}
+{"_e":"metro:bundling:progress","_t":1791754010565,"id":"1","progress":0.1726343979369173,"total":284,"current":118}
+{"_e":"metro:bundling:progress","_t":1791754010666,"id":"1","progress":0.19324579973875047,"total":298,"current":131}
+{"_e":"metro:bundling:progress","_t":1791754010771,"id":"1","progress":0.2356489772834386,"total":309,"current":150}
+{"_e":"metro:bundling:progress","_t":1791754010871,"id":"1","progress":0.2682867797339453,"total":334,"current":173}
+{"_e":"metro:bundling:progress","_t":1791754010971,"id":"1","progress":0.2682867797339453,"total":370,"current":190}
+{"_e":"metro:bundling:progress","_t":1791754011074,"id":"1","progress":0.3119341330918967,"total":376,"current":210}
+{"_e":"metro:bundling:progress","_t":1791754011174,"id":"1","progress":0.31640625,"total":400,"current":225}
+{"_e":"metro:bundling:progress","_t":1791754011274,"id":"1","progress":0.327303008455868,"total":423,"current":242}
+{"_e":"metro:bundling:progress","_t":1791754011374,"id":"1","progress":0.35622615859102347,"total":444,"current":265}
+{"_e":"metro:bundling:progress","_t":1791754011481,"id":"1","progress":0.3630508338212749,"total":473,"current":285}
+{"_e":"metro:bundling:progress","_t":1791754011602,"id":"1","progress":0.3630508338212749,"total":502,"current":297}
+{"_e":"metro:bundling:progress","_t":1791754011702,"id":"1","progress":0.3630508338212749,"total":504,"current":301}
+{"_e":"metro:bundling:progress","_t":1791754011803,"id":"1","progress":0.3630508338212749,"total":504,"current":302}
+{"_e":"metro:bundling:progress","_t":1791754011883,"id":"1","progress":0.3630508338212749,"total":504,"current":303}
+{"_e":"metro:bundling:progress","_t":1791754011989,"id":"1","progress":0.37439858837368883,"total":505,"current":309}
+{"_e":"metro:bundling:progress","_t":1791754012091,"id":"1","progress":0.3930702209472656,"total":512,"current":321}
+{"_e":"metro:bundling:progress","_t":1791754012190,"id":"1","progress":0.3930702209472656,"total":534,"current":330}
+{"_e":"metro:bundling:progress","_t":1791754012291,"id":"1","progress":0.40157522575104987,"total":546,"current":346}
+{"_e":"metro:bundling:progress","_t":1791754012393,"id":"1","progress":0.40157522575104987,"total":575,"current":358}
+{"_e":"metro:bundling:progress","_t":1791754012498,"id":"1","progress":0.40157522575104987,"total":597,"current":364}
+{"_e":"metro:bundling:progress","_t":1791754012598,"id":"1","progress":0.40553451647236455,"total":603,"current":384}
+{"_e":"metro:bundling:progress","_t":1791754012698,"id":"1","progress":0.425611142926158,"total":607,"current":396}
+{"_e":"metro:bundling:progress","_t":1791754012799,"id":"1","progress":0.45606341710237813,"total":616,"current":416}
+{"_e":"metro:bundling:progress","_t":1791754012901,"id":"1","progress":0.5062869822485208,"total":624,"current":444}
+{"_e":"metro:bundling:progress","_t":1791754013002,"id":"1","progress":0.5340236686390532,"total":624,"current":456}
+{"_e":"metro:bundling:progress","_t":1791754013104,"id":"1","progress":0.5619058622014713,"total":631,"current":473}
+{"_e":"metro:bundling:progress","_t":1791754013205,"id":"1","progress":0.5619058622014713,"total":672,"current":500}
+{"_e":"metro:bundling:progress","_t":1791754013306,"id":"1","progress":0.5780471453287197,"total":680,"current":517}
+{"_e":"metro:bundling:progress","_t":1791754013405,"id":"1","progress":0.607449428190453,"total":689,"current":537}
+{"_e":"metro:bundling:progress","_t":1791754013506,"id":"1","progress":0.6376999120128358,"total":695,"current":555}
+{"_e":"metro:bundling:progress","_t":1791754013607,"id":"1","progress":0.6472213815054172,"total":711,"current":572}
+{"_e":"metro:bundling:progress","_t":1791754013712,"id":"1","progress":0.6472213815054172,"total":751,"current":578}
+{"_e":"metro:bundling:progress","_t":1791754013816,"id":"1","progress":0.6472213815054172,"total":760,"current":587}
+{"_e":"metro:bundling:progress","_t":1791754013927,"id":"1","progress":0.6472213815054172,"total":782,"current":601}
+{"_e":"metro:bundling:progress","_t":1791754014027,"id":"1","progress":0.6472213815054172,"total":793,"current":620}
+{"_e":"metro:bundling:progress","_t":1791754014132,"id":"1","progress":0.6472213815054172,"total":796,"current":630}
+{"_e":"metro:bundling:progress","_t":1791754014232,"id":"1","progress":0.6472213815054172,"total":805,"current":640}
+{"_e":"metro:bundling:progress","_t":1791754014347,"id":"1","progress":0.6472213815054172,"total":811,"current":649}
+{"_e":"metro:bundling:progress","_t":1791754014449,"id":"1","progress":0.6472213815054172,"total":819,"current":656}
+{"_e":"metro:bundling:progress","_t":1791754014548,"id":"1","progress":0.6543968745293736,"total":827,"current":669}
+{"_e":"metro:bundling:progress","_t":1791754014664,"id":"1","progress":0.6617460296773203,"total":831,"current":676}
+{"_e":"metro:bundling:progress","_t":1791754014769,"id":"1","progress":0.6617460296773203,"total":847,"current":684}
+{"_e":"metro:bundling:progress","_t":1791754014877,"id":"1","progress":0.6617460296773203,"total":885,"current":694}
+{"_e":"metro:bundling:progress","_t":1791754014978,"id":"1","progress":0.6617460296773203,"total":885,"current":700}
+{"_e":"metro:bundling:progress","_t":1791754015102,"id":"1","progress":0.6617460296773203,"total":934,"current":711}
+{"_e":"metro:bundling:progress","_t":1791754015202,"id":"1","progress":0.6617460296773203,"total":939,"current":719}
+{"_e":"metro:bundling:progress","_t":1791754015303,"id":"1","progress":0.6617460296773203,"total":954,"current":723}
+{"_e":"metro:bundling:progress","_t":1791754015405,"id":"1","progress":0.6617460296773203,"total":961,"current":732}
+{"_e":"metro:bundling:progress","_t":1791754015520,"id":"1","progress":0.6617460296773203,"total":963,"current":740}
+{"_e":"metro:bundling:progress","_t":1791754015649,"id":"1","progress":0.6617460296773203,"total":964,"current":744}
+{"_e":"metro:bundling:progress","_t":1791754015756,"id":"1","progress":0.6617460296773203,"total":970,"current":747}
+{"_e":"metro:bundling:progress","_t":1791754015862,"id":"1","progress":0.6617460296773203,"total":985,"current":753}
+{"_e":"metro:bundling:progress","_t":1791754015967,"id":"1","progress":0.6617460296773203,"total":1014,"current":765}
+{"_e":"metro:bundling:progress","_t":1791754016074,"id":"1","progress":0.6617460296773203,"total":1035,"current":774}
+{"_e":"metro:bundling:progress","_t":1791754016174,"id":"1","progress":0.6617460296773203,"total":1040,"current":783}
+{"_e":"metro:bundling:progress","_t":1791754016292,"id":"1","progress":0.6617460296773203,"total":1043,"current":788}
+{"_e":"metro:bundling:progress","_t":1791754016391,"id":"1","progress":0.6617460296773203,"total":1048,"current":793}
+{"_e":"metro:bundling:progress","_t":1791754016506,"id":"1","progress":0.6617460296773203,"total":1051,"current":799}
+{"_e":"metro:bundling:progress","_t":1791754016606,"id":"1","progress":0.6617460296773203,"total":1057,"current":808}
+{"_e":"metro:bundling:progress","_t":1791754016712,"id":"1","progress":0.6617460296773203,"total":1060,"current":817}
+{"_e":"metro:bundling:progress","_t":1791754016832,"id":"1","progress":0.6617460296773203,"total":1063,"current":824}
+{"_e":"metro:bundling:progress","_t":1791754016934,"id":"1","progress":0.6617460296773203,"total":1068,"current":830}
+{"_e":"metro:bundling:progress","_t":1791754017060,"id":"1","progress":0.6617460296773203,"total":1068,"current":833}
+{"_e":"metro:bundling:progress","_t":1791754017435,"id":"1","progress":0.6617460296773203,"total":1070,"current":839}
+{"_e":"metro:bundling:progress","_t":1791754017548,"id":"1","progress":0.6617460296773203,"total":1073,"current":849}
+{"_e":"metro:bundling:progress","_t":1791754017660,"id":"1","progress":0.6617460296773203,"total":1073,"current":853}
+{"_e":"metro:bundling:progress","_t":1791754017758,"id":"1","progress":0.6617460296773203,"total":1073,"current":859}
+{"_e":"metro:bundling:progress","_t":1791754017858,"id":"1","progress":0.6617460296773203,"total":1073,"current":872}
+{"_e":"metro:bundling:progress","_t":1791754018088,"id":"1","progress":0.6665132208083007,"total":1073,"current":876}
+{"_e":"metro:bundling:progress","_t":1791754018192,"id":"1","progress":0.6799015081563559,"total":1083,"current":893}
+{"_e":"metro:bundling:progress","_t":1791754018293,"id":"1","progress":0.6929106084809512,"total":1086,"current":904}
+{"_e":"metro:bundling:progress","_t":1791754018397,"id":"1","progress":0.713224534496081,"total":1087,"current":918}
+{"_e":"metro:bundling:progress","_t":1791754018498,"id":"1","progress":0.713224534496081,"total":1108,"current":927}
+{"_e":"metro:bundling:progress","_t":1791754018598,"id":"1","progress":0.713224534496081,"total":1113,"current":938}
+{"_e":"metro:bundling:progress","_t":1791754018699,"id":"1","progress":0.7246341902082449,"total":1116,"current":950}
+{"_e":"metro:bundling:progress","_t":1791754018803,"id":"1","progress":0.748116685494478,"total":1118,"current":967}
+{"_e":"metro:bundling:progress","_t":1791754018905,"id":"1","progress":0.7636696311135717,"total":1118,"current":977}
+{"_e":"metro:bundling:progress","_t":1791754019004,"id":"1","progress":0.7751484535645724,"total":1129,"current":994}
+{"_e":"metro:bundling:progress","_t":1791754019106,"id":"1","progress":0.8216390418551534,"total":1133,"current":1027}
+{"_e":"metro:bundling:progress","_t":1791754019208,"id":"1","progress":0.8354601415820252,"total":1140,"current":1042}
+{"_e":"metro:bundling:progress","_t":1791754019313,"id":"1","progress":0.8504579991686635,"total":1144,"current":1055}
+{"_e":"metro:bundling:progress","_t":1791754019416,"id":"1","progress":0.8738185255198488,"total":1150,"current":1075}
+{"_e":"metro:bundling:progress","_t":1791754019529,"id":"1","progress":0.8841855641096252,"total":1156,"current":1087}
+{"_e":"metro:bundling:progress","_t":1791754019644,"id":"1","progress":0.8877249064045423,"total":1159,"current":1092}
+{"_e":"metro:bundling:progress","_t":1791754019746,"id":"1","progress":0.8975069252077561,"total":1159,"current":1098}
+{"_e":"metro:bundling:progress","_t":1791754019848,"id":"1","progress":0.9141466283131048,"total":1162,"current":1111}
+{"_e":"metro:bundling:progress","_t":1791754019950,"id":"1","progress":0.9193619093292221,"total":1166,"current":1118}
+{"_e":"metro:bundling:progress","_t":1791754020069,"id":"1","progress":0.9393572625005397,"total":1169,"current":1133}
+{"_e":"metro:bundling:progress","_t":1791754020176,"id":"1","progress":0.9446185604345859,"total":1175,"current":1142}
+{"_e":"metro:bundling:progress","_t":1791754020276,"id":"1","progress":0.9496726048469353,"total":1177,"current":1147}
+{"_e":"metro:bundling:progress","_t":1791754020411,"id":"1","progress":0.9548742433845496,"total":1183,"current":1156}
+{"_e":"metro:bundling:progress","_t":1791754020511,"id":"1","progress":0.9633364716234674,"total":1189,"current":1167}
+{"_e":"metro:bundling:progress","_t":1791754020611,"id":"1","progress":0.9833475017057974,"total":1196,"current":1186}
+{"_e":"metro:bundling:progress","_t":1791754020732,"id":"1","progress":0.999,"total":1196,"current":1196}
+{"_e":"metro:bundling:done","_t":1791754021555,"id":"1","total":1196,"ms":14458.8788}
+{"_e":"metro:client_log","_t":1791754030795,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791754030795,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791754030796,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791754030796,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791754030796,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+Z+Tg3TJMvnsZ2USUxPLSV17jJnUHBOuc=\",\n  \"encrypted_surname\": \"U2FsdGVkX18gNCwJgQVz0OZlme3mxU70hKvOCa3PS3Q=\",\n  \"encrypted_email\": \"U2FsdGVkX194dFMByVF6nAtjumfitUHzyIpcbHDfFrw0qoZVSkh5uPCPXKAcXgNE\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+zJjCz1ADkjBc3g2tAzmTfNxPBpS55kes=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-11T21:03:59.776Z\",\n  \"deleted_at\": null,\n  \"is_synched\": 0,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791754030796,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791754030796,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791754030796,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791754030797,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791754030854,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791754030854,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T18:31:41.764245+02:00\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791754030854,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791754030855,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791754094852,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754177825,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754182253,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754182295,"level":"log","data":["From the service: ","1"]}
+{"_e":"metro:client_log","_t":1791754185495,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754186656,"level":"error","data":["The action 'NAVIGATE' with payload {\"name\":\"SettingsScreen\"} was not handled by any navigator.\n\nDo you have a screen named 'SettingsScreen'?\n\nIf you're trying to navigate to a screen in a nested navigator, see https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator.\n\nIf you're using conditional rendering, navigation will happen automatically and you shouldn't navigate manually, see.\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791754189215,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754189271,"level":"log","data":["From the service: ","1"]}
+{"_e":"metro:client_log","_t":1791754190649,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754263560,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754263619,"level":"log","data":["From the service: ","1"]}
+{"_e":"metro:client_log","_t":1791754269460,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754270685,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754270729,"level":"log","data":["From the service: ","1"]}
+{"_e":"metro:client_log","_t":1791754272982,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791754311280,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"root:init","_t":1791803797722,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791803797750,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791803797780,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://192.168.0.172:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791803805744,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791803816320,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791803819999,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791803840608,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"root:init","_t":1791803922403,"format":"v0-jsonl","version":"57.0.28"}
+{"_e":"env:mode","_t":1791803922405,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1791803922412,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db"}}
+{"_e":"devserver:start","_t":1791803923514,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1791803924510,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1791803925395,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1791803941246,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1791804076011,"id":"2","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791804076012,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791804076026,"id":"2","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1791804083046,"id":"2","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1791804083147,"id":"2","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1791804083297,"id":"2","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1791804083398,"id":"2","progress":0.04000000000000001,"total":14,"current":2}
+{"_e":"metro:bundling:progress","_t":1791804083472,"id":"2","progress":0.04591836734693877,"total":14,"current":3}
+{"_e":"metro:bundling:progress","_t":1791804083658,"id":"2","progress":0.0625,"total":16,"current":4}
+{"_e":"metro:bundling:progress","_t":1791804083835,"id":"2","progress":0.06925207756232686,"total":19,"current":5}
+{"_e":"metro:bundling:progress","_t":1791804084027,"id":"2","progress":0.06925207756232686,"total":30,"current":5}
+{"_e":"metro:bundling:progress","_t":1791804085594,"id":"2","progress":0.06925207756232686,"total":30,"current":6}
+{"_e":"metro:bundling:progress","_t":1791804085707,"id":"2","progress":0.06925207756232686,"total":34,"current":6}
+{"_e":"metro:bundling:progress","_t":1791804085982,"id":"2","progress":0.06925207756232686,"total":34,"current":7}
+{"_e":"metro:bundling:progress","_t":1791804086100,"id":"2","progress":0.06925207756232686,"total":35,"current":8}
+{"_e":"metro:bundling:progress","_t":1791804086284,"id":"2","progress":0.07198096371207616,"total":41,"current":11}
+{"_e":"metro:bundling:progress","_t":1791804086551,"id":"2","progress":0.07198096371207616,"total":42,"current":11}
+{"_e":"metro:bundling:progress","_t":1791804086701,"id":"2","progress":0.07198096371207616,"total":141,"current":12}
+{"_e":"metro:bundling:progress","_t":1791804086802,"id":"2","progress":0.07198096371207616,"total":145,"current":13}
+{"_e":"metro:bundling:progress","_t":1791804087060,"id":"2","progress":0.07198096371207616,"total":147,"current":16}
+{"_e":"metro:bundling:progress","_t":1791804087187,"id":"2","progress":0.07198096371207616,"total":152,"current":17}
+{"_e":"metro:bundling:progress","_t":1791804087308,"id":"2","progress":0.07198096371207616,"total":155,"current":18}
+{"_e":"metro:bundling:progress","_t":1791804087429,"id":"2","progress":0.07198096371207616,"total":158,"current":19}
+{"_e":"metro:bundling:progress","_t":1791804087541,"id":"2","progress":0.07198096371207616,"total":168,"current":23}
+{"_e":"metro:bundling:progress","_t":1791804087655,"id":"2","progress":0.07198096371207616,"total":169,"current":23}
+{"_e":"metro:bundling:progress","_t":1791804087771,"id":"2","progress":0.07198096371207616,"total":174,"current":24}
+{"_e":"metro:bundling:progress","_t":1791804087881,"id":"2","progress":0.07198096371207616,"total":205,"current":29}
+{"_e":"metro:bundling:progress","_t":1791804087982,"id":"2","progress":0.07198096371207616,"total":205,"current":30}
+{"_e":"metro:bundling:progress","_t":1791804088084,"id":"2","progress":0.07198096371207616,"total":206,"current":30}
+{"_e":"metro:bundling:progress","_t":1791804088616,"id":"2","progress":0.07198096371207616,"total":206,"current":31}
+{"_e":"metro:bundling:progress","_t":1791804088720,"id":"2","progress":0.07198096371207616,"total":207,"current":32}
+{"_e":"metro:bundling:progress","_t":1791804088823,"id":"2","progress":0.07198096371207616,"total":208,"current":33}
+{"_e":"metro:bundling:progress","_t":1791804089058,"id":"2","progress":0.07198096371207616,"total":208,"current":34}
+{"_e":"metro:bundling:progress","_t":1791804089209,"id":"2","progress":0.07198096371207616,"total":210,"current":37}
+{"_e":"metro:bundling:progress","_t":1791804089348,"id":"2","progress":0.07198096371207616,"total":210,"current":38}
+{"_e":"metro:bundling:progress","_t":1791804089448,"id":"2","progress":0.07198096371207616,"total":218,"current":44}
+{"_e":"metro:bundling:progress","_t":1791804089640,"id":"2","progress":0.07198096371207616,"total":220,"current":46}
+{"_e":"metro:bundling:progress","_t":1791804089747,"id":"2","progress":0.07198096371207616,"total":228,"current":49}
+{"_e":"metro:bundling:progress","_t":1791804089844,"id":"2","progress":0.07198096371207616,"total":228,"current":50}
+{"_e":"metro:bundling:progress","_t":1791804090018,"id":"2","progress":0.07198096371207616,"total":237,"current":54}
+{"_e":"metro:bundling:progress","_t":1791804090038,"id":"2","progress":0.07198096371207616,"total":237,"current":55}
+{"_e":"metro:bundling:progress","_t":1791804090169,"id":"2","progress":0.07198096371207616,"total":249,"current":61}
+{"_e":"metro:bundling:progress","_t":1791804090327,"id":"2","progress":0.07198096371207616,"total":251,"current":62}
+{"_e":"metro:bundling:progress","_t":1791804090427,"id":"2","progress":0.07198096371207616,"total":257,"current":66}
+{"_e":"metro:bundling:progress","_t":1791804090544,"id":"2","progress":0.07198096371207616,"total":258,"current":67}
+{"_e":"metro:bundling:progress","_t":1791804090659,"id":"2","progress":0.07198096371207616,"total":267,"current":70}
+{"_e":"metro:bundling:progress","_t":1791804090755,"id":"2","progress":0.07198096371207616,"total":267,"current":71}
+{"_e":"metro:bundling:progress","_t":1791804090869,"id":"2","progress":0.07864816655546628,"total":271,"current":76}
+{"_e":"metro:bundling:progress","_t":1791804091007,"id":"2","progress":0.08826927116152068,"total":276,"current":82}
+{"_e":"metro:bundling:progress","_t":1791804091109,"id":"2","progress":0.0912996221727654,"total":278,"current":84}
+{"_e":"metro:bundling:progress","_t":1791804091214,"id":"2","progress":0.09751923668821177,"total":285,"current":89}
+{"_e":"metro:bundling:progress","_t":1791804091368,"id":"2","progress":0.09751923668821177,"total":286,"current":89}
+{"_e":"metro:bundling:progress","_t":1791804091474,"id":"2","progress":0.10292490302740859,"total":293,"current":94}
+{"_e":"metro:bundling:progress","_t":1791804091611,"id":"2","progress":0.11787777777777778,"total":300,"current":103}
+{"_e":"metro:bundling:progress","_t":1791804091711,"id":"2","progress":0.12591050988553593,"total":310,"current":110}
+{"_e":"metro:bundling:progress","_t":1791804091840,"id":"2","progress":0.12886259040105194,"total":312,"current":112}
+{"_e":"metro:bundling:progress","_t":1791804091952,"id":"2","progress":0.14092089681457673,"total":317,"current":119}
+{"_e":"metro:bundling:progress","_t":1791804092057,"id":"2","progress":0.1510991440728766,"total":319,"current":124}
+{"_e":"metro:bundling:progress","_t":1791804092200,"id":"2","progress":0.1550390625,"total":320,"current":126}
+{"_e":"metro:bundling:progress","_t":1791804092327,"id":"2","progress":0.1550390625,"total":321,"current":126}
+{"_e":"metro:bundling:progress","_t":1791804092497,"id":"2","progress":0.1565299249813181,"total":321,"current":127}
+{"_e":"metro:bundling:progress","_t":1791804092615,"id":"2","progress":0.1629952548127001,"total":322,"current":130}
+{"_e":"metro:bundling:progress","_t":1791804092719,"id":"2","progress":0.16999763313609467,"total":325,"current":134}
+{"_e":"metro:bundling:progress","_t":1791804092881,"id":"2","progress":0.17445902736466387,"total":328,"current":137}
+{"_e":"metro:bundling:progress","_t":1791804092984,"id":"2","progress":0.17889577495641695,"total":331,"current":140}
+{"_e":"metro:bundling:progress","_t":1791804093105,"id":"2","progress":0.19074793148497604,"total":332,"current":145}
+{"_e":"metro:bundling:progress","_t":1791804093238,"id":"2","progress":0.19370540356412924,"total":334,"current":147}
+{"_e":"metro:bundling:progress","_t":1791804093341,"id":"2","progress":0.19370540356412924,"total":337,"current":148}
+{"_e":"metro:bundling:progress","_t":1791804093454,"id":"2","progress":0.2039542143600416,"total":341,"current":154}
+{"_e":"metro:bundling:progress","_t":1791804093575,"id":"2","progress":0.2201563454046663,"total":341,"current":160}
+{"_e":"metro:bundling:progress","_t":1791804093691,"id":"2","progress":0.2201563454046663,"total":350,"current":164}
+{"_e":"metro:bundling:progress","_t":1791804093840,"id":"2","progress":0.23466202280734136,"total":353,"current":171}
+{"_e":"metro:bundling:progress","_t":1791804093942,"id":"2","progress":0.23889029162984468,"total":356,"current":174}
+{"_e":"metro:bundling:progress","_t":1791804094041,"id":"2","progress":0.23889029162984468,"total":399,"current":181}
+{"_e":"metro:bundling:progress","_t":1791804094163,"id":"2","progress":0.23889029162984468,"total":399,"current":182}
+{"_e":"metro:bundling:progress","_t":1791804094238,"id":"2","progress":0.23889029162984468,"total":399,"current":183}
+{"_e":"metro:bundling:progress","_t":1791804094341,"id":"2","progress":0.23889029162984468,"total":405,"current":190}
+{"_e":"metro:bundling:progress","_t":1791804094484,"id":"2","progress":0.23889029162984468,"total":441,"current":194}
+{"_e":"metro:bundling:progress","_t":1791804094616,"id":"2","progress":0.23889029162984468,"total":441,"current":200}
+{"_e":"metro:bundling:progress","_t":1791804094704,"id":"2","progress":0.23889029162984468,"total":441,"current":201}
+{"_e":"metro:bundling:progress","_t":1791804094809,"id":"2","progress":0.23889029162984468,"total":441,"current":203}
+{"_e":"metro:bundling:progress","_t":1791804094912,"id":"2","progress":0.23889029162984468,"total":442,"current":206}
+{"_e":"metro:bundling:progress","_t":1791804095016,"id":"2","progress":0.23889029162984468,"total":453,"current":211}
+{"_e":"metro:bundling:progress","_t":1791804095172,"id":"2","progress":0.23889029162984468,"total":458,"current":218}
+{"_e":"metro:bundling:progress","_t":1791804095272,"id":"2","progress":0.23889029162984468,"total":461,"current":225}
+{"_e":"metro:bundling:progress","_t":1791804095388,"id":"2","progress":0.23929461591799253,"total":462,"current":226}
+{"_e":"metro:bundling:progress","_t":1791804095504,"id":"2","progress":0.2510718101325606,"total":467,"current":234}
+{"_e":"metro:bundling:progress","_t":1791804095605,"id":"2","progress":0.25636917160711425,"total":474,"current":240}
+{"_e":"metro:bundling:progress","_t":1791804095760,"id":"2","progress":0.26443006808116865,"total":492,"current":253}
+{"_e":"metro:bundling:progress","_t":1791804095889,"id":"2","progress":0.26638917793964617,"total":496,"current":256}
+{"_e":"metro:bundling:progress","_t":1791804096031,"id":"2","progress":0.27767220050916136,"total":501,"current":264}
+{"_e":"metro:bundling:progress","_t":1791804096142,"id":"2","progress":0.28189529125381974,"total":501,"current":266}
+{"_e":"metro:bundling:progress","_t":1791804096242,"id":"2","progress":0.2924164753032501,"total":503,"current":272}
+{"_e":"metro:bundling:progress","_t":1791804096343,"id":"2","progress":0.2924164753032501,"total":521,"current":277}
+{"_e":"metro:bundling:progress","_t":1791804096455,"id":"2","progress":0.2924164753032501,"total":521,"current":278}
+{"_e":"metro:bundling:progress","_t":1791804096556,"id":"2","progress":0.2924164753032501,"total":543,"current":291}
+{"_e":"metro:bundling:progress","_t":1791804096657,"id":"2","progress":0.2924164753032501,"total":546,"current":295}
+{"_e":"metro:bundling:progress","_t":1791804096760,"id":"2","progress":0.2939703270598777,"total":557,"current":302}
+{"_e":"metro:bundling:progress","_t":1791804096882,"id":"2","progress":0.2939703270598777,"total":566,"current":303}
+{"_e":"metro:bundling:progress","_t":1791804097001,"id":"2","progress":0.29699616472103246,"total":567,"current":309}
+{"_e":"metro:bundling:progress","_t":1791804097101,"id":"2","progress":0.29699616472103246,"total":572,"current":311}
+{"_e":"metro:bundling:progress","_t":1791804097203,"id":"2","progress":0.30202192816635165,"total":575,"current":316}
+{"_e":"metro:bundling:progress","_t":1791804097347,"id":"2","progress":0.30202192816635165,"total":580,"current":318}
+{"_e":"metro:bundling:progress","_t":1791804097503,"id":"2","progress":0.30505253185598824,"total":583,"current":322}
+{"_e":"metro:bundling:progress","_t":1791804097606,"id":"2","progress":0.30505253185598824,"total":624,"current":330}
+{"_e":"metro:bundling:progress","_t":1791804097713,"id":"2","progress":0.30505253185598824,"total":629,"current":337}
+{"_e":"metro:bundling:progress","_t":1791804097828,"id":"2","progress":0.30505253185598824,"total":635,"current":346}
+{"_e":"metro:bundling:progress","_t":1791804098086,"id":"2","progress":0.30505253185598824,"total":635,"current":347}
+{"_e":"metro:bundling:progress","_t":1791804098234,"id":"2","progress":0.30505253185598824,"total":645,"current":352}
+{"_e":"metro:bundling:progress","_t":1791804098349,"id":"2","progress":0.30505253185598824,"total":662,"current":364}
+{"_e":"metro:bundling:progress","_t":1791804098454,"id":"2","progress":0.30505253185598824,"total":678,"current":370}
+{"_e":"metro:bundling:progress","_t":1791804098588,"id":"2","progress":0.30505253185598824,"total":678,"current":371}
+{"_e":"metro:bundling:progress","_t":1791804098690,"id":"2","progress":0.3129510607015332,"total":690,"current":386}
+{"_e":"metro:bundling:progress","_t":1791804098790,"id":"2","progress":0.31904591849446473,"total":694,"current":392}
+{"_e":"metro:bundling:progress","_t":1791804098949,"id":"2","progress":0.3227935258506944,"total":697,"current":396}
+{"_e":"metro:bundling:progress","_t":1791804099054,"id":"2","progress":0.3267645585832628,"total":698,"current":399}
+{"_e":"metro:bundling:progress","_t":1791804099155,"id":"2","progress":0.3284045286984507,"total":698,"current":400}
+{"_e":"metro:bundling:progress","_t":1791804099268,"id":"2","progress":0.33334906938366676,"total":698,"current":403}
+{"_e":"metro:bundling:progress","_t":1791804099384,"id":"2","progress":0.3366659551235211,"total":698,"current":405}
+{"_e":"metro:bundling:progress","_t":1791804099489,"id":"2","progress":0.3366659551235211,"total":714,"current":407}
+{"_e":"metro:bundling:progress","_t":1791804099617,"id":"2","progress":0.3366659551235211,"total":717,"current":411}
+{"_e":"metro:bundling:progress","_t":1791804099783,"id":"2","progress":0.3366659551235211,"total":718,"current":412}
+{"_e":"metro:bundling:progress","_t":1791804099799,"id":"2","progress":0.3366659551235211,"total":718,"current":413}
+{"_e":"metro:bundling:progress","_t":1791804100016,"id":"2","progress":0.33772057225190005,"total":721,"current":419}
+{"_e":"metro:bundling:progress","_t":1791804100126,"id":"2","progress":0.34363852556480373,"total":725,"current":425}
+{"_e":"metro:bundling:progress","_t":1791804100244,"id":"2","progress":0.3459254452868277,"total":726,"current":427}
+{"_e":"metro:bundling:progress","_t":1791804100366,"id":"2","progress":0.3554306900010981,"total":733,"current":437}
+{"_e":"metro:bundling:progress","_t":1791804100499,"id":"2","progress":0.364914618908788,"total":735,"current":444}
+{"_e":"metro:bundling:progress","_t":1791804100602,"id":"2","progress":0.364914618908788,"total":751,"current":448}
+{"_e":"metro:bundling:progress","_t":1791804100741,"id":"2","progress":0.364914618908788,"total":785,"current":452}
+{"_e":"metro:bundling:progress","_t":1791804100871,"id":"2","progress":0.364914618908788,"total":785,"current":455}
+{"_e":"metro:bundling:progress","_t":1791804100978,"id":"2","progress":0.364914618908788,"total":786,"current":457}
+{"_e":"metro:bundling:progress","_t":1791804101084,"id":"2","progress":0.364914618908788,"total":800,"current":461}
+{"_e":"metro:bundling:progress","_t":1791804101212,"id":"2","progress":0.364914618908788,"total":812,"current":465}
+{"_e":"metro:bundling:progress","_t":1791804101314,"id":"2","progress":0.364914618908788,"total":815,"current":473}
+{"_e":"metro:bundling:progress","_t":1791804101419,"id":"2","progress":0.364914618908788,"total":821,"current":476}
+{"_e":"metro:bundling:progress","_t":1791804101519,"id":"2","progress":0.364914618908788,"total":825,"current":481}
+{"_e":"metro:bundling:progress","_t":1791804101606,"id":"2","progress":0.364914618908788,"total":825,"current":482}
+{"_e":"metro:bundling:progress","_t":1791804101722,"id":"2","progress":0.364914618908788,"total":825,"current":485}
+{"_e":"metro:bundling:progress","_t":1791804101823,"id":"2","progress":0.364914618908788,"total":826,"current":487}
+{"_e":"metro:bundling:progress","_t":1791804101925,"id":"2","progress":0.364914618908788,"total":826,"current":492}
+{"_e":"metro:bundling:progress","_t":1791804102060,"id":"2","progress":0.36699862120190835,"total":827,"current":501}
+{"_e":"metro:bundling:progress","_t":1791804102171,"id":"2","progress":0.36699862120190835,"total":836,"current":505}
+{"_e":"metro:bundling:progress","_t":1791804102272,"id":"2","progress":0.36748480585095783,"total":838,"current":508}
+{"_e":"metro:bundling:progress","_t":1791804102387,"id":"2","progress":0.3782469907844772,"total":839,"current":516}
+{"_e":"metro:bundling:progress","_t":1791804102506,"id":"2","progress":0.3861734693877551,"total":840,"current":522}
+{"_e":"metro:bundling:progress","_t":1791804102626,"id":"2","progress":0.39136587228498915,"total":844,"current":528}
+{"_e":"metro:bundling:progress","_t":1791804102733,"id":"2","progress":0.40006742498969905,"total":849,"current":537}
+{"_e":"metro:bundling:progress","_t":1791804102837,"id":"2","progress":0.40305299243480514,"total":849,"current":539}
+{"_e":"metro:bundling:progress","_t":1791804102947,"id":"2","progress":0.412727165276955,"total":853,"current":548}
+{"_e":"metro:bundling:progress","_t":1791804103048,"id":"2","progress":0.4228802024554564,"total":855,"current":556}
+{"_e":"metro:bundling:progress","_t":1791804103166,"id":"2","progress":0.43104747139488164,"total":856,"current":562}
+{"_e":"metro:bundling:progress","_t":1791804103268,"id":"2","progress":0.43670839649860627,"total":858,"current":567}
+{"_e":"metro:bundling:progress","_t":1791804103375,"id":"2","progress":0.43979466531914085,"total":858,"current":569}
+{"_e":"metro:bundling:progress","_t":1791804103541,"id":"2","progress":0.45378452789007734,"total":861,"current":580}
+{"_e":"metro:bundling:progress","_t":1791804103645,"id":"2","progress":0.46214759825797663,"total":862,"current":586}
+{"_e":"metro:bundling:progress","_t":1791804103746,"id":"2","progress":0.46422984844965354,"total":863,"current":588}
+{"_e":"metro:bundling:progress","_t":1791804103904,"id":"2","progress":0.4715640348825554,"total":865,"current":594}
+{"_e":"metro:bundling:progress","_t":1791804103938,"id":"2","progress":0.47315312907213747,"total":865,"current":595}
+{"_e":"metro:bundling:progress","_t":1791804104051,"id":"2","progress":0.48435163219619765,"total":865,"current":602}
+{"_e":"metro:bundling:progress","_t":1791804104157,"id":"2","progress":0.4956811119649838,"total":865,"current":609}
+{"_e":"metro:bundling:progress","_t":1791804104270,"id":"2","progress":0.5120932874469578,"total":865,"current":619}
+{"_e":"metro:bundling:progress","_t":1791804104373,"id":"2","progress":0.5237408533529352,"total":865,"current":626}
+{"_e":"metro:bundling:progress","_t":1791804104501,"id":"2","progress":0.5284686975726816,"total":868,"current":631}
+{"_e":"metro:bundling:progress","_t":1791804104623,"id":"2","progress":0.5284686975726816,"total":882,"current":637}
+{"_e":"metro:bundling:progress","_t":1791804104725,"id":"2","progress":0.5284686975726816,"total":888,"current":644}
+{"_e":"metro:bundling:progress","_t":1791804104827,"id":"2","progress":0.5395389974453417,"total":889,"current":653}
+{"_e":"metro:bundling:progress","_t":1791804104927,"id":"2","progress":0.5646110884058503,"total":889,"current":668}
+{"_e":"metro:bundling:progress","_t":1791804105028,"id":"2","progress":0.5807432096246162,"total":891,"current":679}
+{"_e":"metro:bundling:progress","_t":1791804105113,"id":"2","progress":0.5824550530873015,"total":891,"current":680}
+{"_e":"metro:bundling:progress","_t":1791804105218,"id":"2","progress":0.59820556640625,"total":896,"current":693}
+{"_e":"metro:bundling:progress","_t":1791804105337,"id":"2","progress":0.6055164682473101,"total":897,"current":698}
+{"_e":"metro:bundling:progress","_t":1791804105437,"id":"2","progress":0.6194760436435586,"total":897,"current":706}
+{"_e":"metro:bundling:progress","_t":1791804105537,"id":"2","progress":0.6318211702827087,"total":897,"current":713}
+{"_e":"metro:bundling:progress","_t":1791804105639,"id":"2","progress":0.6482222310405207,"total":898,"current":723}
+{"_e":"metro:bundling:progress","_t":1791804105744,"id":"2","progress":0.6597049382716048,"total":900,"current":731}
+{"_e":"metro:bundling:progress","_t":1791804105849,"id":"2","progress":0.669091316714318,"total":901,"current":737}
+{"_e":"metro:bundling:progress","_t":1791804105961,"id":"2","progress":0.669091316714318,"total":916,"current":742}
+{"_e":"metro:bundling:progress","_t":1791804106108,"id":"2","progress":0.669091316714318,"total":927,"current":751}
+{"_e":"metro:bundling:progress","_t":1791804106225,"id":"2","progress":0.669091316714318,"total":927,"current":758}
+{"_e":"metro:bundling:progress","_t":1791804106345,"id":"2","progress":0.6766389177939647,"total":930,"current":765}
+{"_e":"metro:bundling:progress","_t":1791804106454,"id":"2","progress":0.6875990036469107,"total":931,"current":772}
+{"_e":"metro:bundling:progress","_t":1791804106559,"id":"2","progress":0.7001249479383591,"total":931,"current":779}
+{"_e":"metro:bundling:progress","_t":1791804106684,"id":"2","progress":0.7081925269041538,"total":934,"current":786}
+{"_e":"metro:bundling:progress","_t":1791804106809,"id":"2","progress":0.7177854938271605,"total":936,"current":793}
+{"_e":"metro:bundling:progress","_t":1791804106923,"id":"2","progress":0.7258531893875728,"total":939,"current":800}
+{"_e":"metro:bundling:progress","_t":1791804107023,"id":"2","progress":0.7269806094182826,"total":950,"current":810}
+{"_e":"metro:bundling:progress","_t":1791804107146,"id":"2","progress":0.7398532288221706,"total":951,"current":818}
+{"_e":"metro:bundling:progress","_t":1791804107252,"id":"2","progress":0.7406099881773311,"total":954,"current":821}
+{"_e":"metro:bundling:progress","_t":1791804107370,"id":"2","progress":0.7478442308452989,"total":954,"current":825}
+{"_e":"metro:bundling:progress","_t":1791804107513,"id":"2","progress":0.7506287019320871,"total":958,"current":830}
+{"_e":"metro:bundling:progress","_t":1791804107619,"id":"2","progress":0.7565375434027777,"total":960,"current":835}
+{"_e":"metro:bundling:progress","_t":1791804107723,"id":"2","progress":0.7681257406706499,"total":963,"current":844}
+{"_e":"metro:bundling:progress","_t":1791804107825,"id":"2","progress":0.7726537260089681,"total":967,"current":850}
+{"_e":"metro:bundling:progress","_t":1791804107976,"id":"2","progress":0.7726537260089681,"total":972,"current":854}
+{"_e":"metro:bundling:progress","_t":1791804108104,"id":"2","progress":0.7766353877147787,"total":977,"current":861}
+{"_e":"metro:bundling:progress","_t":1791804108206,"id":"2","progress":0.7826832569762598,"total":980,"current":867}
+{"_e":"metro:bundling:progress","_t":1791804108367,"id":"2","progress":0.7853129750809704,"total":984,"current":872}
+{"_e":"metro:bundling:progress","_t":1791804108467,"id":"2","progress":0.797322722171207,"total":990,"current":884}
+{"_e":"metro:bundling:progress","_t":1791804108596,"id":"2","progress":0.8174641399232853,"total":991,"current":896}
+{"_e":"metro:bundling:progress","_t":1791804108706,"id":"2","progress":0.8183345833131724,"total":996,"current":901}
+{"_e":"metro:bundling:progress","_t":1791804108821,"id":"2","progress":0.8201520943210594,"total":996,"current":902}
+{"_e":"metro:bundling:progress","_t":1791804108931,"id":"2","progress":0.8257832675559275,"total":997,"current":906}
+{"_e":"metro:bundling:progress","_t":1791804109041,"id":"2","progress":0.8330910484713921,"total":997,"current":910}
+{"_e":"metro:bundling:progress","_t":1791804109140,"id":"2","progress":0.8367570112544251,"total":997,"current":912}
+{"_e":"metro:bundling:progress","_t":1791804109240,"id":"2","progress":0.8461050357227482,"total":998,"current":918}
+{"_e":"metro:bundling:progress","_t":1791804109341,"id":"2","progress":0.8553469664780462,"total":998,"current":923}
+{"_e":"metro:bundling:progress","_t":1791804109457,"id":"2","progress":0.8650300748202847,"total":1001,"current":931}
+{"_e":"metro:bundling:progress","_t":1791804109564,"id":"2","progress":0.8650300748202847,"total":1007,"current":934}
+{"_e":"metro:bundling:progress","_t":1791804109665,"id":"2","progress":0.8661895892559554,"total":1010,"current":940}
+{"_e":"metro:bundling:progress","_t":1791804109764,"id":"2","progress":0.870127638300864,"total":1012,"current":944}
+{"_e":"metro:bundling:progress","_t":1791804109868,"id":"2","progress":0.870127638300864,"total":1019,"current":949}
+{"_e":"metro:bundling:progress","_t":1791804109989,"id":"2","progress":0.870127638300864,"total":1019,"current":950}
+{"_e":"metro:bundling:progress","_t":1791804110090,"id":"2","progress":0.870127638300864,"total":1022,"current":952}
+{"_e":"metro:bundling:progress","_t":1791804110277,"id":"2","progress":0.870127638300864,"total":1026,"current":957}
+{"_e":"metro:bundling:progress","_t":1791804110306,"id":"2","progress":0.8718390083938458,"total":1026,"current":958}
+{"_e":"metro:bundling:progress","_t":1791804110454,"id":"2","progress":0.8759506079743613,"total":1030,"current":964}
+{"_e":"metro:bundling:progress","_t":1791804110505,"id":"2","progress":0.8777688754830805,"total":1030,"current":965}
+{"_e":"metro:bundling:progress","_t":1791804110614,"id":"2","progress":0.8814110660759732,"total":1030,"current":967}
+{"_e":"metro:bundling:progress","_t":1791804110715,"id":"2","progress":0.8839988878236213,"total":1037,"current":975}
+{"_e":"metro:bundling:progress","_t":1791804110819,"id":"2","progress":0.8858131487889274,"total":1037,"current":976}
+{"_e":"metro:bundling:progress","_t":1791804110923,"id":"2","progress":0.8876292695809532,"total":1037,"current":977}
+{"_e":"metro:bundling:progress","_t":1791804111028,"id":"2","progress":0.8881524898596748,"total":1042,"current":982}
+{"_e":"metro:bundling:progress","_t":1791804111120,"id":"2","progress":0.8899622754115996,"total":1042,"current":983}
+{"_e":"metro:bundling:progress","_t":1791804111260,"id":"2","progress":0.8899622754115996,"total":1064,"current":990}
+{"_e":"metro:bundling:progress","_t":1791804111365,"id":"2","progress":0.8899622754115996,"total":1065,"current":991}
+{"_e":"metro:bundling:progress","_t":1791804111471,"id":"2","progress":0.8899622754115996,"total":1065,"current":996}
+{"_e":"metro:bundling:progress","_t":1791804111614,"id":"2","progress":0.8899622754115996,"total":1071,"current":1002}
+{"_e":"metro:bundling:progress","_t":1791804111720,"id":"2","progress":0.8899622754115996,"total":1071,"current":1006}
+{"_e":"metro:bundling:progress","_t":1791804111820,"id":"2","progress":0.8899622754115996,"total":1072,"current":1011}
+{"_e":"metro:bundling:progress","_t":1791804111923,"id":"2","progress":0.9035637461015816,"total":1072,"current":1019}
+{"_e":"metro:bundling:progress","_t":1791804112025,"id":"2","progress":0.9109148729042725,"total":1075,"current":1026}
+{"_e":"metro:bundling:progress","_t":1791804112284,"id":"2","progress":0.9146249468717482,"total":1077,"current":1030}
+{"_e":"metro:bundling:progress","_t":1791804112385,"id":"2","progress":0.916779702133039,"total":1082,"current":1036}
+{"_e":"metro:bundling:progress","_t":1791804112497,"id":"2","progress":0.916779702133039,"total":1087,"current":1040}
+{"_e":"metro:bundling:progress","_t":1791804112602,"id":"2","progress":0.916779702133039,"total":1098,"current":1046}
+{"_e":"metro:bundling:progress","_t":1791804112708,"id":"2","progress":0.916779702133039,"total":1106,"current":1049}
+{"_e":"metro:bundling:progress","_t":1791804112821,"id":"2","progress":0.916779702133039,"total":1109,"current":1052}
+{"_e":"metro:bundling:progress","_t":1791804112925,"id":"2","progress":0.916779702133039,"total":1112,"current":1053}
+{"_e":"metro:bundling:progress","_t":1791804113260,"id":"2","progress":0.916779702133039,"total":1121,"current":1059}
+{"_e":"metro:bundling:progress","_t":1791804113382,"id":"2","progress":0.916779702133039,"total":1134,"current":1070}
+{"_e":"metro:bundling:progress","_t":1791804113487,"id":"2","progress":0.916779702133039,"total":1134,"current":1076}
+{"_e":"metro:bundling:progress","_t":1791804113589,"id":"2","progress":0.916779702133039,"total":1136,"current":1083}
+{"_e":"metro:bundling:progress","_t":1791804113699,"id":"2","progress":0.920790336081245,"total":1138,"current":1092}
+{"_e":"metro:bundling:progress","_t":1791804113799,"id":"2","progress":0.9310557094490612,"total":1140,"current":1100}
+{"_e":"metro:bundling:progress","_t":1791804113901,"id":"2","progress":0.9310557094490612,"total":1146,"current":1103}
+{"_e":"metro:bundling:progress","_t":1791804114022,"id":"2","progress":0.9310557094490612,"total":1147,"current":1106}
+{"_e":"metro:bundling:progress","_t":1791804114109,"id":"2","progress":0.9331526312148973,"total":1147,"current":1108}
+{"_e":"metro:bundling:progress","_t":1791804114209,"id":"2","progress":0.935060435491821,"total":1151,"current":1113}
+{"_e":"metro:bundling:progress","_t":1791804114311,"id":"2","progress":0.9367954583815586,"total":1152,"current":1115}
+{"_e":"metro:bundling:progress","_t":1791804114414,"id":"2","progress":0.9367954583815586,"total":1162,"current":1124}
+{"_e":"metro:bundling:progress","_t":1791804114522,"id":"2","progress":0.9407666713902765,"total":1164,"current":1129}
+{"_e":"metro:bundling:progress","_t":1791804114624,"id":"2","progress":0.9458188583322589,"total":1165,"current":1133}
+{"_e":"metro:bundling:progress","_t":1791804114725,"id":"2","progress":0.9526695112768475,"total":1169,"current":1141}
+{"_e":"metro:bundling:progress","_t":1791804114826,"id":"2","progress":0.9526695112768475,"total":1175,"current":1146}
+{"_e":"metro:bundling:progress","_t":1791804114978,"id":"2","progress":0.956307851781057,"total":1177,"current":1151}
+{"_e":"metro:bundling:progress","_t":1791804115093,"id":"2","progress":0.9563445280049349,"total":1178,"current":1152}
+{"_e":"metro:bundling:progress","_t":1791804115216,"id":"2","progress":0.9629973394519215,"total":1178,"current":1156}
+{"_e":"metro:bundling:progress","_t":1791804115325,"id":"2","progress":0.9680290005834361,"total":1179,"current":1160}
+{"_e":"metro:bundling:progress","_t":1791804115442,"id":"2","progress":0.9730652111462224,"total":1180,"current":1164}
+{"_e":"metro:bundling:progress","_t":1791804115544,"id":"2","progress":0.974843775036052,"total":1185,"current":1170}
+{"_e":"metro:bundling:progress","_t":1791804115655,"id":"2","progress":0.9865434670369778,"total":1185,"current":1177}
+{"_e":"metro:bundling:progress","_t":1791804115755,"id":"2","progress":0.9932603393330841,"total":1185,"current":1181}
+{"_e":"metro:bundling:progress","_t":1791804115859,"id":"2","progress":0.9966301624631381,"total":1186,"current":1184}
+{"_e":"metro:bundling:progress","_t":1791804115964,"id":"2","progress":0.9983143702953798,"total":1186,"current":1185}
+{"_e":"metro:bundling:progress","_t":1791804118667,"id":"2","progress":0.999,"total":1186,"current":1186}
+{"_e":"metro:bundling:progress","_t":1791804118776,"id":"2","progress":0.999,"total":1188,"current":1187}
+{"_e":"metro:bundling:progress","_t":1791804118823,"id":"2","progress":0.999,"total":1188,"current":1188}
+{"_e":"metro:bundling:progress","_t":1791804118924,"id":"2","progress":0.999,"total":1195,"current":1193}
+{"_e":"metro:bundling:progress","_t":1791804119100,"id":"2","progress":0.999,"total":1196,"current":1196}
+{"_e":"metro:bundling:done","_t":1791804120372,"id":"2","total":1196,"ms":44359.4154}
+{"_e":"metro:client_log","_t":1791804126104,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791804126137,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791804126138,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+ixdegyqhqeYsWisMKrTgEBp+LJd+aWPw=\",\n  \"encrypted_surname\": \"U2FsdGVkX18xo1uRMO43ch6gir7d9fj6oZGa5luObDY=\",\n  \"encrypted_email\": \"U2FsdGVkX1+XA1HriJtgatflKaTzdTPgZM27dM1/3oyojhawdPYMDilX4gE73JTT\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+vbZ/6xm3v009vnGRa7Jo/O90PbNkgogU=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-06T10:30:14.878006+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791804126850,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791804126851,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791804126851,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791804146656,"level":"warn","data":["Network request failed:","fetch failed: java.net.ConnectException: Failed to connect to /10.0.2.2:8080"]}
+{"_e":"metro:client_log","_t":1791804148258,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:bundling:started","_t":1791804419530,"id":"6","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1791804419530,"id":"6","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1791804419640,"id":"6","total":1,"ms":110.2115}
+{"_e":"metro:client_log","_t":1791804424379,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791804424533,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791804424534,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791804424596,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791804424600,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+ixdegyqhqeYsWisMKrTgEBp+LJd+aWPw=\",\n  \"encrypted_surname\": \"U2FsdGVkX18xo1uRMO43ch6gir7d9fj6oZGa5luObDY=\",\n  \"encrypted_email\": \"U2FsdGVkX1+XA1HriJtgatflKaTzdTPgZM27dM1/3oyojhawdPYMDilX4gE73JTT\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+vbZ/6xm3v009vnGRa7Jo/O90PbNkgogU=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-06T10:30:14.878006+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791804424602,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791804424606,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791804424626,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791804424632,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791804424636,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791804424638,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791804424639,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791804424641,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791804439768,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791804508696,"level":"log","data":["7907b864-dfa5-41e7-9cae-459584c37fc0"]}
+{"_e":"metro:client_log","_t":1791804539977,"level":"log","data":["7907b864-dfa5-41e7-9cae-459584c37fc0"]}
+{"_e":"metro:client_log","_t":1791804605617,"level":"error","data":["Server returned non-JSON response (404):","<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/users/reset-password</pre>\n</body>\n</html>\n"]}
+{"_e":"metro:client_log","_t":1791804664339,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791804669799,"level":"error","data":["The action 'GO_BACK' was not handled by any navigator.\n\nIs there any screen to go back to?\n\nThis is a development-only warning and won't be shown in production."]}
+{"_e":"metro:client_log","_t":1791805180022,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:bundling:failed","_t":1791806372910,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Missing initializer in const declaration. (234:21)\n\n  232 | };\n  233 |\n> 234 | export const markUser\n      |                      ^\n  235 |","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806373114,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Missing initializer in const declaration. (234:21)\n\n  232 | };\n  233 |\n> 234 | export const markUser\n      |                      ^\n  235 |","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806382930,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Missing initializer in const declaration. (234:41)\n\n  232 | };\n  233 |\n> 234 | export const markUserAsSoftDeletedLocally\n      |                                          ^\n  235 |","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806385847,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Missing initializer in const declaration. (234:41)\n\n  232 | };\n  233 |\n> 234 | export const markUserAsSoftDeletedLocally\n      |                                          ^\n  235 |","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791806387640,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791806392134,"level":"error","data":["[ReferenceError: Property 'db' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791806403550,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791806412866,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791806415799,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791806417761,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:bundling:failed","_t":1791806422737,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected reserved word 'await'. (236:1)\n\n  234 | export const markUserAsSoftDeletedLocally = async = (db, userId) => {\n  235 | \tconst now = new Date.toISOString();\n> 236 | \tawait updateLocalUserField()\n      | \t^\n  237 | }\n  238 |","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806427398,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected reserved word 'await'. (236:1)\n\n  234 | export const markUserAsSoftDeletedLocally = async = (db, userId) => {\n  235 | \tconst now = new Date.toISOString();\n> 236 | \tawait updateLocalUserField(db, userId, {\n      | \t^\n  237 | \t\t\n  238 | \t})\n  239 | }","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806436752,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected reserved word 'await'. (236:1)\n\n  234 | export const markUserAsSoftDeletedLocally = async = (db, userId) => {\n  235 | \tconst now = new Date.toISOString();\n> 236 | \tawait updateLocalUserField(db, userId, {\n      | \t^\n  237 | \t\tis_deleted: 1,\n  238 | \t\tdeleted_at\n  239 | \t})","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806439517,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected reserved word 'await'. (236:1)\n\n  234 | export const markUserAsSoftDeletedLocally = async = (db, userId) => {\n  235 | \tconst now = new Date.toISOString();\n> 236 | \tawait updateLocalUserField(db, userId, {\n      | \t^\n  237 | \t\tis_deleted: 1,\n  238 | \t\tdeleted_at: now,\n  239 | \t\t","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806446807,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected reserved word 'await'. (236:1)\n\n  234 | export const markUserAsSoftDeletedLocally = async = (db, userId) => {\n  235 | \tconst now = new Date.toISOString();\n> 236 | \tawait updateLocalUserField(db, userId, {\n      | \t^\n  237 | \t\tis_deleted: 1,\n  238 | \t\tdeleted_at: now,\n  239 | \t\tupdated_at: now,","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806449221,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected reserved word 'await'. (236:1)\n\n  234 | export const markUserAsSoftDeletedLocally = async = (db, userId) => {\n  235 | \tconst now = new Date.toISOString();\n> 236 | \tawait updateLocalUserField(db, userId, {\n      | \t^\n  237 | \t\tis_deleted: 1,\n  238 | \t\tdeleted_at: now,\n  239 | \t\tupdated_at: now,","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806451771,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected reserved word 'await'. (236:1)\n\n  234 | export const markUserAsSoftDeletedLocally = async = (db, userId) => {\n  235 | \tconst now = new Date.toISOString();\n> 236 | \tawait updateLocalUserField(db, userId, {\n      | \t^\n  237 | \t\tis_deleted: 1,\n  238 | \t\tdeleted_at: now,\n  239 | \t\tupdated_at: now,","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791806477750,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791806477762,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791806477763,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791806477763,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791806477763,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806477767,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806477768,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806477789,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791806477801,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791806477819,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791806477834,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806477837,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806477845,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806479761,"level":"error","data":["[Error: Uncaught (in promise, id: 0): \"Error: Call to function 'NativeDatabase.prepareAsync' has been rejected.\n→ Caused by: Access to closed resource\"]"]}
+{"_e":"metro:bundling:failed","_t":1791806482436,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Unexpected token (245:0)\n\n  243 |\n  244 | export const \n> 245 |\n      | ^","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806486270,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\database\\repositories\\userRepository.js: Missing initializer in const declaration. (244:30)\n\n  242 | };\n  243 |\n> 244 | export const deleteUserLocally\n      |                               ^\n  245 |","importStack":null,"filename":"src\\database\\repositories\\userRepository.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791806491201,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1791806498916,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791806498920,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791806498923,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791806498949,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791806498951,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806498951,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806498953,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806498970,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791806498971,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791806498974,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791806498983,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806498988,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806498990,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806501938,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791806501946,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791806501953,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791806501955,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791806501958,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806501964,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806501969,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806501972,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791806501988,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791806501996,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791806502001,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806502003,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806502003,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806512172,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791806512198,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791806512198,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791806512202,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791806512203,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806512204,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806512204,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806512220,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791806512225,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791806512234,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791806512235,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806512236,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806512237,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806514753,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791806514764,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791806514765,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791806514765,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791806514765,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806514768,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806514768,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806514787,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791806514788,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791806514830,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791806514832,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806514832,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806514832,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806517127,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791806517137,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791806517138,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791806517146,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791806517147,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806517147,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806517147,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791806517154,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791806517158,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791806517164,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791806517169,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791806517170,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791806517170,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:failed","_t":1791806538710,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\main\\userService.js: Unexpected token (216:0)\n\n  214 |\n  215 | \tif (result?.success)\n> 216 | };\n      | ^\n  217 |","importStack":null,"filename":"src\\services\\main\\userService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806608223,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\main\\userService.js: Missing semicolon. (218:37)\n\n  216 | \tif (result?.success) {\n  217 | \t\tawait markUserAsSoftDeletedLocally(db, userId);\n> 218 | \t\tawait markUserAsSynched(db, userId)l;\n      | \t\t                                   ^\n  219 | \t} else {\n  220 | \t\tconsole.warn(\"[User Service] Backend soft delete failed, updating locally\");\n  221 | \t\tawait markUserAsSoftDeletedLocally(db, userId);","importStack":null,"filename":"src\\services\\main\\userService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806638912,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\main\\userService.js: Missing initializer in const declaration. (230:30)\n\n  228 | };\n  229 |\n> 230 | export const hardDeleteAccount\n      |                               ^\n  231 |","importStack":null,"filename":"src\\services\\main\\userService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791806643667,"level":"error","data":["[ReferenceError: Property 'async' doesn't exist]"]}
+{"_e":"metro:bundling:failed","_t":1791806655091,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\main\\userService.js: Unexpected token (231:35)\n\n  229 |\n  230 | export const hardDeleteAccount = async (db, userId) => {\n> 231 | \tconst result = await safeApiCall(())\n      | \t                                  ^\n  232 | }\n  233 |","importStack":null,"filename":"src\\services\\main\\userService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:bundling:failed","_t":1791806660515,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\main\\userService.js: Unexpected token (231:40)\n\n  229 |\n  230 | export const hardDeleteAccount = async (db, userId) => {\n> 231 | \tconst result = await safeApiCall(() => )\n      | \t                                       ^\n  232 | }\n  233 |","importStack":null,"filename":"src\\services\\main\\userService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791807380150,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791807813146,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791807813269,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791807813269,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791807813350,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791807813407,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807813407,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807813443,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791807813495,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791807813512,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791807813529,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791807813554,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807813554,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807813554,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791807829050,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791807829097,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791807829140,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791807829140,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791807829140,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807829141,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807829141,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791807829141,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791807829141,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791807829152,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791807829167,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807829181,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807829181,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791807844582,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791807844627,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791807844647,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791807844654,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791807844684,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807844687,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807844687,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791807844697,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791807844701,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791807844710,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791807844718,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807844722,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807844725,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791807852104,"level":"log","data":["Database initialized successfully."]}
+{"_e":"metro:client_log","_t":1791807852162,"level":"log","data":["\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================"]}
+{"_e":"metro:client_log","_t":1791807852217,"level":"log","data":["Total Records: 1\n"]}
+{"_e":"metro:client_log","_t":1791807852263,"level":"log","data":["--- Record #1 ---"]}
+{"_e":"metro:client_log","_t":1791807852265,"level":"log","data":["{\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"email_blind_index\": \"1489eaddf3a7fb9fa1cd9684fe7ecc243480558ee947112abbfcc54d4aa477ac\",\n  \"encrypted_name\": \"U2FsdGVkX1+pP9uTz4z1iA27/nGsfIN6DY5FbOixnxE=\",\n  \"encrypted_surname\": \"U2FsdGVkX19Ue6XLgFRNU0246nBAIQijgCdYzvKu+EU=\",\n  \"encrypted_email\": \"U2FsdGVkX1/h8bdks3JLYYXPrcq5g6Mes+Gt5mqgpOCAINsoGGaAs2Xt0QKvx9UM\",\n  \"encrypted_phone_num\": \"U2FsdGVkX1+I0vz2AM6nRdKwrRcRX/0mFQCmy+rLqaw=\",\n  \"is_verified\": 1,\n  \"created_at\": \"2026-10-04T00:49:51.11223+02:00\",\n  \"updated_at\": \"2026-10-12T13:39:15.897042+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_name\": \"Brandan-Lee\",\n  \"_decrypted_surname\": \"Sherbrooke\",\n  \"_decrypted_email\": \"brandan.sherbrooke@gmail.com\",\n  \"_decrypted_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807852268,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807852280,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:client_log","_t":1791807852299,"level":"log","data":["\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================"]}
+{"_e":"metro:client_log","_t":1791807852323,"level":"log","data":["Total Contacts: 1\n"]}
+{"_e":"metro:client_log","_t":1791807852334,"level":"log","data":["--- Contact #1 ---"]}
+{"_e":"metro:client_log","_t":1791807852335,"level":"log","data":["{\n  \"contact_id\": \"ff49060b-7b27-4e02-823b-215205c28369\",\n  \"user_id\": \"7907b864-dfa5-41e7-9cae-459584c37fc0\",\n  \"contact_email_blind_index\": \"cffe49c531157bc75f9c1c6b3d813f2d434733bcc15d8c45d69e8f27266820e6\",\n  \"encrypted_contact_name\": \"U2FsdGVkX19H5fHVvjEH4t+J8+DTLKKIs2m+uDTL0XI=\",\n  \"encrypted_contact_surname\": \"U2FsdGVkX18bcZfE4+C+/krxR74A5GFm2jSz+z38zPA=\",\n  \"encrypted_contact_phone_num\": \"U2FsdGVkX1+deNC7TViF/lH9XbMTF2aC3venmUtUJnU=\",\n  \"encrypted_contact_email\": \"U2FsdGVkX18LeakTY+Qnr4pbdPN1xhBr9z169bUkZps=\",\n  \"created_at\": \"2026-10-08T16:31:39.663Z\",\n  \"updated_at\": \"2026-10-08T18:32:38.7+02:00\",\n  \"deleted_at\": null,\n  \"is_synched\": 1,\n  \"is_deleted\": 0,\n  \"_decrypted_contact_name\": \"Ewald\",\n  \"_decrypted_contact_surname\": \"De Wit\",\n  \"_decrypted_contact_email\": \"ewald@gmail.com\",\n  \"_decrypted_contact_phone_num\": \"0628212494\"\n}"]}
+{"_e":"metro:client_log","_t":1791807852363,"level":"log","data":["----------------------------------------\n"]}
+{"_e":"metro:client_log","_t":1791807852367,"level":"log","data":["========================================================================\n"]}
+{"_e":"metro:bundling:failed","_t":1791808265288,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\services\\main\\userService.js: Missing initializer in const declaration. (221:16)\n\n  219 | \t\tawait markUserAsSoftDeletedLocally(db, userId);\n  220 | \t\tawait softDeleteDecoysLocally(db, userId);\n> 221 | \t\tconst incident\n      | \t\t              ^\n  222 | \t\tawait markUserAsSynched(db, userId);\n  223 | \t} else {\n  224 | \t\tconsole.warn(\"[User Service] Backend soft delete failed, updating locally\");","importStack":null,"filename":"src\\services\\main\\userService.js","targetModuleName":null,"originModulePath":null}
+{"_e":"metro:client_log","_t":1791808424077,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791808608745,"level":"error","data":["Server returned non-JSON response (404):","<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/users/soft-delete</pre>\n</body>\n</html>\n"]}
+{"_e":"metro:client_log","_t":1791808608766,"level":"warn","data":["[User Service] Backend soft delete failed, updating locally"]}
+{"_e":"metro:client_log","_t":1791808722354,"level":"log","data":["From the Repository: ","1"]}
+{"_e":"metro:client_log","_t":1791808743868,"level":"error","data":["[ReferenceError: Property 'no' doesn't exist]"]}
+{"_e":"metro:bundling:failed","_t":1791808748639,"id":null,"message":"SyntaxError: C:\\Users\\brand\\Desktop\\SaferMzansi\\client\\src\\screens\\main\\settings\\Profile\\ProfileScreen.js: Unexpected token, expected \",\" (302:13)\n\n  300 | \tscroll: {\n  301 | \t\tpaddingBottom: 30,\n> 302 | \t\tnoScrollbar;\n      | \t\t           ^\n  303 | \t},\n  304 | \tavatarFrame: {\n  305 | \t\talignSelf: \"center\",","importStack":null,"filename":"src\\screens\\main\\settings\\Profile\\ProfileScreen.js","targetModuleName":null,"originModulePath":null}

@@ -15,10 +15,16 @@ import { useAuth } from "@context/AuthContext";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { useSQLiteContext } from "expo-sqlite";
 import { useFocusEffect } from "@react-navigation/native";
-import { getLocalUserDetails } from "@services/main/userService";
+import {
+	getLocalUserDetails,
+	hardDeleteAccount,
+	softDeleteUser,
+} from "@services/main/userService";
 import { forgotPasswordUser } from "@services/auth/authService";
 import { checkNetworkAndNotify } from "@utils/network/networkGuard";
 import { useNetStatus } from "@utils/network/netStatus";
+import AccountDeletionModal from "@components/modals/AccountDeletionModal";
+import { softDeleteLocalEmergencyContact } from "@database/repositories/contactRepository";
 
 const PURPLE = "#5E0A9E";
 
@@ -33,6 +39,7 @@ const ProfileScreen = ({ navigation }) => {
 		iconName: "alert-circle-outline",
 		onConfirm: () => {},
 	});
+	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 	const [banner, setBanner] = useState(null);
 	const { user, logOut } = useAuth();
 	const [userDetails, setUserDetails] = useState(null);
@@ -113,18 +120,72 @@ const ProfileScreen = ({ navigation }) => {
 		}
 	};
 
+	const handleSoftDelete = async () => {
+		setBanner(null);
+		setLoading(true);
+
+		try {
+			if (!checkNetworkAndNotify(isOnline, setBanner)) {
+				return;
+			}
+
+			setLoading(true);
+
+			await softDeleteUser(db, user.userId);
+
+			setBanner({
+				message: "Account has been deleted successfully.",
+				type: "success",
+			});
+			setTimeout(async () => {
+				setDeleteModalVisible(false);
+				await logOut("LoginScreen");
+			}, 800);
+		} catch (error) {
+			setBanner({
+				message: error.message || "Failed to soft delete account.",
+				type: "error",
+			});
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleHardDelete = async () => {
+		setBanner(null);
+		setLoading(true);
+
+		try {
+			if (!checkNetworkAndNotify(isOnline, setBanner)) {
+				return;
+			}
+
+			await hardDeleteAccount(db, user.userId);
+
+			setBanner({ message: "Account permanently deleted.", type: "success" });
+			setTimeout(async () => {
+				setDeleteModalVisible(false);
+				await logOut("LoginScreen");
+			}, 800);
+		} catch (error) {
+			setBanner({
+				message: error.message || "Failed to permanently delete account",
+				type: "error",
+			});
+		}
+	};
+
 	const hideModal = () => {
 		setModalConfig((prev) => ({ ...prev, visible: false }));
 	};
 
 	return (
 		<MainLayout
-			title="Profile"
+			title="User Profle"
 			onBack={() => navigation.replace("HomeScreen")}
 			tab="Settings"
 			navigation={navigation}
 			banner={banner}
-			scrollable={true}
 		>
 			<KeyboardAvoidingView
 				style={{ flex: 1 }}
@@ -133,6 +194,7 @@ const ProfileScreen = ({ navigation }) => {
 				<ScrollView
 					contentContainerStyle={styles.scroll}
 					keyboardShouldPersistTaps="handled"
+					showsVerticalScrollIndicator={false}
 				>
 					{/* Avatar Section */}
 					<View style={styles.avatarFrame}>
@@ -202,26 +264,12 @@ const ProfileScreen = ({ navigation }) => {
 					</TouchableOpacity>
 
 					<TouchableOpacity
-						style={styles.logoutButton}
-						onPress={() => {
-							setModalConfig({
-								visible: true,
-								title: "Log out",
-								message: "Are you sure you want to log out of your account?",
-								confirmLabel: "Log Out",
-								cancelLabel: "Cancel",
-								isDestructive: true,
-								iconName: "log-out-outline",
-								onConfirm: () => {
-									// Handle log out logic here
-									hideModal();
-								},
-							});
-						}}
+						style={styles.deleteButton}
 						activeOpacity={0.8}
+						onPress={() => setDeleteModalVisible(true)}
 					>
-						<Feather name="log-out" size={20} color="#DC2626" />
-						<Text style={styles.logoutText}>Log Out</Text>
+						<Ionicons name="trash-outline" size={20} color="#fff" />
+						<Text style={styles.primaryText}>Delete Account</Text>
 					</TouchableOpacity>
 				</ScrollView>
 			</KeyboardAvoidingView>
@@ -236,6 +284,14 @@ const ProfileScreen = ({ navigation }) => {
 				iconName={modalConfig.iconName}
 				onConfirm={modalConfig.onConfirm}
 				onCancel={hideModal}
+			/>
+			<AccountDeletionModal
+				visible={deleteModalVisible}
+				loading={loading}
+				banner={banner}
+				onCancel={() => setDeleteModalVisible(false)}
+				onSoftDelete={handleSoftDelete}
+				onHardDelete={handleHardDelete}
 			/>
 		</MainLayout>
 	);
@@ -334,22 +390,17 @@ const styles = StyleSheet.create({
 		color: "#FFFFFF",
 		fontWeight: "600",
 	},
-	logoutButton: {
-		height: 50,
-		borderRadius: 10,
-		backgroundColor: "#FEF2F2",
-		borderWidth: 1,
-		borderColor: "#FCA5A5",
-		justifyContent: "center",
-		alignItems: "center",
+	deleteButton: {
 		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "#ff3b3b",
+		borderWidth: 1.5,
+		borderColor: "#b30000",
+		borderRadius: 8,
+		paddingVertical: 12,
 		gap: 8,
-		marginTop: 8,
-	},
-	logoutText: {
-		fontSize: 15,
-		color: "#DC2626",
-		fontWeight: "600",
+		marginTop: 12,
 	},
 });
 

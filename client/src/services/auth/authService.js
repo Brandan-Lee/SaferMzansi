@@ -259,7 +259,7 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 
 	const result = await safeApiCall(
 		() =>
-			postApi("/users/reset-password", {
+			postApi("/auth/reset-password", {
 				email_blind_index: emailBlindIndex,
 				password,
 				reset_token: resetToken,

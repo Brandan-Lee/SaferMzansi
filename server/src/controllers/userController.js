@@ -15,6 +15,38 @@ const updateUser = async (req, res, next) => {
 	}
 };
 
+const softDeleteUser = async (req, res, next) => {
+	try {
+		const { user_id } = req.body;
+		const result = await userService.softDeleteUser(user_id);
+
+		return res.status(200).json({
+			success: true,
+			message: "Account soft deleted successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+const hardDeleteUser = async (req, res, next) => {
+	try {
+		const { user_id } = req.body;
+		const result = await userService.hardDeleteUser(user_id);
+
+		return res.status(200).json({
+			success: true,
+			message: "Account permenantly deleted successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 module.exports = {
 	updateUser,
+	softDeleteUser,
+	hardDeleteUser,
 };

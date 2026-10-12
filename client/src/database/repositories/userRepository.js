@@ -230,3 +230,17 @@ export const getUserDetails = async (db, userId) => {
 	const result = await db.getAllAsync(query, [userId]);
 	return result[0] || null;
 };
+
+export const markUserAsSoftDeletedLocally = async (db, userId) => {
+	const now = new Date.toISOString();
+	await updateLocalUserField(db, userId, {
+		is_deleted: 1,
+		deleted_at: now,
+		updated_at: now,
+		is_synched: 0,
+	});
+};
+
+export const deleteUserLocally = async (db, userId) => {
+	await db.runAsync(`DELETE FROM Local_Users WHERE user_id = ?`, [userId]);
+};

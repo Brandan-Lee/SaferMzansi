@@ -1,5 +1,10 @@
+import { softDeleteDecoysLocally } from "@database/repositories/decoyRepository";
+import { softDeleteEvidenceAndLocationsLocally } from "@database/repositories/evidenceRepository";
+import { softDeleteIncidentsLocally } from "@database/repositories/incidentRepository";
 import {
+	deleteUserLocally,
 	getUserDetails,
+	markUserAsSoftDeletedLocally,
 	markUserAsSynched,
 	markUserAsUnSynched,
 	saveOrUpdateLocalUser,
@@ -195,5 +200,50 @@ export const updateUser = async (
 		success: true,
 		userId,
 		message: "User Updated Successfully",
+	};
+};
+
+export const softDeleteUser = async (userId) => {
+	if (!userId) {
+		throw new Error("User ID is needed for soft delete operations");
+	}
+
+	//First work with the server
+	const result = await safeApiCall(() =>
+		postApi(
+			"/users/soft-delete",
+			userId,
+			"Server failed to soft delete user. Please try again",
+		),
+	);
+
+	if (result?.success) {
+		await markUserAsSoftDeletedLocally(db, userId);
+		await softDeleteDecoysLocally(db, userId);
+		const incidentIds = await softDeleteIncidentsLocally(db, userId);
+		await softDeleteEvidenceAndLocationsLocally(db, incidentIds);
+		await markUserAsSynched(db, userId);
+	} else {
+		console.warn("[User Service] Backend soft delete failed, updating locally");
+		await markUserAsSoftDeletedLocally(db, userId);
+		await markUserAsUnSynched(db, userId);
+	}
+
+	return {
+		success: true,
+	};
+};
+
+export const hardDeleteAccount = async (db, userId) => {
+	const result = await safeApiCall(
+		() => postApi("/users/hard-delete"),
+		userId,
+		"Server failed to hard delete",
+	);
+
+	await deleteUserLocally(db, userId);
+
+	return {
+		success: true,
 	};
 };

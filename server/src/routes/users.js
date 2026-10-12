@@ -13,10 +13,24 @@ const REQUIRED_USER_FIELDS = [
 	"encrypted_email",
 ];
 
+const REQUIRED_DELETE_FIELDS = ["user_id"];
+
 router.post(
 	"/update",
 	validateBody(REQUIRED_USER_FIELDS),
 	userController.updateUser,
+);
+
+router.post(
+	"soft-delete",
+	validateBody(REQUIRED_DELETE_FIELDS),
+	userController.softDeleteUser,
+);
+
+router.post(
+	"hard-delete",
+	validateBody(REQUIRED_DELETE_FIELDS),
+	userController.hardDeleteUser,
 );
 
 module.exports = router;

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { ActivityIndicator, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -13,7 +12,7 @@ import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetails
 import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
 import DecoyScreen from "@screens/main/DecoyScreen";
 import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
-import EditProfileScreen from "@screens/main/Profile/EditProfileScreen";
+import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 

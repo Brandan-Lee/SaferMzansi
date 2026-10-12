@@ -1,4 +1,5 @@
 // authService_2.js
+const { supabase } = require("#config/supabase_db.js");
 const contactModel = require("#models/contactModel.js");
 const userModel = require("#models/userModel.js");
 const {
@@ -59,6 +60,24 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 
 	if (!isPasswordValid || !user.is_verified) {
 		return null;
+	}
+
+	//Reactivate account if the user deactivated it previously
+	if (user.is_deleted) {
+		const now = new Date().toISOString();
+
+		//Reactivate the user account
+		await supabase
+			.from("Users")
+			.update({ is_deleted: false, deleted_at: null, updated_at: now })
+			.eq("user_id", user.user_id);
+
+		await supabase
+			.from("Emergency_Contacts")
+			.update({ is_deleted: false, deleted_at: null, updated_at: now })
+			.eq("user_id", user.user_id);
+
+		user.is_deleted = false;
 	}
 
 	const { password_hash, ...safeUser } = user;
