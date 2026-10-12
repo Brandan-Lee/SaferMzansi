@@ -100,38 +100,6 @@ const OTPScreen = ({ navigation, route }) => {
 		};
 	}, [sanitizedEmail]);
 
-	// // Send initial OTP email when navigating to the screen
-	// useEffect(() => {
-	// 	let isMounted = true;
-	// 	const sendInitialEmail = async () => {
-	// 		if (!sanitizedEmail) return;
-	// 		try {
-	// 			const response = isResetPassword
-	// 				? await forgotPasswordUser(db, sanitizedEmail)
-	// 				: await sendOtpEmail(sanitizedEmail);
-
-	// 			if (response?.error && isMounted) {
-	// 				setBanner({
-	// 					message: response.error,
-	// 					type: "error",
-	// 				});
-	// 			}
-	// 		} catch (err) {
-	// 			if (isMounted) {
-	// 				setBanner({
-	// 					message: err.message || "Failed to send OTP email.",
-	// 					type: "error",
-	// 				});
-	// 			}
-	// 		}
-	// 	};
-
-	// 	sendInitialEmail();
-	// 	return () => {
-	// 		isMounted = false;
-	// 	};
-	// }, []);
-
 	// 60-second Resend button countdown timer
 	useEffect(() => {
 		if (timer <= 0) return;
@@ -331,10 +299,13 @@ const OTPScreen = ({ navigation, route }) => {
 					return;
 				}
 
-				navigation.navigate("ResetPasswordScreen", {
-					email: sanitizedEmail,
-					resetToken,
-				});
+				setTimeout(() => {
+					navigation.navigate("ResetPasswordScreen", {
+						email: sanitizedEmail,
+						resetToken,
+					});
+				}, 800);
+
 				return;
 			}
 

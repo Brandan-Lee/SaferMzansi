@@ -182,7 +182,7 @@ const ProfileScreen = ({ navigation }) => {
 	return (
 		<MainLayout
 			title="User Profle"
-			onBack={() => navigation.replace("HomeScreen")}
+			onBack={() => navigation.replace("SettingsScreen")}
 			tab="Settings"
 			navigation={navigation}
 			banner={banner}
