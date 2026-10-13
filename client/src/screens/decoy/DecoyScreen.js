@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { evaluate } from "mathjs";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { verifyDecoyAttempt } from "@services/main/decoyService";
 
 const DecoyScreen = () => {
 	const navigation = useNavigation();
+	const route = useRoute();
+	const { isTesting } = route.params || {}; // Read isTesting from route params
 
 	const [pin, setPin] = useState("");
 	const [emergencyPin, setEmergencyPin] = useState("");
@@ -14,14 +17,32 @@ const DecoyScreen = () => {
 		setEmergencyPin(emergencyPin + value);
 	};
 
-	const calculate = () => {
-		if (emergencyPin === "1097") {
-			navigation.navigate("EmergencyContactsScreen");
-			return;
-		} else if (pin === "1234") {
-			navigation.navigate("HomeScreen");
+	const calculate = async () => {
+		if (isTesting) {
+			if (pin === "1234") {
+				navigation.replace("DecoyConfigurationScreen"); // Jump back to config when testing
+				return;
+			} else if (pin === "0000") {
+				navigation.replace("EmergencyContactsScreen");
+				return;
+			}
+		}
+
+		const matchType = await verifyDecoyAttempt(pin);
+
+		if (matchType === "emergency") {
+			setPin("");
+			navigation.replace("EmergencyContactsScreen");
 			return;
 		}
+
+		if (matchType === "decoy") {
+			setPin("");
+			// Standard decoy unlock behavior
+			navigation.replace("AuthStack");
+			return;
+		}
+
 		try {
 			const result = evaluate(pin);
 			setPin(result.toString());
@@ -155,7 +176,7 @@ const DecoyScreen = () => {
 					</Pressable>
 				</View>
 
-				{/* Row 5 (Aligned 4-Column Grid: 0 spans 2 columns) */}
+				{/* Row 5 */}
 				<View style={styles.row}>
 					<Pressable
 						style={styles.buttonZero}
@@ -214,12 +235,12 @@ const styles = StyleSheet.create({
 		backgroundColor: "#2D2D2D",
 	},
 	buttonZero: {
-		width: 162, // Exactly spans two columns + gap (75 + 75 + 12 gap)
+		width: 162,
 		height: 75,
 		borderRadius: 38,
 		justifyContent: "center",
 		alignItems: "flex-start",
-		paddingLeft: 28, // Pints the '0' nicely towards the left like Android calc
+		paddingLeft: 28,
 		backgroundColor: "#2D2D2D",
 	},
 	numberButtonText: {
@@ -237,7 +258,7 @@ const styles = StyleSheet.create({
 	},
 	functionButtonText: {
 		fontSize: 26,
-		color: "#81C784", // Soft green highlight for utility functions
+		color: "#81C784",
 		fontWeight: "500",
 	},
 	buttonOperator: {
@@ -246,11 +267,11 @@ const styles = StyleSheet.create({
 		borderRadius: 38,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#2E3A59", // Deep blue-grey for operators
+		backgroundColor: "#2E3A59",
 	},
 	operatorButtonText: {
 		fontSize: 30,
-		color: "#8AB4F8", // Google Material blue accent
+		color: "#8AB4F8",
 		fontWeight: "400",
 	},
 	buttonEqual: {

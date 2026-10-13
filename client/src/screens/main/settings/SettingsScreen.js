@@ -220,7 +220,7 @@ const SettingsScreen = ({ navigation }) => {
 				<SettingRow
 					icon="lock"
 					title="Decoy Configuration"
-					onPress={() => navigation.replace("DecoyPinScreen")}
+					onPress={() => navigation.replace("DecoyConfigurationScreen")}
 				/>
 
 				{/* ABOUT */}

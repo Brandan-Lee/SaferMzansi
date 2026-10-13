@@ -22,6 +22,7 @@ import {
 
 const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
+	DECOY_LAUNCH_KEY: "@setting_launch_decoy",
 };
 
 const INITIAL_QUICK_ACTIONS = [
@@ -32,7 +33,7 @@ const INITIAL_QUICK_ACTIONS = [
 		icon: Shield,
 		color: "#8B5CF6",
 		bg: "#F5F3FF",
-		route: "DecoyScreen",
+		route: "DecoyConfigurationScreen",
 	},
 	{
 		id: "location",
@@ -61,24 +62,13 @@ const INITIAL_QUICK_ACTIONS = [
 		bg: "#FFFBEB",
 		route: "VaultScreen",
 	},
-	
 ];
-
-// import React, { useMemo } from "react";
-// import {
-// 	Shield,
-// 	ShieldOff,
-// 	MapPin,
-// 	MapPinOff,
-// 	AlertTriangle,
-// 	Users,
-// } from "lucide-react-native"; // or your icon library import
 
 const INITIAL_RADIAL_ACTIONS = [
 	{
 		id: "decoy",
 		icon: Shield,
-		route: "DecoyScreen",
+		route: "DecoyConfigurationScreen",
 		angle: 225,
 		color: "#FFFFFF",
 		bg: "#7E22CE",
@@ -152,33 +142,35 @@ const HomeScreen = ({ navigation }) => {
 				}
 			};
 
+			const checkPermissions = async () => {
+				try {
+					//Location
+					const saveShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+
+					if (saveShare !== null) {
+						setShareLiveLocation(saveShare === "true");
+					}
+
+					//Decoy
+					const saveDecoy = await AsyncStorage.getItem(KEYS.DECOY_LAUNCH_KEY);
+
+					if (saveDecoy !== null) {
+						setDecoyActivated(saveDecoy === "true");
+					}
+				} catch (error) {
+					console.error("Error updating the home screen: ", error);
+				}
+			};
+
 			//Methods to invoke
 			contactFetchCount();
+			checkPermissions();
 
 			return () => {
 				isMounted = false;
 			};
 		}, [db, user]),
 	);
-
-	useEffect(() => {
-		const checkPermissions = async () => {
-			try {
-				//Location
-				const saveShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
-
-				if (saveShare !== null) {
-					setShareLiveLocation(saveShare === "true");
-				}
-
-				//Decoy
-			} catch (error) {
-				console.error("Error updating the home screen: ", error);
-			}
-		};
-
-		checkPermissions();
-	}, []);
 
 	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
 		if (item.id === "contacts") {

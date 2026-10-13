@@ -1,12 +1,12 @@
 export const DECOY_FORM_FIELDS = [
 	{
-		key: "decoy-pin",
+		key: "decoyPin",
 		label: "Enter your decoy pin",
 		icon: "lock",
 		placeholder: "••••••••",
 	},
 	{
-		key: "emergency-pin",
+		key: "emergencyPin",
 		label: "Enter the pin to set up your emergency trigger",
 		icon: "lock",
 		placeholder: "••••••••",

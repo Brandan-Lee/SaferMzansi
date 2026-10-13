@@ -1,4 +1,3 @@
-import { softDeleteDecoysLocally } from "@database/repositories/decoyRepository";
 import { softDeleteEvidenceAndLocationsLocally } from "@database/repositories/evidenceRepository";
 import { softDeleteIncidentsLocally } from "@database/repositories/incidentRepository";
 import {

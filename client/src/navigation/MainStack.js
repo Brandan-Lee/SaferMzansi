@@ -6,11 +6,13 @@ import EmergencyContactsScreen from "@screens/main/emergencyContacts/EmergencyCo
 import AddContactScreen from "@screens/main/emergencyContacts/AddContactScreen";
 import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetailsScreen";
 import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
-import DecoyScreen from "@screens/decoy/DecoyScreen";
-import DecoyPinScreen from "@screens/main/settings/decoy/DecoyPinScreen";
+import DecoyScreen from "@screens/decoy/DecoyScreen"; // <-- Bring back DecoyScreen
 import SettingsScreen from "@screens/main/settings/SettingsScreen";
-import ProfileScreen from "@screens/main/settings/profile/ProfileScreen";
-import EditProfileScreen from "@screens/main/settings/profile/EditProfileScreen";
+import DecoyConfigurationScreen from "@screens/main/settings/decoy/DecoyConfigurationScreen";
+import DecoyAddScreen from "@screens/main/settings/decoy/DecoyAddScreen";
+import DecoyUpdateScreen from "@screens/main/settings/decoy/DecoyUpdateScreen";
+import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
+import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +20,7 @@ export default function MainStack({ user }) {
 	return (
 		<Stack.Navigator
 			screenOptions={{ headerShown: false }}
-			initialRouteName="DecoyScreen"
+			initialRouteName="HomeScreen"
 		>
 			<Stack.Screen
 				name="HomeScreen"
@@ -28,6 +30,8 @@ export default function MainStack({ user }) {
 					userId: user?.userId,
 				}}
 			/>
+			{/* DecoyScreen is now available inside MainStack for testing/previews */}
+			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />
 			<Stack.Screen
 				name="EmergencyContactsScreen"
 				component={EmergencyContactsScreen}
@@ -38,11 +42,15 @@ export default function MainStack({ user }) {
 				component={ContactDetailsScreen}
 			/>
 			<Stack.Screen name="EditContactScreen" component={EditContactScreen} />
-			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />
-			<Stack.Screen name="DecoyPinScreen" component={DecoyPinScreen} />
 			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
 			<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+			<Stack.Screen
+				name="DecoyConfigurationScreen"
+				component={DecoyConfigurationScreen}
+			/>
+			<Stack.Screen name="DecoyAddScreen" component={DecoyAddScreen} />
+			<Stack.Screen name="DecoyUpdateScreen" component={DecoyUpdateScreen} />
 		</Stack.Navigator>
 	);
 }

@@ -1,32 +1,28 @@
-import { react, useState } from "react";
+import React, { useState } from "react";
 import {
 	View,
-	Text,
-	Pressable,
 	StyleSheet,
-	TextInput,
-	Alert,
 	ScrollView,
 	KeyboardAvoidingView,
 	Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { AppHeader } from "@components/common/AppHeader";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { DECOY_FORM_FIELDS } from "@constants/DecoyFields";
 import { CustomInput } from "@components/forms/CustomInput";
 import { useFormHandler } from "@hooks/useFormHandler";
 import MainLayout from "@components/layouts/MainLayout";
+import { validateDecoyForm } from "@utils/securityAndValidation/validationUtil";
+import { useAuth } from "@context/AuthContext";
+import { addDecoyConfiguration } from "@services/main/decoyService";
 
 const INITIAL_STATE = {
 	decoyPin: "",
 	emergencyPin: "",
 };
 
-const DecoyPinScreen = () => {
+const DecoyAddScreen = () => {
 	const navigation = useNavigation();
-	const [pin, setPin] = useState("");
-	const [emergencyPin, setEmergencyPin] = useState("");
 	const [loading, setIsLoading] = useState(false);
 	const [banner, setBanner] = useState(null);
 	const [modalConfig, setModalConfig] = useState({
@@ -39,6 +35,7 @@ const DecoyPinScreen = () => {
 		iconName: "alert-circle-outline",
 		onConfirm: () => {},
 	});
+	const { user } = useAuth();
 
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
@@ -47,31 +44,62 @@ const DecoyPinScreen = () => {
 		setModalConfig((prev) => ({ ...prev, visible: false }));
 	};
 
-	const handleCreatePin = () => {
-		if (pin.length !== 4 || emergencyPin.length !== 4) {
-			Alert.alert("Error", "Please enter a valid 4-digit PIN for both fields.");
-			return;
-		}
-
-		if (pin === emergencyPin) {
-			Alert.alert("Error", "Decoy PIN and Emergency PIN cannot be the same.");
-			return;
-		}
-
-		Alert.alert(
-			"Success",
-			"Decoy PIN and Emergency PIN have been set successfully.",
-			[
-				{
-					text: "OK",
-					onPress: () => navigation.goBack(),
-				},
-			],
-		);
-	};
-
 	const handleAdd = async () => {
-		console.log("Adding configuration");
+		setBanner(null);
+
+		const { isValid, errors: validationErrors } = validateDecoyForm(formData);
+
+		if (!isValid) {
+			setErrors(validationErrors);
+			return;
+		}
+
+		const currentUserId = user?.userId;
+
+		if (!currentUserId) {
+			setBanner({
+				message: "A user session is required to add a decoy configuration",
+				type: "error",
+			});
+
+			return;
+		}
+
+		setIsLoading(true);
+
+		try {
+			const decoyPayload = {
+				decoyPin: formData.decoyPin.trim(),
+				emergencyPin: formData.emergencyPin.trim(),
+			};
+
+			const result = await addDecoyConfiguration(currentUserId, decoyPayload);
+
+			if (!result?.success) {
+				setBanner({
+					message: result?.error || "Failed to save decoy configuration",
+					type: "error",
+				});
+				return;
+			}
+
+			setBanner({
+				message:
+					"Decoy configuration has successfully been created for your device",
+				type: "success",
+			});
+
+			setTimeout(() => navigation.replace("DecoyConfigurationScreen"), 800);
+		} catch (error) {
+			setBanner({
+				message:
+					error.message ||
+					"There was an error creating your decoy configuration. Please try again",
+				type: "error",
+			});
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	const handleBack = () => {
@@ -91,19 +119,19 @@ const DecoyPinScreen = () => {
 				onConfirm: () => {
 					hideModal();
 					navigation.replace("SettingsScreen", {
-						userId: user.userId,
+						userId: user?.userId,
 					});
 				},
 			});
 		} else {
-			navigation.replace("SettingsScreen", { userId: user.userId });
+			navigation.replace("DecoyConfigurationScreen");
 		}
 	};
 
 	return (
 		<MainLayout
-			title="Decoy Configuration"
-			onBack={() => navigation.replace("SettingsScreen")}
+			title="Add Decoy Configuration"
+			onBack={handleBack}
 			tab="Settings"
 			navigation={navigation}
 			banner={banner}
@@ -123,9 +151,6 @@ const DecoyPinScreen = () => {
 					keyboardShouldPersistTaps="handled"
 					showsVerticalScrollIndicator={false}
 				>
-					{/* App header title and subtitle */}
-					<AppHeader subtitle={"Create a pin for your decoy account"} />
-
 					{DECOY_FORM_FIELDS.map((field) => (
 						<CustomInput
 							key={field.key}
@@ -160,70 +185,9 @@ const DecoyPinScreen = () => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		marginHorizontal: 20,
-		justifyContent: "center",
-		backgroundColor: "#FAF7FF",
-	},
-	logoBadge: {
-		width: 56,
-		height: 56,
-		borderRadius: 16,
-		backgroundColor: "#6B21A8",
-		alignItems: "center",
-		justifyContent: "center",
-		marginBottom: 10,
-	},
-	logoBadgeHeart: { position: "absolute" },
-	logoText: {
-		fontSize: 24,
-		fontWeight: "800",
-		color: "#6B21A8",
-		marginBottom: 16,
-	},
-	title: {
-		fontSize: 24,
-		fontWeight: "700",
-		color: "#1F2937",
-		textAlign: "center",
-		marginBottom: 8,
-	},
-	subtitle: {
-		fontSize: 14,
-		color: "#6B7280",
-		textAlign: "center",
-		marginBottom: 24,
-	},
-	label: {
-		width: "80%",
-		fontSize: 16,
-		color: "#1F2937",
-		marginBottom: 8,
-	},
-	input: {
-		width: "80%",
-		height: 48,
-		borderColor: "#d1d5db",
-		borderWidth: 1,
-		borderRadius: 8,
-		paddingHorizontal: 12,
-		marginBottom: 20,
-	},
-	button: {
-		backgroundColor: "#6B21A8",
-		paddingVertical: 14,
-		alignItems: "center",
-		borderRadius: 8,
-		marginTop: 8,
-		width: "80%",
-	},
-	buttonText: {
-		color: "#FFFFFF",
-		fontSize: 16,
-		fontWeight: "600",
+	scroll: {
+		paddingBottom: 30,
 	},
 });
 
-export default DecoyPinScreen;
+export default DecoyAddScreen;
