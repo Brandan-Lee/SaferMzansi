@@ -1,17 +1,35 @@
-import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { AppHeader } from "../../components/common/AppHeader";
-import { FloatingNavigationBar } from "../../components/common/FloatingNavigationBar";
-import { ProtectionRadar } from "../../components/home/ProtectionRadar";
-import { SafetyToolCard } from "../../components/home/SafetyToolCard";
-import { decryptData } from "../../utils/SecurityUtil";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationBar } from "@components/common/NavigationBar";
+import { ProtectionRadar } from "@components/home/ProtectionRadar";
+import { SafetyToolCard } from "@components/home/SafetyToolCard";
+import { decryptData } from "@utils/securityAndValidation/securityUtil";
+import { useAuth } from "@context/AuthContext";
+import AuthLayout from "@components/layouts/AuthLayout";
+import { useFocusEffect } from "@react-navigation/native";
+import { useSQLiteContext } from "expo-sqlite";
+import { getLocalContactTotal } from "@database/repositories/contactRepository";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+	Shield,
+	ShieldOff,
+	MapPin,
+	MapPinOff,
+	Users,
+	Lock,
+	AlertTriangle,
+} from "lucide-react-native";
 
-const QUICK_ACTIONS = [
+const KEYS = {
+	SHARE_LOCATION: "@setting_share_location",
+};
+
+const INITIAL_QUICK_ACTIONS = [
 	{
 		id: "decoy",
 		title: "Decoy Mode",
 		subtitle: "Decoy Mode is active",
-		icon: "shield-off",
+		icon: Shield,
 		color: "#8B5CF6",
 		bg: "#F5F3FF",
 		route: "DecoyScreen",
@@ -19,8 +37,8 @@ const QUICK_ACTIONS = [
 	{
 		id: "location",
 		title: "Live Location",
-		subtitle: "You have activated the monitoring of your live location",
-		icon: "map-pin",
+		subtitle: "Checking permission...",
+		icon: MapPin,
 		color: "#10B981",
 		bg: "#ECFDF5",
 		route: "LocationScreen",
@@ -28,72 +46,250 @@ const QUICK_ACTIONS = [
 	{
 		id: "contacts",
 		title: "Emergency Contacts",
-		subtitle: "4 user saved emergency contacts",
-		icon: "users",
+		subtitle: "Loading contacts...",
+		icon: Users,
 		color: "#3B82F6",
 		bg: "#EFF6FF",
-		route: "EmergencyContactScreen",
+		route: "EmergencyContactsScreen",
 	},
 	{
 		id: "vault",
 		title: "Secure Vault",
 		subtitle: "5 Cases include encrypted evidence",
-		icon: "lock",
+		icon: Lock,
 		color: "#F59E0B",
 		bg: "#FFFBEB",
 		route: "VaultScreen",
 	},
+	
 ];
 
-const RADIAL_ACTIONS = [
-	{ id: "lock", icon: "shield-off", route: "DecoyScreen", angle: 225 },
-	{ id: "map", icon: "map-pin", route: "LocationScreen", angle: 315 },
-	{ id: "alert", icon: "alert-triangle", route: "SOSScreen", angle: 135 },
-	{ id: "user", icon: "users", route: "EmergencyContactScreen", angle: 45 },
+// import React, { useMemo } from "react";
+// import {
+// 	Shield,
+// 	ShieldOff,
+// 	MapPin,
+// 	MapPinOff,
+// 	AlertTriangle,
+// 	Users,
+// } from "lucide-react-native"; // or your icon library import
+
+const INITIAL_RADIAL_ACTIONS = [
+	{
+		id: "decoy",
+		icon: Shield,
+		route: "DecoyScreen",
+		angle: 225,
+		color: "#FFFFFF",
+		bg: "#7E22CE",
+	},
+	{
+		id: "location",
+		icon: MapPin,
+		route: "LocationScreen",
+		angle: 315,
+		color: "#FFFFFF",
+		bg: "#7E22CE",
+	},
+	{
+		id: "alert",
+		icon: AlertTriangle,
+		route: "SOSScreen",
+		angle: 135,
+		color: "#FFFFFF",
+		bg: "#7E22CE",
+	},
+	{
+		id: "contacts",
+		icon: Users,
+		route: "EmergencyContactsScreen",
+		angle: 45,
+		color: "#FFFFFF",
+		bg: "#7E22CE",
+	},
 ];
 
-const HomeScreen = ({ navigation, route }) => {
-	const rawName = route?.params?.userName;
-	const decryptedName = rawName ? decryptData(rawName) : "User";
+const HomeScreen = ({ navigation }) => {
+	const { user } = useAuth();
+	const db = useSQLiteContext();
+	const [contactCount, setContactCount] = useState(0);
+	const [evidenceCount, setEvidenceCount] = useState(0);
+	const [shareLiveLocation, setShareLiveLocation] = useState(false);
+	const [decoyActivated, setDecoyActivated] = useState(false);
+
+	const resolveDisplayName = (name) => {
+		if (!name) {
+			return "User";
+		}
+
+		try {
+			return decryptData(name);
+		} catch (error) {
+			return name;
+		}
+	};
+
+	const displayName = resolveDisplayName(user?.userName);
+
+	//Fetch data whenever the screen gains focus
+	useFocusEffect(
+		useCallback(() => {
+			let isMounted = true;
+
+			//Fetch the total emergency contact count
+			const contactFetchCount = async () => {
+				const userId = user?.userId;
+
+				if (!userId || !db) {
+					return;
+				}
+
+				//Add code to fetch the emergency contact count
+				const contactResult = await getLocalContactTotal(db, userId); //
+
+				if (isMounted) {
+					setContactCount(contactResult);
+				}
+			};
+
+			//Methods to invoke
+			contactFetchCount();
+
+			return () => {
+				isMounted = false;
+			};
+		}, [db, user]),
+	);
+
+	useEffect(() => {
+		const checkPermissions = async () => {
+			try {
+				//Location
+				const saveShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+
+				if (saveShare !== null) {
+					setShareLiveLocation(saveShare === "true");
+				}
+
+				//Decoy
+			} catch (error) {
+				console.error("Error updating the home screen: ", error);
+			}
+		};
+
+		checkPermissions();
+	}, []);
+
+	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
+		if (item.id === "contacts") {
+			return {
+				...item,
+				subtitle:
+					contactCount === 0
+						? "No emergency contacts saved"
+						: `${contactCount} user saved emergency contact${contactCount === 1 ? "" : "s"}`,
+			};
+		}
+
+		if (item.id === "location") {
+			return {
+				...item,
+				subtitle:
+					shareLiveLocation === false
+						? "You are not sharing your live location"
+						: "You are sharing your live location",
+				icon: shareLiveLocation === false ? MapPinOff : MapPin,
+				color: shareLiveLocation === false ? "#c01414" : "#10B981",
+				bg: shareLiveLocation === false ? "#ffe7e7" : "#ECFDF5",
+			};
+		}
+
+		if (item.id === "decoy") {
+			return {
+				...item,
+				subtitle:
+					decoyActivated === false
+						? "You have deactivated the decoy interface"
+						: "Decoy interface activated",
+				icon: decoyActivated === false ? ShieldOff : Shield,
+				color: decoyActivated === false ? "#c01414" : "#8B5CF6",
+				bg: decoyActivated === false ? "#ffe7e7" : "#F5F3FF",
+			};
+		}
+
+		if (item.id === "vault") {
+			return {
+				...item,
+				subtitle:
+					evidenceCount === 0
+						? "No incident evidence has been stored yet"
+						: `${evidenceCount} user saved emergency contact${evidenceCount === 1 ? "" : "s"}`,
+			};
+		}
+
+		return item;
+	});
+
+	// Inside your screen component:
+	const radialActions = useMemo(() => {
+		return INITIAL_RADIAL_ACTIONS.map((action) => {
+			if (action.id === "location") {
+				return {
+					...action,
+					icon: shareLiveLocation === false ? MapPinOff : MapPin,
+				};
+			}
+
+			if (action.id === "decoy") {
+				return {
+					...action,
+					icon: decoyActivated === false ? ShieldOff : Shield,
+				};
+			}
+
+			return action;
+		});
+	}, [shareLiveLocation, decoyActivated]);
 
 	return (
-		<ScrollView style={styles.container}>
-			<AppHeader title={`Welcome Back ${decryptedName}`} />
+		<View style={styles.screenContainer}>
+			<AuthLayout title={`Welcome back ${displayName}`}>
+				<View style={styles.content}>
+					{/* Protection Radar Component */}
+					<ProtectionRadar actions={radialActions} navigation={navigation} />
 
-			<View style={styles.content}>
-				{/* Protection Radar Component */}
-				<ProtectionRadar actions={RADIAL_ACTIONS} navigation={navigation} />
-
-				{/* Safety Tools Grid */}
-				<View style={styles.toolsSection}>
-					<Text style={styles.sectionTitle}>Safety Tools</Text>
-					<View style={styles.grid}>
-						{QUICK_ACTIONS.map((item) => (
-							<SafetyToolCard
-								key={item.id}
-								item={item}
-								onPress={() => item.route && navigation.navigate(item.route)}
-							/>
-						))}
+					{/* Safety Tools Grid */}
+					<View style={styles.toolsSection}>
+						<Text style={styles.sectionTitle}>Safety Tools</Text>
+						<View style={styles.grid}>
+							{quickActions.map((item) => (
+								<SafetyToolCard
+									key={item.id}
+									item={item}
+									onPress={() => item.route && navigation.navigate(item.route)}
+								/>
+							))}
+						</View>
 					</View>
 				</View>
-			</View>
+			</AuthLayout>
 
-			<FloatingNavigationBar activeTab="Home" navigation={navigation} />
-		</ScrollView>
+			{/* Fixed Floating Navigation Bar */}
+			<View style={styles.navWrapper}>
+				<NavigationBar activeTab="Home" navigation={navigation} />
+			</View>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
+	screenContainer: {
 		flex: 1,
-		backgroundColor: "#F8EEFF",
+		position: "relative",
 	},
 	content: {
-		flex: 1,
 		paddingHorizontal: 20,
-		paddingBottom: 90,
-		justifyContent: "space-between",
+		paddingBottom: 10,
 		alignItems: "center",
 	},
 	toolsSection: {
@@ -111,6 +307,21 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		rowGap: 10,
 		width: "100%",
+	},
+	footerTagline: {
+		marginTop: 20,
+		fontSize: 12,
+		fontWeight: "600",
+		color: "#6B21A8",
+		textAlign: "center",
+	},
+	navWrapper: {
+		position: "absolute",
+		bottom: 0,
+		left: 0,
+		right: 0,
+		alignItems: "center",
+		zIndex: 99,
 	},
 });
 

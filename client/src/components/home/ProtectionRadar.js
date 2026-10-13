@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
 import Icon from "@expo/vector-icons/Ionicons";
 
 const RADAR_SIZE = 230;
@@ -17,15 +16,19 @@ const getRadialPosition = (angleInDegrees) => {
 	};
 };
 
-export const ProtectionRadar = ({ actions = [], navigation }) => {
+export const ProtectionRadar = ({ actions = [], navigation, onEmergencyPress }) => {
 	return (
 		<View style={styles.radarSection}>
 			<View style={styles.radarContainer}>
 				<View style={styles.outerRing} />
 				<View style={styles.innerRing} />
 
-				{/* Center Shield Badge (Static Display) */}
-				<View style={styles.centerShield}>
+				{/* Interactive Center Emergency Shield Button */}
+				<TouchableOpacity
+					activeOpacity={0.8}
+					style={styles.centerShield}
+					onPress={onEmergencyPress}
+				>
 					<View style={styles.logoBadge}>
 						<Icon name="shield" size={42} color="#FFFFFF" />
 						<Icon
@@ -35,19 +38,30 @@ export const ProtectionRadar = ({ actions = [], navigation }) => {
 							style={styles.logoBadgeHeart}
 						/>
 					</View>
-				</View>
+				</TouchableOpacity>
 
 				{/* Orbiting Action Buttons */}
 				{actions.map((action) => {
 					const pos = getRadialPosition(action.angle);
+					const IconComponent = action.icon;
+
 					return (
 						<TouchableOpacity
 							key={action.id}
-							style={[styles.radialButton, pos]}
+							style={[
+								styles.radialButton,
+								pos,
+								{ backgroundColor: action.bg || "#7E22CE" },
+							]}
 							activeOpacity={0.7}
 							onPress={() => action.route && navigation.navigate(action.route)}
 						>
-							<Feather name={action.icon} size={18} color="#FFFFFF" />
+							{IconComponent ? (
+								<IconComponent
+									size={20}
+									color={action.color || "#FFFFFF"}
+								/>
+							) : null}
 						</TouchableOpacity>
 					);
 				})}
@@ -116,7 +130,6 @@ const styles = StyleSheet.create({
 		width: ACTION_BUTTON_SIZE,
 		height: ACTION_BUTTON_SIZE,
 		borderRadius: ACTION_BUTTON_SIZE / 2,
-		backgroundColor: "#7E22CE",
 		justifyContent: "center",
 		alignItems: "center",
 		zIndex: 5,
