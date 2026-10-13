@@ -5,8 +5,6 @@ export const DECOY_SCHEMA = `
         decoy_pin_hash TEXT NOT NULL,
         trigger_pin_hash TEXT NOT NULL,
         status TEXT NOT NULL,
-        is_deleted INTEGER NOT NULL DEFAULT 0,
-        deleted_at TEXT NULL DEFAULT NULL,
         created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
         updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
         FOREIGN KEY (user_id) REFERENCES Local_Users(user_id) ON DELETE CASCADE

@@ -1,5 +1,4 @@
-// Local SQLite Schema
-import { COMMON_SYNC_COLUMNS, createSyncIndex } from "../dbConstatns";
+import { COMMON_SYNC_COLUMNS, createSyncIndex } from "../dbConstants";
 
 export const LOCAL_USERS_SCHEMA = `
     CREATE TABLE IF NOT EXISTS Local_Users (

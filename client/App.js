@@ -20,6 +20,7 @@ export const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
 
 const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
+	GESTURE: "@setting_gesture",
 };
 
 TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
@@ -34,7 +35,9 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 		const isSharingEnabled = savedShare === "true";
 
 		if (!isSharingEnabled) {
-			console.log("Background location received, but sharing is disabled by user setting.");
+			console.log(
+				"Background location received, but sharing is disabled by user setting.",
+			);
 			// Optionally stop location updates here if user turned it off
 			await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
 			return;
@@ -45,7 +48,6 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 			if (locations && locations.length > 0) {
 				const { latitude, longitude } = locations[0].coords;
 				console.log("Background Location :", latitude, longitude);
-
 			}
 		}
 	} catch (err) {
@@ -68,14 +70,14 @@ export default function App() {
 			if (fgStatus !== "granted" || bgStatus !== "granted") {
 				Alert.alert(
 					"Permissions Missing",
-					"Please accept both foreground and background tracking settings to share your live location."
+					"Please accept both foreground and background tracking settings to share your live location.",
 				);
 				return;
 			}
 
 			// Check if task is already running to avoid duplication errors
 			const isRegistered = await TaskManager.isTaskRegisteredAsync(
-				BACKGROUND_LOCATION_TASK
+				BACKGROUND_LOCATION_TASK,
 			);
 
 			if (!isRegistered) {
@@ -86,7 +88,8 @@ export default function App() {
 					showsBackgroundLocationIndicator: true, // Required for iOS background tracking visibility
 					foregroundService: {
 						notificationTitle: "Safer Mzansi Active",
-						notificationBody: "Live location sharing is running in the background.",
+						notificationBody:
+							"Live location sharing is running in the background.",
 						notificationColor: "#FF0000",
 					},
 				});
@@ -98,18 +101,30 @@ export default function App() {
 	};
 
 	const handleEmergencyShake = async () => {
-		console.log("Emergency shake triggered!");
+		try {
+			const savedGesture = await AsyncStorage.getItem(KEYS.GESTURE);
+			const isGestureEnabled = savedGesture === "true";
 
-		const result = await getLocation();
+			if (!isGestureEnabled) {
+				console.log("Shake detected, but gesture activation is disabled in settings");
+				return;
+			}
 
-		if (result.success) {
-			console.log(
-				"GPS COORDINATES:",
-				result.location.latitude,
-				result.location.longitude
-			);
-		} else {
-			console.log("Location capture failed:", result.error);
+			console.log("Emergency shake triggered!");
+
+			const result = await getLocation();
+
+			if (result.success) {
+				console.log(
+					"GPS COORDINATES:",
+					result.location.latitude,
+					result.location.longitude
+				);
+			} else {
+				console.log("Location capture failed:", result.error);
+			}
+		} catch (error) {
+			console.error("Error reading gesture activation setting:", error);
 		}
 	};
 
