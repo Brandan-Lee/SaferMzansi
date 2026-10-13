@@ -10,7 +10,15 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { getLocalContactTotal } from "@database/repositories/contactRepository";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Shield, ShieldOff, MapPin, MapPinOff, Users, Lock, AlertTriangle } from "lucide-react-native";
+import {
+	Shield,
+	ShieldOff,
+	MapPin,
+	MapPinOff,
+	Users,
+	Lock,
+	AlertTriangle,
+} from "lucide-react-native";
 
 const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
@@ -53,6 +61,7 @@ const INITIAL_QUICK_ACTIONS = [
 		bg: "#FFFBEB",
 		route: "VaultScreen",
 	},
+	
 ];
 
 // import React, { useMemo } from "react";
@@ -99,8 +108,6 @@ const INITIAL_RADIAL_ACTIONS = [
 		bg: "#7E22CE",
 	},
 ];
-
-
 
 const HomeScreen = ({ navigation }) => {
 	const { user } = useAuth();
@@ -157,11 +164,14 @@ const HomeScreen = ({ navigation }) => {
 	useEffect(() => {
 		const checkPermissions = async () => {
 			try {
+				//Location
 				const saveShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
 
 				if (saveShare !== null) {
 					setShareLiveLocation(saveShare === "true");
 				}
+
+				//Decoy
 			} catch (error) {
 				console.error("Error updating the home screen: ", error);
 			}
@@ -184,7 +194,10 @@ const HomeScreen = ({ navigation }) => {
 		if (item.id === "location") {
 			return {
 				...item,
-				subtitle: shareLiveLocation === false ? "You are not sharing your live location" : "You are sharing your live location",
+				subtitle:
+					shareLiveLocation === false
+						? "You are not sharing your live location"
+						: "You are sharing your live location",
 				icon: shareLiveLocation === false ? MapPinOff : MapPin,
 				color: shareLiveLocation === false ? "#c01414" : "#10B981",
 				bg: shareLiveLocation === false ? "#ffe7e7" : "#ECFDF5",
@@ -194,7 +207,10 @@ const HomeScreen = ({ navigation }) => {
 		if (item.id === "decoy") {
 			return {
 				...item,
-				subtitle: decoyActivated === false ? "You have deactivated the decoy interface" : "Decoy interface activated",
+				subtitle:
+					decoyActivated === false
+						? "You have deactivated the decoy interface"
+						: "Decoy interface activated",
 				icon: decoyActivated === false ? ShieldOff : Shield,
 				color: decoyActivated === false ? "#c01414" : "#8B5CF6",
 				bg: decoyActivated === false ? "#ffe7e7" : "#F5F3FF",
@@ -301,7 +317,7 @@ const styles = StyleSheet.create({
 	},
 	navWrapper: {
 		position: "absolute",
-		bottom: 20,
+		bottom: 0,
 		left: 0,
 		right: 0,
 		alignItems: "center",

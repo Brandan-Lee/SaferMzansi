@@ -18,13 +18,14 @@ const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
 	AUTO_RECORD: "@setting_auto_record",
 	EMAIL: "@setting_email",
+	GESTURE: "@setting_gesture",
 };
 
 const SettingsScreen = ({ navigation }) => {
 	const [shareLocation, setShareLocation] = useState(false);
 	const [autoRecord, setAutoRecord] = useState(false);
 	const [EmailTrigger, setEmailTrigger] = useState(false);
-	const [cloudBackup, setCloudBackup] = useState(false);
+	const [GestureTrigger, setGestureTrigger] = useState(false);
 	const { logOut } = useAuth();
 
 	useEffect(() => {
@@ -34,26 +35,33 @@ const SettingsScreen = ({ navigation }) => {
 				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
 
 				if (savedShare !== null) {
-					setShareLocation(savedShare === "true")
+					setShareLocation(savedShare === "true");
 				}
 
 				//For auto-recording
 				const savedRecord = await AsyncStorage.getItem(KEYS.AUTO_RECORD);
 
 				if (savedRecord !== null) {
-					setAutoRecord(savedRecord === "true")
+					setAutoRecord(savedRecord === "true");
 				}
 
 				//For Emailing with event details
 				const savedEmail = await AsyncStorage.getItem(KEYS.EMAIL);
 
 				if (savedEmail !== null) {
-					setEmailTrigger(savedEmail === "true")
+					setEmailTrigger(savedEmail === "true");
+				}
+
+				//For gesture activation
+				const gesture = await AsyncStorage.getItem(KEYS.GESTURE);
+
+				if (gesture !== null) {
+					setGestureTrigger(gesture === "true");
 				}
 			} catch (error) {
 				console.log(error);
 			}
-		}
+		};
 
 		loadSettings();
 	}, []);
@@ -71,7 +79,6 @@ const SettingsScreen = ({ navigation }) => {
 	const showTemporaryAlert = (title) => {
 		Alert.alert(title, "This function will be connected later.");
 	};
-
 
 	const SettingRow = ({
 		icon,
@@ -164,8 +171,8 @@ const SettingsScreen = ({ navigation }) => {
 
 				<SettingRow
 					icon="clock"
-					title="Panic cancel window"
-					onPress={() => showTemporaryAlert("Panic cancel window")}
+					title="Panic Cancel Configuration"
+					onPress={() => showTemporaryAlert("Panic Cancel Configuration")}
 				/>
 
 				{/* ALERTS */}
@@ -173,23 +180,38 @@ const SettingsScreen = ({ navigation }) => {
 
 				<ToggleRow
 					icon="map-pin"
-					title="Share live location"
+					title="Share Live Location"
 					value={shareLocation}
-					onPress={() => toggleSetting(KEYS.SHARE_LOCATION, shareLocation, setShareLocation)}
+					onPress={() =>
+						toggleSetting(KEYS.SHARE_LOCATION, shareLocation, setShareLocation)
+					}
 				/>
 
 				<ToggleRow
 					icon="mic"
-					title="Auto-record on trigger"
+					title="Auto-record on Trigger"
 					value={autoRecord}
-					onPress={() => toggleSetting(KEYS.AUTO_RECORD, autoRecord, setAutoRecord)}
+					onPress={() =>
+						toggleSetting(KEYS.AUTO_RECORD, autoRecord, setAutoRecord)
+					}
 				/>
 
 				<ToggleRow
 					icon="message-square"
-					title="Email trigger"
+					title="Email Trigger"
 					value={EmailTrigger}
-					onPress={() => toggleSetting(KEYS.EMAIL, EmailTrigger, setEmailTrigger)}
+					onPress={() =>
+						toggleSetting(KEYS.EMAIL, EmailTrigger, setEmailTrigger)
+					}
+				/>
+
+				<ToggleRow
+					icon="smartphone"
+					title="Gesture Activation"
+					value={GestureTrigger}
+					onPress={() =>
+						toggleSetting(KEYS.GESTURE, GestureTrigger, setGestureTrigger)
+					}
 				/>
 
 				{/* SECURITY */}
@@ -197,30 +219,8 @@ const SettingsScreen = ({ navigation }) => {
 
 				<SettingRow
 					icon="lock"
-					title="Decoy activation code"
-					onPress={() => showTemporaryAlert("Decoy activation code")}
-				/>
-
-				<ToggleRow
-					icon="cloud-lock-outline"
-					title="Encrypted cloud backup"
-					materialIcon
-					value={cloudBackup}
-					onPress={() => setCloudBackup((prev) => !prev)}
-				/>
-
-				<SettingRow icon="log-out" title="Logout" onPress={handleLogout} />
-
-				<SettingRow
-					icon="trash-2"
-					title="Wipe app data"
-					danger
-					onPress={() =>
-						Alert.alert(
-							"Wipe app data",
-							"This destructive action will be connected later.",
-						)
-					}
+					title="Decoy Configuration"
+					onPress={() => showTemporaryAlert("Decoy Configuration")}
 				/>
 
 				{/* ABOUT */}
@@ -232,6 +232,23 @@ const SettingsScreen = ({ navigation }) => {
 					title="Privacy policy"
 					onPress={() => showTemporaryAlert("Privacy policy")}
 				/>
+
+				<SettingRow
+					icon="check-circle-outline"
+					materialIcon
+					title="Terms of Service"
+					onPress={() => showTemporaryAlert("Terms of Service")}
+				/>
+
+				{/* LOGOUT BUTTON */}
+				<TouchableOpacity
+					style={styles.logoutButton}
+					activeOpacity={0.8}
+					onPress={handleLogout}
+				>
+					<Feather name="log-out" size={20} color="#DC2626" />
+					<Text style={styles.logoutButtonText}>Log Out</Text>
+				</TouchableOpacity>
 			</ScrollView>
 		</MainLayout>
 	);
@@ -319,6 +336,25 @@ const styles = StyleSheet.create({
 	checkboxActive: {
 		backgroundColor: "#6B21A8",
 		borderColor: "#6B21A8",
+	},
+
+	logoutButton: {
+		flexDirection: "row",
+		justifyContent: "center",
+		backgroundColor: "#FEF2F2",
+		borderWidth: 1.5,
+		borderColor: "#FCA5A5",
+		borderRadius: 12,
+		paddingVertical: 16,
+		marginTop: 30,
+		alignItems: "center",
+	},
+
+	logoutButtonText: {
+		fontSize: 17,
+		fontWeight: "600",
+		color: "#DC2626",
+		marginLeft: 10,
 	},
 });
 

@@ -18,10 +18,12 @@ const MainLayout = ({
 	actionButton,
 }) => {
 	return (
-		<LinearGradient colors={["#D9D9D9", "#DECDFA"]}
+		<LinearGradient
+			colors={["#D9D9D9", "#DECDFA"]}
 			start={{ x: 0, y: 0 }}
 			end={{ x: 0, y: 1 }}
-			style={styles.gradient}>
+			style={styles.gradient}
+		>
 			<SafeAreaView style={styles.safeArea} edges={["top"]}>
 				<View style={styles.innerContainer}>
 					{title && (
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
 	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 	navWrapper: {
 		position: "absolute",
-		bottom: 20,
+		bottom: 0,
 		left: 0,
 		right: 0,
 		width: "100%",

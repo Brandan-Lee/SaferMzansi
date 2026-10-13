@@ -1,8 +1,11 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const NavigationBar = ({ activeTab = "Home", navigation }) => {
+	const insets = useSafeAreaInsets();
+
 	const tabs = [
 		{ name: "Home", route: "HomeScreen", icon: "house-user" },
 		{
@@ -20,7 +23,12 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 	];
 
 	return (
-		<View style={styles.tabContainer}>
+		<View
+			style={[
+				styles.tabContainer,
+				{ paddingBottom: insets.bottom > 0 ? insets.bottom : 10 },
+			]}
+		>
 			<View style={styles.tabBar}>
 				{tabs.map((tab) => {
 					const isActive = activeTab === tab.name;
@@ -35,16 +43,19 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 							}}
 							activeOpacity={0.7}
 						>
-							<FontAwesome6
-								name={tab.icon}
-								size={20}
-								color={isActive ? "#6B21A8" : "#9CA3AF"}
-							/>
-							<Text
-								style={[styles.tabLabel, isActive && styles.tabLabelActive]}
-							>
-								{tab.name}
-							</Text>
+							<View style={styles.tabContent}>
+								<FontAwesome6
+									name={tab.icon}
+									size={20}
+									color={isActive ? "#6B21A8" : "#9CA3AF"}
+								/>
+								<Text
+									style={[styles.tabLabel, isActive && styles.tabLabelActive]}
+									numberOfLines={1}
+								>
+									{tab.name}
+								</Text>
+							</View>
 						</TouchableOpacity>
 					);
 				})}
@@ -56,35 +67,40 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 const styles = StyleSheet.create({
 	tabContainer: {
 		position: "absolute",
-		bottom: 20,
-		left: 20,
-		right: 20,
+		bottom: 0,
+		left: 0,
+		right: 0,
+		backgroundColor: "#FFFFFF",
+		borderTopWidth: 1,
+		borderTopColor: "#F3E8FF",
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: -4 },
+		shadowOpacity: 0.06,
+		shadowRadius: 8,
+		elevation: 10,
 	},
 	tabBar: {
 		height: 60,
-		backgroundColor: "#FFFFFF",
-		borderRadius: 20,
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "space-around",
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 8 },
-		shadowOpacity: 0.08,
-		shadowRadius: 16,
-		elevation: 8,
-		borderWidth: 1,
-		borderColor: "#F3E8FF",
+		width: "100%",
 	},
 	tabItem: {
+		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		flex: 1,
+		height: "100%",
+	},
+	tabContent: {
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	tabLabel: {
 		fontSize: 10,
 		color: "#9CA3AF",
 		fontWeight: "500",
-		marginTop: 2,
+		marginTop: 3,
+		textAlign: "center",
 	},
 	tabLabelActive: {
 		color: "#6B21A8",

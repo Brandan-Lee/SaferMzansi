@@ -299,7 +299,7 @@ const ProfileScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	scroll: {
-		paddingBottom: 30,
+		paddingBottom: 50,
 	},
 	avatarFrame: {
 		alignSelf: "center",
@@ -377,7 +377,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "row",
-		marginBottom: 12,
 		gap: 8,
 		shadowColor: "#000",
 		shadowOpacity: 0.1,
@@ -400,7 +399,7 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		paddingVertical: 12,
 		gap: 8,
-		marginTop: 12,
+		marginTop: 8,
 	},
 });
 
