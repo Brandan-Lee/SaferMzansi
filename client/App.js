@@ -2,98 +2,158 @@ import "react-native-get-random-values";
 
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import * as Location from "expo-location";
+import { initDatabase } from "@database/init";
+import { AuthProvider } from "@context/AuthContext";
+import { NetStatusProvider } from "@utils/network/netStatus";
+import AppNavigator from "@navigation/AppNavigator";
+import * as TaskManager from "expo-task-manager";
+import { useShake } from "@hooks/useShake";
+import { useLocation } from "@hooks/useLocation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { initDatabase } from "./src/database/init";
-import { AuthProvider } from "./src/context/AuthContext";
-
-// Import of all screens for the mobile app
-import ForgotPasswordScreen from "./src/screens/auth/ForgotPasswordScreen";
-import OTPScreen from "./src/screens/auth/OTPScreen";
-import LoginScreen from "./src/screens/auth/LoginScreen";
-import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
-import HomeScreen from "./src/screens/main/HomeScreen";
-import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';
-
-import { NetStatusProvider } from "./src/utils/NetStatus";
-
-const Stack = createNativeStackNavigator();
-
-//Retrieve environment variables
-const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
 const DATABASE_NAME = "safer_mzansi.db";
+export const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
+
+const KEYS = {
+	SHARE_LOCATION: "@setting_share_location",
+};
+
+TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
+	if (error) {
+		console.error("SaferMzansi Background Location Task Exception:", error);
+		return;
+	}
+
+	try {
+		// Always check persistent storage inside the background thread
+		const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+		const isSharingEnabled = savedShare === "true";
+
+		if (!isSharingEnabled) {
+			console.log("Background location received, but sharing is disabled by user setting.");
+			// Optionally stop location updates here if user turned it off
+			await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
+			return;
+		}
+
+		if (data) {
+			const { locations } = data;
+			if (locations && locations.length > 0) {
+				const { latitude, longitude } = locations[0].coords;
+				console.log("Background Location :", latitude, longitude);
+
+			}
+		}
+	} catch (err) {
+		console.error("Error reading storage inside background task:", err);
+	}
+});
 
 export default function App() {
-	const [status, setStatus] = useState("TESTING 123 - NEW BUNDLE");
+	const { getLocation, loading: locationLoading } = useLocation();
+	const [shareLiveLocation, setShareLiveLocation] = useState(false);
 
-	// //Connect to the backend Node.js server
-	// useEffect(() => {
-	// 	const controller = new AbortController();
-	// 	const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+	// Method to ask permissions and start background location tracking
+	const runBackgroundLocationTracking = async () => {
+		try {
+			const { status: fgStatus } =
+				await Location.requestForegroundPermissionsAsync();
+			const { status: bgStatus } =
+				await Location.requestBackgroundPermissionsAsync();
 
-	// 	fetch(API_URL, { signal: controller.signal })
-	// 		.then(async (res) => {
-	// 			clearTimeout(timeoutId);
-	// 			const text = await res.text();
-	// 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
-	// 			return JSON.parse(text);
-	// 		})
-	// 		.then((data) => setStatus(data.message))
-	// 		.catch((err) => {
-	// 			clearTimeout(timeoutId);
-	// 			console.error("Fetch error details:", err);
-	// 			if (err.name === "AbortError") {
-	// 				setStatus("Connection timed out (Server unreachable)");
-	// 			} else {
-	// 				setStatus(`Connection failed: ${err.message}`);
-	// 			}
-	// 		});
+			if (fgStatus !== "granted" || bgStatus !== "granted") {
+				Alert.alert(
+					"Permissions Missing",
+					"Please accept both foreground and background tracking settings to share your live location."
+				);
+				return;
+			}
 
-	// 	return () => clearTimeout(timeoutId);
-	// }, []);
+			// Check if task is already running to avoid duplication errors
+			const isRegistered = await TaskManager.isTaskRegisteredAsync(
+				BACKGROUND_LOCATION_TASK
+			);
+
+			if (!isRegistered) {
+				await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
+					accuracy: Location.Accuracy.Balanced,
+					timeInterval: 5000,
+					distanceInterval: 1,
+					showsBackgroundLocationIndicator: true, // Required for iOS background tracking visibility
+					foregroundService: {
+						notificationTitle: "Safer Mzansi Active",
+						notificationBody: "Live location sharing is running in the background.",
+						notificationColor: "#FF0000",
+					},
+				});
+				console.log("Background tracking task started successfully.");
+			}
+		} catch (error) {
+			console.log("Background Tracking Initialization Error:", error.message);
+		}
+	};
+
+	const handleEmergencyShake = async () => {
+		console.log("Emergency shake triggered!");
+
+		const result = await getLocation();
+
+		if (result.success) {
+			console.log(
+				"GPS COORDINATES:",
+				result.location.latitude,
+				result.location.longitude
+			);
+		} else {
+			console.log("Location capture failed:", result.error);
+		}
+	};
+
+	useShake(handleEmergencyShake);
+
+	// Load saved setting and initialize background tracking if enabled
+	useEffect(() => {
+		const initializeSettings = async () => {
+			try {
+				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+
+				if (savedShare !== null) {
+					const isShared = savedShare === "true";
+					setShareLiveLocation(isShared);
+
+					if (isShared) {
+						runBackgroundLocationTracking();
+					}
+				}
+			} catch (error) {
+				console.error("Error reading location sharing preference: ", error);
+			}
+		};
+
+		initializeSettings();
+	}, []);
 
 	return (
-		<SQLiteProvider
-			databaseName={DATABASE_NAME}
-			onInit={initDatabase}
-			useNewConnection={false}
-		>
-			<NetStatusProvider>
-				<AuthProvider>
-					<View style={styles.container}>
-						<NavigationContainer>
-							<Stack.Navigator
-
-								initialRouteName="LoginScreen"
-
-								screenOptions={{ headerShown: false }}
-							>
-								<Stack.Screen
-									name="RegistrationScreen"
-									component={RegistrationScreen}
-								/>
-								<Stack.Screen name="OTPScreen" component={OTPScreen} />
-								<Stack.Screen name="LoginScreen" component={LoginScreen} />
-								<Stack.Screen
-									name="ForgotPasswordScreen"
-									component={ForgotPasswordScreen}
-								/>
-								<Stack.Screen
-									name="ResetPasswordScreen"
-									component={ResetPasswordScreen}
-								/>
-								<Stack.Screen name="HomeScreen" component={HomeScreen} />
-							</Stack.Navigator>
-						</NavigationContainer>
-						<StatusBar style="auto" />
-					</View>
-				</AuthProvider>
-			</NetStatusProvider>
-		</SQLiteProvider>
+		<SafeAreaProvider>
+			<SQLiteProvider
+				databaseName={DATABASE_NAME}
+				onInit={initDatabase}
+				useNewConnection={false}
+			>
+				<NetStatusProvider>
+					<AuthProvider>
+						<View style={styles.container}>
+							<AppNavigator />
+							<StatusBar style="auto" />
+						</View>
+					</AuthProvider>
+				</NetStatusProvider>
+			</SQLiteProvider>
+		</SafeAreaProvider>
 	);
 }
 
@@ -101,16 +161,5 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-		paddingTop: 40,
-	},
-	statusText: {
-		fontSize: 12,
-		color: "#555",
-		textAlign: "center",
-		paddingVertical: 8,
-		backgroundColor: "#f0f0f0",
-	},
-	screenContainer: {
-		flex: 1,
 	},
 });

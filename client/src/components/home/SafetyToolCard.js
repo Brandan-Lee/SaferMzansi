@@ -1,8 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
 
 export const SafetyToolCard = ({ item, onPress }) => {
+	// Dynamically assign the component reference to a capitalized variable
+	const IconComponent = item.icon;
+
 	return (
 		<TouchableOpacity
 			activeOpacity={0.7}
@@ -10,7 +12,7 @@ export const SafetyToolCard = ({ item, onPress }) => {
 			onPress={onPress}
 		>
 			<View style={[styles.iconContainer, { backgroundColor: item.bg }]}>
-				<Feather name={item.icon} size={20} color={item.color} />
+				{IconComponent && <IconComponent size={20} color={item.color} />}
 			</View>
 			<Text style={styles.cardTitle}>{item.title}</Text>
 			<Text style={styles.cardSubtitle}>{item.subtitle}</Text>
