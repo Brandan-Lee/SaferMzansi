@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNetStatus } from "@utils/network/netStatus";
-import { MainLayout } from "@components/layouts/AuthLayout";
+import AuthLayout, { MainLayout } from "@components/layouts/AuthLayout";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { sendOtpEmail, verifyOtpCode } from "@services/auth/otpService";
 import { forgotPasswordUser } from "@services/auth/authService";
@@ -354,7 +354,7 @@ const OTPScreen = ({ navigation, route }) => {
 	};
 
 	return (
-		<MainLayout
+		<AuthLayout
 			title="Verify your account"
 			subtitle={`Enter the OTP sent to ${sanitizedEmail || "your email"}`}
 			banner={banner}
@@ -429,7 +429,7 @@ const OTPScreen = ({ navigation, route }) => {
 				/>
 				<Text style={styles.backButtonText}>Back</Text>
 			</Pressable>
-		</MainLayout>
+		</AuthLayout>
 	);
 };
 

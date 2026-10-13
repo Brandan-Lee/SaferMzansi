@@ -19,6 +19,8 @@ export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [sessionToken, setSessionToken] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [pendingAuthRoute, setPendingAuthRoute] = useState(null);
+	const [pendingAuthParams, setPendingAuthParams] = useState(null);
 
 	// Helper method to persist the authentication session upon successful login
 	const updateSession = useCallback((token, userData) => {
@@ -29,6 +31,8 @@ export const AuthProvider = ({ children }) => {
 						userId: userData.userId,
 						email: userData.email,
 						userName: userData.userName,
+						userSurname: userData.userSurname,
+						userNumber: userData.userNumber,
 					}
 				: null,
 		);
@@ -88,10 +92,12 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	// Logout clears state and SecureStore
-	const logout = useCallback(async () => {
+	const logOut = useCallback(async (nextRoute = null, nextParams = null) => {
 		setLoading(true);
 		try {
 			await SecureStore.deleteItemAsync(TOKEN_KEY);
+			setPendingAuthRoute(nextRoute);
+			setPendingAuthParams(nextParams);
 			setSessionToken(null);
 			setUser(null);
 		} finally {
@@ -106,12 +112,14 @@ export const AuthProvider = ({ children }) => {
 			loading,
 			register,
 			login,
-			logout,
+			logOut,
 			updateSession,
 			checkAuthSession,
 			isAuthenticated: !!sessionToken,
+			pendingAuthParams,
+			pendingAuthRoute,
 		}),
-		[user, sessionToken, loading, register, login, logout, checkAuthSession],
+		[user, sessionToken, loading, register, login, logOut, checkAuthSession],
 	);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

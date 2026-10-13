@@ -67,7 +67,7 @@ export const registerUser = async (db, userData) => {
 	};
 
 	const result = await safeApiCall(
-		() => postApi("/users/register", apiPayload),
+		() => postApi("/auth/register", apiPayload),
 		"Server registration failed. Please try again",
 	);
 
@@ -122,7 +122,7 @@ export const loginUser = async (db, email, password) => {
 
 	const response = await safeApiCall(
 		() =>
-			postApi("/users/login", {
+			postApi("/auth/login", {
 				email_blind_index: emailBlindIndex,
 				password,
 			}),
@@ -238,7 +238,7 @@ export const forgotPasswordUser = async (email) => {
 
 	return safeApiCall(
 		() =>
-			postApi("/users/forgot-password", {
+			postApi("/auth/forgot-password", {
 				email_blind_index: emailBlindIndex,
 				email: normalEmail,
 			}),
@@ -259,7 +259,7 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 
 	const result = await safeApiCall(
 		() =>
-			postApi("/users/reset-password", {
+			postApi("/auth/reset-password", {
 				email_blind_index: emailBlindIndex,
 				password,
 				reset_token: resetToken,

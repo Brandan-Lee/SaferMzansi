@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { ActivityIndicator, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -13,6 +12,8 @@ import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetails
 import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
 import DecoyScreen from "@screens/main/DecoyScreen";
 import DecoyPinScreen from "@screens/main/settings/DecoyPinScreen";
+import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
+import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,12 +44,15 @@ function MainStack({ user }) {
 			<Stack.Screen name="EditContactScreen" component={EditContactScreen} />
 			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />
 			<Stack.Screen name="DecoyPinScreen" component={DecoyPinScreen} />
+			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
 		</Stack.Navigator>
 	);
 }
 
 export default function AppNavigator() {
-	const { sessionToken, user } = useContext(AuthContext);
+	const { sessionToken, user, pendingAuthRoute, pendingAuthParams } =
+		useContext(AuthContext);
 
 	// if (loading) {
 	// 	return (
@@ -63,6 +67,15 @@ export default function AppNavigator() {
 			{/* Change the following line to use the second commented one rather than this one */}
 			{/* {sessionToken ? <MainStack user={user} /> : <AuthStack />} */}
 			<MainStack />
+			{sessionToken ? (
+				<MainStack user={user} />
+			) : (
+				<AuthStack
+					initialRoute={pendingAuthRoute || "LoginScreen"}
+					initialParams={pendingAuthParams}
+				/>
+			)}
+			{/* <MainStack /> */}
 		</NavigationContainer>
 	);
 }

@@ -173,7 +173,7 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 	const now = new Date().toISOString();
 	const resolvedCreatedAt = createdAt || now;
 	const resolvedUpdatedAt = updatedAt || now;
-	const resolvedPhone = encryptedPhoneNum || encryptedPhone || "";
+	const resolvedPhone = encryptedPhoneNum || encryptedPhoneNum || "";
 
 	const query = `
 		INSERT INTO Local_Users (
@@ -209,7 +209,7 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 		encryptedName,
 		encryptedSurname,
 		encryptedEmail,
-		encryptedPhoneNum,
+		resolvedPhone,
 		isVerified,
 		isSynched,
 		isDeleted,
@@ -219,4 +219,28 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 	];
 
 	await db.runAsync(query, params);
+};
+
+export const getUserDetails = async (db, userId) => {
+	if (!userId) {
+		throw new Error("User ID is needed to get user details");
+	}
+
+	const query = `SELECT * FROM Local_Users WHERE user_id = ? AND is_deleted = 0`;
+	const result = await db.getAllAsync(query, [userId]);
+	return result[0] || null;
+};
+
+export const markUserAsSoftDeletedLocally = async (db, userId) => {
+	const now = new Date.toISOString();
+	await updateLocalUserField(db, userId, {
+		is_deleted: 1,
+		deleted_at: now,
+		updated_at: now,
+		is_synched: 0,
+	});
+};
+
+export const deleteUserLocally = async (db, userId) => {
+	await db.runAsync(`DELETE FROM Local_Users WHERE user_id = ?`, [userId]);
 };

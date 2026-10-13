@@ -115,6 +115,8 @@ export const validateResetPasswordForm = (formData) => validateForm(formData);
 
 export const validateContactForm = (formData) => validateForm(formData);
 
+export const validateUserForm = (formData) => validateForm(formData);
+
 const normalizeOtpString = (otp) =>
 	Array.isArray(otp) ? otp.join("") : otp?.trim() || "";
 

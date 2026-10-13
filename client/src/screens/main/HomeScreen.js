@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
 import { SafetyToolCard } from "@components/home/SafetyToolCard";
@@ -10,6 +10,7 @@ import { useShake } from "@hooks/useShake";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { getLocalContactTotal } from "@database/repositories/contactRepository";
+import { Ionicons } from "@expo/vector-icons";
 
 const INITIAL_QUICK_ACTIONS = [
 	{
@@ -144,6 +145,18 @@ const HomeScreen = ({ navigation }) => {
 							))}
 						</View>
 					</View>
+
+					{/* Temporary until the settings screen has been implemented */}
+					<TouchableOpacity
+						style={[styles.primaryButton]}
+						activeOpacity={0.8}
+						onPress={() => {
+							navigation.replace("ProfileScreen");
+						}}
+					>
+						<Ionicons name="call-outline" size={20} color="#fff" />
+						<Text style={styles.primaryText}>Profile Screen</Text>
+					</TouchableOpacity>
 				</View>
 			</AuthLayout>
 

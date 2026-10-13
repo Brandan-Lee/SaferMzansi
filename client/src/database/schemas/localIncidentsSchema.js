@@ -7,8 +7,11 @@ export const LOCAL_INCIDENTS_SCHEMA = `
         trigger_type TEXT NOT NULL,
         status TEXT NOT NULL,
         tracking_token TEXT NULL,
+        is_deleted INTEGER NOT NULL DEFAULT 0,
+        deleted_at TEXT NULL DEFAULT NULL,
         start_time TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
         end_time TEXT NULL DEFAULT NULL,
+        updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
         is_synched INTEGER NOT NULL DEFAULT 0,
         FOREIGN KEY (user_id) REFERENCES Local_Users(user_id) ON DELETE CASCADE
     );
