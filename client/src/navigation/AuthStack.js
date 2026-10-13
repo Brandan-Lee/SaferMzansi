@@ -18,7 +18,7 @@ export default function AuthStack({
 			initialRouteName={initialRoute}
 		>
 			<Stack.Screen name="LoginScreen" component={LoginScreen} />
-			<Stack.Screen name="RegisterScreen" component={RegistrationScreen} />
+			<Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
 			<Stack.Screen
 				name="ForgotPasswordScreen"
 				component={ForgotPasswordScreen}

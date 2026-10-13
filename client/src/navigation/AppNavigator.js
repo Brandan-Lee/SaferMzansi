@@ -14,6 +14,7 @@ import DecoyScreen from "@screens/main/DecoyScreen";
 import DecoyPinScreen from "@screens/main/settings/DecoyPinScreen";
 import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
 import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
+import SettingsScreen from "@screens/main/settings/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ function MainStack({ user }) {
 			<Stack.Screen name="DecoyPinScreen" component={DecoyPinScreen} />
 			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+			<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
 		</Stack.Navigator>
 	);
 }

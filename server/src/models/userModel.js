@@ -1,5 +1,4 @@
 const { supabase } = require("#config/supabase_db.js");
-const { hardDeleteUser } = require("#controllers/userController.js");
 
 //Method to create a user in supabase during registration
 const createUser = async (payload) => {
@@ -107,6 +106,8 @@ const updateUser = async (payload) => {
 		throw new Error("Update user in supabase");
 	}
 
+	console.log("entered in model");
+
 	const { user_id, ...updateFields } = payload;
 
 	const cleanFields = Object.fromEntries(
@@ -130,7 +131,6 @@ const updateUser = async (payload) => {
 
 	return user;
 };
-
 
 const softDeleteUser = async (userId) => {
 	if (!userId) {

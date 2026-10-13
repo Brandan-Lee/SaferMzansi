@@ -168,6 +168,8 @@ export const updateUser = async (
 		"Server failed to update user profile. Saving changes locally for offline sync",
 	);
 
+	console.log(result);
+
 	if (result?.success) {
 		await markUserAsSynched(db, userId);
 	} else {

@@ -48,7 +48,6 @@ const registerUser = async (userData) => {
 };
 
 const authenticateUser = async ({ email_blind_index, password }) => {
-	// Added missing await on findUserByEmailBlindIndex
 	const user = await userModel.findUserByEmailBlindIndex(email_blind_index);
 	const contacts = await contactModel.getEmergencyContacts(user.user_id);
 
