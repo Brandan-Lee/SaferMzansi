@@ -2,70 +2,155 @@ import "react-native-get-random-values";
 
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import * as Location from "expo-location";
+import { initDatabase } from "@database/init";
+import { AuthProvider } from "@context/AuthContext";
+import { NetStatusProvider } from "@utils/network/netStatus";
+import AppNavigator from "@navigation/AppNavigator";
+import * as TaskManager from "expo-task-manager";
+import { useShake } from "@hooks/useShake";
+import { useLocation } from "@hooks/useLocation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { initDatabase } from "./src/database/init";
-import { AuthProvider } from "./src/context/AuthContext";
-
-// Import of all screens for the mobile app
-import ForgotPasswordScreen from "./src/screens/auth/ForgotPasswordScreen";
-import OTPScreen from "./src/screens/auth/OTPScreen";
-import LoginScreen from "./src/screens/auth/LoginScreen";
-import RegistrationScreen from "./src/screens/auth/RegistrationScreen";
-import HomeScreen from "./src/screens/main/HomeScreen";
-import ResetPasswordScreen from './src/screens/auth/ResetPasswordScreen';
-import EmergencyContactsScreen, {
-	MOCK_CONTACTS,
-	USE_MOCK_DATA,
-} from "./src/screens/main/EmergencyContactsScreen";
-import AddContactScreen from "./src/screens/main/AddContactScreen";
-import ContactDetailsScreen from "./src/screens/main/ContactDetailsScreen";
-
-import { NetStatusProvider } from "./src/utils/NetStatus";
-
-const Stack = createNativeStackNavigator();
-
-//Retrieve environment variables
-const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/health`;
 const DATABASE_NAME = "safer_mzansi.db";
+export const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
+
+const KEYS = {
+	SHARE_LOCATION: "@setting_share_location",
+	GESTURE: "@setting_gesture",
+};
+
+TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
+	if (error) {
+		console.error("SaferMzansi Background Location Task Exception:", error);
+		return;
+	}
+
+	try {
+		// Always check persistent storage inside the background thread
+		const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+		const isSharingEnabled = savedShare === "true";
+
+		if (!isSharingEnabled) {
+			console.log(
+				"Background location received, but sharing is disabled by user setting.",
+			);
+			// Optionally stop location updates here if user turned it off
+			await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
+			return;
+		}
+
+		if (data) {
+			const { locations } = data;
+			if (locations && locations.length > 0) {
+				const { latitude, longitude } = locations[0].coords;
+				console.log("Background Location :", latitude, longitude);
+			}
+		}
+	} catch (err) {
+		console.error("Error reading storage inside background task:", err);
+	}
+});
 
 export default function App() {
-	const [status, setStatus] = useState("TESTING 123 - NEW BUNDLE");
+	const { getLocation, loading: locationLoading } = useLocation();
+	const [shareLiveLocation, setShareLiveLocation] = useState(false);
 
-	// Emergency contacts (kept in memory for now)
-	const [contacts, setContacts] = useState(USE_MOCK_DATA ? MOCK_CONTACTS : []);
-	const deleteContact = (id) => setContacts((prev) => prev.filter((c) => c.id !== id));
+	// Method to ask permissions and start background location tracking
+	const runBackgroundLocationTracking = async () => {
+		try {
+			const { status: fgStatus } =
+				await Location.requestForegroundPermissionsAsync();
+			const { status: bgStatus } =
+				await Location.requestBackgroundPermissionsAsync();
 
-	// //Connect to the backend Node.js server
-	// useEffect(() => {
-	// 	const controller = new AbortController();
-	// 	const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+			if (fgStatus !== "granted" || bgStatus !== "granted") {
+				Alert.alert(
+					"Permissions Missing",
+					"Please accept both foreground and background tracking settings to share your live location.",
+				);
+				return;
+			}
 
-	// 	fetch(API_URL, { signal: controller.signal })
-	// 		.then(async (res) => {
-	// 			clearTimeout(timeoutId);
-	// 			const text = await res.text();
-	// 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
-	// 			return JSON.parse(text);
-	// 		})
-	// 		.then((data) => setStatus(data.message))
-	// 		.catch((err) => {
-	// 			clearTimeout(timeoutId);
-	// 			console.error("Fetch error details:", err);
-	// 			if (err.name === "AbortError") {
-	// 				setStatus("Connection timed out (Server unreachable)");
-	// 			} else {
-	// 				setStatus(`Connection failed: ${err.message}`);
-	// 			}
-	// 		});
+			// Check if task is already running to avoid duplication errors
+			const isRegistered = await TaskManager.isTaskRegisteredAsync(
+				BACKGROUND_LOCATION_TASK,
+			);
 
-	// 	return () => clearTimeout(timeoutId);
-	// }, []);
+			if (!isRegistered) {
+				await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
+					accuracy: Location.Accuracy.Balanced,
+					timeInterval: 5000,
+					distanceInterval: 1,
+					showsBackgroundLocationIndicator: true, // Required for iOS background tracking visibility
+					foregroundService: {
+						notificationTitle: "Safer Mzansi Active",
+						notificationBody:
+							"Live location sharing is running in the background.",
+						notificationColor: "#FF0000",
+					},
+				});
+				console.log("Background tracking task started successfully.");
+			}
+		} catch (error) {
+			console.log("Background Tracking Initialization Error:", error.message);
+		}
+	};
+
+	const handleEmergencyShake = async () => {
+		try {
+			const savedGesture = await AsyncStorage.getItem(KEYS.GESTURE);
+			const isGestureEnabled = savedGesture === "true";
+
+			if (!isGestureEnabled) {
+				console.log("Shake detected, but gesture activation is disabled in settings");
+				return;
+			}
+
+			console.log("Emergency shake triggered!");
+
+			const result = await getLocation();
+
+			if (result.success) {
+				console.log(
+					"GPS COORDINATES:",
+					result.location.latitude,
+					result.location.longitude
+				);
+			} else {
+				console.log("Location capture failed:", result.error);
+			}
+		} catch (error) {
+			console.error("Error reading gesture activation setting:", error);
+		}
+	};
+
+	useShake(handleEmergencyShake);
+
+	// Load saved setting and initialize background tracking if enabled
+	useEffect(() => {
+		const initializeSettings = async () => {
+			try {
+				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+
+				if (savedShare !== null) {
+					const isShared = savedShare === "true";
+					setShareLiveLocation(isShared);
+
+					if (isShared) {
+						runBackgroundLocationTracking();
+					}
+				}
+			} catch (error) {
+				console.error("Error reading location sharing preference: ", error);
+			}
+		};
+
+		initializeSettings();
+	}, []);
 
 	return (
 		<SafeAreaProvider>
@@ -77,70 +162,7 @@ export default function App() {
 				<NetStatusProvider>
 					<AuthProvider>
 						<View style={styles.container}>
-							<NavigationContainer>
-								<Stack.Navigator
-
-									initialRouteName="EmergencyContactsScreen"
-
-									screenOptions={{ headerShown: false }}
-								>
-									<Stack.Screen
-										name="RegistrationScreen"
-										component={RegistrationScreen}
-									/>
-									<Stack.Screen name="OTPScreen" component={OTPScreen} />
-									<Stack.Screen name="LoginScreen" component={LoginScreen} />
-									<Stack.Screen
-										name="ForgotPasswordScreen"
-										component={ForgotPasswordScreen}
-									/>
-									<Stack.Screen
-										name="ResetPasswordScreen"
-										component={ResetPasswordScreen}
-									/>
-									<Stack.Screen name="HomeScreen" component={HomeScreen} />
-
-									<Stack.Screen name="EmergencyContactsScreen">
-										{({ navigation }) => (
-											<EmergencyContactsScreen
-												contacts={contacts}
-												onAddPress={() => navigation.navigate("AddContactScreen")}
-												onContactPress={(contact) =>
-													navigation.navigate("ContactDetailsScreen", { contactId: contact.id })
-												}
-												onBack={() => {
-													if (navigation.canGoBack()) navigation.goBack();
-												}}
-											/>
-										)}
-									</Stack.Screen>
-
-									<Stack.Screen name="ContactDetailsScreen">
-										{({ navigation, route }) => (
-											<ContactDetailsScreen
-												contact={contacts.find((c) => c.id === route.params?.contactId)}
-												onBack={() => navigation.goBack()}
-												onDelete={(id) => {
-													deleteContact(id);
-													navigation.goBack();
-												}}
-											/>
-										)}
-									</Stack.Screen>
-
-									<Stack.Screen name="AddContactScreen">
-										{({ navigation }) => (
-											<AddContactScreen
-												onSave={(contact) => {
-													setContacts((prev) => [...prev, contact]);
-													navigation.goBack();
-												}}
-												onBack={() => navigation.goBack()}
-											/>
-										)}
-									</Stack.Screen>
-								</Stack.Navigator>
-							</NavigationContainer>
+							<AppNavigator />
 							<StatusBar style="auto" />
 						</View>
 					</AuthProvider>
@@ -154,16 +176,5 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-		paddingTop: 40,
-	},
-	statusText: {
-		fontSize: 12,
-		color: "#555",
-		textAlign: "center",
-		paddingVertical: 8,
-		backgroundColor: "#f0f0f0",
-	},
-	screenContainer: {
-		flex: 1,
 	},
 });

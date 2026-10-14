@@ -2,6 +2,9 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
 const otpStore = new Map();
+const passwordResetTokenStore = new Map();
+const otpRequestTimes = new Map();
+const OTP_REQUEST_COOLDOWN_MS = 60 * 1000;
 const port = parseInt(process.env.SMTP_PORT, 10) || 587;
 
 // Create a transporter to send the email to the user
@@ -99,6 +102,37 @@ const generateOtpEmailHTML = (otp) => {
     `;
 };
 
+const canRequestOtp = (email) => {
+	const lastRequestedAt = otpRequestTimes.get(email);
+	const now = Date.now();
+
+	if (lastRequestedAt && now - lastRequestedAt < OTP_REQUEST_COOLDOWN_MS) {
+		return false;
+	}
+
+	otpRequestTimes.set(email, now);
+	return true;
+};
+
+const createOtpMailOptions = (email, purpose = "verification", userId = null) => {
+	const sanitizedEmail = sanitizeEmail(email);
+	const otp = crypto.randomInt(100000, 999999).toString();
+
+	otpStore.set(sanitizedEmail, {
+		otp,
+		expiresAt: Date.now() + 5 * 60 * 1000,
+		purpose,
+		userId,
+	});
+
+	return {
+		from: `${process.env.FROM_NAME || "SaferMzansi"} <${process.env.FROM_EMAIL}>`,
+		to: sanitizedEmail,
+		subject: "Your SaferMzansi Verification Code",
+		html: generateOtpEmailHTML(otp),
+	};
+};
+
 // Periodic background cleanup interval for expired OTPs
 setInterval(
 	() => {
@@ -107,6 +141,18 @@ setInterval(
 		for (const [key, record] of otpStore.entries()) {
 			if (now > record.expiresAt) {
 				otpStore.delete(key);
+			}
+		}
+
+		for (const [key, record] of passwordResetTokenStore.entries()) {
+			if (now > record.expiresAt) {
+				passwordResetTokenStore.delete(key);
+			}
+		}
+
+		for (const [key, requestedAt] of otpRequestTimes.entries()) {
+			if (now - requestedAt >= OTP_REQUEST_COOLDOWN_MS) {
+				otpRequestTimes.delete(key);
 			}
 		}
 	},
@@ -121,21 +167,11 @@ const sendOtpEmail = async (email) => {
 		return buildResponse(false, 400, "Email is required");
 	}
 
-	// Generate 6-digit OTP
-	const otp = crypto.randomInt(100000, 999999).toString();
-	// OTP lives for 5 minutes
-	const expiresAt = Date.now() + 5 * 60 * 1000;
+	if (!canRequestOtp(sanitizedEmail)) {
+		return buildResponse(false, 429, "Please wait before requesting another code");
+	}
 
-	// Store OTP using the sanitized email string variable as the key
-	otpStore.set(sanitizedEmail, { otp, expiresAt });
-
-	const mailOptions = {
-		from: `${process.env.FROM_NAME || "SaferMzansi"} <${process.env.FROM_EMAIL}>`,
-		to: sanitizedEmail,
-		subject: `Your SaferMzansi Verification Code`,
-		text: `Your OTP is: ${otp}. It will expire in 5 minutes.`,
-		html: generateOtpEmailHTML(otp),
-	};
+	const mailOptions = createOtpMailOptions(sanitizedEmail);
 
 	try {
 		await transporter.sendMail(mailOptions);
@@ -146,36 +182,97 @@ const sendOtpEmail = async (email) => {
 	}
 };
 
+const queueOtpEmail = (email, userId) => {
+	const sanitizedEmail = sanitizeEmail(email);
+
+	if (!sanitizedEmail || !userId) {
+		throw new Error("Email and user ID are required to send a password reset OTP");
+	}
+
+	if (!canRequestOtp(sanitizedEmail)) {
+		return;
+	}
+
+	const mailOptions = createOtpMailOptions(
+		sanitizedEmail,
+		"password_reset",
+		userId,
+	);
+	setImmediate(() => {
+		transporter.sendMail(mailOptions).catch((error) => {
+			console.error("Failed to send password reset OTP:", error.message);
+			otpStore.delete(sanitizedEmail);
+		});
+	});
+};
+
 // Method that verifies the OTP received from the client
-const verifyOtpCode = async (email, otp) => {
+const verifyOtpCode = async (email, otp, purpose = "verification") => {
 	const key = sanitizeEmail(email);
 	const receivedOtp = otp ? String(otp).trim() : "";
 	const record = otpStore.get(key);
 
 	// OTP doesn't exist
-	if (!record) {
-		return buildResponse(false, 400, "No OTP found for this email address");
+	if (!record || record.purpose !== purpose) {
+		return buildResponse(false, 400, "Invalid verification code or code expired");
 	}
 
 	// Verify if the OTP code has expired or not
 	if (Date.now() > record.expiresAt) {
 		otpStore.delete(key);
-		return buildResponse(
-			false,
-			400,
-			"OTP has expired. Please request a new one and try again",
-		);
+		return buildResponse(false, 400, "Invalid verification code or code expired");
 	}
 
 	// OTP received is not the same as the OTP stored in the map
 	if (record.otp !== receivedOtp) {
-		return buildResponse(false, 400, "Invalid OTP. Please try again");
+		return buildResponse(false, 400, "Invalid verification code or code expired");
 	}
 
 	// Clean up stored OTP after successful verification
 	otpStore.delete(key);
 
+	if (purpose === "password_reset" && record.userId) {
+		const resetToken = crypto.randomBytes(32).toString("hex");
+		passwordResetTokenStore.set(resetToken, {
+			userId: record.userId,
+			expiresAt: Date.now() + 5 * 60 * 1000,
+		});
+
+		return {
+			...buildResponse(true, 200, "OTP verified successfully."),
+			resetToken,
+		};
+	}
+
 	return buildResponse(true, 200, "OTP verified successfully.");
 };
 
-module.exports = { sendOtpEmail, verifyOtpCode };
+const isPasswordResetTokenValid = (resetToken, userId) => {
+	const record = passwordResetTokenStore.get(resetToken);
+
+	if (!record || record.userId !== userId || Date.now() > record.expiresAt) {
+		if (record && Date.now() > record.expiresAt) {
+			passwordResetTokenStore.delete(resetToken);
+		}
+		return false;
+	}
+
+	return true;
+};
+
+const consumePasswordResetToken = (resetToken, userId) => {
+	if (!isPasswordResetTokenValid(resetToken, userId)) {
+		return false;
+	}
+
+	passwordResetTokenStore.delete(resetToken);
+	return true;
+};
+
+module.exports = {
+	sendOtpEmail,
+	queueOtpEmail,
+	verifyOtpCode,
+	isPasswordResetTokenValid,
+	consumePasswordResetToken,
+};
