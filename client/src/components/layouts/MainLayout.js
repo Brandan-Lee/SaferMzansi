@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 		backgroundColor: PURPLE,
 		borderRadius: 8,
 		paddingVertical: 12,
-		marginBottom: 50,
+		marginBottom: 30,
 		gap: 12,
 	},
 	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },

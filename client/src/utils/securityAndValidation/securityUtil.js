@@ -38,3 +38,27 @@ export const encryptPayload = (payload) => {
 		return acc;
 	}, {});
 };
+
+export const hashFileSHA256 = async (fileUri) => {
+	try {
+		const response = await fetch(fileUri);
+		const arrayBuffer = await response.arrayBuffer();
+
+		const byteArray = new Uint8Array(arrayBuffer);
+		let binaryString = "";
+		const chunkSize = 8192;
+
+		for (let i = 0; i < byteArray.length; i += chunkSize) {
+			const chunk = byteArray.subarray(i, i + chunkSize);
+			binaryString += String.fromCharCode.apply(null, chunk);
+		}
+
+		const wordArray = CryptoJS.enc.Latin1.parse(binaryString);
+		const hash = CryptoJS.SHA256(wordArray);
+
+		return hash.toString(CryptoJS.enc.Hex);
+	} catch (error) {
+		console.error("[Security Util] Failed to hash file with SHA-256:", error);
+		throw new Error("Failed to generate SHA-256 file hash.");
+	}
+};
