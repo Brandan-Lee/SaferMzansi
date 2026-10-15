@@ -1,4 +1,3 @@
-// authService_2.js
 const { supabase } = require("#config/supabase_db.js");
 const contactModel = require("#models/contactModel.js");
 const userModel = require("#models/userModel.js");
@@ -49,7 +48,6 @@ const registerUser = async (userData) => {
 
 const authenticateUser = async ({ email_blind_index, password }) => {
 	const user = await userModel.findUserByEmailBlindIndex(email_blind_index);
-	const contacts = await contactModel.getEmergencyContacts(user.user_id);
 
 	if (!user) {
 		return null;
@@ -76,7 +74,25 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 			.update({ is_deleted: false, deleted_at: null, updated_at: now })
 			.eq("user_id", user.user_id);
 
+		await supabase
+			.from("Evidence_Vault")
+			.update({ is_deleted: false, deleted_at: null, updated_at: now })
+			.eq("user_id", user.user_id);
+
 		user.is_deleted = false;
+	}
+
+	// Fetch contacts and evidence safely after user validation
+	const contacts = await contactModel.getEmergencyContacts(user.user_id);
+
+	const { data: evidence, error: evidenceError } = await supabase
+		.from("Evidence_Vault")
+		.select("*")
+		.eq("user_id", user.user_id)
+		.eq("is_deleted", false);
+
+	if (evidenceError) {
+		console.error("[Auth Service] Error fetching evidence for login:", evidenceError);
 	}
 
 	const { password_hash, ...safeUser } = user;
@@ -85,7 +101,12 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 		email: user.encrypted_email,
 	});
 
-	return { user: safeUser, contacts, token };
+	return {
+		user: safeUser,
+		contacts: contacts || [],
+		evidence: evidence || [],
+		token
+	};
 };
 
 const requestForgotPassword = async (email, email_blind_index) => {

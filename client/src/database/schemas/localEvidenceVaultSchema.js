@@ -6,6 +6,7 @@ export const LOCAL_EVIDENCE_VAULT_SCHEMA = `
         user_id TEXT NOT NULL,
         file_type TEXT NOT NULL,
         local_file_url TEXT NOT NULL,
+        cloud_file_url TEXT NULL,
         sha256_hash TEXT NOT NULL,
         file_size INTEGER NOT NULL,
         is_deleted INTEGER NOT NULL DEFAULT 0,

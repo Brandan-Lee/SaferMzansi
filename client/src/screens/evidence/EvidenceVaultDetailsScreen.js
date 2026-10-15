@@ -9,6 +9,51 @@ import EvidenceDetailCard from "@components/evidence/EvidenceDetailCard";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import DownloadModal from "@components/modals/DownloadModal";
 import { deleteEvidence } from "@services/evidence/evidenceService";
+import { downloadToDownloadsDirectory, downloadFilesAsZip } from "@utils/downloadUtil";
+
+const getFileId = (file) => file.evidence_id || file.evidenceId;
+
+const getFileName = (file) => {
+  const localUrl = file.local_file_url || file.localFileUrl || file.uri || "";
+  const evidenceId = getFileId(file);
+
+  if (localUrl.includes('/')) {
+    const baseName = localUrl.substring(localUrl.lastIndexOf('/') + 1);
+    if (evidenceId && baseName.startsWith(`${evidenceId}_`)) {
+      return baseName.replace(`${evidenceId}_`, '');
+    }
+    return baseName;
+  }
+
+  if (file.name && file.name.includes('.')) {
+    if (evidenceId && file.name.startsWith(`${evidenceId}_`)) {
+      return file.name.replace(`${evidenceId}_`, '');
+    }
+    return file.name;
+  }
+
+  const mime = file.file_type || file.fileType || "";
+  const ext = mime.includes('webp') ? 'webp' : mime.includes('pdf') ? 'pdf' : 'jpg';
+
+  return `${evidenceId}.${ext}`;
+};
+
+// Generates the exact compound key: userId/evidenceId_pickerName without duplicating IDs
+const getRemotePath = (userId, file) => {
+  const fileId = getFileId(file);
+  const fileName = getFileName(file);
+
+  // If the stored path already contains the full userId/fileId_filename format, use it directly
+  const rawPath = file.local_file_url || file.cloud_file_url || "";
+  if (rawPath.startsWith(`${userId}/${fileId}_`)) {
+    console.log("PRODUCTION BUCKET PATH DISPATCHED (RAW):", rawPath);
+    return rawPath;
+  }
+
+  const targetPath = `${userId}/${fileId}_${fileName}`;
+  console.log("PRODUCTION BUCKET PATH DISPATCHED:", targetPath);
+  return targetPath;
+};
 
 export default function EvidenceVaultDetailsScreen() {
   const navigation = useNavigation();
@@ -28,6 +73,8 @@ export default function EvidenceVaultDetailsScreen() {
     message: "",
   });
 
+  const updateDownloadModal = (state) => setDownloadModalState((prev) => ({ ...prev, ...state }));
+
   if (!evidenceItem) {
     return (
       <MainLayout
@@ -45,51 +92,103 @@ export default function EvidenceVaultDetailsScreen() {
     );
   }
 
-  const handleDownloadSingle = (file) => {
-    setDownloadModalState({
+  const handleDownloadSingle = async (file) => {
+    const evidenceId = getFileId(file);
+    const localName = getFileName(file);
+
+    if (!evidenceId) {
+      Alert.alert("Error", "Could not identify the unique evidence item ID.");
+      return;
+    }
+
+    const remotePath = getRemotePath(user.userId, file);
+
+    updateDownloadModal({
       visible: true,
       loading: true,
-      title: "Preparing Download",
-      message: `Starting download for ${file.name || "File"}...`,
+      title: "Preparing Secure Download",
+      message: `Fetching file from secure repository...`,
     });
 
-    setTimeout(() => {
-      setDownloadModalState({
-        visible: true,
+    try {
+      await downloadToDownloadsDirectory(remotePath, localName);
+      updateDownloadModal({
         loading: false,
-        title: "Download Started",
-        message: `${file.name || "File"} is being downloaded to your device storage.`,
+        title: "Download Complete",
+        message: `"${localName}" has been successfully downloaded to your local device directory.`,
       });
-    }, 1200);
+    } catch (error) {
+      console.error("Single download routine failed:", error);
+      updateDownloadModal({ loading: false, title: "Download Failed", message: "Failed to download item from storage vault." });
+    }
   };
 
-  const handleDownloadAll = () => {
-    setDownloadModalState({
+  const handleDownloadAll = async () => {
+    if (!evidenceItem.files?.length) {
+      Alert.alert("Empty Collection", "No files found to compile into a zip bundle.");
+      return;
+    }
+
+    const totalFiles = evidenceItem.files.length;
+
+    updateDownloadModal({
       visible: true,
       loading: true,
-      title: "Packaging Bundle",
-      message: `Preparing all files.`,
+      title: "Compiling ZIP Bundle",
+      message: `Initializing download queue for ${totalFiles} records...`,
     });
 
-    setTimeout(() => {
-      setDownloadModalState({
-        visible: true,
-        loading: false,
-        title: "Bundle Ready",
-        message: "All files have been successfully packaged and download has started.",
+    try {
+      const filesToZip = [];
+
+      for (let i = 0; i < totalFiles; i++) {
+        const file = evidenceItem.files[i];
+        const remotePath = getRemotePath(user.userId, file);
+        const localName = getFileName(file);
+
+        updateDownloadModal({
+          message: `Fetching file ${i + 1} of ${totalFiles}: ${localName}...`,
+        });
+
+        filesToZip.push({ remotePath, localName });
+      }
+
+      updateDownloadModal({
+        message: `Compressing and packaging ${totalFiles} assets into archive folder...`,
       });
-    }, 1500);
+
+      const cleanBannerDate = (evidenceItem.date || "Evidence").replace(/[^a-zA-Z0-9]/g, "_");
+      const zipFileName = `Evidence_Bundle_${cleanBannerDate}.zip`;
+
+      await downloadFilesAsZip(filesToZip, zipFileName);
+
+      updateDownloadModal({
+        loading: false,
+        title: "ZIP Bundle Downloaded",
+        message: `Successfully assembled and saved "${zipFileName}" into your native downloads folder.`,
+      });
+    } catch (error) {
+      console.error("ZIP pipeline initialization sequence failed:", error);
+      updateDownloadModal({
+        loading: false,
+        title: "Zip Export Failed",
+        message: "Failed to assemble compressed asset package folder bundle.",
+      });
+    }
   };
 
   const confirmDeleteFile = async () => {
-    if (!db || !fileToDelete?.evidenceId || !user.userId) {
+    const fileId = fileToDelete?.evidence_id || fileToDelete?.evidenceId;
+    const userId = user?.userId || user?.user_id;
+
+    if (!db || !fileId || !userId) {
       Alert.alert("Error", "Missing required parameters for deletion.");
       return;
     }
 
     try {
       setIsDeleting(true);
-      await deleteEvidence(db, fileToDelete.evidenceId, user.userId);
+      await deleteEvidence(db, fileId, userId);
       setFileToDelete(null);
       navigation.replace("EvidenceVaultScreen");
     } catch (error) {
@@ -119,7 +218,7 @@ export default function EvidenceVaultDetailsScreen() {
       >
         <View style={styles.dateBanner}>
           <View>
-            <Text style={styles.bannerSubtitle}>Recorded On</Text>
+            <Text style={styles.bannerSubtitle}>Added On</Text>
             <Text style={styles.bannerTitle}>{evidenceItem.date}</Text>
           </View>
           <View style={styles.badgeContainer}>
@@ -140,7 +239,6 @@ export default function EvidenceVaultDetailsScreen() {
         ))}
       </ScrollView>
 
-      {/* Reusable Confirmation Modal for Deletion */}
       <ConfirmationModal
         visible={!!fileToDelete}
         title="Delete File"
@@ -154,13 +252,12 @@ export default function EvidenceVaultDetailsScreen() {
         onCancel={() => !isDeleting && setFileToDelete(null)}
       />
 
-      {/* Download Progress / Status Modal */}
       <DownloadModal
         visible={downloadModalState.visible}
         title={downloadModalState.title}
         message={downloadModalState.message}
         loading={downloadModalState.loading}
-        onClose={() => setDownloadModalState((prev) => ({ ...prev, visible: false }))}
+        onClose={() => updateDownloadModal({ visible: false })}
       />
     </MainLayout>
   );
@@ -187,5 +284,5 @@ const styles = StyleSheet.create({
   bannerTitle: { fontSize: 20, fontWeight: "bold", color: "#111827", marginTop: 4 },
   badgeContainer: { backgroundColor: "#E9D5FF", paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20 },
   badgeText: { color: "#6B21A8", fontWeight: "bold", fontSize: 12 },
-  sectionHeader: { fontSize: 16, fontWeight: "bold", color: "#374151", marginBottom: 14 },
+  sectionHeader: { fontSize: 16, fontWeight: "bold", color: "#374151", marginBottom: 14, paddingHorizontal: 4 },
 });

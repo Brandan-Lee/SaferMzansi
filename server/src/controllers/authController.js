@@ -43,8 +43,6 @@ const register = async (req, res) => {
 	}
 };
 
-// #controllers/authController.js
-
 const login = async (req, res) => {
 	try {
 		const result = await authService.authenticateUser(req.body);
@@ -56,7 +54,7 @@ const login = async (req, res) => {
 			});
 		}
 
-		const { user, contacts, token } = result;
+		const { user, contacts, evidence, token } = result;
 
 		return res.status(200).json({
 			message: "Login Successful",
@@ -75,6 +73,7 @@ const login = async (req, res) => {
 				is_verified: user.is_verified,
 			},
 			contacts: contacts || [], // Send all retrieved contacts from Supabase
+			evidence: evidence || [],
 		});
 	} catch (error) {
 		console.error("Error during login process:", error);

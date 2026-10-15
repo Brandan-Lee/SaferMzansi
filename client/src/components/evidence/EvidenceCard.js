@@ -1,24 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { supabase } from "@config/supabase_client";
 
 const PURPLE = "#6B21A8";
 
 const FilePreview = ({ fileObj }) => {
-    if (fileObj.type === "image") {
-        return <Image source={{ uri: fileObj.uri }} style={styles.previewImage} />;
+    const [resolvedUri, setResolvedUri] = useState("");
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const resolveUri = async () => {
+            if (!fileObj) return;
+
+            const rawUri = fileObj.uri || fileObj.local_file_url || fileObj.cloud_file_url;
+            if (!rawUri) return;
+
+            if (rawUri.startsWith("file://") || rawUri.startsWith("http")) {
+                if (isMounted) setResolvedUri(rawUri);
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.storage
+                    .from("EvidenceVault")
+                    .createSignedUrl(rawUri, 300);
+
+                if (!error && data?.signedUrl && isMounted) {
+                    setResolvedUri(data.signedUrl);
+                }
+            } catch (err) {
+                console.error("Failed to resolve card signed image URL:", err);
+            }
+        };
+
+        resolveUri();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [fileObj]);
+
+    if (fileObj.type === "image" && resolvedUri) {
+        return <Image source={{ uri: resolvedUri }} style={styles.previewImage} />;
     }
-    if (fileObj.type === "video") {
+    if (fileObj.type === "video" && resolvedUri) {
         return (
             <View style={styles.videoPreviewContainer}>
-                <Image source={{ uri: fileObj.uri }} style={styles.previewImage} resizeMode="cover" />
+                <Image source={{ uri: resolvedUri }} style={styles.previewImage} resizeMode="cover" />
                 <View style={styles.playOverlay}>
                     <Feather name="play" size={12} color="#FFFFFF" />
                 </View>
             </View>
         );
     }
-    return <Feather name={fileObj.icon} size={22} color="#2D1638" />;
+    return <Feather name={fileObj.icon || "file-text"} size={22} color="#2D1638" />;
 };
 
 export default function EvidenceCard({ item, onPress }) {

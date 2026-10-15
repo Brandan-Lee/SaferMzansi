@@ -1,6 +1,6 @@
 const getTimestamp = () => new Date().toISOString().replace("T", " ").slice(0, 23);
 
-//Format bytes to readable size
+// Format bytes to readable size
 const formatFileSize = (bytes) => {
 	if (!bytes) return "Encrypted file";
 	const k = 1024;
@@ -9,7 +9,7 @@ const formatFileSize = (bytes) => {
 	return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
 };
 
-//Map MIME type to file type and icon
+// Map MIME type to file type and icon
 const getFileTypeInfo = (mimeType = "") => {
 	if (mimeType.startsWith("image/")) return { type: "image", icon: "file" };
 	if (mimeType.startsWith("video/")) return { type: "video", icon: "file" };
@@ -31,6 +31,45 @@ export const insertLocalEvidence = async (db, payload) => {
 	return await db.runAsync(query, [
 		evidenceId, userId, fileType, localFileUrl,
 		sha256Hash, fileSize, getTimestamp()
+	]);
+};
+
+// Optional helper if your sync needs an upsert fallback matching your base columns
+export const saveOrUpdateLocalEvidence = async (db, userId, evidenceData) => {
+	const {
+		evidenceId,
+		fileType,
+		localFileUrl = "",
+		cloudFileUrl = "",
+		sha256Hash,
+		fileSize,
+		isSynched = 0,
+		isDeleted = 0
+	} = evidenceData;
+
+	if (!evidenceId || !userId) {
+		throw new Error("evidenceId and userId are required to save or update evidence.");
+	}
+
+	const query = `
+        INSERT INTO Local_Evidence_Vault (
+            evidence_id, user_id, file_type, local_file_url, cloud_file_url,
+            sha256_hash, file_size, captured_at, is_deleted, is_synched, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(evidence_id) DO UPDATE SET
+            file_type = excluded.file_type,
+            local_file_url = excluded.local_file_url,
+            cloud_file_url = excluded.cloud_file_url,
+            sha256_hash = excluded.sha256_hash,
+            file_size = excluded.file_size,
+            is_synched = excluded.is_synched,
+            is_deleted = excluded.is_deleted,
+            updated_at = excluded.updated_at
+    `;
+
+	await db.runAsync(query, [
+		evidenceId, userId, fileType, localFileUrl, cloudFileUrl,
+		sha256Hash, fileSize, getTimestamp(), isDeleted, isSynched, getTimestamp()
 	]);
 };
 

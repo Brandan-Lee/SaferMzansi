@@ -2,7 +2,6 @@ import * as Crypto from "expo-crypto";
 import {
 	encryptPayload,
 	generateBlindIndex,
-	decryptData,
 } from "@utils/securityAndValidation/securityUtil";
 import { postApi, safeApiCall } from "@services/ApiClient";
 import {
@@ -17,26 +16,20 @@ import {
 	markContactAsSynched,
 } from "@database/repositories/contactRepository";
 import { getAuthToken, saveToken } from "@utils/auth/authTokenUtil";
+import {
+	saveOrUpdateLocalEvidence,
+	markEvidenceAsSynched,
+} from "@database/repositories/evidenceRepository";
 
 const normalizeEmail = (email) =>
 	String(email ?? "")
 		.trim()
 		.toLowerCase();
 
-const safeDecrypt = (val) => {
-	if (!val) return "";
-	try {
-		return decryptData(val) || val;
-	} catch (err) {
-		return val;
-	}
-};
-
 // Service to handle user registration
 export const registerUser = async (db, userData) => {
 	const { name, surname, email, phoneNum, password } = userData;
 
-	// 1. Safely check if user exists locally
 	let existingUser = null;
 	try {
 		existingUser = await findUserByEmail(db, email);
@@ -50,12 +43,10 @@ export const registerUser = async (db, userData) => {
 		);
 	}
 
-	// 2. Generate unique user ID & encrypt PII
 	const userId = Crypto.randomUUID();
 	const emailBlindIndex = generateBlindIndex(email);
 	const encryptedData = encryptPayload({ name, surname, email, phoneNum });
 
-	// 3. Post to Node.js backend
 	const apiPayload = {
 		user_id: userId,
 		email_blind_index: emailBlindIndex,
@@ -76,7 +67,6 @@ export const registerUser = async (db, userData) => {
 		throw new Error(result?.error || "Server registration failed.");
 	}
 
-	// 4. Save to local database with try/catch to avoid locking issues
 	const localPayload = {
 		userId,
 		emailBlindIndex,
@@ -92,10 +82,8 @@ export const registerUser = async (db, userData) => {
 		await markUserAsSynched(db, userId);
 	} catch (localDbErr) {
 		console.error("[User Service] Failed to sync local SQLite DB:", localDbErr);
-		// Proceeding since backend registration succeeded and token was issued
 	}
 
-	// 5. Save the JWT token to SecureStore
 	try {
 		await saveToken(result.data.token);
 	} catch (tokenErr) {
@@ -135,8 +123,8 @@ export const loginUser = async (db, email, password) => {
 
 		const serverUser = response.data.user;
 		const serverContacts = response.data.contacts || [];
+		const serverEvidence = response.data.evidence || [];
 
-		// 1. Sync User Record to local SQLite
 		if (serverUser) {
 			await saveOrUpdateLocalUser(db, {
 				userId: serverUser.user_id,
@@ -155,7 +143,6 @@ export const loginUser = async (db, email, password) => {
 			await markUserAsSynched(db, serverUser.user_id);
 		}
 
-		// 2. Sync all retrieved Supabase Emergency Contacts to local SQLite
 		if (Array.isArray(serverContacts) && serverContacts.length > 0) {
 			for (const contact of serverContacts) {
 				const contactId = contact.contact_id || contact.id;
@@ -200,6 +187,38 @@ export const loginUser = async (db, email, password) => {
 				}
 			}
 		}
+
+		if (Array.isArray(serverEvidence) && serverEvidence.length > 0) {
+			for (const evidence of serverEvidence) {
+				const evidenceId = evidence.evidence_id || evidence.id;
+
+				const localEvidencePayload = {
+					evidenceId,
+					userId: serverUser.user_id,
+					fileType: evidence.file_type || "application/octet-stream",
+					localFileUrl: evidence.local_file_url || evidence.cloud_file_url || "",
+					sha256Hash: evidence.sha256_hash || "",
+					fileSize: evidence.file_size || 0,
+					isSynched: 1,
+					isDeleted: evidence.is_deleted ? 1 : 0,
+				};
+
+				try {
+					await saveOrUpdateLocalEvidence(
+						db,
+						serverUser.user_id,
+						localEvidencePayload,
+					);
+					await markEvidenceAsSynched(db, evidenceId);
+				} catch (evidenceErr) {
+					console.error(
+						`[Auth Service] Failed to sync evidence ${evidenceId} to SQLite:`,
+						evidenceErr,
+					);
+				}
+			}
+		}
+
 	} else if (response.status === 0) {
 		isOffline = true;
 

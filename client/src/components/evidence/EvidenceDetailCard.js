@@ -1,17 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { supabase } from "@config/supabase_client";
 
 const PURPLE = "#6B21A8";
 
 const FilePreview = ({ file }) => {
-    if (file.type === "image") {
-        return <Image source={{ uri: file.uri }} style={styles.thumbnailImage} />;
+    const [resolvedUri, setResolvedUri] = useState("");
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const resolveUri = async () => {
+            if (!file) return;
+
+            const rawUri = file.uri || file.local_file_url || file.cloud_file_url;
+            if (!rawUri) return;
+
+            if (rawUri.startsWith("file://") || rawUri.startsWith("http")) {
+                if (isMounted) setResolvedUri(rawUri);
+                return;
+            }
+
+            // Generate a secure signed URL for private storage bucket objects
+            try {
+                const { data, error } = await supabase.storage
+                    .from("EvidenceVault")
+                    .createSignedUrl(rawUri, 300); // Valid for 5 minutes
+
+                if (!error && data?.signedUrl && isMounted) {
+                    setResolvedUri(data.signedUrl);
+                }
+            } catch (err) {
+                console.error("Failed to resolve signed image URL:", err);
+            }
+        };
+
+        resolveUri();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [file]);
+
+    if (file.type === "image" && resolvedUri) {
+        return <Image source={{ uri: resolvedUri }} style={styles.thumbnailImage} />;
     }
-    if (file.type === "video") {
+    if (file.type === "video" && resolvedUri) {
         return (
             <View style={styles.videoWrapper}>
-                <Image source={{ uri: file.uri }} style={styles.thumbnailImage} resizeMode="cover" />
+                <Image source={{ uri: resolvedUri }} style={styles.thumbnailImage} resizeMode="cover" />
                 <View style={styles.playBadge}>
                     <Feather name="play" size={12} color="#FFFFFF" />
                 </View>
