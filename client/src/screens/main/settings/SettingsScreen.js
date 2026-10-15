@@ -204,7 +204,7 @@ const SettingsScreen = ({ navigation, route }) => {
 	return (
 		<MainLayout
 			title="Settings"
-			onBack={() => navigation.replace("HomeScreen")}
+			onBack={() => navigation.goBack()}
 			tab="Settings"
 			navigation={navigation}
 		>
@@ -217,7 +217,7 @@ const SettingsScreen = ({ navigation, route }) => {
 				<SettingRow
 					icon="user"
 					title="Profile"
-					onPress={() => navigation.replace("ProfileScreen")}
+					onPress={() => navigation.navigate("ProfileScreen")}
 				/>
 
 				<SettingRow
@@ -272,7 +272,7 @@ const SettingsScreen = ({ navigation, route }) => {
 				<SettingRow
 					icon="lock"
 					title="Decoy Configuration"
-					onPress={() => showTemporaryAlert("Decoy Configuration")}
+					onPress={() => navigation.navigate("DecoyConfigurationScreen")}
 				/>
 
 				{/* ABOUT */}

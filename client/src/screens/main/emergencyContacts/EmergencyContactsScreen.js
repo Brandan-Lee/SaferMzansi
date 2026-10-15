@@ -83,7 +83,7 @@ export default function EmergencyContactsScreen({ navigation }) {
 	return (
 		<MainLayout
 			title="Emergency contacts"
-			onBack={() => navigation.replace("HomeScreen")}
+			onBack={() => navigation.goBack()}
 			banner={banner}
 			tab="Contacts"
 			navigation={navigation}
@@ -92,7 +92,7 @@ export default function EmergencyContactsScreen({ navigation }) {
 					{
 						label: "Add contact",
 						icon: "person-add-outline",
-						onPress: () => navigation.replace("AddContactScreen", { userId: user?.userId })
+						onPress: () => navigation.navigate("AddContactScreen", { userId: user?.userId })
 					}
 					: null
 			}
@@ -109,7 +109,7 @@ export default function EmergencyContactsScreen({ navigation }) {
 						<ContactCard
 							item={item}
 							onPress={() =>
-								navigation.replace("ContactDetailsScreen", {
+								navigation.navigate("ContactDetailsScreen", {
 									contact: item,
 									userId,
 								})

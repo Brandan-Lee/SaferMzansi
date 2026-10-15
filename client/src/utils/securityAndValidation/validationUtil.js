@@ -43,6 +43,21 @@ const FIELD_RULES = {
 			: rawVal !== formData.password
 				? "Passwords do not match"
 				: "",
+	decoyPin: (val, rawVal, formData) => {
+		const str = String(val ?? "").trim();
+		if (!str) return "Decoy PIN is required";
+		if (str.length < 4) return "Decoy PIN must be at least 4 characters";
+		return "";
+	},
+	emergencyPin: (val, rawVal, formData) => {
+		const str = String(val ?? "").trim();
+		if (!str) return "Emergency PIN is required";
+		if (str.length < 4) return "Emergency PIN must be at least 4 characters";
+		if (formData?.decoyPin && str === String(formData.decoyPin).trim()) {
+			return "Emergency PIN cannot be the same as Decoy PIN";
+		}
+		return "";
+	},
 };
 
 //Method that helps to validate the fields enter into the form
@@ -116,6 +131,8 @@ export const validateResetPasswordForm = (formData) => validateForm(formData);
 export const validateContactForm = (formData) => validateForm(formData);
 
 export const validateUserForm = (formData) => validateForm(formData);
+
+export const validateDecoyForm = (formData) => validateForm(formData);
 
 const normalizeOtpString = (otp) =>
 	Array.isArray(otp) ? otp.join("") : otp?.trim() || "";

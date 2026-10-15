@@ -43,7 +43,7 @@ const registerUser = async (userData) => {
 		email: newUser.encrypted_email,
 	});
 
-	return { user: newUser, token };
+	return { user: newUser, token, password };
 };
 
 const authenticateUser = async ({ email_blind_index, password }) => {

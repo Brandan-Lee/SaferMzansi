@@ -20,6 +20,7 @@ export const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
 
 const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
+	GESTURE: "@setting_gesture",
 };
 
 TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
@@ -100,18 +101,30 @@ export default function App() {
 	};
 
 	const handleEmergencyShake = async () => {
-		console.log("Emergency shake triggered!");
+		try {
+			const savedGesture = await AsyncStorage.getItem(KEYS.GESTURE);
+			const isGestureEnabled = savedGesture === "true";
 
-		const result = await getLocation();
+			if (!isGestureEnabled) {
+				console.log("Shake detected, but gesture activation is disabled in settings");
+				return;
+			}
 
-		if (result.success) {
-			console.log(
-				"GPS COORDINATES:",
-				result.location.latitude,
-				result.location.longitude,
-			);
-		} else {
-			console.log("Location capture failed:", result.error);
+			console.log("Emergency shake triggered!");
+
+			const result = await getLocation();
+
+			if (result.success) {
+				console.log(
+					"GPS COORDINATES:",
+					result.location.latitude,
+					result.location.longitude
+				);
+			} else {
+				console.log("Location capture failed:", result.error);
+			}
+		} catch (error) {
+			console.error("Error reading gesture activation setting:", error);
 		}
 	};
 

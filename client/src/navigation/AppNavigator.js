@@ -1,86 +1,83 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "@context/AuthContext";
 import AuthStack from "./AuthStack";
-
-import HomeScreen from "@screens/main/HomeScreen";
-import EmergencyContactsScreen from "@screens/main/emergencyContacts/EmergencyContactsScreen";
-import AddContactScreen from "@screens/main/emergencyContacts/AddContactScreen";
-import ContactDetailsScreen from "@screens/main/emergencyContacts/ContactDetailsScreen";
-import EditContactScreen from "@screens/main/emergencyContacts/EditContactScreen";
-import DecoyScreen from "@screens/main/DecoyScreen";
-import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
-import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
-import SettingsScreen from "@screens/main/settings/SettingsScreen";
-import EvidenceVaultScreen from "@screens/evidence/EvidenceVaultScreen";
-import EvidenceVaultDetailsScreen from "@screens/evidence/EvidenceVaultDetailsScreen";
-
+import MainStack from "./MainStack";
+import DecoyScreen from "@screens/decoy/DecoyScreen";
 
 const Stack = createNativeStackNavigator();
-
-function MainStack({ user }) {
-	return (
-		<Stack.Navigator
-			screenOptions={{ headerShown: false }}
-			//Change this to the screen name that you wish to work on... so HomeScreen to SettingsScreen for instance
-			initialRouteName="HomeScreen"
-		>
-			<Stack.Screen
-				name="HomeScreen"
-				component={HomeScreen}
-				initialParams={{
-					userName: user?.userName,
-					userId: user?.userId,
-				}}
-			/>
-			<Stack.Screen
-				name="EmergencyContactsScreen"
-				component={EmergencyContactsScreen}
-			/>
-			<Stack.Screen name="AddContactScreen" component={AddContactScreen} />
-			<Stack.Screen
-				name="ContactDetailsScreen"
-				component={ContactDetailsScreen}
-			/>
-			<Stack.Screen name="EditContactScreen" component={EditContactScreen} />
-			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />
-			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
-			<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
-			<Stack.Screen name="EvidenceVaultScreen" component={EvidenceVaultScreen} />
-			<Stack.Screen name="EvidenceVaultDetailsScreen" component={EvidenceVaultDetailsScreen} />
-
-
-		</Stack.Navigator>
-	);
-}
+const DECOY_LAUNCH_KEY = "@setting_launch_decoy";
 
 export default function AppNavigator() {
-	const { sessionToken, user, pendingAuthRoute, pendingAuthParams } =
+	const { sessionToken, user, pendingAuthRoute, pendingAuthParams, logOut } =
 		useContext(AuthContext);
 
-	// if (loading) {
-	// 	return (
-	// 		<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-	// 			<ActivityIndicator size="large" />
-	// 		</View>
-	// 	);
-	// }
+	const [isCheckingLaunch, setIsCheckingLaunch] = useState(true);
+	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
+	const [isDecoyUnlocked, setIsDecoyUnlocked] = useState(false);
+	const [emergencyTriggered, setEmergencyTriggered] = useState(false);
+
+	useEffect(() => {
+		const initializeApp = async () => {
+			try {
+				await logOut();
+			} catch (error) {
+				console.error("Failed to clear the previous app session", error);
+			}
+
+			try {
+				const savedToggle = await AsyncStorage.getItem(DECOY_LAUNCH_KEY);
+				if (savedToggle === "true") {
+					setLaunchAsDecoy(true);
+				}
+			} catch (error) {
+				console.error("Failed to load decoy launch preference", error);
+			} finally {
+				setIsCheckingLaunch(false);
+			}
+		};
+
+		initializeApp();
+	}, [logOut]);
+
+	if (isCheckingLaunch) {
+		return null;
+	}
+
+	const showMainStack =
+		(emergencyTriggered && !isDecoyUnlocked) || Boolean(sessionToken);
 
 	return (
 		<NavigationContainer>
-			{/* Change the following line to use the second commented one rather than this one */}
-			{sessionToken ? (
-				<MainStack user={user} />
+			{showMainStack ? (
+				<MainStack
+					user={user}
+					initialRouteName={
+						emergencyTriggered ? "EmergencyContactsScreen" : "HomeScreen"
+					}
+				/>
+			) : launchAsDecoy && !isDecoyUnlocked ? (
+				<Stack.Navigator screenOptions={{ headerShown: false }}>
+					<Stack.Screen name="DecoyScreen">
+						{() => (
+							<DecoyScreen
+								onDecoyUnlock={() => setIsDecoyUnlocked(true)}
+								onEmergencyUnlock={() => setEmergencyTriggered(true)}
+							/>
+						)}
+					</Stack.Screen>
+				</Stack.Navigator>
 			) : (
 				<AuthStack
-					initialRoute={pendingAuthRoute || "LoginScreen"}
-					initialParams={pendingAuthParams}
+					initialRoute={
+						isDecoyUnlocked ? "LoginScreen" : pendingAuthRoute || "LoginScreen"
+					}
+					initialParams={isDecoyUnlocked ? undefined : pendingAuthParams}
 				/>
 			)}
-			{/* <MainStack /> */}
 		</NavigationContainer>
 	);
 }

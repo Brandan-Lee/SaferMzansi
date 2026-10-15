@@ -1,4 +1,4 @@
-import { createSyncIndex } from "../dbConstatns";
+import { createSyncIndex } from "../dbConstants";
 
 export const LOCAL_INCIDENT_LOCATIONS_SCHEMA = `
     CREATE TABLE IF NOT EXISTS Local_Incident_Locations (
@@ -8,10 +8,7 @@ export const LOCAL_INCIDENT_LOCATIONS_SCHEMA = `
         longitude REAL NOT NULL,
         altitude REAL NULL DEFAULT NULL,
         accuracy REAL NULL DEFAULT NULL,
-        is_deleted INTEGER NOT NULL DEFAULT 0,
-        deleted_at TEXT NULL DEFAULT NULL,
         created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
-        updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
         is_synched INTEGER NOT NULL DEFAULT 0,
         FOREIGN KEY (incident_id) REFERENCES Local_Incidents(incident_id) ON DELETE CASCADE
     );

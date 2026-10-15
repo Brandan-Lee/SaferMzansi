@@ -81,7 +81,7 @@ const ProfileScreen = ({ navigation }) => {
 		.join("");
 
 	const handleEditScreen = () => {
-		navigation.replace("EditProfileScreen", { userDetails });
+		navigation.navigate("EditProfileScreen", { userDetails });
 	};
 
 	const handleSendOTP = async () => {
@@ -182,7 +182,7 @@ const ProfileScreen = ({ navigation }) => {
 	return (
 		<MainLayout
 			title="User Profle"
-			onBack={() => navigation.replace("SettingsScreen")}
+			onBack={() => navigation.goBack()}
 			tab="Settings"
 			navigation={navigation}
 			banner={banner}

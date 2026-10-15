@@ -22,15 +22,23 @@ const formatAuthSuccess = (
 
 const register = async (req, res) => {
 	try {
-		const { user, token } = await authService.registerUser(req.body);
-		return formatAuthSuccess(
-			res,
-			201,
-			"User successfully registered and synched with database",
-			user.user_id,
-			user.encrypted_email,
+		const { user, token, password } = await authService.registerUser(req.body);
+		return res.status(201).json({
+			message: "User successfully registered and synched with database",
 			token,
-		);
+			user: {
+				user_id: user.user_id,
+				email_blind_index: user.email_blind_index,
+				encrypted_name: user.encrypted_name,
+				encrypted_surname: user.encrypted_surname,
+				encrypted_email: user.encrypted_email,
+				encrypted_phone_num: user.encrypted_phone_num,
+				password_hash: user.password_hash,
+				is_verified: user.is_verified,
+				created_at: user.created_at,
+				updated_at: user.updated_at,
+			},
+		});
 	} catch (error) {
 		if (error.statusCode === 409 || error.code === "23505") {
 			console.error("Error during register user:", error);
