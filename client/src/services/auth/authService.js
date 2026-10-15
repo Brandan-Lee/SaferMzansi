@@ -23,6 +23,14 @@ const normalizeEmail = (email) =>
 		.trim()
 		.toLowerCase();
 
+// Helper to hash password using expo-crypto for offline verification
+const hashPasswordLocal = async (password) => {
+	return await Crypto.digestStringAsync(
+		Crypto.CryptoDigestAlgorithm.SHA256,
+		password,
+	);
+};
+
 const safeDecrypt = (val) => {
 	if (!val) return "";
 	try {
@@ -76,6 +84,9 @@ export const registerUser = async (db, userData) => {
 		throw new Error(result?.error || "Server registration failed.");
 	}
 
+	// Generate a local SHA-256 hash of the password for offline comparison
+	const localPasswordHash = await hashPasswordLocal(password);
+
 	// 4. Save to local database with try/catch to avoid locking issues
 	const localPayload = {
 		userId,
@@ -84,6 +95,7 @@ export const registerUser = async (db, userData) => {
 		encryptedSurname: encryptedData.surname,
 		encryptedEmail: encryptedData.email,
 		encryptedPhoneNum: encryptedData.phoneNum,
+		passwordHash: localPasswordHash,
 	};
 
 	try {
@@ -92,7 +104,6 @@ export const registerUser = async (db, userData) => {
 		await markUserAsSynched(db, userId);
 	} catch (localDbErr) {
 		console.error("[User Service] Failed to sync local SQLite DB:", localDbErr);
-		// Proceeding since backend registration succeeded and token was issued
 	}
 
 	// 5. Save the JWT token to SecureStore
@@ -136,6 +147,9 @@ export const loginUser = async (db, email, password) => {
 		const serverUser = response.data.user;
 		const serverContacts = response.data.contacts || [];
 
+		// Generate local password hash from the input password during successful online login
+		const localPasswordHash = await hashPasswordLocal(password);
+
 		// 1. Sync User Record to local SQLite
 		if (serverUser) {
 			await saveOrUpdateLocalUser(db, {
@@ -145,6 +159,7 @@ export const loginUser = async (db, email, password) => {
 				encryptedSurname: serverUser.encrypted_surname,
 				encryptedEmail: serverUser.encrypted_email,
 				encryptedPhoneNum: serverUser.encrypted_phone_num,
+				passwordHash: localPasswordHash, // Store local hash for subsequent offline logins
 				createdAt: serverUser.created_at,
 				updatedAt: serverUser.updated_at,
 				deletedAt: serverUser.deleted_at,
@@ -160,7 +175,7 @@ export const loginUser = async (db, email, password) => {
 			for (const contact of serverContacts) {
 				const contactId = contact.contact_id || contact.id;
 
-				const emailBlindIndex =
+				const contactEmailBlindIndex =
 					contact.contact_email_blind_index ||
 					contact.email_blind_index ||
 					contact.emailBlindIndex;
@@ -168,7 +183,7 @@ export const loginUser = async (db, email, password) => {
 				const localContactPayload = {
 					contactId,
 					userId: serverUser.user_id,
-					emailBlindIndex,
+					emailBlindIndex: contactEmailBlindIndex,
 					encryptedName:
 						contact.encrypted_contact_name || contact.encryptedName,
 					encryptedSurname:
@@ -209,6 +224,20 @@ export const loginUser = async (db, email, password) => {
 			);
 		}
 
+		// 3. Verify password hash locally during offline login using expo-crypto SHA-256
+		if (!localUser.password_hash) {
+			throw new Error(
+				"Offline authentication credentials are missing. Please connect online once to sync.",
+			);
+		}
+
+		const inputPasswordHash = await hashPasswordLocal(password);
+		if (inputPasswordHash !== localUser.password_hash) {
+			throw new Error(
+				"Invalid credentials. Please check your password and try again.",
+			);
+		}
+
 		if (!token) {
 			token = `offline_token_${localUser.user_id}`;
 			await saveToken(token);
@@ -221,13 +250,13 @@ export const loginUser = async (db, email, password) => {
 		userId: localUser?.user_id || response.data?.user?.user_id,
 		userName: localUser?.encrypted_name || response.data?.user?.encrypted_name,
 		email: normalizeEmail(email),
-		user: localUser,
+		user: localUser || response.data?.user,
 		token,
 		isOffline,
 	};
 };
 
-//Service to handle Forgot password request of the user
+// Service to handle Forgot password request of the user
 export const forgotPasswordUser = async (email) => {
 	if (!email) {
 		throw new Error("Email is required for password reset");
@@ -246,7 +275,7 @@ export const forgotPasswordUser = async (email) => {
 	);
 };
 
-//Service to handle user reset password operations
+// Service to handle user reset password operations
 export const resetPasswordUser = async (db, password, email, resetToken) => {
 	if (!password || !email || !resetToken) {
 		throw new Error(
@@ -274,6 +303,8 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 	const serverUser = result.data?.user;
 
 	if (serverUser) {
+		const localPasswordHash = await hashPasswordLocal(password);
+
 		await saveOrUpdateLocalUser(db, {
 			userId: serverUser.user_id,
 			emailBlindIndex: serverUser.email_blind_index,
@@ -281,6 +312,7 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 			encryptedSurname: serverUser.encrypted_surname,
 			encryptedEmail: serverUser.encrypted_email,
 			encryptedPhoneNum: serverUser.encrypted_phone_num,
+			passwordHash: localPasswordHash,
 			createdAt: serverUser.created_at,
 			updatedAt: serverUser.updated_at,
 			deletedAt: serverUser.deleted_at,

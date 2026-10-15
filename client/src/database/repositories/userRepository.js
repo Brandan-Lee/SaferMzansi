@@ -86,6 +86,7 @@ export const insertLocalUser = async (db, user) => {
 		encryptedSurname,
 		encryptedEmail,
 		encryptedPhoneNum,
+		passwordHash,
 	} = user;
 
 	//Data that has to be sent to the SQLite table
@@ -97,9 +98,10 @@ export const insertLocalUser = async (db, user) => {
             encrypted_surname,
             encrypted_email,
             encrypted_phone_num,
+			password_hash,
             is_verified,
             is_synched
-        ) VALUES (?, ?, ?, ?, ?, ?, 0, 0)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)`,
 		[
 			userId,
 			emailBlindIndex,
@@ -107,6 +109,7 @@ export const insertLocalUser = async (db, user) => {
 			encryptedSurname,
 			encryptedEmail,
 			encryptedPhoneNum,
+			passwordHash,
 		],
 	);
 };
@@ -156,6 +159,7 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 		encryptedSurname,
 		encryptedEmail,
 		encryptedPhoneNum,
+		passwordHash,
 		isVerified,
 		createdAt,
 		updatedAt,
@@ -183,19 +187,21 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 			encrypted_surname,
 			encrypted_email,
 			encrypted_phone_num,
+			password_hash,
 			is_verified,
 			is_synched,
 			is_deleted,
 			created_at,
 			updated_at,
 			deleted_at
-		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		ON CONFLICT(user_id) DO UPDATE SET
 			email_blind_index = excluded.email_blind_index,
 			encrypted_name = excluded.encrypted_name,
 			encrypted_surname = excluded.encrypted_surname,
 			encrypted_email = excluded.encrypted_email,
 			encrypted_phone_num = excluded.encrypted_phone_num,
+			password_hash = excluded.password_hash,
 			is_verified = excluded.is_verified,
 			is_synched = excluded.is_synched,
 			is_deleted = excluded.is_deleted,
@@ -210,6 +216,7 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 		encryptedSurname,
 		encryptedEmail,
 		resolvedPhone,
+		passwordHash,
 		isVerified,
 		isSynched,
 		isDeleted,
