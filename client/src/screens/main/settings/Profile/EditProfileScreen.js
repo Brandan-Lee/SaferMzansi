@@ -91,7 +91,7 @@ const EditProfileScreen = ({ navigation, route }) => {
 			});
 
 			setTimeout(() => {
-				navigation.replace("ProfileScreen", {
+				navigation.navigate("ProfileScreen", {
 					userDetails,
 				});
 			}, 800);
@@ -137,11 +137,11 @@ const EditProfileScreen = ({ navigation, route }) => {
 				iconName: "warning-outline",
 				onConfirm: () => {
 					hideModal();
-					navigation.replace("ProfileScreen", { userDetails });
+					navigation.goBack();
 				},
 			});
 		} else {
-			navigation.replace("ProfileScreen", { userDetails });
+			navigation.goBack();
 		}
 	};
 

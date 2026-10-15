@@ -63,7 +63,7 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 	return (
 		<MainLayout
 			title="Decoy Configuration"
-			onBack={() => navigation.replace("SettingsScreen")}
+			onBack={() => navigation.goBack()}
 			tab="Settings"
 			navigation={navigation}
 		>
@@ -206,7 +206,7 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 				<TouchableOpacity
 					style={styles.previewButton}
 					activeOpacity={0.8}
-					onPress={() => navigation.replace("DecoyScreen", { isTesting: true })}
+					onPress={() => navigation.navigate("DecoyScreen", { isTesting: true })}
 				>
 					<Feather name="smartphone" size={20} color="#FFFFFF" />
 					<Text style={styles.previewButtonText}>
@@ -239,7 +239,7 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 					<TouchableOpacity
 						style={styles.primaryActionButton}
 						activeOpacity={0.85}
-						onPress={() => navigation.replace("DecoyAddScreen")}
+						onPress={() => navigation.navigate("DecoyAddScreen")}
 					>
 						<Feather name="plus-circle" size={18} color="#FFFFFF" />
 						<Text style={styles.actionButtonText}>Add Decoy Configuration</Text>

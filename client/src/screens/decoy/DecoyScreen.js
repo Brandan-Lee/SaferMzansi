@@ -4,10 +4,10 @@ import { evaluate } from "mathjs";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { verifyDecoyAttempt } from "@services/main/decoyService";
 
-const DecoyScreen = () => {
+const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 	const navigation = useNavigation();
 	const route = useRoute();
-	const { isTesting } = route.params || {}; // Read isTesting from route params
+	const { isTesting } = route.params || {};
 
 	const [pin, setPin] = useState("");
 	const [emergencyPin, setEmergencyPin] = useState("");
@@ -20,10 +20,12 @@ const DecoyScreen = () => {
 	const calculate = async () => {
 		if (isTesting) {
 			if (pin === "1234") {
-				navigation.replace("DecoyConfigurationScreen"); // Jump back to config when testing
+				navigation.goBack();
 				return;
 			} else if (pin === "0000") {
-				navigation.replace("EmergencyContactsScreen");
+				if (onEmergencyUnlock) {
+					onEmergencyUnlock();
+				}
 				return;
 			}
 		}
@@ -32,14 +34,17 @@ const DecoyScreen = () => {
 
 		if (matchType === "emergency") {
 			setPin("");
-			navigation.replace("EmergencyContactsScreen");
+			if (onEmergencyUnlock) {
+				onEmergencyUnlock();
+			}
 			return;
 		}
 
 		if (matchType === "decoy") {
 			setPin("");
-			// Standard decoy unlock behavior
-			navigation.replace("AuthStack");
+			if (onDecoyUnlock) {
+				onDecoyUnlock();
+			}
 			return;
 		}
 

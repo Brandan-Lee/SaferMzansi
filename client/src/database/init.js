@@ -1,6 +1,5 @@
 import { logLocalUsersDatabase } from "@database/repositories/userRepository";
 import { logLocalEmergencyContactsDatabase } from "@database/repositories/contactRepository";
-import { DECOY_SCHEMA } from "@database/schemas/decoySchema";
 import { LOCAL_EMERGENCY_CONTACTS_SCHEMA } from "@database/schemas/localEmergencyContactsSchema";
 import { LOCAL_EVIDENCE_VAULT_SCHEMA } from "@database/schemas/localEvidenceVaultSchema";
 import { LOCAL_INCIDENT_LOCATIONS_SCHEMA } from "@database/schemas/localIncidentLocationsSchema";
@@ -13,7 +12,6 @@ const TABLE_SCHEMAS = [
 	LOCAL_INCIDENT_LOCATIONS_SCHEMA,
 	LOCAL_EVIDENCE_VAULT_SCHEMA,
 	LOCAL_EMERGENCY_CONTACTS_SCHEMA,
-	DECOY_SCHEMA,
 ];
 
 export const initDatabase = async (db) => {

@@ -92,7 +92,7 @@ const DecoyUpdateForm = ({ storedPins, navigation, user }) => {
 				type: "success",
 			});
 
-			setTimeout(() => navigation.replace("DecoyConfigurationScreen"), 800);
+			setTimeout(() => navigation.goBack(), 800);
 		} catch (error) {
 			setBanner({
 				message:
@@ -128,11 +128,11 @@ const DecoyUpdateForm = ({ storedPins, navigation, user }) => {
 				iconName: "warning-outline",
 				onConfirm: () => {
 					hideModal();
-					navigation.replace("DecoyConfigurationScreen");
+					navigation.goBack();
 				},
 			});
 		} else {
-			navigation.replace("DecoyConfigurationScreen");
+			navigation.goBack();
 		}
 	};
 
@@ -218,7 +218,7 @@ const DecoyUpdateScreen = () => {
 		return (
 			<MainLayout
 				title="Update Decoy Configuration"
-				onBack={() => navigation.replace("DecoyConfigurationScreen")}
+				onBack={() => navigation.goBack()}
 				tab="Settings"
 				navigation={navigation}
 			>

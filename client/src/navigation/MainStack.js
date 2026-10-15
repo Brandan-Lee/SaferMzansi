@@ -13,14 +13,15 @@ import DecoyAddScreen from "@screens/main/settings/decoy/DecoyAddScreen";
 import DecoyUpdateScreen from "@screens/main/settings/decoy/DecoyUpdateScreen";
 import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
 import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
+import SupportHubScreen from "@screens/main/supportHub/SupportHubScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function MainStack({ user }) {
+export default function MainStack({ user, initialRouteName = "HomeScreen" }) {
 	return (
 		<Stack.Navigator
 			screenOptions={{ headerShown: false }}
-			initialRouteName="HomeScreen"
+			initialRouteName={initialRouteName}
 		>
 			<Stack.Screen
 				name="HomeScreen"
@@ -51,6 +52,7 @@ export default function MainStack({ user }) {
 			/>
 			<Stack.Screen name="DecoyAddScreen" component={DecoyAddScreen} />
 			<Stack.Screen name="DecoyUpdateScreen" component={DecoyUpdateScreen} />
+			<Stack.Screen name="SupportHubScreen" component={SupportHubScreen} />
 		</Stack.Navigator>
 	);
 }

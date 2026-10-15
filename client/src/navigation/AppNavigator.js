@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,21 +7,27 @@ import { AuthContext } from "@context/AuthContext";
 import AuthStack from "./AuthStack";
 import MainStack from "./MainStack";
 import DecoyScreen from "@screens/decoy/DecoyScreen";
-import EmergencyContactsScreen from "@screens/main/emergencyContacts/EmergencyContactsScreen";
 
 const Stack = createNativeStackNavigator();
 const DECOY_LAUNCH_KEY = "@setting_launch_decoy";
 
 export default function AppNavigator() {
-	const { sessionToken, user, pendingAuthRoute, pendingAuthParams } =
+	const { sessionToken, user, pendingAuthRoute, pendingAuthParams, logOut } =
 		useContext(AuthContext);
 
 	const [isCheckingLaunch, setIsCheckingLaunch] = useState(true);
 	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
 	const [isDecoyUnlocked, setIsDecoyUnlocked] = useState(false);
+	const [emergencyTriggered, setEmergencyTriggered] = useState(false);
 
 	useEffect(() => {
-		const checkStartupPreference = async () => {
+		const initializeApp = async () => {
+			try {
+				await logOut();
+			} catch (error) {
+				console.error("Failed to clear the previous app session", error);
+			}
+
 			try {
 				const savedToggle = await AsyncStorage.getItem(DECOY_LAUNCH_KEY);
 				if (savedToggle === "true") {
@@ -35,38 +40,44 @@ export default function AppNavigator() {
 			}
 		};
 
-		checkStartupPreference();
-	}, []);
+		initializeApp();
+	}, [logOut]);
+
+	if (isCheckingLaunch) {
+		return null;
+	}
+
+	const showMainStack =
+		(emergencyTriggered && isDecoyUnlocked) || Boolean(sessionToken);
 
 	return (
 		<NavigationContainer>
-			{sessionToken ? (
-				<MainStack user={user} />
+			{showMainStack ? (
+				<MainStack
+					user={user}
+					initialRouteName={
+						emergencyTriggered ? "EmergencyContactsScreen" : "HomeScreen"
+					}
+				/>
 			) : launchAsDecoy && !isDecoyUnlocked ? (
 				<Stack.Navigator screenOptions={{ headerShown: false }}>
 					<Stack.Screen name="DecoyScreen">
-						{() => <DecoyScreen onUnlock={() => setIsDecoyUnlocked(true)} />}
+						{() => (
+							<DecoyScreen
+								onDecoyUnlock={() => setIsDecoyUnlocked(true)}
+								onEmergencyUnlock={() => setEmergencyTriggered(true)}
+							/>
+						)}
 					</Stack.Screen>
-					<Stack.Screen
-						name="EmergencyContactsScreen"
-						component={EmergencyContactsScreen}
-					/>
 				</Stack.Navigator>
 			) : (
 				<AuthStack
-					initialRoute={pendingAuthRoute || "LoginScreen"}
-					initialParams={pendingAuthParams}
+					initialRoute={
+						isDecoyUnlocked ? "LoginScreen" : pendingAuthRoute || "LoginScreen"
+					}
+					initialParams={isDecoyUnlocked ? undefined : pendingAuthParams}
 				/>
 			)}
 		</NavigationContainer>
 	);
 }
-
-const styles = StyleSheet.create({
-	loaderContainer: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#FFFFFF",
-	},
-});

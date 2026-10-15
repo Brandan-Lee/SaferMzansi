@@ -109,7 +109,7 @@ const EditContactScreen = ({ navigation, route }) => {
 			});
 
 			setTimeout(() => {
-				navigation.replace("ContactDetailsScreen", {
+				navigation.navigate("ContactDetailsScreen", {
 					contact: {
 						...contact,
 						...contactPayload,
@@ -159,11 +159,11 @@ const EditContactScreen = ({ navigation, route }) => {
 				iconName: "warning-outline",
 				onConfirm: () => {
 					hideModal();
-					navigation.replace("ContactDetailsScreen", { contact });
+					navigation.goBack();
 				},
 			});
 		} else {
-			navigation.replace("ContactDetailsScreen", { contact });
+			navigation.goBack();
 		}
 	};
 

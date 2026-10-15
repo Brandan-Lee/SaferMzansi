@@ -101,7 +101,7 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 				setTimeout(() => {
 					hideModal();
 					setIsLoading(false);
-					navigation.replace("EmergencyContactsScreen");
+					navigation.goBack();
 				}, 800);
 			},
 		});
@@ -110,7 +110,7 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 	return (
 		<MainLayout
 			title="Contact details"
-			onBack={() => navigation.replace("EmergencyContactsScreen")}
+			onBack={() => navigation.goBack()}
 			tab="Contacts"
 			navigation={navigation}
 		>

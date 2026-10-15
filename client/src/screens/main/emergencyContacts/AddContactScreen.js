@@ -102,7 +102,7 @@ const AddContactScreen = ({ navigation }) => {
 			});
 
 			setTimeout(() => {
-				navigation.replace("EmergencyContactsScreen", {});
+				navigation.goBack();
 			}, 800);
 		} catch (error) {
 			setBanner({
@@ -135,13 +135,11 @@ const AddContactScreen = ({ navigation }) => {
 				iconName: "warning-outline",
 				onConfirm: () => {
 					hideModal();
-					navigation.replace("EmergencyContactsScreen", {
-						userId: user.userId,
-					});
+					navigation.goBack();
 				},
 			});
 		} else {
-			navigation.replace("EmergencyContactsScreen", { userId: user.userId });
+			navigation.goBack();
 		}
 	};
 

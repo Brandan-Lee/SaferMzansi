@@ -16,7 +16,7 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 		{ name: "Vault", route: "VaultScreen", icon: "vault" },
 		{
 			name: "Support Hub",
-			route: "SupportHubSreen",
+			route: "SupportHubScreen",
 			icon: "hand-holding-heart",
 		},
 		{ name: "Settings", route: "SettingsScreen", icon: "gear" },

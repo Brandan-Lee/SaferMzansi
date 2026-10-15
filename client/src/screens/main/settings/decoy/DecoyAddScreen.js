@@ -89,7 +89,7 @@ const DecoyAddScreen = () => {
 				type: "success",
 			});
 
-			setTimeout(() => navigation.replace("DecoyConfigurationScreen"), 800);
+			setTimeout(() => navigation.goBack(), 800);
 		} catch (error) {
 			setBanner({
 				message:
@@ -118,13 +118,11 @@ const DecoyAddScreen = () => {
 				iconName: "warning-outline",
 				onConfirm: () => {
 					hideModal();
-					navigation.replace("SettingsScreen", {
-						userId: user?.userId,
-					});
+					navigation.goBack();
 				},
 			});
 		} else {
-			navigation.replace("DecoyConfigurationScreen");
+			navigation.goBack();
 		}
 	};
 
