@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
@@ -9,6 +9,7 @@ import AuthLayout from "@components/layouts/AuthLayout";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { getLocalContactTotal } from "@database/repositories/contactRepository";
+import { getEvidenceTotal } from "@services/evidence/evidenceService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
 	Shield,
@@ -55,24 +56,13 @@ const INITIAL_QUICK_ACTIONS = [
 	{
 		id: "vault",
 		title: "Secure Vault",
-		subtitle: "5 Cases include encrypted evidence",
+		subtitle: "Loading vault evidence...",
 		icon: Lock,
 		color: "#F59E0B",
 		bg: "#FFFBEB",
-		route: "VaultScreen",
+		route: "EvidenceVaultScreen",
 	},
-	
 ];
-
-// import React, { useMemo } from "react";
-// import {
-// 	Shield,
-// 	ShieldOff,
-// 	MapPin,
-// 	MapPinOff,
-// 	AlertTriangle,
-// 	Users,
-// } from "lucide-react-native"; // or your icon library import
 
 const INITIAL_RADIAL_ACTIONS = [
 	{
@@ -86,7 +76,8 @@ const INITIAL_RADIAL_ACTIONS = [
 	{
 		id: "location",
 		icon: MapPin,
-		route: "LocationScreen",
+		route: "SettingsScreen",
+		params: { highlight: "shareLocation" },
 		angle: 315,
 		color: "#FFFFFF",
 		bg: "#7E22CE",
@@ -118,10 +109,7 @@ const HomeScreen = ({ navigation }) => {
 	const [decoyActivated, setDecoyActivated] = useState(false);
 
 	const resolveDisplayName = (name) => {
-		if (!name) {
-			return "User";
-		}
-
+		if (!name) return "User";
 		try {
 			return decryptData(name);
 		} catch (error) {
@@ -131,54 +119,53 @@ const HomeScreen = ({ navigation }) => {
 
 	const displayName = resolveDisplayName(user?.userName);
 
-	//Fetch data whenever the screen gains focus
+	// Fetch data whenever the screen gains focus
 	useFocusEffect(
 		useCallback(() => {
 			let isMounted = true;
 
-			//Fetch the total emergency contact count
-			const contactFetchCount = async () => {
+			const fetchHomeCounts = async () => {
 				const userId = user?.userId;
+				if (!userId || !db) return;
 
-				if (!userId || !db) {
-					return;
-				}
+				try {
+					const [contactsTotal, evidenceTotal] = await Promise.all([
+						getLocalContactTotal(db, userId),
+						getEvidenceTotal(db, userId),
+					]);
 
-				//Add code to fetch the emergency contact count
-				const contactResult = await getLocalContactTotal(db, userId); //
-
-				if (isMounted) {
-					setContactCount(contactResult);
+					if (isMounted) {
+						setContactCount(contactsTotal);
+						setEvidenceCount(evidenceTotal);
+					}
+				} catch (error) {
+					console.error("[Home] Failed to fetch totals:", error);
 				}
 			};
 
-			//Methods to invoke
-			contactFetchCount();
+			fetchHomeCounts();
 
 			return () => {
 				isMounted = false;
 			};
-		}, [db, user]),
+		}, [db, user])
 	);
 
-	useEffect(() => {
-		const checkPermissions = async () => {
-			try {
-				//Location
-				const saveShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
-
-				if (saveShare !== null) {
-					setShareLiveLocation(saveShare === "true");
+	useFocusEffect(
+		useCallback(() => {
+			const checkPermissions = async () => {
+				try {
+					const saveShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+					if (saveShare !== null) {
+						setShareLiveLocation(saveShare === "true");
+					}
+				} catch (error) {
+					console.error("Error updating location settings: ", error);
 				}
-
-				//Decoy
-			} catch (error) {
-				console.error("Error updating the home screen: ", error);
-			}
-		};
-
-		checkPermissions();
-	}, []);
+			};
+			checkPermissions();
+		}, [])
+	);
 
 	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
 		if (item.id === "contacts") {
@@ -187,7 +174,17 @@ const HomeScreen = ({ navigation }) => {
 				subtitle:
 					contactCount === 0
 						? "No emergency contacts saved"
-						: `${contactCount} user saved emergency contact${contactCount === 1 ? "" : "s"}`,
+						: `${contactCount} saved emergency contact${contactCount === 1 ? "" : "s"}`,
+			};
+		}
+
+		if (item.id === "vault") {
+			return {
+				...item,
+				subtitle:
+					evidenceCount === 0
+						? "No incident evidence stored yet"
+						: `${evidenceCount} encrypted file${evidenceCount === 1 ? "" : "s"} in vault`,
 			};
 		}
 
@@ -217,36 +214,17 @@ const HomeScreen = ({ navigation }) => {
 			};
 		}
 
-		if (item.id === "vault") {
-			return {
-				...item,
-				subtitle:
-					evidenceCount === 0
-						? "No incident evidence has been stored yet"
-						: `${evidenceCount} user saved emergency contact${evidenceCount === 1 ? "" : "s"}`,
-			};
-		}
-
 		return item;
 	});
 
-	// Inside your screen component:
 	const radialActions = useMemo(() => {
 		return INITIAL_RADIAL_ACTIONS.map((action) => {
 			if (action.id === "location") {
-				return {
-					...action,
-					icon: shareLiveLocation === false ? MapPinOff : MapPin,
-				};
+				return { ...action, icon: shareLiveLocation === false ? MapPinOff : MapPin };
 			}
-
 			if (action.id === "decoy") {
-				return {
-					...action,
-					icon: decoyActivated === false ? ShieldOff : Shield,
-				};
+				return { ...action, icon: decoyActivated === false ? ShieldOff : Shield };
 			}
-
 			return action;
 		});
 	}, [shareLiveLocation, decoyActivated]);
@@ -255,10 +233,8 @@ const HomeScreen = ({ navigation }) => {
 		<View style={styles.screenContainer}>
 			<AuthLayout title={`Welcome back ${displayName}`}>
 				<View style={styles.content}>
-					{/* Protection Radar Component */}
 					<ProtectionRadar actions={radialActions} navigation={navigation} />
 
-					{/* Safety Tools Grid */}
 					<View style={styles.toolsSection}>
 						<Text style={styles.sectionTitle}>Safety Tools</Text>
 						<View style={styles.grid}>
@@ -266,7 +242,13 @@ const HomeScreen = ({ navigation }) => {
 								<SafetyToolCard
 									key={item.id}
 									item={item}
-									onPress={() => item.route && navigation.navigate(item.route)}
+									onPress={() => {
+										if (item.id === "location") {
+											navigation.navigate("SettingsScreen", { highlight: "shareLocation" });
+										} else if (item.route) {
+											navigation.navigate(item.route);
+										}
+									}}
 								/>
 							))}
 						</View>
@@ -274,7 +256,6 @@ const HomeScreen = ({ navigation }) => {
 				</View>
 			</AuthLayout>
 
-			{/* Fixed Floating Navigation Bar */}
 			<View style={styles.navWrapper}>
 				<NavigationBar activeTab="Home" navigation={navigation} />
 			</View>
@@ -283,46 +264,12 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-	screenContainer: {
-		flex: 1,
-		position: "relative",
-	},
-	content: {
-		paddingHorizontal: 20,
-		paddingBottom: 10,
-		alignItems: "center",
-	},
-	toolsSection: {
-		width: "100%",
-	},
-	sectionTitle: {
-		fontSize: 16,
-		fontWeight: "700",
-		color: "#581C87",
-		marginBottom: 10,
-	},
-	grid: {
-		flexDirection: "row",
-		flexWrap: "wrap",
-		justifyContent: "space-between",
-		rowGap: 10,
-		width: "100%",
-	},
-	footerTagline: {
-		marginTop: 20,
-		fontSize: 12,
-		fontWeight: "600",
-		color: "#6B21A8",
-		textAlign: "center",
-	},
-	navWrapper: {
-		position: "absolute",
-		bottom: 0,
-		left: 0,
-		right: 0,
-		alignItems: "center",
-		zIndex: 99,
-	},
+	screenContainer: { flex: 1, position: "relative" },
+	content: { paddingHorizontal: 20, paddingBottom: 10, alignItems: "center" },
+	toolsSection: { width: "100%" },
+	sectionTitle: { fontSize: 16, fontWeight: "700", color: "#581C87", marginBottom: 10 },
+	grid: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 10, width: "100%" },
+	navWrapper: { position: "absolute", bottom: 0, left: 0, right: 0, alignItems: "center", zIndex: 99 },
 });
 
 export default HomeScreen;

@@ -13,6 +13,7 @@ import {
 	softDeleteLocalEmergencyContact,
 	getLocalContactTotal,
 	markContactAsSynched,
+	findContactByEmail,
 } from "@database/repositories/contactRepository";
 
 // Service to handle adding or updating an emergency contact
@@ -237,7 +238,7 @@ export const updateEmergencyContact = async (
 	// Re-encrypt values that have changed, or encrypt fresh values
 	const encryptedContactName =
 		newFirstName !== existingFirstName ||
-		!existingContact.encrypted_contact_name
+			!existingContact.encrypted_contact_name
 			? encryptData(newFirstName)
 			: existingContact.encrypted_contact_name;
 

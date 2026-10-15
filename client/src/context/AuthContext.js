@@ -28,12 +28,12 @@ export const AuthProvider = ({ children }) => {
 		setUser(
 			userData
 				? {
-						userId: userData.userId,
-						email: userData.email,
-						userName: userData.userName,
-						userSurname: userData.userSurname,
-						userNumber: userData.userNumber,
-					}
+					userId: userData.userId,
+					email: userData.email,
+					userName: userData.userName,
+					userSurname: userData.userSurname,
+					userNumber: userData.userNumber,
+				}
 				: null,
 		);
 	}, []);

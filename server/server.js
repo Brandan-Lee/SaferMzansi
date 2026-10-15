@@ -15,6 +15,7 @@ const authRouter = require("./src/routes/auth");
 const contactRouter = require("./src/routes/contacts");
 const otpRouter = require("./src/routes/otpRoutes");
 const userRouter = require("./src/routes/users");
+const evidenceRouter = require("./src/routes/evidence");
 
 // Health Check Endpoint
 app.get("/api/health", (req, res) => {
@@ -26,6 +27,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/otp", otpRouter);
 app.use("/api/contacts", contactRouter);
+app.use("/api/evidence", evidenceRouter);
 
 // Global Error Handler Middleware (Must be at the very bottom, after routes)
 app.use((err, req, res, next) => {

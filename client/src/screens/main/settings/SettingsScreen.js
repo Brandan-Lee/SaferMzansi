@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Alert,
+	Animated,
 } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,12 +22,47 @@ const KEYS = {
 	GESTURE: "@setting_gesture",
 };
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation, route }) => {
 	const [shareLocation, setShareLocation] = useState(false);
 	const [autoRecord, setAutoRecord] = useState(false);
 	const [EmailTrigger, setEmailTrigger] = useState(false);
 	const [GestureTrigger, setGestureTrigger] = useState(false);
 	const { logOut } = useAuth();
+	const [highlightedKey, setHighlightedKey] = useState(null);
+
+	// Initialize animation ref for smooth background fading
+	const highlightAnim = useRef(new Animated.Value(0)).current;
+
+	useEffect(() => {
+		if (route.params?.highlight) {
+			setHighlightedKey(route.params.highlight);
+
+			// 1. Fade in quickly
+			Animated.timing(highlightAnim, {
+				toValue: 1,
+				duration: 200,
+				useNativeDriver: false, // backgroundColor doesn't support native driver
+			}).start();
+
+			// 2. Hold for 1.8 seconds, then fade out smoothly over 700ms
+			const timer = setTimeout(() => {
+				Animated.timing(highlightAnim, {
+					toValue: 0,
+					duration: 700,
+					useNativeDriver: false,
+				}).start(() => {
+					setHighlightedKey(null);
+				});
+			}, 1800);
+
+			return () => clearTimeout(timer);
+		}
+	}, [route.params]);
+
+	const animatedBgColor = highlightAnim.interpolate({
+		inputRange: [0, 1],
+		outputRange: ["rgba(245, 243, 255, 0)", "rgba(237, 233, 254, 1)"], // Transparent to subtle light purple tint
+	});
 
 	useEffect(() => {
 		const loadSettings = async () => {
@@ -86,62 +122,77 @@ const SettingsScreen = ({ navigation }) => {
 		danger = false,
 		onPress,
 		materialIcon = false,
+		isHighlighted = false,
 	}) => {
 		return (
 			<TouchableOpacity
-				style={styles.row}
+				style={styles.rowWrapper}
 				onPress={onPress}
 				activeOpacity={0.7}
 			>
-				<View style={styles.rowLeft}>
-					{materialIcon ? (
-						<MaterialCommunityIcons
-							name={icon}
-							size={26}
-							color={danger ? "#DC2626" : "#2D1638"}
-						/>
-					) : (
-						<Feather
-							name={icon}
-							size={25}
-							color={danger ? "#DC2626" : "#2D1638"}
-						/>
-					)}
+				<Animated.View
+					style={[
+						styles.row,
+						isHighlighted && { backgroundColor: animatedBgColor },
+					]}
+				>
+					<View style={styles.rowLeft}>
+						{materialIcon ? (
+							<MaterialCommunityIcons
+								name={icon}
+								size={26}
+								color={danger ? "#DC2626" : "#2D1638"}
+							/>
+						) : (
+							<Feather
+								name={icon}
+								size={25}
+								color={danger ? "#DC2626" : "#2D1638"}
+							/>
+						)}
 
-					<Text style={[styles.rowText, danger && styles.dangerText]}>
-						{title}
-					</Text>
-				</View>
+						<Text style={[styles.rowText, danger && styles.dangerText]}>
+							{title}
+						</Text>
+					</View>
 
-				<Feather
-					name="chevron-right"
-					size={27}
-					color={danger ? "#DC2626" : "#2D1638"}
-				/>
+					<Feather
+						name="chevron-right"
+						size={27}
+						color={danger ? "#DC2626" : "#2D1638"}
+					/>
+				</Animated.View>
 			</TouchableOpacity>
 		);
 	};
 
-	const ToggleRow = ({ icon, title, value, onPress, materialIcon = false }) => {
+	const ToggleRow = ({ icon, title, value, onPress, materialIcon = false, isHighlighted = false }) => {
 		return (
 			<TouchableOpacity
-				style={styles.row}
+				style={styles.rowWrapper}
 				onPress={onPress}
 				activeOpacity={0.7}
 			>
-				<View style={styles.rowLeft}>
-					{materialIcon ? (
-						<MaterialCommunityIcons name={icon} size={26} color="#2D1638" />
-					) : (
-						<Feather name={icon} size={25} color="#2D1638" />
-					)}
+				<Animated.View
+					style={[
+						styles.row,
+						isHighlighted && { backgroundColor: animatedBgColor },
+					]}
+				>
+					<View style={styles.rowLeft}>
+						{materialIcon ? (
+							<MaterialCommunityIcons name={icon} size={26} color="#2D1638" />
+						) : (
+							<Feather name={icon} size={25} color="#2D1638" />
+						)}
 
-					<Text style={styles.rowText}>{title}</Text>
-				</View>
+						<Text style={styles.rowText}>{title}</Text>
+					</View>
 
-				<View style={[styles.checkbox, value && styles.checkboxActive]}>
-					{value && <Feather name="check" size={17} color="#FFFFFF" />}
-				</View>
+					<View style={[styles.checkbox, value && styles.checkboxActive]}>
+						{value && <Feather name="check" size={17} color="#FFFFFF" />}
+					</View>
+				</Animated.View>
 			</TouchableOpacity>
 		);
 	};
@@ -182,6 +233,7 @@ const SettingsScreen = ({ navigation }) => {
 					icon="map-pin"
 					title="Share Live Location"
 					value={shareLocation}
+					isHighlighted={highlightedKey === "shareLocation"}
 					onPress={() =>
 						toggleSetting(KEYS.SHARE_LOCATION, shareLocation, setShareLocation)
 					}
@@ -297,13 +349,17 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 	},
 
+	rowWrapper: {
+		borderBottomWidth: 1,
+		borderBottomColor: "#D8C7E8",
+	},
+
 	row: {
 		minHeight: 64,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		borderBottomWidth: 1,
-		borderBottomColor: "#D8C7E8",
+		paddingHorizontal: 4,
 	},
 
 	rowLeft: {

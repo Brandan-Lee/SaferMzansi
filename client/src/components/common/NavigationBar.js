@@ -13,7 +13,7 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 			route: "EmergencyContactsScreen",
 			icon: "address-book",
 		},
-		{ name: "Vault", route: "VaultScreen", icon: "vault" },
+		{ name: "Vault", route: "EvidenceVaultScreen", icon: "vault" },
 		{
 			name: "Support Hub",
 			route: "SupportHubSreen",

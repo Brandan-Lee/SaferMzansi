@@ -14,6 +14,9 @@ import DecoyScreen from "@screens/main/DecoyScreen";
 import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
 import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
 import SettingsScreen from "@screens/main/settings/SettingsScreen";
+import EvidenceVaultScreen from "@screens/evidence/EvidenceVaultScreen";
+import EvidenceVaultDetailsScreen from "@screens/evidence/EvidenceVaultDetailsScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +49,10 @@ function MainStack({ user }) {
 			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 			<Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
 			<Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+			<Stack.Screen name="EvidenceVaultScreen" component={EvidenceVaultScreen} />
+			<Stack.Screen name="EvidenceVaultDetailsScreen" component={EvidenceVaultDetailsScreen} />
+
+
 		</Stack.Navigator>
 	);
 }

@@ -1,5 +1,6 @@
 import { logLocalUsersDatabase } from "@database/repositories/userRepository";
 import { logLocalEmergencyContactsDatabase } from "@database/repositories/contactRepository";
+import { logLocalEvidenceDatabase } from "@database/repositories/evidenceRepository";
 import { DECOY_SCHEMA } from "@database/schemas/decoySchema";
 import { LOCAL_EMERGENCY_CONTACTS_SCHEMA } from "@database/schemas/localEmergencyContactsSchema";
 import { LOCAL_EVIDENCE_VAULT_SCHEMA } from "@database/schemas/localEvidenceVaultSchema";
@@ -30,6 +31,7 @@ export const initDatabase = async (db) => {
 		//show data in local SQLITE database
 		await logLocalUsersDatabase(db);
 		await logLocalEmergencyContactsDatabase(db);
+		await logLocalEvidenceDatabase(db);
 	} catch (error) {
 		console.error("Error initializing database:", error);
 	}
