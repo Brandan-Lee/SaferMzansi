@@ -41,8 +41,6 @@ export default function SupportHubScreen({ navigation }) {
 		getLocation,
 	} = useLocation();
 	const { isOnline } = useNetStatus();
-	const [banner, setBanner] = useState(null);
-	const [phoneAvailable, setPhoneAvailable] = useState(false);
 
 	useEffect(() => {
 		const checkStoredLocationSettings = async () => {
@@ -66,10 +64,8 @@ export default function SupportHubScreen({ navigation }) {
 		const result = handlePhoneCall(place.phone, place.isSample);
 
 		if (result && !result.success) {
-			setPhoneAvailable = false;
 			setTimeout(() => setBanner(null), 4000);
 		} else if (result && result.isSample) {
-			setPhoneAvailable = true;
 			setTimeout(() => setBanner(null), 4000);
 		}
 	};

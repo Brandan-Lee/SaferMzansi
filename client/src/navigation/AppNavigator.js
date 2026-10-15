@@ -48,7 +48,7 @@ export default function AppNavigator() {
 	}
 
 	const showMainStack =
-		(emergencyTriggered && isDecoyUnlocked) || Boolean(sessionToken);
+		(emergencyTriggered && !isDecoyUnlocked) || Boolean(sessionToken);
 
 	return (
 		<NavigationContainer>
