@@ -13,6 +13,7 @@ import DecoyAddScreen from "@screens/main/settings/decoy/DecoyAddScreen";
 import DecoyUpdateScreen from "@screens/main/settings/decoy/DecoyUpdateScreen";
 import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
 import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
+import RecycleBinScreen from "@screens/main/settings/decoy/REcycleBinScreenScreen"
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,7 @@ export default function MainStack({ user }) {
 			/>
 			<Stack.Screen name="DecoyAddScreen" component={DecoyAddScreen} />
 			<Stack.Screen name="DecoyUpdateScreen" component={DecoyUpdateScreen} />
+			<Stack.Screen name="RecycleBinScreen" component={RecycleBinScreen} />
 		</Stack.Navigator>
 	);
 }
