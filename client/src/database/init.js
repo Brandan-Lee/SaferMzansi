@@ -32,5 +32,6 @@ export const initDatabase = async (db) => {
 		await logLocalEvidenceDatabase(db);
 	} catch (error) {
 		console.error("Error initializing database:", error);
+		throw error;
 	}
 };

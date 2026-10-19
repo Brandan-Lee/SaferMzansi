@@ -9,9 +9,12 @@ export const LOCAL_INCIDENT_LOCATIONS_SCHEMA = `
         altitude REAL NULL DEFAULT NULL,
         accuracy REAL NULL DEFAULT NULL,
         created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
+        updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%f', 'now')),
+        is_deleted INTEGER NOT NULL DEFAULT 0,
+        deleted_at TEXT NULL DEFAULT NULL,
         is_synched INTEGER NOT NULL DEFAULT 0,
         FOREIGN KEY (incident_id) REFERENCES Local_Incidents(incident_id) ON DELETE CASCADE
     );
 
-    ${createSyncIndex("Local_Incident_Locations", "created_at")}
+    ${createSyncIndex("Local_Incident_Locations", "updated_at")}
 `;

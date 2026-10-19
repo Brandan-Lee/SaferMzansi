@@ -32,6 +32,7 @@ export const useFormHandler = (initialState) => {
 	return {
 		formData,
 		errors,
+		setFormData,
 		setErrors,
 		handleChange,
 		handleFieldBlur,

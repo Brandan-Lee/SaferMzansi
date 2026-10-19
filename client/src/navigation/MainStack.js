@@ -14,6 +14,9 @@ import DecoyUpdateScreen from "@screens/main/settings/decoy/DecoyUpdateScreen";
 import ProfileScreen from "@screens/main/settings/Profile/ProfileScreen";
 import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen";
 import SupportHubScreen from "@screens/main/supportHub/SupportHubScreen";
+import EmergencyTimerConfigScreen from "@screens/main/settings/panicTrigger/EmergencyTimerConfigScreen";
+import EvidenceVaultScreen from "@screens/evidence/EvidenceVaultScreen";
+import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +56,15 @@ export default function MainStack({ user, initialRouteName = "HomeScreen" }) {
 			<Stack.Screen name="DecoyAddScreen" component={DecoyAddScreen} />
 			<Stack.Screen name="DecoyUpdateScreen" component={DecoyUpdateScreen} />
 			<Stack.Screen name="SupportHubScreen" component={SupportHubScreen} />
+			<Stack.Screen
+				name="EmergencyTimerConfigScreen"
+				component={EmergencyTimerConfigScreen}
+			/>
+			<Stack.Screen
+				name="EvidenceVaultScreen"
+				component={EvidenceVaultScreen}
+			/>
+			<Stack.Screen name="SOSScreen" component={SOSScreen} />
 		</Stack.Navigator>
 	);
 }

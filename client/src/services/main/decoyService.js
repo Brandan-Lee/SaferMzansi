@@ -2,7 +2,7 @@ import {
 	saveDecoyPin,
 	saveEmergencyPin,
 	verifyPins,
-} from "@utils/securityAndValidation/secureStore";
+} from "@utils/storage/secureStore";
 
 export const addDecoyConfiguration = async (userId, decoyData) => {
 	const { decoyPin, emergencyPin } = decoyData;

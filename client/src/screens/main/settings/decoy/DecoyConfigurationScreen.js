@@ -10,7 +10,7 @@ import {
 import { Feather, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getStoredPins } from "@utils/securityAndValidation/secureStore";
+import { getStoredPins } from "@utils/storage/secureStore";
 
 const DECOY_LAUNCH_KEY = "@setting_launch_decoy";
 
@@ -206,7 +206,9 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 				<TouchableOpacity
 					style={styles.previewButton}
 					activeOpacity={0.8}
-					onPress={() => navigation.navigate("DecoyScreen", { isTesting: true })}
+					onPress={() =>
+						navigation.navigate("DecoyScreen", { isTesting: true })
+					}
 				>
 					<Feather name="smartphone" size={20} color="#FFFFFF" />
 					<Text style={styles.previewButtonText}>

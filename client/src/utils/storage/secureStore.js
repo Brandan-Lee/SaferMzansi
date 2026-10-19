@@ -2,6 +2,7 @@ import * as SecureStore from "expo-secure-store";
 
 const DECOY_PIN_KEY = "decoy_pin";
 const EMERGENCY_PIN_KEY = "emergency_pin";
+const EMERGENCY_TIMER_KEY = "emergency_countdown_timer";
 
 export const saveDecoyPin = async (pin) => {
 	try {
@@ -67,5 +68,33 @@ export const getStoredPins = async () => {
 			decoyPin: null,
 			emergencyPin: null,
 		};
+	}
+};
+
+export const saveEmergencyTimer = async (timerSeconds) => {
+	try {
+		await SecureStore.setItemAsync(
+			EMERGENCY_TIMER_KEY,
+			timerSeconds.toString(),
+		);
+		return {
+			success: true,
+		};
+	} catch (error) {
+		console.error("Error saving emergency timer:", error);
+		return {
+			success: false,
+			error,
+		};
+	}
+};
+
+export const getEmergencyTimer = async () => {
+	try {
+		const timer = await SecureStore.getItemAsync(EMERGENCY_TIMER_KEY);
+		return timer !== null ? timer : "5";
+	} catch (error) {
+		console.error("Error retrieveing emergency timer:", error);
+		return "5";
 	}
 };

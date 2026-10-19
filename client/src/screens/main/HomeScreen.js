@@ -165,13 +165,13 @@ const HomeScreen = ({ navigation }) => {
 			};
 
 			//Methods to invoke
-			contactFetchCount();
+			fetchHomeCounts();
 			checkPermissions();
 
 			return () => {
 				isMounted = false;
 			};
-		}, [db, user])
+		}, [db, user]),
 	);
 
 	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
@@ -227,10 +227,16 @@ const HomeScreen = ({ navigation }) => {
 	const radialActions = useMemo(() => {
 		return INITIAL_RADIAL_ACTIONS.map((action) => {
 			if (action.id === "location") {
-				return { ...action, icon: shareLiveLocation === false ? MapPinOff : MapPin };
+				return {
+					...action,
+					icon: shareLiveLocation === false ? MapPinOff : MapPin,
+				};
 			}
 			if (action.id === "decoy") {
-				return { ...action, icon: decoyActivated === false ? ShieldOff : Shield };
+				return {
+					...action,
+					icon: decoyActivated === false ? ShieldOff : Shield,
+				};
 			}
 			return action;
 		});
@@ -251,7 +257,9 @@ const HomeScreen = ({ navigation }) => {
 									item={item}
 									onPress={() => {
 										if (item.id === "location") {
-											navigation.navigate("SettingsScreen", { highlight: "shareLocation" });
+											navigation.navigate("SettingsScreen", {
+												highlight: "shareLocation",
+											});
 										} else if (item.route) {
 											navigation.navigate(item.route);
 										}
@@ -274,9 +282,27 @@ const styles = StyleSheet.create({
 	screenContainer: { flex: 1, position: "relative" },
 	content: { paddingHorizontal: 20, paddingBottom: 10, alignItems: "center" },
 	toolsSection: { width: "100%" },
-	sectionTitle: { fontSize: 16, fontWeight: "700", color: "#581C87", marginBottom: 10 },
-	grid: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", rowGap: 10, width: "100%" },
-	navWrapper: { position: "absolute", bottom: 0, left: 0, right: 0, alignItems: "center", zIndex: 99 },
+	sectionTitle: {
+		fontSize: 16,
+		fontWeight: "700",
+		color: "#581C87",
+		marginBottom: 10,
+	},
+	grid: {
+		flexDirection: "row",
+		flexWrap: "wrap",
+		justifyContent: "space-between",
+		rowGap: 10,
+		width: "100%",
+	},
+	navWrapper: {
+		position: "absolute",
+		bottom: 0,
+		left: 0,
+		right: 0,
+		alignItems: "center",
+		zIndex: 99,
+	},
 });
 
 export default HomeScreen;

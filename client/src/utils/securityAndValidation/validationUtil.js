@@ -58,6 +58,15 @@ const FIELD_RULES = {
 		}
 		return "";
 	},
+	timerSeconds: (val) => {
+		const str = String(val ?? "").trim();
+		const parsed = parseInt(str, 10);
+		if (!str) return "Timer window is required";
+		if (isNaN(parsed) || parsed < 3 || parsed > 30) {
+			return "Allowed range is between 3 and 30 seconds";
+		}
+		return "";
+	},
 };
 
 //Method that helps to validate the fields enter into the form
@@ -133,6 +142,8 @@ export const validateContactForm = (formData) => validateForm(formData);
 export const validateUserForm = (formData) => validateForm(formData);
 
 export const validateDecoyForm = (formData) => validateForm(formData);
+
+export const validateEmergencyTimerForm = (formData) => validateForm(formData);
 
 const normalizeOtpString = (otp) =>
 	Array.isArray(otp) ? otp.join("") : otp?.trim() || "";

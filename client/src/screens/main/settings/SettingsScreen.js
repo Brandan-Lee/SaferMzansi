@@ -166,7 +166,14 @@ const SettingsScreen = ({ navigation, route }) => {
 		);
 	};
 
-	const ToggleRow = ({ icon, title, value, onPress, materialIcon = false, isHighlighted = false }) => {
+	const ToggleRow = ({
+		icon,
+		title,
+		value,
+		onPress,
+		materialIcon = false,
+		isHighlighted = false,
+	}) => {
 		return (
 			<TouchableOpacity
 				style={styles.rowWrapper}
@@ -223,7 +230,7 @@ const SettingsScreen = ({ navigation, route }) => {
 				<SettingRow
 					icon="clock"
 					title="Panic Cancel Configuration"
-					onPress={() => showTemporaryAlert("Panic Cancel Configuration")}
+					onPress={() => navigation.navigate("EmergencyTimerConfigScreen")}
 				/>
 
 				{/* ALERTS */}

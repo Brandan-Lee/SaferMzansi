@@ -16,7 +16,7 @@ import MainLayout from "@components/layouts/MainLayout";
 import { validateDecoyForm } from "@utils/securityAndValidation/validationUtil";
 import { useAuth } from "@context/AuthContext";
 import { updateDecoyConfiguration } from "@services/main/decoyService";
-import { getStoredPins } from "@utils/securityAndValidation/secureStore";
+import { getStoredPins } from "@utils/storage/secureStore";
 
 // Inner form component that mounts only after pins are successfully loaded
 const DecoyUpdateForm = ({ storedPins, navigation, user }) => {
