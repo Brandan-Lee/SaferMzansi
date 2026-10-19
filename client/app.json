@@ -60,7 +60,16 @@
           "iCloudContainerEnvironment": "Production"
         }
       ],
-      "expo-sharing"
+      "expo-sharing",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow SaferMzansi to record audio during an emergency.",
+          "recordAudioAndroid": true,
+          "enableBackgroundPlayback": false
+        }
+      ],
+      "expo-font"
     ]
   }
 }

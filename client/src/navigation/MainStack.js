@@ -17,6 +17,7 @@ import SupportHubScreen from "@screens/main/supportHub/SupportHubScreen";
 import EmergencyTimerConfigScreen from "@screens/main/settings/panicTrigger/EmergencyTimerConfigScreen";
 import EvidenceVaultScreen from "@screens/evidence/EvidenceVaultScreen";
 import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
+import EvidenceVaultDetailsScreen from "@screens/evidence/EvidenceVaultDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,6 +64,10 @@ export default function MainStack({ user, initialRouteName = "HomeScreen" }) {
 			<Stack.Screen
 				name="EvidenceVaultScreen"
 				component={EvidenceVaultScreen}
+			/>
+			<Stack.Screen
+				name="EvidenceVaultDetailsScreen"
+				component={EvidenceVaultDetailsScreen}
 			/>
 			<Stack.Screen name="SOSScreen" component={SOSScreen} />
 		</Stack.Navigator>

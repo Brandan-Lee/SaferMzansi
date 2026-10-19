@@ -58,61 +58,6 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 export default function App() {
 	const { getLocation, loading: locationLoading } = useLocation();
 	const [shareLiveLocation, setShareLiveLocation] = useState(false);
-	const [recording, setRecording] = useState(undefined);
-
-	async function startRecording() {
-		try {
-			// Dynamically require expo-av to prevent top-level runtime crashes if native module is unlinked
-			const { Audio } = require("expo-av");
-
-			const permissionResponse = await Audio.getPermissionsAsync();
-			if (permissionResponse?.status !== "granted") {
-				console.log("Requesting permission...");
-				const status = await Audio.requestPermissionsAsync();
-
-				if (status.status !== "granted") {
-					console.log("Permission denied");
-					return;
-				}
-			}
-
-			await Audio.setAudioModeAsync({
-				allowsRecordingIOS: true,
-				playsInSilentModeIOS: true,
-			});
-
-			console.log("Starting recording...");
-
-			const { recording: newRecording } = await Audio.Recording.createAsync(
-				Audio.RecordingOptionsPresets.HIGH_QUALITY,
-			);
-
-			setRecording(newRecording);
-			console.log("Recording started");
-		} catch (error) {
-			console.error(
-				"Failed to start recording (expo-av native module might be unlinked)",
-				error,
-			);
-		}
-	}
-
-	async function stopRecording() {
-		if (!recording) return;
-
-		try {
-			console.log("Stopping recording...");
-			const activeRecording = recording;
-			setRecording(undefined);
-
-			await activeRecording.stopAndUnloadAsync();
-			const uri = activeRecording.getURI();
-			console.log("Recording stopped and stored at:", uri);
-			return uri;
-		} catch (error) {
-			console.error("Failed to stop recording", error);
-		}
-	}
 
 	// Method to ask permissions and start background location tracking
 	const runBackgroundLocationTracking = async () => {
@@ -177,6 +122,7 @@ export default function App() {
 					result.location.latitude,
 					result.location.longitude,
 				);
+				navigation.navigate("SOSScreen");
 			} else {
 				console.log("Location capture failed:", result.error);
 			}

@@ -3,6 +3,16 @@ import * as SecureStore from "expo-secure-store";
 const DECOY_PIN_KEY = "decoy_pin";
 const EMERGENCY_PIN_KEY = "emergency_pin";
 const EMERGENCY_TIMER_KEY = "emergency_countdown_timer";
+const EMERGENCY_USER_ID_KEY = "emergency_user_id";
+
+export const saveEmergencyUserId = async (userId) => {
+	if (!userId) return;
+	await SecureStore.setItemAsync(EMERGENCY_USER_ID_KEY, userId);
+};
+
+export const getEmergencyUserId = async () => {
+	return SecureStore.getItemAsync(EMERGENCY_USER_ID_KEY);
+};
 
 export const saveDecoyPin = async (pin) => {
 	try {

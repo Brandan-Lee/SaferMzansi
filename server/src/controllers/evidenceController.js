@@ -1,4 +1,4 @@
-const evidenceService = require("#services/evidenceServiceServer.js");
+const evidenceService = require("#services/main/evidenceServiceServer.js");
 
 const addEvidence = async (req, res, next) => {
     try {

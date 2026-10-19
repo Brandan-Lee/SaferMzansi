@@ -16,7 +16,7 @@ const getRadialPosition = (angleInDegrees) => {
 	};
 };
 
-export const ProtectionRadar = ({ actions = [], navigation, onEmergencyPress }) => {
+export const ProtectionRadar = ({ actions = [], navigation }) => {
 	return (
 		<View style={styles.radarSection}>
 			<View style={styles.radarContainer}>
@@ -27,7 +27,7 @@ export const ProtectionRadar = ({ actions = [], navigation, onEmergencyPress }) 
 				<TouchableOpacity
 					activeOpacity={0.8}
 					style={styles.centerShield}
-					onPress={onEmergencyPress}
+					onPress={() => navigation.navigate("SOSScreen")}
 				>
 					<View style={styles.logoBadge}>
 						<Icon name="shield" size={42} color="#FFFFFF" />
@@ -57,10 +57,7 @@ export const ProtectionRadar = ({ actions = [], navigation, onEmergencyPress }) 
 							onPress={() => action.route && navigation.navigate(action.route)}
 						>
 							{IconComponent ? (
-								<IconComponent
-									size={20}
-									color={action.color || "#FFFFFF"}
-								/>
+								<IconComponent size={20} color={action.color || "#FFFFFF"} />
 							) : null}
 						</TouchableOpacity>
 					);

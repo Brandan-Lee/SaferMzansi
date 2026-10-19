@@ -9,7 +9,7 @@ import AuthLayout from "@components/layouts/AuthLayout";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { getLocalContactTotal } from "@database/repositories/contactRepository";
-import { getEvidenceTotal } from "@services/evidence/evidenceService";
+import { getEvidenceTotal } from "@services/main/evidenceService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
 	Shield,

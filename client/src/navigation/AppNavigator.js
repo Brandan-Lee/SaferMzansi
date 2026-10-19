@@ -55,9 +55,7 @@ export default function AppNavigator() {
 			{showMainStack ? (
 				<MainStack
 					user={user}
-					initialRouteName={
-						emergencyTriggered ? "EmergencyContactsScreen" : "HomeScreen"
-					}
+					initialRouteName={emergencyTriggered ? "SOSScreen" : "HomeScreen"}
 				/>
 			) : launchAsDecoy && !isDecoyUnlocked ? (
 				<Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -20,6 +20,14 @@ import {
 	saveOrUpdateLocalEvidence,
 	markEvidenceAsSynched,
 } from "@database/repositories/evidenceRepository";
+import {
+	saveOrUpdateLocalIncident,
+	logLocalIncidentsDatabase,
+} from "@database/repositories/incidentRepository";
+import {
+	saveOrUpdateLocalIncidentLocation,
+	logLocalIncidentLocationsDatabase,
+} from "@database/repositories/incidentLocationRepository";
 
 const normalizeEmail = (email) =>
 	String(email ?? "")
@@ -84,10 +92,8 @@ export const registerUser = async (db, userData) => {
 		throw new Error(result?.error || "Server registration failed.");
 	}
 
-	// Generate a local SHA-256 hash of the password for offline comparison
 	const localPasswordHash = await hashPasswordLocal(password);
 
-	// 4. Save to local database with try/catch to avoid locking issues
 	const localPayload = {
 		userId,
 		emailBlindIndex,
@@ -126,8 +132,9 @@ export const loginUser = async (db, email, password) => {
 	}
 
 	const emailBlindIndex = generateBlindIndex(email);
-	let localUser = await findUserByEmail(db, email);
+
 	let token = await getAuthToken();
+	let localUser = await findUserByEmail(db, email);
 	let isOffline = false;
 
 	const response = await safeApiCall(
@@ -146,8 +153,10 @@ export const loginUser = async (db, email, password) => {
 		const serverUser = response.data.user;
 		const serverContacts = response.data.contacts || [];
 		const serverEvidence = response.data.evidence || [];
+		const serverIncidents = response.data.incidents || [];
+		const serverLocations =
+			response.data.incident_locations || response.data.locations || [];
 
-		// Generate local password hash from the input password during successful online login
 		const localPasswordHash = await hashPasswordLocal(password);
 
 		// 1. Sync User Record to local SQLite
@@ -159,7 +168,7 @@ export const loginUser = async (db, email, password) => {
 				encryptedSurname: serverUser.encrypted_surname,
 				encryptedEmail: serverUser.encrypted_email,
 				encryptedPhoneNum: serverUser.encrypted_phone_num,
-				passwordHash: localPasswordHash, // Store local hash for subsequent offline logins
+				passwordHash: localPasswordHash,
 				createdAt: serverUser.created_at,
 				updatedAt: serverUser.updated_at,
 				deletedAt: serverUser.deleted_at,
@@ -170,10 +179,10 @@ export const loginUser = async (db, email, password) => {
 			await markUserAsSynched(db, serverUser.user_id);
 		}
 
+		// 2. Sync Emergency Contacts
 		if (Array.isArray(serverContacts) && serverContacts.length > 0) {
 			for (const contact of serverContacts) {
 				const contactId = contact.contact_id || contact.id;
-
 				const contactEmailBlindIndex =
 					contact.contact_email_blind_index ||
 					contact.email_blind_index ||
@@ -215,6 +224,7 @@ export const loginUser = async (db, email, password) => {
 			}
 		}
 
+		// 3. Sync Evidence Vault
 		if (Array.isArray(serverEvidence) && serverEvidence.length > 0) {
 			for (const evidence of serverEvidence) {
 				const evidenceId = evidence.evidence_id || evidence.id;
@@ -223,7 +233,8 @@ export const loginUser = async (db, email, password) => {
 					evidenceId,
 					userId: serverUser.user_id,
 					fileType: evidence.file_type || "application/octet-stream",
-					localFileUrl: evidence.local_file_url || evidence.cloud_file_url || "",
+					localFileUrl:
+						evidence.local_file_url || evidence.cloud_file_url || "",
 					sha256Hash: evidence.sha256_hash || "",
 					fileSize: evidence.file_size || 0,
 					isSynched: 1,
@@ -246,6 +257,60 @@ export const loginUser = async (db, email, password) => {
 			}
 		}
 
+		// 4. Sync Incidents via Repository
+		if (Array.isArray(serverIncidents) && serverIncidents.length > 0) {
+			for (const incident of serverIncidents) {
+				const incidentId = incident.incident_id || incident.id;
+				try {
+					await saveOrUpdateLocalIncident(db, serverUser.user_id, {
+						incidentId,
+						userId: serverUser.user_id,
+						evidenceId: incident.evidence_id || null,
+						triggerType: incident.trigger_type || "PANIC_BUTTON",
+						status: incident.status || "ACTIVE",
+						trackingToken: incident.tracking_token || null,
+						startTime: incident.start_time || new Date().toISOString(),
+						endTime: incident.end_time || null,
+						isSynched: 1,
+						isDeleted: incident.is_deleted ? 1 : 0,
+					});
+				} catch (incErr) {
+					console.error(
+						`[Auth Service] Failed to sync incident ${incidentId} to SQLite:`,
+						incErr,
+					);
+				}
+			}
+		}
+
+		// 5. Sync Incident Locations via Repository
+		if (Array.isArray(serverLocations) && serverLocations.length > 0) {
+			for (const loc of serverLocations) {
+				const locationId = loc.location_id || loc.id;
+				const incidentId = loc.incident_id;
+				try {
+					await saveOrUpdateLocalIncidentLocation(
+						db,
+						incidentId,
+						{
+							latitude: loc.latitude,
+							longitude: loc.longitude,
+							coordinates: loc.coordinates,
+							altitude: loc.altitude || null,
+							accuracy: loc.accuracy || null,
+							isSynched: 1,
+							isDeleted: loc.is_deleted ? 1 : 0,
+						},
+						locationId,
+					);
+				} catch (locErr) {
+					console.error(
+						`[Auth Service] Failed to sync location ${locationId} to SQLite:`,
+						locErr,
+					);
+				}
+			}
+		}
 	} else if (response.status === 0) {
 		isOffline = true;
 
@@ -255,7 +320,6 @@ export const loginUser = async (db, email, password) => {
 			);
 		}
 
-		// 3. Verify password hash locally during offline login using expo-crypto SHA-256
 		if (!localUser.password_hash) {
 			throw new Error(
 				"Offline authentication credentials are missing. Please connect online once to sync.",
@@ -332,6 +396,9 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 	}
 
 	const serverUser = result.data?.user;
+	const serverIncidents = result.data?.incidents || [];
+	const serverLocations =
+		result.data?.incident_locations || result.data?.locations || [];
 
 	if (serverUser) {
 		const localPasswordHash = await hashPasswordLocal(password);
@@ -352,6 +419,65 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 		});
 
 		await markUserAsSynched(db, serverUser.user_id);
+	}
+
+	// Sync Incidents via Repository on Reset Password
+	if (
+		Array.isArray(serverIncidents) &&
+		serverIncidents.length > 0 &&
+		serverUser
+	) {
+		for (const incident of serverIncidents) {
+			const incidentId = incident.incident_id || incident.id;
+			try {
+				await saveOrUpdateLocalIncident(db, serverUser.user_id, {
+					incidentId,
+					userId: serverUser.user_id,
+					evidenceId: incident.evidence_id || null,
+					triggerType: incident.trigger_type || "PANIC_BUTTON",
+					status: incident.status || "ACTIVE",
+					trackingToken: incident.tracking_token || null,
+					startTime: incident.start_time || new Date().toISOString(),
+					endTime: incident.end_time || null,
+					isSynched: 1,
+					isDeleted: incident.is_deleted ? 1 : 0,
+				});
+			} catch (err) {
+				console.error(
+					`[Auth Service] Failed to sync incident during reset password:`,
+					err,
+				);
+			}
+		}
+	}
+
+	// Sync Incident Locations via Repository on Reset Password
+	if (Array.isArray(serverLocations) && serverLocations.length > 0) {
+		for (const loc of serverLocations) {
+			const locationId = loc.location_id || loc.id;
+			const incidentId = loc.incident_id;
+			try {
+				await saveOrUpdateLocalIncidentLocation(
+					db,
+					incidentId,
+					{
+						latitude: loc.latitude,
+						longitude: loc.longitude,
+						coordinates: loc.coordinates,
+						altitude: loc.altitude || null,
+						accuracy: loc.accuracy || null,
+						isSynched: 1,
+						isDeleted: loc.is_deleted ? 1 : 0,
+					},
+					locationId,
+				);
+			} catch (err) {
+				console.error(
+					`[Auth Service] Failed to sync incident location during reset password:`,
+					err,
+				);
+			}
+		}
 	}
 
 	return {

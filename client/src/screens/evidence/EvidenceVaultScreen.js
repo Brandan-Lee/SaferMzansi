@@ -14,7 +14,7 @@ import { Feather } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import MainLayout from "@components/layouts/MainLayout";
 import EvidenceCard from "@components/evidence/EvidenceCard";
-import { addEvidence, getEvidence } from "@services/evidence/evidenceService";
+import { addEvidence, getEvidence } from "@services/main/evidenceService";
 
 const PURPLE = "#6B21A8";
 

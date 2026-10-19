@@ -210,7 +210,6 @@ export const softDeleteLocalEmergencyContact = async (
 };
 
 export const getLocalContactTotal = async (db, userId) => {
-
 	if (!userId) {
 		throw new Error("There is no User Id to search the database");
 	}
@@ -232,4 +231,40 @@ export const findContactByEmail = async (db, targetEmail) => {
 	const query = `SELECT * FROM Local_Emergency_Contacts WHERE contact_email_blind_index = ? AND is_deleted = 0 LIMIT 1`;
 	const results = await db.getAllAsync(query, [blindIndex]);
 	return results.length > 0 ? results[0] : null;
+};
+
+export const getPrimaryEmergencyContact = async (db, userId) => {
+	if (!db || !userId) return null;
+
+	const query = `
+        SELECT * FROM Local_Emergency_Contacts 
+        WHERE user_id = ? AND is_deleted = 0
+        ORDER BY created_at ASC
+        LIMIT 1
+    `;
+	const row = await db.getFirstAsync(query, [userId]);
+	if (!row) return null;
+
+	const decryptField = (value) => {
+		if (!value) return "";
+		try {
+			return decryptData(value) || value;
+		} catch {
+			return "[Decryption Failed]";
+		}
+	};
+
+	const firstName = decryptField(row.encrypted_contact_name);
+	const surname = decryptField(row.encrypted_contact_surname);
+
+	return {
+		...row,
+		firstName,
+		surname,
+		name: `${firstName} ${surname}`.trim(),
+		phone_number: decryptField(row.encrypted_contact_phone_num),
+		phone: decryptField(row.encrypted_contact_phone_num),
+		email: decryptField(row.encrypted_contact_email),
+		contactId: row.contact_id,
+	};
 };

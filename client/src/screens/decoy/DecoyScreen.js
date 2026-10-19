@@ -12,11 +12,11 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 	const [pin, setPin] = useState("");
 	const [emergencyPin, setEmergencyPin] = useState("");
 
-	const unlockEmergencyContacts = () => {
+	const unlockSOS = () => {
 		if (onEmergencyUnlock) {
 			onEmergencyUnlock();
 		} else {
-			navigation.navigate("EmergencyContactsScreen");
+			navigation.navigate("SOSScreen", { isTesting: true });
 		}
 	};
 
@@ -31,7 +31,7 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 				navigation.goBack();
 				return;
 			} else if (pin === "0000") {
-				unlockEmergencyContacts();
+				unlockSOS();
 				return;
 			}
 		}
@@ -40,7 +40,7 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 
 		if (matchType === "emergency") {
 			setPin("");
-			unlockEmergencyContacts();
+			unlockSOS();
 			return;
 		}
 

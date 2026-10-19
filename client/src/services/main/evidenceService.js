@@ -120,6 +120,7 @@ export const addEvidence = async (db, userId, evidenceData) => {
 		return {
 			success: true,
 			evidenceId,
+			syncedWithServer: result?.success === true,
 			message: "Evidence uploaded and saved successfully.",
 		};
 	} catch (error) {

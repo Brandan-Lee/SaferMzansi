@@ -1,5 +1,8 @@
 const { supabase } = require("#config/supabase_db.js");
 const contactModel = require("#models/contactModel.js");
+const evidenceModel = require("#models/evidenceModel.js");
+const locationModel = require("#models/incidentLocationModel.js");
+const incidentModel = require("#models/incidentModel.js");
 const userModel = require("#models/userModel.js");
 const {
 	queueOtpEmail,
@@ -59,11 +62,10 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 		return null;
 	}
 
-	//Reactivate account if the user deactivated it previously
+	// Reactivate account if the user deactivated it previously
 	if (user.is_deleted) {
 		const now = new Date().toISOString();
 
-		//Reactivate the user account
 		await supabase
 			.from("Users")
 			.update({ is_deleted: false, deleted_at: null, updated_at: now })
@@ -82,17 +84,15 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 		user.is_deleted = false;
 	}
 
-	// Fetch contacts and evidence safely after user validation
 	const contacts = await contactModel.getEmergencyContacts(user.user_id);
+	const evidence = await evidenceModel.getEvidenceByUserId(user.user_id);
+	const incidents = await incidentModel.getIncidentsByUserId(user.user_id);
 
-	const { data: evidence, error: evidenceError } = await supabase
-		.from("Evidence_Vault")
-		.select("*")
-		.eq("user_id", user.user_id)
-		.eq("is_deleted", false);
-
-	if (evidenceError) {
-		console.error("[Auth Service] Error fetching evidence for login:", evidenceError);
+	let allLocations = [];
+	const incidentList = incidents || [];
+	if (incidentList.length > 0) {
+		const incidentIds = incidentList.map((i) => i.incident_id);
+		allLocations = await locationModel.getLocationsByIncidentId(incidentIds);
 	}
 
 	const { password_hash, ...safeUser } = user;
@@ -105,7 +105,9 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 		user: safeUser,
 		contacts: contacts || [],
 		evidence: evidence || [],
-		token
+		incidents: incidentList,
+		incident_locations: allLocations,
+		token,
 	};
 };
 
@@ -173,12 +175,28 @@ const resetPassword = async ({ email_blind_index, password, reset_token }) => {
 		throw new Error("Update failed");
 	}
 
+	const incidents = await incidentModel.getIncidentsByUserId(resolvedUserId);
+	let allLocations = [];
+	const incidentList = incidents || [];
+	if (incidentList.length > 0) {
+		const incidentIds = incidentList.map((i) => i.incident_id);
+		allLocations = await locationModel.getLocationsByIncidentId(incidentIds);
+	}
+
+	const { password_hash, ...safeUser } = user;
 	const token = generateToken({
 		userId: resolvedUserId,
 		email: user.encrypted_email,
 	});
 
-	return { user, token, resolvedUserId };
+	return {
+		user: safeUser,
+		incidents: incidentList,
+		incident_locations: allLocations,
+		token,
+		resolvedUserId,
+		message: "Password updated successfully",
+	};
 };
 
 module.exports = {

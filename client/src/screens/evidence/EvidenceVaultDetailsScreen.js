@@ -8,7 +8,7 @@ import MainLayout from "@components/layouts/MainLayout";
 import EvidenceDetailCard from "@components/evidence/EvidenceDetailCard";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import DownloadModal from "@components/modals/DownloadModal";
-import { deleteEvidence } from "@services/evidence/evidenceService";
+import { deleteEvidence } from "@services/main/evidenceService";
 import {
 	downloadToDownloadsDirectory,
 	downloadFilesAsZip,

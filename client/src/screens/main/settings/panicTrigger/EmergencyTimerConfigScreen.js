@@ -58,7 +58,7 @@ const EmergencyTimerConfigScreen = () => {
 			setInitialTimerValue(timerStr);
 		} catch (error) {
 			console.error("Failed to load emergency timer configuration", error);
-			setFormData({ timerSeconds: "5" }); 
+			setFormData({ timerSeconds: "5" });
 		}
 	};
 
@@ -212,8 +212,7 @@ const EmergencyTimerConfigScreen = () => {
 									Set this between <Text style={styles.codeBadge}>
 										5
 									</Text> and <Text style={styles.codeBadge}>15</Text> seconds
-									depending on how quickly you want your contacts and emergency
-									services notified.
+									depending on how quickly you want your contacts notified.
 								</Text>
 							</View>
 						</View>

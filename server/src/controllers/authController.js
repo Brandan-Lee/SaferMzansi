@@ -62,7 +62,14 @@ const login = async (req, res) => {
 			});
 		}
 
-		const { user, contacts, evidence, token } = result;
+		const {
+			user,
+			contacts,
+			evidence,
+			incidents,
+			incident_locations,
+			token,
+		} = result;
 
 		return res.status(200).json({
 			message: "Login Successful",
@@ -80,8 +87,10 @@ const login = async (req, res) => {
 				is_deleted: user.is_deleted,
 				is_verified: user.is_verified,
 			},
-			contacts: contacts || [], // Send all retrieved contacts from Supabase
+			contacts: contacts || [], 
 			evidence: evidence || [],
+			incidents: incidents || [],
+			incident_locations: incident_locations || [],
 		});
 	} catch (error) {
 		console.error("Error during login process:", error);

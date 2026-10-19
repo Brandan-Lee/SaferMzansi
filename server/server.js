@@ -13,9 +13,12 @@ app.use(express.json()); // Built-in Express JSON parser
 // Import Routers
 const authRouter = require("./src/routes/auth");
 const contactRouter = require("./src/routes/contacts");
+const emergencyRouter = require("./src/routes/emergency");
+const evidenceRouter = require("./src/routes/evidence");
+const incidentRouter = require("./src/routes/incident");
+const incidentLocationRouter = require("./src/routes/incidentLocation");
 const otpRouter = require("./src/routes/otpRoutes");
 const userRouter = require("./src/routes/users");
-const evidenceRouter = require("./src/routes/evidence");
 
 // Health Check Endpoint
 app.get("/api/health", (req, res) => {
@@ -28,6 +31,9 @@ app.use("/api/users", userRouter);
 app.use("/api/otp", otpRouter);
 app.use("/api/contacts", contactRouter);
 app.use("/api/evidence", evidenceRouter);
+app.use("/api/incidents", incidentRouter);
+app.use("/api/emergency", emergencyRouter);
+app.use("/api/locations", incidentLocationRouter);
 
 // Global Error Handler Middleware (Must be at the very bottom, after routes)
 app.use((err, req, res, next) => {

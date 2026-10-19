@@ -9,6 +9,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import * as SecureStore from "expo-secure-store";
 import { loginUser, registerUser } from "@services/auth/authService";
 import { isTokenExpired } from "@utils/auth/authTokenUtil";
+import { saveEmergencyUserId } from "@utils/storage/secureStore";
 
 const TOKEN_KEY = "user_jwt_token";
 
@@ -36,6 +37,11 @@ export const AuthProvider = ({ children }) => {
 				}
 				: null,
 		);
+		if (userData?.userId) {
+			saveEmergencyUserId(userData.userId).catch((error) => {
+				console.error("Failed to save the local emergency profile:", error);
+			});
+		}
 	}, []);
 
 	const register = useCallback(
