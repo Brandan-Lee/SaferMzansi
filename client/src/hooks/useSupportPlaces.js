@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { fetchNominatimServices } from "@services/main/nominatumServices";
+import { fetchGeoapifyServices } from "@services/main/geoapifyService";
 import { calculateDistanceKm } from "@utils/location/geoUtils";
 import { CATEGORIES } from "@constants/supportConstants";
 
@@ -15,7 +15,7 @@ export function useSupportPlaces(userLocation) {
 		setRefreshTrigger((prev) => prev + 1);
 	}, []);
 
-	// Fetch Nominatim API data whenever location changes or manual refresh is triggered
+	// Fetch nearby services whenever location changes or manual refresh is triggered
 	useEffect(() => {
 		let isMounted = true;
 		console.log(
@@ -24,7 +24,10 @@ export function useSupportPlaces(userLocation) {
 		);
 
 		const loadApiData = async () => {
-			if (!userLocation?.latitude || !userLocation?.longitude) {
+			if (
+				!Number.isFinite(userLocation?.latitude) ||
+				!Number.isFinite(userLocation?.longitude)
+			) {
 				if (isMounted) setLiveServices([]);
 				console.warn(
 					"[useSupportPlaces] Missing latitude or longitude, skipping fetch.",
@@ -35,8 +38,8 @@ export function useSupportPlaces(userLocation) {
 			setLoadingApi(true);
 			setLiveServices([]);
 			try {
-				console.log("[useSupportPlaces] Calling fetchNominatimServices...");
-				const results = await fetchNominatimServices(
+				console.log("[useSupportPlaces] Calling fetchGeoapifyServices...");
+				const results = await fetchGeoapifyServices(
 					userLocation.latitude,
 					userLocation.longitude,
 				);

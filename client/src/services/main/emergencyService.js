@@ -20,7 +20,7 @@ import { addEvidence } from "./evidenceService";
 import { postIncidentOnline } from "./incidentService";
 import { postLocationOnline } from "./incidentLocationService";
 import { postApi } from "@services/ApiClient";
-import { fetchNearestPoliceStation } from "./nominatumServices";
+import { fetchNearestPoliceStation } from "./geoapifyService";
 import { decryptData } from "@utils/securityAndValidation/securityUtil";
 
 const KEYS = {
@@ -258,7 +258,10 @@ export const executeEmergencyDispatch = async (
 			localSaved = true;
 		} catch (error) {
 			localSaveError = error.message;
-			console.error("[Emergency Dispatch] Failed to save emergency locally:", error);
+			console.error(
+				"[Emergency Dispatch] Failed to save emergency locally:",
+				error,
+			);
 		}
 
 		// 3. Check Network Connectivity
@@ -280,7 +283,10 @@ export const executeEmergencyDispatch = async (
 				"[Emergency Dispatch] Device is offline. Triggering native SMS fallback...",
 			);
 			let smsOpened = false;
-			const primaryContact = await getPrimaryEmergencyContact(db, emergencyUserId);
+			const primaryContact = await getPrimaryEmergencyContact(
+				db,
+				emergencyUserId,
+			);
 			smsOpened = await prepareEmergencySms(primaryContact, emergencyMessage);
 			if (!smsOpened) {
 				console.warn(
@@ -297,9 +303,10 @@ export const executeEmergencyDispatch = async (
 				smsOpened,
 				emergencyDialerOpened,
 				localSaveError,
-				error: smsOpened || emergencyDialerOpened
-					? null
-					: "No emergency SMS could be prepared and the emergency dialer could not be opened.",
+				error:
+					smsOpened || emergencyDialerOpened
+						? null
+						: "No emergency SMS could be prepared and the emergency dialer could not be opened.",
 			};
 		} else {
 			// ==========================================
@@ -495,10 +502,7 @@ export const executeEmergencyDispatch = async (
 				const message = mapsLink
 					? `EMERGENCY: ${displayName} is in danger. Their location: ${mapsLink}`
 					: `EMERGENCY: ${displayName} is in danger. Their current location is unavailable.`;
-				const smsOpened = await prepareEmergencySms(
-					primaryContact,
-					message,
-				);
+				const smsOpened = await prepareEmergencySms(primaryContact, message);
 				if (smsOpened) {
 					return {
 						success: true,
@@ -609,14 +613,13 @@ export const finalizeEmergencyOnCancel = async (
 			evidenceId,
 			evidenceSyncedWithServer: !!serverEvidenceId,
 			incidentSyncedWithServer: syncResult?.success === true,
-			warning:
-				evidenceError
-					? `Audio evidence could not be saved: ${evidenceError}`
-					: evidenceId && !serverEvidenceId
-						? "Evidence is saved locally, but could not be linked on the server because its evidence record was not synced."
-						: !syncResult?.success
-							? "Incident updates are saved locally but could not be synced to the server."
-							: null,
+			warning: evidenceError
+				? `Audio evidence could not be saved: ${evidenceError}`
+				: evidenceId && !serverEvidenceId
+					? "Evidence is saved locally, but could not be linked on the server because its evidence record was not synced."
+					: !syncResult?.success
+						? "Incident updates are saved locally but could not be synced to the server."
+						: null,
 		};
 	} catch (error) {
 		console.error(
