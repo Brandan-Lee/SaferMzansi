@@ -14,7 +14,6 @@ const REQUIRED_EVIDENCE_FIELDS = [
 ];
 
 const REQUIRED_GET_EVIDENCE_FIELDS = ["user_id"];
-
 const REQUIRED_DELETE_EVIDENCE_FIELDS = ["evidence_id", "user_id"];
 
 router.post(
@@ -33,6 +32,18 @@ router.post(
     "/delete",
     validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
     evidenceController.deleteEvidence,
+);
+
+router.post(
+    "/restore",
+    validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
+    evidenceController.restoreEvidence,
+);
+
+router.post(
+    "/permanent-delete",
+    validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
+    evidenceController.permanentDeleteEvidence,
 );
 
 module.exports = router;

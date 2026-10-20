@@ -53,12 +53,10 @@ const getRemotePath = (userId, file) => {
 	// If the stored path already contains the full userId/fileId_filename format, use it directly
 	const rawPath = file.local_file_url || file.cloud_file_url || "";
 	if (rawPath.startsWith(`${userId}/${fileId}_`)) {
-		console.log("PRODUCTION BUCKET PATH DISPATCHED (RAW):", rawPath);
 		return rawPath;
 	}
 
 	const targetPath = `${userId}/${fileId}_${fileName}`;
-	console.log("PRODUCTION BUCKET PATH DISPATCHED:", targetPath);
 	return targetPath;
 };
 

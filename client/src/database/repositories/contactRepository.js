@@ -216,7 +216,6 @@ export const getLocalContactTotal = async (db, userId) => {
 
 	const countQuery = `SELECT COUNT(*) AS total_contacts FROM Local_Emergency_Contacts WHERE user_id = ? AND (is_deleted = 0 OR deleted_at IS NULL)`;
 	const result = await db.getFirstAsync(countQuery, [userId]);
-	console.log("From the Repository: ", result?.total_contacts ?? 0);
 	return result?.total_contacts ?? 0;
 };
 

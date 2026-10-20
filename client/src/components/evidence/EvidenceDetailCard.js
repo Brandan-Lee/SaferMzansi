@@ -22,11 +22,10 @@ const FilePreview = ({ file }) => {
                 return;
             }
 
-            // Generate a secure signed URL for private storage bucket objects
             try {
                 const { data, error } = await supabase.storage
                     .from("EvidenceVault")
-                    .createSignedUrl(rawUri, 300); // Valid for 5 minutes
+                    .createSignedUrl(rawUri, 300);
 
                 if (!error && data?.signedUrl && isMounted) {
                     setResolvedUri(data.signedUrl);
@@ -59,7 +58,7 @@ const FilePreview = ({ file }) => {
     return <Feather name={file.icon || "file-text"} size={24} color={PURPLE} />;
 };
 
-export default function EvidenceDetailCard({ file, index, onDownload, onDelete }) {
+export default function EvidenceDetailCard({ file, index, onDownload, onDelete, onRestore }) {
     return (
         <View style={styles.fileCard}>
             <View style={styles.filePreviewContainer}>
@@ -76,14 +75,25 @@ export default function EvidenceDetailCard({ file, index, onDownload, onDelete }
             </View>
 
             <View style={styles.actionButtonsContainer}>
-                <TouchableOpacity
-                    style={styles.actionButton}
-                    onPress={onDownload}
-                    activeOpacity={0.7}
-                >
-                    <Feather name="download" size={15} color={PURPLE} />
-                    <Text style={styles.actionButtonText}>Download</Text>
-                </TouchableOpacity>
+                {onRestore ? (
+                    <TouchableOpacity
+                        style={styles.actionButton}
+                        onPress={onRestore}
+                        activeOpacity={0.7}
+                    >
+                        <Feather name="rotate-ccw" size={15} color={PURPLE} />
+                        <Text style={styles.actionButtonText}>Restore</Text>
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity
+                        style={styles.actionButton}
+                        onPress={onDownload}
+                        activeOpacity={0.7}
+                    >
+                        <Feather name="download" size={15} color={PURPLE} />
+                        <Text style={styles.actionButtonText}>Download</Text>
+                    </TouchableOpacity>
+                )}
 
                 <TouchableOpacity
                     style={[styles.actionButton, styles.deleteButton]}

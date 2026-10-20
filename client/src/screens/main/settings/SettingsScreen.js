@@ -30,21 +30,18 @@ const SettingsScreen = ({ navigation, route }) => {
 	const { logOut } = useAuth();
 	const [highlightedKey, setHighlightedKey] = useState(null);
 
-	// Initialize animation ref for smooth background fading
 	const highlightAnim = useRef(new Animated.Value(0)).current;
 
 	useEffect(() => {
 		if (route.params?.highlight) {
 			setHighlightedKey(route.params.highlight);
 
-			// 1. Fade in quickly
 			Animated.timing(highlightAnim, {
 				toValue: 1,
 				duration: 200,
-				useNativeDriver: false, // backgroundColor doesn't support native driver
+				useNativeDriver: false,
 			}).start();
 
-			// 2. Hold for 1.8 seconds, then fade out smoothly over 700ms
 			const timer = setTimeout(() => {
 				Animated.timing(highlightAnim, {
 					toValue: 0,
@@ -61,7 +58,7 @@ const SettingsScreen = ({ navigation, route }) => {
 
 	const animatedBgColor = highlightAnim.interpolate({
 		inputRange: [0, 1],
-		outputRange: ["rgba(245, 243, 255, 0)", "rgba(237, 233, 254, 1)"], // Transparent to subtle light purple tint
+		outputRange: ["rgba(245, 243, 255, 0)", "rgba(237, 233, 254, 1)"],
 	});
 
 	useEffect(() => {
@@ -231,6 +228,12 @@ const SettingsScreen = ({ navigation, route }) => {
 					icon="clock"
 					title="Panic Cancel Configuration"
 					onPress={() => navigation.navigate("EmergencyTimerConfigScreen")}
+				/>
+
+				<SettingRow
+					icon="trash-2"
+					title="Recycling Bin"
+					onPress={() => navigation.navigate("RecycleBinScreen")}
 				/>
 
 				{/* ALERTS */}

@@ -16,6 +16,8 @@ import EditProfileScreen from "@screens/main/settings/Profile/EditProfileScreen"
 import SupportHubScreen from "@screens/main/supportHub/SupportHubScreen";
 import EmergencyTimerConfigScreen from "@screens/main/settings/panicTrigger/EmergencyTimerConfigScreen";
 import EvidenceVaultScreen from "@screens/evidence/EvidenceVaultScreen";
+import EvidenceVaultDetailsScreen from "@screens/evidence/EvidenceVaultDetailsScreen";
+import RecycleBinScreen from "@screens/evidence/RecycleBinScreen";
 import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
 import EvidenceVaultDetailsScreen from "@screens/evidence/EvidenceVaultDetailsScreen";
 
@@ -68,6 +70,10 @@ export default function MainStack({ user, initialRouteName = "HomeScreen" }) {
 			<Stack.Screen
 				name="EvidenceVaultDetailsScreen"
 				component={EvidenceVaultDetailsScreen}
+			/>
+			<Stack.Screen
+				name="RecycleBinScreen"
+				component={RecycleBinScreen}
 			/>
 			<Stack.Screen name="SOSScreen" component={SOSScreen} />
 		</Stack.Navigator>

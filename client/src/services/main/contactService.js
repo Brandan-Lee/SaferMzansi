@@ -193,8 +193,6 @@ export const getTotalContacts = async (db, userId) => {
 
 	const count = await getLocalContactTotal(db, userId);
 
-	console.log("From the service: ", count);
-
 	return count;
 };
 

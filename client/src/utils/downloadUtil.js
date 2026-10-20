@@ -6,7 +6,6 @@ import { supabase } from '@config/supabase_client';
 import JSZip from 'jszip';
 import { Buffer } from 'buffer';
 
-// Helper to clean up an array of file URIs safely
 const cleanupFiles = async (paths) => {
     await Promise.all(paths.map(p => FileSystem.deleteAsync(p, { idempotent: true }).catch(() => { })));
 };
@@ -21,14 +20,11 @@ export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
         if (error) throw error;
         const signedUrl = data.signedUrl;
 
-        // Define a temporary internal application route using legacy configuration
         const tempLocalUri = `${FileSystem.documentDirectory}${localFileName}`;
 
-        // Download the asset into the app's internal sandbox area
         const downloadRes = await FileSystem.downloadAsync(signedUrl, tempLocalUri);
         console.log('Downloaded temporarily to:', downloadRes.uri);
 
-        // Move to System Downloads Folder based on Platform
         if (Platform.OS === 'android') {
             const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
 
@@ -47,12 +43,10 @@ export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
                     encoding: FileSystem.EncodingType.Base64,
                 });
 
-                // Clear temporary sandbox cache
                 try {
                     await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true });
-                    console.log("Temporary sandbox cache cleared successfully.");
                 } catch (cleanupError) {
-                    console.warn("Non-blocking error cleaning up sandbox cache file:", cleanupError);
+                    console.warn("Non-blocking error cleaning up cache file:", cleanupError);
                 }
 
                 Alert.alert('Success', 'File saved directly to your selected folder.');
@@ -69,9 +63,9 @@ export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
             // Clear iOS temporary cache
             try {
                 await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true });
-                console.log("Temporary iOS sandbox cache cleared successfully.");
+                console.log("Temporary iOS cache cleared successfully.");
             } catch (cleanupError) {
-                console.warn("Non-blocking error cleaning up sandbox cache file:", cleanupError);
+                console.warn("Non-blocking error cleaning up cache file:", cleanupError);
             }
         }
 
@@ -104,7 +98,6 @@ export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.z
             });
 
             zip.file(file.localName, Buffer.from(base64Data, 'base64'));
-            console.log(`Zipped file compiled internally: ${file.localName}`);
         }
 
         // Generate ZIP base64
@@ -130,7 +123,6 @@ export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.z
             await FileSystem.writeAsStringAsync(createdUri, zipBase64, {
                 encoding: FileSystem.EncodingType.Base64,
             });
-            Alert.alert('Success', 'ZIP bundle saved successfully.');
         } else {
             await Sharing.shareAsync(tempZipUri, {
                 UTI: 'com.pkware.zip',
