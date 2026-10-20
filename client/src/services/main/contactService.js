@@ -9,7 +9,6 @@ import { postApi, safeApiCall } from "@services/ApiClient";
 import {
 	saveOrUpdateLocalEmergencyContact,
 	getLocalEmergencyContacts,
-	markContactAsUnSynched,
 	softDeleteLocalEmergencyContact,
 	getLocalContactTotal,
 	markContactAsSynched,
@@ -26,7 +25,7 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 
 	let existingContact = null;
 	try {
-		existingContact = await findContactByEmail(db, email);
+		existingContact = await findContactByEmail(db, userId, email);
 	} catch (error) {
 		console.warn("[Contact Service] Local DB check error");
 	}
@@ -48,7 +47,7 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 	}
 
 	const contactId = Crypto.randomUUID();
-	const emailBlindIndex = generateBlindIndex(email);
+	const emailBlindIndex = email ? generateBlindIndex(email) : null;
 	const encryptedData = encryptPayload({ firstName, surname, email, phoneNum });
 
 	const apiPayload = {
@@ -61,24 +60,6 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 		encrypted_contact_email: encryptedData.email,
 	};
 
-	const result = await safeApiCall(
-		() => postApi("/contacts/add", apiPayload),
-		"Server failed to save contact. Saving locally for offline sync.",
-	);
-
-	if (result?.success) {
-		await markContactAsSynched(db, contactId);
-	} else {
-		console.warn(
-			"[Contact Service] Backend sync failed, saving locally as offline:",
-			result?.error,
-		);
-
-		throw new Error(
-			result.error || "A contact with this email already exists on the server.",
-		);
-	}
-
 	const localContactPayload = {
 		contactId,
 		userId,
@@ -87,9 +68,8 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 		encryptedSurname: encryptedData.surname,
 		encryptedPhone: encryptedData.phoneNum,
 		encryptedEmail: encryptedData.email,
+		isSynched: 0,
 	};
-
-	console.log(localContactPayload);
 
 	try {
 		await saveOrUpdateLocalEmergencyContact(db, userId, localContactPayload);
@@ -101,11 +81,22 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 		throw new Error("Failed to save emergency contact locally.");
 	}
 
+	const result = await safeApiCall(
+		() => postApi("/contacts/add", apiPayload),
+		"Server failed to save contact. Saving locally for offline sync.",
+	);
+
+	if (result?.success) {
+		await markContactAsSynched(db, contactId);
+	} else {
+		console.warn("[Contact Service] Contact saved locally for later sync:", result?.error);
+	}
+
 	return {
 		success: true,
 		contactId,
 		message: "Contact added successfully.",
-		result: result.data,
+		syncedWithServer: result?.success === true,
 	};
 };
 
@@ -127,9 +118,14 @@ export const getEmergencyContacts = async (db, userId) => {
 
 	const isFromServer = res.success && Boolean(serverContacts);
 
+	const localContacts =
+		(await getLocalEmergencyContacts(db, userId).catch(() => [])) || [];
 	const rawList = isFromServer
-		? serverContacts
-		: (await getLocalEmergencyContacts(db, userId).catch(() => [])) || [];
+		? [
+				...serverContacts,
+				...localContacts.filter((local) => !local.is_synched),
+			]
+		: localContacts;
 
 	const safeDecrypt = (val, fieldName) => {
 		if (!val) return "";
@@ -143,7 +139,8 @@ export const getEmergencyContacts = async (db, userId) => {
 		}
 	};
 
-	const contacts = rawList.map((c, index) => {
+	const contactsById = new Map();
+	const contacts = rawList.map((c) => {
 		const contactId = c.contactId || c.contact_id || c.id;
 
 		const firstName =
@@ -177,12 +174,13 @@ export const getEmergencyContacts = async (db, userId) => {
 			email,
 		};
 	});
+	contacts.forEach((contact) => contactsById.set(contact.contactId, contact));
 
 	return {
 		success: true,
 		isOffline: !isFromServer,
-		count: contacts.length,
-		contacts,
+		count: contactsById.size,
+		contacts: [...contactsById.values()],
 	};
 };
 
@@ -270,22 +268,6 @@ export const updateEmergencyContact = async (
 		encrypted_contact_email: encryptedContactEmail,
 	};
 
-	const result = await safeApiCall(
-		() => postApi("/contacts/update", apiPayload), // Added leading slash
-		"Server failed to update contact. Saving changes locally for offline sync.",
-	);
-
-	if (result?.success) {
-		await markContactAsSynched(db, userId);
-	} else {
-		console.warn(
-			"[Contact Service] Backend update failed, updating locally as offline:",
-			result?.error,
-		);
-		await markContactAsUnSynched(db, contactId);
-		throw new Error(result?.error || "Server update contact failed.");
-	}
-
 	const localContactPayload = {
 		contactId,
 		userId,
@@ -294,6 +276,7 @@ export const updateEmergencyContact = async (
 		encryptedSurname: encryptedContactSurname,
 		encryptedPhone: encryptedContactPhone,
 		encryptedEmail: encryptedContactEmail,
+		isSynched: 0,
 	};
 
 	try {
@@ -303,10 +286,21 @@ export const updateEmergencyContact = async (
 		throw new Error("Failed to update Emergency contact locally");
 	}
 
+	const result = await safeApiCall(
+		() => postApi("/contacts/update", apiPayload),
+		"Server failed to update contact. Saving changes locally for offline sync.",
+	);
+
+	if (result?.success) {
+		await markContactAsSynched(db, contactId);
+	} else {
+		console.warn("[Contact Service] Contact update saved locally for later sync:", result?.error);
+	}
+
 	return {
 		success: true,
 		contactId,
-		// result,
+		syncedWithServer: result?.success === true,
 		message: "Contact Updated Successfully",
 	};
 };
@@ -323,24 +317,6 @@ export const deleteEmergencyContact = async (db, contactId, userId) => {
 		user_id: userId,
 	};
 
-	const result = await safeApiCall(
-		() => postApi("/contacts/delete", apiPayload),
-		"Server failed to delete emergency contact. Saving changes locally for offline sync",
-	);
-
-	console.log(result);
-
-	if (!result.success) {
-		console.warn(
-			"[Contact Service] Backend deletion failed, updating locally as offline:",
-			result?.error,
-		);
-
-		await markContactAsUnSynched(db, contactId);
-	} else {
-		await markContactAsSynched(db, contactId);
-	}
-
 	try {
 		await softDeleteLocalEmergencyContact(db, userId, contactId);
 	} catch (error) {
@@ -348,8 +324,20 @@ export const deleteEmergencyContact = async (db, contactId, userId) => {
 		throw new Error("Failed to delete Emergency contact locally");
 	}
 
+	const result = await safeApiCall(
+		() => postApi("/contacts/delete", apiPayload),
+		"Server failed to delete emergency contact. Saving changes locally for offline sync",
+	);
+
+	if (result?.success) {
+		await markContactAsSynched(db, contactId);
+	} else {
+		console.warn("[Contact Service] Contact deletion saved locally for later sync:", result?.error);
+	}
+
 	return {
 		success: true,
 		message: "Contact deleted successfully",
+		syncedWithServer: result?.success === true,
 	};
 };

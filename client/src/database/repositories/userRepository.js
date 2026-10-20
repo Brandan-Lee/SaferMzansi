@@ -239,7 +239,7 @@ export const getUserDetails = async (db, userId) => {
 };
 
 export const markUserAsSoftDeletedLocally = async (db, userId) => {
-	const now = new Date.toISOString();
+	const now = new Date().toISOString();
 	await updateLocalUserField(db, userId, {
 		is_deleted: 1,
 		deleted_at: now,
@@ -250,4 +250,14 @@ export const markUserAsSoftDeletedLocally = async (db, userId) => {
 
 export const deleteUserLocally = async (db, userId) => {
 	await db.runAsync(`DELETE FROM Local_Users WHERE user_id = ?`, [userId]);
+};
+
+export const restoreUserLocally = async (db, userId) => {
+	const now = new Date().toISOString();
+	await updateLocalUserField(db, userId, {
+		is_deleted: 0,
+		deleted_at: null,
+		updated_at: now,
+		is_synched: 1,
+	});
 };

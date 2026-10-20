@@ -1,5 +1,6 @@
 import { postApi, safeApiCall } from "@services/ApiClient";
 import { saveOrUpdateLocalIncident } from "@database/repositories/incidentRepository";
+import { syncQueuedEvidence } from "./evidenceService";
 
 export const syncIncidents = async (db, userId) => {
 	if (!userId) {
@@ -48,15 +49,38 @@ export const syncIncidents = async (db, userId) => {
 
 export const postIncidentOnline = async (db, incidentPayload) => {
 	try {
+		let payloadToSync = incidentPayload;
+		if (incidentPayload.incident_id) {
+			const localIncident = await db.getFirstAsync(
+				`SELECT evidence_id FROM Local_Incidents WHERE incident_id = ?`,
+				[incidentPayload.incident_id],
+			);
+			const evidenceId = localIncident?.evidence_id;
+			if (evidenceId) {
+				await syncQueuedEvidence(db, incidentPayload.user_id);
+				const evidence = await db.getFirstAsync(
+					`SELECT is_synched FROM Local_Evidence_Vault WHERE evidence_id = ?`,
+					[evidenceId],
+				);
+				if (!evidence?.is_synched) {
+					return {
+						success: false,
+						error: "Incident is queued until its evidence is synced.",
+					};
+				}
+				payloadToSync = { ...incidentPayload, evidence_id: evidenceId };
+			}
+		}
+
 		const result = await safeApiCall(
-			() => postApi("/incidents/add", incidentPayload),
+			() => postApi("/incidents/add", payloadToSync),
 			"Server failed to save incident metadata. Saved locally for offline sync.",
 		);
 
-		if (result?.success && incidentPayload.incident_id) {
+		if (result?.success && payloadToSync.incident_id) {
 			await db.runAsync(
 				`UPDATE Local_Incidents SET is_synched = 1 WHERE incident_id = ?;`,
-				[incidentPayload.incident_id],
+				[payloadToSync.incident_id],
 			);
 		}
 

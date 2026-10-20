@@ -3,12 +3,25 @@ const contactModel = require("#models/contactModel.js");
 const addEmergencyContact = async (contactData) => {
 	const { contact_email_blind_index } = contactData;
 
-	// Check if contact ID already exists
 	const existingContact = await contactModel.findContactByEmailBlindIndex(
 		contact_email_blind_index,
+		contactData.user_id,
 	);
 
 	if (existingContact) {
+		if (existingContact.user_id === contactData.user_id) {
+			const reconciledContact = await contactModel.updateContact({
+				...contactData,
+				contact_id: existingContact.contact_id,
+				is_deleted: false,
+				deleted_at: null,
+			});
+			if (!reconciledContact) {
+				throw new Error("Failed to reconcile emergency contact in database.");
+			}
+			return reconciledContact;
+		}
+
 		const err = new Error("This contact already exists.");
 		err.status = 400;
 		throw err;

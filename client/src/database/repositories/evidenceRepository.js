@@ -183,6 +183,30 @@ export const markEvidenceAsSynched = async (db, evidenceId) => {
 	await db.runAsync(query, [getTimestamp(), evidenceId]);
 };
 
+export const markEvidenceAsUnSynched = async (db, evidenceId) => {
+	await db.runAsync(
+		`UPDATE Local_Evidence_Vault SET is_synched = 0 WHERE evidence_id = ?`,
+		[evidenceId],
+	);
+};
+
+export const updateEvidenceCloudFileUrl = async (
+	db,
+	evidenceId,
+	cloudFileUrl,
+) => {
+	await db.runAsync(
+		`UPDATE Local_Evidence_Vault SET cloud_file_url = ?, updated_at = ? WHERE evidence_id = ?`,
+		[cloudFileUrl, getTimestamp(), evidenceId],
+	);
+};
+
+export const getPendingEvidence = async (db, userId) =>
+	db.getAllAsync(
+		`SELECT * FROM Local_Evidence_Vault WHERE user_id = ? AND is_synched = 0 ORDER BY captured_at ASC`,
+		[userId],
+	);
+
 export const logLocalEvidenceDatabase = async (db) => {
 	try {
 		const records = await db.getAllAsync("SELECT * FROM Local_Evidence_Vault ORDER BY captured_at DESC;");

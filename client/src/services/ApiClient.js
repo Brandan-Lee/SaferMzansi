@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import NetInfo from "@react-native-community/netinfo";
 import { isTokenExpired } from "../utils/auth/authTokenUtil";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -8,6 +9,18 @@ const REQUEST_TIMEOUT_MS = 15000;
 //Helper service method that allows easier endpoint creation
 export const postApi = async (endpoint, body) => {
 	const token = await SecureStore.getItemAsync(TOKEN_KEY);
+	const network = await NetInfo.fetch();
+	if (
+		network.isConnected === false ||
+		network.isInternetReachable === false
+	) {
+		return {
+			ok: false,
+			status: 0,
+			data: null,
+			error: "Network connection failed",
+		};
+	}
 
 	//Verify if the users offline JWT token has expired or not
 	if (token && !endpoint.includes("/users") && isTokenExpired(token)) {

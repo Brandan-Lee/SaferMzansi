@@ -4,10 +4,15 @@ import {
 	useContext,
 	useCallback,
 	useMemo,
+	useEffect,
+	useRef,
 } from "react";
 import { useSQLiteContext } from "expo-sqlite";
 import * as SecureStore from "expo-secure-store";
+import NetInfo from "@react-native-community/netinfo";
 import { loginUser, registerUser } from "@services/auth/authService";
+import { syncOfflineChanges } from "@services/main/offlineSyncService";
+import { restoreLocalAccountAfterLogin } from "@services/main/userService";
 import { isTokenExpired } from "@utils/auth/authTokenUtil";
 import { saveEmergencyUserId } from "@utils/storage/secureStore";
 
@@ -22,25 +27,68 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(false);
 	const [pendingAuthRoute, setPendingAuthRoute] = useState(null);
 	const [pendingAuthParams, setPendingAuthParams] = useState(null);
+	const isSyncingOfflineChanges = useRef(false);
+
+	useEffect(() => {
+		const syncWhenOnline = async (state) => {
+			if (
+				!state.isConnected ||
+				state.isInternetReachable === false ||
+				isSyncingOfflineChanges.current
+			) {
+				return;
+			}
+
+			isSyncingOfflineChanges.current = true;
+			try {
+				await syncOfflineChanges(db);
+			} catch (error) {
+				console.error("[Offline Sync] Failed to sync pending local changes:", error);
+			} finally {
+				isSyncingOfflineChanges.current = false;
+			}
+		};
+
+		const unsubscribe = NetInfo.addEventListener(syncWhenOnline);
+		NetInfo.fetch()
+			.then(syncWhenOnline)
+			.catch((error) =>
+				console.error("[Offline Sync] Could not check network status:", error),
+			);
+
+		return unsubscribe;
+	}, [db]);
 
 	// Helper method to persist the authentication session upon successful login
-	const updateSession = useCallback((token, userData) => {
-		setSessionToken(token || null);
-		setUser(
-			userData
-				? {
-					userId: userData.userId,
-					email: userData.email,
-					userName: userData.userName,
-					userSurname: userData.userSurname,
-					userNumber: userData.userNumber,
-				}
-				: null,
-		);
-		if (userData?.userId) {
-			saveEmergencyUserId(userData.userId).catch((error) => {
-				console.error("Failed to save the local emergency profile:", error);
-			});
+	const updateSession = useCallback(async (token, userData) => {
+		try {
+			if (token) {
+				await SecureStore.setItemAsync(TOKEN_KEY, token);
+				setSessionToken(token);
+			} else {
+				await SecureStore.deleteItemAsync(TOKEN_KEY);
+				setSessionToken(null);
+			}
+
+			setUser(
+				userData
+					? {
+						userId: userData.userId,
+						email: userData.email,
+						userName: userData.userName,
+						userSurname: userData.userSurname,
+						userNumber: userData.userNumber,
+					}
+					: null,
+			);
+
+			if (userData?.userId) {
+				saveEmergencyUserId(userData.userId).catch((error) => {
+					console.error("Failed to save the local emergency profile:", error);
+				});
+			}
+		} catch (error) {
+			console.error("Failed to update session storage:", error);
 		}
 	}, []);
 
@@ -69,12 +117,24 @@ export const AuthProvider = ({ children }) => {
 			try {
 				const result = await loginUser(db, email, password);
 
+				if (result?.token && result?.userId) {
+					const isSoftDeleted = result.is_deleted || result.deleted_at;
+
+					if (isSoftDeleted) {
+						console.log("[Auth] Reactivated account detected. Clearing local soft-delete state...");
+
+						await restoreLocalAccountAfterLogin(db, result.userId);
+					}
+
+					await SecureStore.setItemAsync(TOKEN_KEY, result.token);
+				}
+
 				return result;
 			} finally {
 				setLoading(false);
 			}
 		},
-		[db, updateSession],
+		[db],
 	);
 
 	// Optional manually triggered method if needed elsewhere in the app

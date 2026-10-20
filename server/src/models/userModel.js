@@ -139,7 +139,6 @@ const softDeleteUser = async (userId) => {
 
 	const now = new Date().toISOString();
 
-	//Soft delete the user account
 	const { data: userData, error: userError } = await supabase
 		.from("Users")
 		.update({
@@ -154,21 +153,6 @@ const softDeleteUser = async (userId) => {
 	if (userError) {
 		throw userError;
 	}
-
-	//Soft delete users emergency contacts
-	const { error: contactsError } = await supabase
-		.from("Emergency_Contacts")
-		.update({
-			is_deleted: true,
-			deleted_at: now,
-			updated_at: now,
-		})
-		.eq("user_id", userId);
-
-	if (contactsError) {
-		throw contactsError;
-	}
-
 	return userData;
 };
 
@@ -177,21 +161,6 @@ const handleDeleteUser = async (userId) => {
 		throw new Error("User ID is needed for hard delete operations");
 	}
 
-	//Delete other tables first to prevent foreign key constraints
-	const { error: contactsError } = await supabase
-		.from("Emergency_Contacts")
-		.delete()
-		.eq("user_id", userId);
-
-	if (contactsError) {
-		console.warn(
-			"Warning: Failed to delete emergency contacts during hard delete:",
-			contactsError,
-		);
-		throw contactsError;
-	}
-
-	//Lastly delete the user record
 	const { data: userData, error: userError } = await supabase
 		.from("Users")
 		.delete()

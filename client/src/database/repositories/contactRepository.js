@@ -120,8 +120,8 @@ export const getLocalEmergencyContacts = async (db, userId) => {
 // Method to mark a local emergency contact as synched with the server
 export const markContactAsSynched = async (db, contactId) => {
 	await db.runAsync(
-		`UPDATE Local_Emergency_Contacts SET is_synched = 1 WHERE contact_id = ?`,
-		[contactId],
+		`UPDATE Local_Emergency_Contacts SET is_synched = 1, updated_at = ? WHERE contact_id = ?`,
+		[new Date().toISOString(), contactId],
 	);
 };
 
@@ -129,6 +129,14 @@ export const markContactAsUnSynched = async (db, contactId) => {
 	await db.runAsync(
 		`UPDATE Local_Emergency_Contacts SET is_synched = 0 WHERE contact_id = ?`,
 		[contactId],
+	);
+};
+
+export const replaceLocalContactId = async (db, currentId, canonicalId) => {
+	if (!currentId || !canonicalId || currentId === canonicalId) return;
+	await db.runAsync(
+		`UPDATE Local_Emergency_Contacts SET contact_id = ? WHERE contact_id = ?`,
+		[canonicalId, currentId],
 	);
 };
 
@@ -202,11 +210,12 @@ export const softDeleteLocalEmergencyContact = async (
 		UPDATE Local_Emergency_Contacts 
 		SET is_deleted = 1,
 		    is_synched = 0,
-		    deleted_at = ?
+		    deleted_at = ?,
+		    updated_at = ?
 		WHERE contact_id = ? AND user_id = ?
 	`;
 
-	await db.runAsync(query, [now, contactId, userId]);
+	await db.runAsync(query, [now, now, contactId, userId]);
 };
 
 export const getLocalContactTotal = async (db, userId) => {
@@ -219,16 +228,16 @@ export const getLocalContactTotal = async (db, userId) => {
 	return result?.total_contacts ?? 0;
 };
 
-export const findContactByEmail = async (db, targetEmail) => {
-	if (!targetEmail) {
+export const findContactByEmail = async (db, userId, targetEmail) => {
+	if (!userId || !targetEmail) {
 		throw new Error(
-			"contactId is required to find an emergency contact by their email index.",
+			"userId and targetEmail are required to find an emergency contact by email index.",
 		);
 	}
 
 	const blindIndex = generateBlindIndex(targetEmail);
-	const query = `SELECT * FROM Local_Emergency_Contacts WHERE contact_email_blind_index = ? AND is_deleted = 0 LIMIT 1`;
-	const results = await db.getAllAsync(query, [blindIndex]);
+	const query = `SELECT * FROM Local_Emergency_Contacts WHERE user_id = ? AND contact_email_blind_index = ? AND is_deleted = 0 LIMIT 1`;
+	const results = await db.getAllAsync(query, [userId, blindIndex]);
 	return results.length > 0 ? results[0] : null;
 };
 

@@ -94,7 +94,7 @@ export default function EvidenceVaultScreen({ navigation }) {
 			setBanner(null);
 			const result = await DocumentPicker.getDocumentAsync({
 				type: ["application/pdf", "image/*", "video/*", "audio/*"],
-				copyToCacheDirectory: true,
+				copyToCacheDirectory: false,
 				multiple: true,
 			});
 
@@ -106,6 +106,7 @@ export default function EvidenceVaultScreen({ navigation }) {
 					file_type: processed.mimeType || "application/octet-stream",
 					local_file_url: fileAsset.uri,
 					file_size: processed.size,
+					file_name: fileAsset.name,
 				});
 			}
 

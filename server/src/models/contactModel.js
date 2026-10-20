@@ -38,17 +38,20 @@ const findContactById = async (contactId) => {
 	return contact;
 };
 
-const findContactByEmailBlindIndex = async (emailBlindIndex) => {
-	if (!emailBlindIndex) {
+const findContactByEmailBlindIndex = async (emailBlindIndex, userId) => {
+	if (!emailBlindIndex || !userId) {
 		throw new Error(
-			"findContactByEmailBlindIndex requires a valid email_blind_index",
+			"findContactByEmailBlindIndex requires a valid email_blind_index and user_id",
 		);
 	}
 
 	const { data: contact, error } = await supabase
 		.from("Emergency_Contacts")
 		.select("*")
-		.eq("contact_email_blind_index", emailBlindIndex)
+		.match({
+			contact_email_blind_index: emailBlindIndex,
+			user_id: userId,
+		})
 		.maybeSingle();
 
 	if (error) {
@@ -91,6 +94,9 @@ const updateContact = async (payload) => {
 	);
 
 	cleanFields.updated_at = new Date().toISOString();
+	if (Object.prototype.hasOwnProperty.call(updateFields, "deleted_at")) {
+		cleanFields.deleted_at = updateFields.deleted_at;
+	}
 
 	// 3. Update using clean fields and match using extracted IDs
 	const { data: contact, error } = await supabase

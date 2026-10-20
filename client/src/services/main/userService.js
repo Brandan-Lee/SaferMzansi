@@ -7,6 +7,7 @@ import {
 	markUserAsSynched,
 	markUserAsUnSynched,
 	saveOrUpdateLocalUser,
+	restoreUserLocally,
 } from "@database/repositories/userRepository";
 import { postApi, safeApiCall } from "@services/ApiClient";
 import {
@@ -162,32 +163,16 @@ export const updateUser = async (
 		encrypted_email: encryptedEmail,
 	};
 
-	const result = await safeApiCall(
-		() => postApi("/users/update", apiPayload),
-		"Server failed to update user profile. Saving changes locally for offline sync",
-	);
-
-	console.log(result);
-
-	if (result?.success) {
-		await markUserAsSynched(db, userId);
-	} else {
-		console.warn(
-			"[User Service] Backend update failed, updating locally as offline",
-			result?.error,
-		);
-		await markUserAsUnSynched(db, userId);
-		throw new Error(result?.error || "Server update user profile failed.");
-	}
-
 	const localUserPayload = {
 		userId,
 		emailBlindIndex,
-		encryptedName: encryptedName,
+		encryptedName,
 		encryptedSurname: encryptedSurname,
 		encryptedPhoneNum: encryptedPhone,
 		encryptedEmail: encryptedEmail,
+		passwordHash: existingUser.password_hash,
 		isVerified: existingUser.is_verified || 0,
+		isSynched: 0,
 	};
 
 	try {
@@ -197,36 +182,48 @@ export const updateUser = async (
 		throw new Error("Failed to update User profile locally");
 	}
 
+	const result = await safeApiCall(
+		() => postApi("/users/update", apiPayload),
+		"Server failed to update user profile. Saving changes locally for offline sync",
+	);
+
+	if (result?.success) {
+		await markUserAsSynched(db, userId);
+	} else {
+		console.warn(
+			"[User Service] Profile update saved locally for later sync:",
+			result?.error,
+		);
+		await markUserAsUnSynched(db, userId);
+	}
+
 	return {
 		success: true,
 		userId,
+		syncedWithServer: result?.success === true,
 		message: "User Updated Successfully",
 	};
 };
 
-export const softDeleteUser = async (userId) => {
+export const softDeleteUser = async (db, userId) => {
 	if (!userId) {
 		throw new Error("User ID is needed for soft delete operations");
 	}
 
-	//First work with the server
-	const result = await safeApiCall(() =>
-		postApi(
+	await markUserAsSoftDeletedLocally(db, userId);
+
+	const result = await safeApiCall(
+		() => postApi(
 			"/users/soft-delete",
-			userId,
-			"Server failed to soft delete user. Please try again",
+			{ user_id: userId },
 		),
+		"Server failed to soft delete user. Please try again",
 	);
 
 	if (result?.success) {
-		await markUserAsSoftDeletedLocally(db, userId);
-		await softDeleteDecoysLocally(db, userId);
-		const incidentIds = await softDeleteIncidentsLocally(db, userId);
-		await softDeleteEvidenceAndLocationsLocally(db, incidentIds);
 		await markUserAsSynched(db, userId);
 	} else {
-		console.warn("[User Service] Backend soft delete failed, updating locally");
-		await markUserAsSoftDeletedLocally(db, userId);
+		console.warn("[User Service] Account deactivation saved locally for later sync");
 		await markUserAsUnSynched(db, userId);
 	}
 
@@ -236,15 +233,53 @@ export const softDeleteUser = async (userId) => {
 };
 
 export const hardDeleteAccount = async (db, userId) => {
+	if (!userId) {
+		throw new Error("User ID is required for hard delete operations");
+	}
+
 	const result = await safeApiCall(
-		() => postApi("/users/hard-delete"),
-		userId,
-		"Server failed to hard delete",
+		() => postApi("/users/hard-delete", { user_id: userId }),
+		"Server failed to hard delete account. Please try again.",
 	);
 
-	await deleteUserLocally(db, userId);
+	if (result?.success) {
+		console.log("[User Service] Backend hard delete successful");
+	} else {
+		console.warn(
+			"[User Service] Backend hard delete failed or offline, proceeding with local deletion:",
+			result?.error
+		);
+	}
+
+	try {
+		await deleteUserLocally(db, userId);
+	} catch (error) {
+		console.error("[User Service] Failed to delete user locally during hard delete:", error);
+		throw new Error("Failed to clear local user data");
+	}
 
 	return {
 		success: true,
+		message: "Account permanently deleted",
+	};
+};
+
+export const restoreLocalAccountAfterLogin = async (db, userId) => {
+	if (!userId) {
+		throw new Error("User ID is required for local account restoration");
+	}
+
+	try {
+		await restoreUserLocally(db, userId);
+		console.log("[User Service] Local user soft-delete flags successfully cleared.");
+	} catch (error) {
+		console.error("[User Service] Failed to restore user locally:", error);
+		throw new Error("Failed to restore user profile locally");
+	}
+
+	return {
+		success: true,
+		userId,
+		message: "Account locally restored",
 	};
 };

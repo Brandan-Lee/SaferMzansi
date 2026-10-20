@@ -22,13 +22,13 @@ router.post(
 );
 
 router.post(
-	"soft-delete",
+	"/soft-delete",
 	validateBody(REQUIRED_DELETE_FIELDS),
 	userController.softDeleteUser,
 );
 
 router.post(
-	"hard-delete",
+	"/hard-delete",
 	validateBody(REQUIRED_DELETE_FIELDS),
 	userController.hardDeleteUser,
 );
