@@ -11,7 +11,7 @@ import {
     getDeletedEvidence,
     restoreEvidence,
     permanentlyDeleteEvidence,
-} from "@services/evidence/evidenceService";
+} from "@services/main/evidenceService";
 
 const RecycleBinScreen = () => {
     const navigation = useNavigation();

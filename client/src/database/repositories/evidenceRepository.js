@@ -20,7 +20,6 @@ const getFileTypeInfo = (mimeType = "") => {
 	return { type: "file", icon: "file" };
 };
 
-// DRY helper to format raw SQLite evidence rows into UI-friendly grouped cards
 const formatEvidenceRowsToGroups = (rows, dateField) => {
 	const groupsMap = {};
 
@@ -83,8 +82,8 @@ export const saveOrUpdateLocalEvidence = async (db, userId, evidenceData) => {
 	const query = `
         INSERT INTO Local_Evidence_Vault (
             evidence_id, user_id, file_type, local_file_url, cloud_file_url,
-            sha256_hash, file_size, captured_at, is_deleted, is_synched, updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            sha256_hash, file_size, captured_at, is_deleted, deleted_at, is_synched, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(evidence_id) DO UPDATE SET
             file_type = excluded.file_type,
             local_file_url = excluded.local_file_url,
@@ -93,7 +92,7 @@ export const saveOrUpdateLocalEvidence = async (db, userId, evidenceData) => {
             file_size = excluded.file_size,
             is_synched = excluded.is_synched,
             is_deleted = excluded.is_deleted,
-			deleted_at = excluded.deleted_at,
+            deleted_at = excluded.deleted_at,
             updated_at = excluded.updated_at
     `;
 

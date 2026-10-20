@@ -19,7 +19,6 @@ import EvidenceVaultScreen from "@screens/evidence/EvidenceVaultScreen";
 import EvidenceVaultDetailsScreen from "@screens/evidence/EvidenceVaultDetailsScreen";
 import RecycleBinScreen from "@screens/evidence/RecycleBinScreen";
 import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
-import EvidenceVaultDetailsScreen from "@screens/evidence/EvidenceVaultDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
