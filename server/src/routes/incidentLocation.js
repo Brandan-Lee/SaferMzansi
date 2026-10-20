@@ -25,4 +25,6 @@ router.post(
 	locationController.getLocations,
 );
 
+router.post("/nearby-services", locationController.getNearbyServices);
+
 module.exports = router;

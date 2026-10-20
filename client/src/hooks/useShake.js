@@ -4,8 +4,8 @@ import { Vibration } from "react-native";
 
 export function useShake(
     onShake,
-    sensitivity = 1,
-    timeout = 500,
+    sensitivity = 0.35,
+    timeout = 1500,
     coolDownMs = 60000,
 ) {
     const lastX = useRef(null);
@@ -24,57 +24,69 @@ export function useShake(
     }, [onShake]);
 
     useEffect(() => {
-        Accelerometer.setUpdateInterval(100);
+        let subscription;
+        let cancelled = false;
 
-        const subscription = Accelerometer.addListener((data) => {
-            const { x, y, z } = data;
-            const now = Date.now();
+        const startListening = async () => {
+            try {
+                const isAvailable = await Accelerometer.isAvailableAsync();
+                if (!isAvailable) {
+                    console.warn("Shake gesture is unavailable: no accelerometer found.");
+                    return;
+                }
+                if (cancelled) return;
 
-            if (now - lastTriggerTime.current < coolDownMs) {
-                lastX.current = x;
-                lastY.current = y;
-                lastZ.current = z;
-                return;
-            }
+                Accelerometer.setUpdateInterval(100);
+                subscription = Accelerometer.addListener((data) => {
+                    const { x, y, z } = data;
+                    const now = Date.now();
 
-            if (lastX.current !== null) {
-                const deltaX = Math.abs(x - lastX.current);
-                const deltaY = Math.abs(y - lastY.current);
-                const deltaZ = Math.abs(z - lastZ.current);
+                    if (now - lastTriggerTime.current < coolDownMs) {
+                        lastX.current = x;
+                        lastY.current = y;
+                        lastZ.current = z;
+                        return;
+                    }
 
-                const totalDelta = deltaX + deltaY + deltaZ;
+                    if (lastX.current !== null) {
+                        const totalDelta =
+                            Math.abs(x - lastX.current) +
+                            Math.abs(y - lastY.current) +
+                            Math.abs(z - lastZ.current);
 
-                if (totalDelta > sensitivity && now - lastTime.current > 100) {
-                    lastTime.current = now;
-                    shakeCount.current += 1;
+                        if (totalDelta > sensitivity && now - lastTime.current > 100) {
+                            lastTime.current = now;
+                            shakeCount.current += 1;
 
-                    if (timer.current) clearTimeout(timer.current);
-                    timer.current = setTimeout(() => {
-                        shakeCount.current = 0;
-                    }, timeout);
+                            if (timer.current) clearTimeout(timer.current);
+                            timer.current = setTimeout(() => {
+                                shakeCount.current = 0;
+                            }, timeout);
 
-                    //Increase if the shake happens to quickly
-                    if (shakeCount.current >= 3) {
-                        if (timer.current) clearTimeout(timer.current);
-                        shakeCount.current = 0;
-                        lastTriggerTime.current = Date.now();
-
-                        Vibration.vibrate(500);
-
-                        if (savedOnShake.current) {
-                            savedOnShake.current();
+                            if (shakeCount.current >= 2) {
+                                if (timer.current) clearTimeout(timer.current);
+                                shakeCount.current = 0;
+                                lastTriggerTime.current = Date.now();
+                                Vibration.vibrate(500);
+                                savedOnShake.current?.();
+                            }
                         }
                     }
-                }
-            }
 
-            lastX.current = x;
-            lastY.current = y;
-            lastZ.current = z;
-        });
+                    lastX.current = x;
+                    lastY.current = y;
+                    lastZ.current = z;
+                });
+            } catch (error) {
+                console.error("Failed to start shake detection:", error);
+            }
+        };
+
+        startListening();
 
         return () => {
-            subscription.remove();
+            cancelled = true;
+            subscription?.remove();
             if (timer.current) clearTimeout(timer.current);
         };
     }, [sensitivity, timeout, coolDownMs]);

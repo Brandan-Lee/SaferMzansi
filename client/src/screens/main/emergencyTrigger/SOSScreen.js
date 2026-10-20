@@ -145,9 +145,9 @@ export default function SOSScreen({
 			return;
 		}
 
-		if (!db || !user?.userId) {
+		if (!db) {
 			setDispatchError(
-				"Your session is unavailable. Please log in and try again.",
+				"Emergency services are unavailable because local storage could not be opened.",
 			);
 			return;
 		}
@@ -155,11 +155,23 @@ export default function SOSScreen({
 		setIsDispatching(true);
 		Vibration.vibrate([0, 300, 150, 300]);
 		try {
+			console.log("[SOS dispatch] Starting dispatch.", {
+				hasSessionUser: Boolean(user?.userId),
+				hasCapturedLocation: Boolean(route?.params?.initialLocation),
+			});
 			const result = await executeEmergencyDispatch(
 				db,
-				user.userId,
+				user?.userId || null,
 				getLocation,
+				route?.params?.initialLocation,
 			);
+			console.log("[SOS dispatch] Dispatch result.", {
+				success: result?.success,
+				smsOpened: result?.smsOpened,
+				emergencyDialerOpened: result?.emergencyDialerOpened,
+				error: result?.error,
+				warning: result?.warning,
+			});
 			if (result?.incidentId) setIncidentId(result.incidentId);
 			if (!result?.success) {
 				setDispatchError(
@@ -202,7 +214,7 @@ export default function SOSScreen({
 		} finally {
 			setIsDispatching(false);
 		}
-	}, [db, getLocation, isTesting, onTimerEnd, user?.userId]);
+	}, [db, getLocation, isTesting, onTimerEnd, route?.params?.initialLocation, user?.userId]);
 
 	// Load timer duration dynamically on mount
 	useEffect(() => {

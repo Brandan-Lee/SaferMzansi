@@ -25,6 +25,7 @@ export function useSupportPlaces(userLocation) {
 
 		const loadApiData = async () => {
 			if (!userLocation?.latitude || !userLocation?.longitude) {
+				if (isMounted) setLiveServices([]);
 				console.warn(
 					"[useSupportPlaces] Missing latitude or longitude, skipping fetch.",
 				);
@@ -32,6 +33,7 @@ export function useSupportPlaces(userLocation) {
 			}
 
 			setLoadingApi(true);
+			setLiveServices([]);
 			try {
 				console.log("[useSupportPlaces] Calling fetchNominatimServices...");
 				const results = await fetchNominatimServices(

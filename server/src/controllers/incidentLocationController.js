@@ -1,4 +1,5 @@
 const locationService = require("#services/main/incidentLocationServiceServer.js");
+const nearbyServicesService = require("#services/main/nearbyServicesServiceServer.js");
 
 const addLocation = async (req, res, next) => {
 	try {
@@ -23,8 +24,39 @@ const getLocations = async (req, res, next) => {
 			data: { locations },
 		});
 	} catch (error) {
+		console.error("[Nearby services] Lookup failed:", error);
 		next(error);
 	}
 };
 
-module.exports = { addLocation, getLocations };
+const getNearbyServices = async (req, res, next) => {
+	try {
+		const { latitude, longitude } = req.body || {};
+		if (
+			!Number.isFinite(latitude) ||
+			!Number.isFinite(longitude) ||
+			latitude < -90 ||
+			latitude > 90 ||
+			longitude < -180 ||
+			longitude > 180
+		) {
+			return res.status(400).json({
+				success: false,
+				error: "Valid latitude and longitude are required.",
+			});
+		}
+
+		const services = await nearbyServicesService.getNearbyServices(
+			latitude,
+			longitude,
+		);
+		return res.status(200).json({
+			success: true,
+			data: { services },
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+module.exports = { addLocation, getLocations, getNearbyServices };

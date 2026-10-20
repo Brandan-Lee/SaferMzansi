@@ -20,11 +20,22 @@ import { addEvidence } from "./evidenceService";
 import { postIncidentOnline } from "./incidentService";
 import { postLocationOnline } from "./incidentLocationService";
 import { postApi } from "@services/ApiClient";
+import { fetchNearestPoliceStation } from "./nominatumServices";
+import { decryptData } from "@utils/securityAndValidation/securityUtil";
 
 const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
 	AUDIO_RECORDING: "@setting_auto_record",
 };
+
+const isValidLocation = (location) =>
+	Number.isFinite(location?.latitude) &&
+	Number.isFinite(location?.longitude) &&
+	location.latitude >= -90 &&
+	location.latitude <= 90 &&
+	location.longitude >= -180 &&
+	location.longitude <= 180 &&
+	(location.latitude !== 0 || location.longitude !== 0);
 
 const prepareEmergencySms = async (contact, message) => {
 	if (!contact?.phone_number) return false;
@@ -89,13 +100,16 @@ export const executeEmergencyDispatch = async (
 	db,
 	userId = null,
 	getLocationFn,
+	fallbackLocation = null,
 ) => {
+	let emergencyUserId = userId;
+	let locationCoords = null;
+	let displayName = "The user";
 	try {
 		console.log(
 			"[Emergency Dispatch] Timer expired. Executing emergency dispatch sequence...",
 		);
 
-		let emergencyUserId = userId;
 		if (!emergencyUserId) {
 			try {
 				emergencyUserId = await getEmergencyUserId();
@@ -104,6 +118,34 @@ export const executeEmergencyDispatch = async (
 					"[Emergency Dispatch] Failed to load the local emergency profile:",
 					error,
 				);
+			}
+		}
+		let localUser = null;
+		if (db && emergencyUserId) {
+			localUser = await db.getFirstAsync(
+				`SELECT user_id, encrypted_name FROM Local_Users
+				 WHERE user_id = ? AND is_deleted = 0
+				 LIMIT 1`,
+				[emergencyUserId],
+			);
+			if (!localUser) emergencyUserId = null;
+		}
+		if (!emergencyUserId && db) {
+			localUser = await db.getFirstAsync(
+				`SELECT user_id FROM Local_Users
+				 WHERE is_deleted = 0
+				 ORDER BY is_synched DESC, updated_at DESC
+				 LIMIT 1`,
+			);
+			emergencyUserId = localUser?.user_id || null;
+			if (emergencyUserId) {
+				localUser = await db.getFirstAsync(
+					`SELECT user_id, encrypted_name FROM Local_Users
+					 WHERE user_id = ? AND is_deleted = 0
+					 LIMIT 1`,
+					[emergencyUserId],
+				);
+				await saveEmergencyUserId(emergencyUserId);
 			}
 		}
 		if (!emergencyUserId) {
@@ -116,6 +158,22 @@ export const executeEmergencyDispatch = async (
 					: "No emergency profile or saved contacts are available. Call emergency services.",
 			};
 		}
+		if (localUser?.encrypted_name) {
+			try {
+				const decryptedName = decryptData(localUser.encrypted_name)?.trim();
+				displayName =
+					decryptedName ||
+					(localUser.encrypted_name.startsWith("U2FsdGVkX1")
+						? null
+						: localUser.encrypted_name);
+			} catch (error) {
+				console.warn(
+					"[Emergency Dispatch] Could not decrypt the local profile name.",
+					error,
+				);
+			}
+		}
+		displayName = displayName?.trim() || "The user";
 
 		const savedShareLocation = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
 		const isLiveSharingEnabled = savedShareLocation === "true";
@@ -123,24 +181,52 @@ export const executeEmergencyDispatch = async (
 			? "LIVE_PANIC_SHARE"
 			: "STANDARD_PANIC";
 
-		// 1. Capture current GPS location
-		let locationCoords = {
-			latitude: 0.0,
-			longitude: 0.0,
-			altitude: null,
-			accuracy: null,
-		};
-		if (typeof getLocationFn === "function") {
-			const locResult = await getLocationFn(true); // High accuracy
-			if (locResult.success && locResult.location) {
-				locationCoords = {
-					latitude: locResult.location.latitude,
-					longitude: locResult.location.longitude,
-					altitude: locResult.location.altitude || null,
-					accuracy: locResult.location.accuracy || null,
-				};
+		// Prefer the location captured when the shake happened; use a fresh fix only
+		// when that trigger-time location was not available.
+		if (fallbackLocation && isValidLocation(fallbackLocation)) {
+			locationCoords = {
+				latitude: fallbackLocation.latitude,
+				longitude: fallbackLocation.longitude,
+				altitude: fallbackLocation.altitude || null,
+				accuracy: fallbackLocation.accuracy || null,
+			};
+			console.log("[Emergency Dispatch] Using trigger-time GPS coordinates.");
+		}
+		if (!locationCoords && typeof getLocationFn === "function") {
+			try {
+				const locResult = await getLocationFn(true); // High accuracy
+				if (locResult?.success && isValidLocation(locResult.location)) {
+					locationCoords = {
+						latitude: locResult.location.latitude,
+						longitude: locResult.location.longitude,
+						altitude: locResult.location.altitude || null,
+						accuracy: locResult.location.accuracy || null,
+					};
+					console.log("[Emergency Dispatch] Using fresh GPS coordinates.");
+				}
+			} catch (error) {
+				console.warn(
+					"[Emergency Dispatch] Current location failed; using captured trigger location:",
+					error,
+				);
 			}
 		}
+		if (!locationCoords) {
+			locationCoords = {
+				latitude: 0,
+				longitude: 0,
+				altitude: null,
+				accuracy: null,
+			};
+			console.warn(
+				"[Emergency Dispatch] No valid location is available; sending alert without coordinates.",
+			);
+		}
+		console.log("[Emergency Dispatch] Coordinates selected for alert:", {
+			latitude: locationCoords.latitude,
+			longitude: locationCoords.longitude,
+			accuracy: locationCoords.accuracy,
+		});
 
 		const incidentId = Crypto.randomUUID();
 		const trackingToken = Crypto.randomUUID();
@@ -181,7 +267,10 @@ export const executeEmergencyDispatch = async (
 			netState.isConnected && netState.isInternetReachable !== false;
 
 		const mapsLink = `https://maps.google.com/?q=${locationCoords.latitude},${locationCoords.longitude}`;
-		const emergencyMessage = `🚨 EMERGENCY! I am in danger. My current location is: ${mapsLink}`;
+		const emergencyMessage =
+			locationCoords.latitude === 0 && locationCoords.longitude === 0
+				? `EMERGENCY! ${displayName} is in danger. Their current location is unavailable.`
+				: `EMERGENCY! ${displayName} is in danger. Their current location is: ${mapsLink}`;
 
 		if (!isOnline) {
 			// ==========================================
@@ -252,22 +341,16 @@ export const executeEmergencyDispatch = async (
 				);
 			}
 
-			// B. Query Nominatim for nearest police station
+			// B. Query Nominatim and select the station nearest to the incident coordinates
 			let nearestPolice = null;
 			try {
-				const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=police&lat=${locationCoords.latitude}&lon=${locationCoords.longitude}&limit=1`;
-				const nominatimRes = await fetch(nominatimUrl, {
-					headers: { "User-Agent": "SaferMzansiEmergencyApp/1.0" },
-				});
-				const nominatimData = await nominatimRes.json();
-
-				if (nominatimData?.[0]) {
-					nearestPolice = {
-						name: nominatimData[0].display_name,
-						lat: nominatimData[0].lat,
-						lon: nominatimData[0].lon,
-					};
+				if (locationCoords.latitude === 0 && locationCoords.longitude === 0) {
+					throw new Error("No valid incident coordinates are available.");
 				}
+				nearestPolice = await fetchNearestPoliceStation(
+					locationCoords.latitude,
+					locationCoords.longitude,
+				);
 			} catch (nomErr) {
 				console.warn("[Emergency Dispatch] Nominatim lookup warning:", nomErr);
 			}
@@ -395,6 +478,49 @@ export const executeEmergencyDispatch = async (
 			"[Emergency Dispatch] Failed to execute emergency dispatch:",
 			error,
 		);
+		if (db && emergencyUserId) {
+			try {
+				const primaryContact = await getPrimaryEmergencyContact(
+					db,
+					emergencyUserId,
+				);
+				const emergencyLocation =
+					locationCoords ||
+					(fallbackLocation && isValidLocation(fallbackLocation)
+						? fallbackLocation
+						: null);
+				const mapsLink = emergencyLocation
+					? `https://maps.google.com/?q=${emergencyLocation.latitude},${emergencyLocation.longitude}`
+					: null;
+				const message = mapsLink
+					? `EMERGENCY: ${displayName} is in danger. Their location: ${mapsLink}`
+					: `EMERGENCY: ${displayName} is in danger. Their current location is unavailable.`;
+				const smsOpened = await prepareEmergencySms(
+					primaryContact,
+					message,
+				);
+				if (smsOpened) {
+					return {
+						success: true,
+						smsOpened: true,
+						warning: error.message,
+					};
+				}
+			} catch (fallbackError) {
+				console.error(
+					"[Emergency Dispatch] SMS fallback failed:",
+					fallbackError,
+				);
+			}
+		}
+		const dialerOpened = await openEmergencyDialer();
+		if (dialerOpened) {
+			return {
+				success: true,
+				emergencyDialerOpened: true,
+				warning: error.message,
+			};
+		}
 		return { success: false, error: error.message };
 	}
 };

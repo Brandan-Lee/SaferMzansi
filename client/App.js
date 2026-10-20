@@ -1,6 +1,6 @@
 import "react-native-get-random-values";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Alert } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
@@ -14,6 +14,7 @@ import * as TaskManager from "expo-task-manager";
 import { useShake } from "@hooks/useShake";
 import { useLocation } from "@hooks/useLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createNavigationContainerRef } from "@react-navigation/native";
 
 const DATABASE_NAME = "safer_mzansi.db";
 export const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
@@ -23,6 +24,9 @@ const KEYS = {
 	GESTURE: "@setting_gesture",
 };
 
+// Create a global navigation reference
+export const navigationRef = createNavigationContainerRef();
+
 TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 	if (error) {
 		console.error("SaferMzansi Background Location Task Exception:", error);
@@ -30,7 +34,6 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 	}
 
 	try {
-		// Always check persistent storage inside the background thread
 		const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
 		const isSharingEnabled = savedShare === "true";
 
@@ -38,7 +41,6 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 			console.log(
 				"Background location received, but sharing is disabled by user setting.",
 			);
-			// Optionally stop location updates here if user turned it off
 			await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
 			return;
 		}
@@ -58,8 +60,23 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data, error }) => {
 export default function App() {
 	const { getLocation, loading: locationLoading } = useLocation();
 	const [shareLiveLocation, setShareLiveLocation] = useState(false);
+	const pendingSOSNavigation = useRef(false);
 
-	// Method to ask permissions and start background location tracking
+	const handleNavigationReady = () => {
+		console.log(
+			"[SOS debug] Navigation ready; current route:",
+			navigationRef.getCurrentRoute()?.name,
+		);
+		if (pendingSOSNavigation.current) {
+			pendingSOSNavigation.current = false;
+			console.log("[SOS debug] Processing queued SOS navigation.");
+			navigationRef.resetRoot({
+				index: 0,
+				routes: [{ name: "SOSScreen" }],
+			});
+		}
+	};
+
 	const runBackgroundLocationTracking = async () => {
 		try {
 			const { status: fgStatus } =
@@ -75,7 +92,6 @@ export default function App() {
 				return;
 			}
 
-			// Check if task is already running to avoid duplication errors
 			const isRegistered = await TaskManager.isTaskRegisteredAsync(
 				BACKGROUND_LOCATION_TASK,
 			);
@@ -85,7 +101,7 @@ export default function App() {
 					accuracy: Location.Accuracy.Balanced,
 					timeInterval: 5000,
 					distanceInterval: 1,
-					showsBackgroundLocationIndicator: true, // Required for iOS background tracking visibility
+					showsBackgroundLocationIndicator: true,
 					foregroundService: {
 						notificationTitle: "Safer Mzansi Active",
 						notificationBody:
@@ -113,16 +129,41 @@ export default function App() {
 			}
 
 			console.log("Emergency shake triggered!");
+			if (navigationRef.isReady()) {
+				const currentRoute = navigationRef.getCurrentRoute()?.name;
+				console.log(
+					"[SOS debug] Resetting navigation from",
+					currentRoute,
+					"to SOSScreen.",
+				);
+				console.log(
+					"[SOS debug] Registered root routes:",
+					navigationRef
+						.getRootState()
+						?.routes?.map((route) => route.name),
+				);
+				navigationRef.resetRoot({
+					index: 0,
+					routes: [{ name: "SOSScreen" }],
+				});
+			} else {
+				console.log(
+					"[SOS debug] Navigation ref is not ready; queueing SOS navigation.",
+				);
+				console.warn(
+					"[SOS debug] Navigation is not ready; SOS route will run on ready.",
+				);
+				pendingSOSNavigation.current = true;
+			}
 
 			const result = await getLocation();
 
 			if (result.success) {
-				console.log(
-					"GPS COORDINATES:",
-					result.location.latitude,
-					result.location.longitude,
-				);
-				navigation.navigate("SOSScreen");
+				console.log("[SOS debug] Location capture succeeded.");
+				if (navigationRef.isReady()) {
+					navigationRef.setParams({ initialLocation: result.location });
+					console.log("[SOS debug] Saved captured coordinates for SOS dispatch.");
+				}
 			} else {
 				console.log("Location capture failed:", result.error);
 			}
@@ -133,7 +174,6 @@ export default function App() {
 
 	useShake(handleEmergencyShake);
 
-	// Load saved setting and initialize background tracking if enabled
 	useEffect(() => {
 		const initializeSettings = async () => {
 			try {
@@ -165,7 +205,10 @@ export default function App() {
 				<NetStatusProvider>
 					<AuthProvider>
 						<View style={styles.container}>
-							<AppNavigator />
+							<AppNavigator
+								navigationRef={navigationRef}
+								onNavigationReady={handleNavigationReady}
+							/>
 							<StatusBar style="auto" />
 						</View>
 					</AuthProvider>

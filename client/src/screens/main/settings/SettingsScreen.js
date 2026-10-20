@@ -259,15 +259,6 @@ const SettingsScreen = ({ navigation, route }) => {
 				/>
 
 				<ToggleRow
-					icon="message-square"
-					title="Email Trigger"
-					value={EmailTrigger}
-					onPress={() =>
-						toggleSetting(KEYS.EMAIL, EmailTrigger, setEmailTrigger)
-					}
-				/>
-
-				<ToggleRow
 					icon="smartphone"
 					title="Gesture Activation"
 					value={GestureTrigger}
