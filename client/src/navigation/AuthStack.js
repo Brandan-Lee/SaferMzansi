@@ -5,11 +5,12 @@ import OTPScreen from "@screens/auth/OTPScreen";
 import ResetPasswordScreen from "@screens/auth/ResetPasswordScreen";
 import ForgotPasswordScreen from "@screens/auth/ForgotPasswordScreen";
 import RegistrationScreen from "@screens/auth/RegistrationScreen";
+import SplashScreen from "@screens/main/SplashScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function AuthStack({
-	initialRoute = "LoginScreen",
+	initialRoute = "SplashScreen",
 	initialParams,
 }) {
 	return (
@@ -17,6 +18,7 @@ export default function AuthStack({
 			screenOptions={{ headerShown: false }}
 			initialRouteName={initialRoute}
 		>
+			<Stack.Screen name="SplashScreen" component={SplashScreen} />
 			<Stack.Screen name="LoginScreen" component={LoginScreen} />
 			<Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
 			<Stack.Screen

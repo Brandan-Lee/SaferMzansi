@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { useAuth } from "@context/AuthContext";
@@ -45,19 +45,15 @@ const getFileName = (file) => {
 	return `${evidenceId}.${ext}`;
 };
 
-// Generates the exact compound key: userId/evidenceId_pickerName without duplicating IDs
+// Prefer the saved storage key; fallback mirrors the upload path based on the cached filename.
 const getRemotePath = (userId, file) => {
 	const fileId = getFileId(file);
-	const fileName = getFileName(file);
+	const storedCloudPath = file.cloud_file_url || file.cloudFileUrl;
+	if (storedCloudPath) return storedCloudPath;
 
-	// If the stored path already contains the full userId/fileId_filename format, use it directly
-	const rawPath = file.local_file_url || file.cloud_file_url || "";
-	if (rawPath.startsWith(`${userId}/${fileId}_`)) {
-		return rawPath;
-	}
-
-	const targetPath = `${userId}/${fileId}_${fileName}`;
-	return targetPath;
+	const localPath = file.local_file_url || file.localFileUrl || file.uri || "";
+	const cachedFileName = localPath.split(/[\\/]/).pop() || getFileName(file);
+	return `${userId}/${fileId}_${cachedFileName}`;
 };
 
 export default function EvidenceVaultDetailsScreen() {
@@ -65,6 +61,8 @@ export default function EvidenceVaultDetailsScreen() {
 	const db = useSQLiteContext();
 	const route = useRoute();
 	const { user } = useAuth();
+	const [banner, setBanner] = useState(null);
+
 
 	const evidenceItem = route?.params?.evidenceItem;
 
@@ -101,15 +99,25 @@ export default function EvidenceVaultDetailsScreen() {
 	}
 
 	const handleDownloadSingle = async (file) => {
+		setBanner(null);
+
 		const evidenceId = getFileId(file);
 		const localName = getFileName(file);
 
 		if (!evidenceId) {
-			Alert.alert("Error", "Could not identify the unique evidence item ID.");
+			setBanner({
+				message: "Could not identify the unique evidence item ID.",
+				type: "Error",
+			});
 			return;
 		}
 
 		const remotePath = getRemotePath(user.userId, file);
+
+		console.log("DEBUG - User ID:", user.userId);
+		console.log("DEBUG - Evidence ID:", evidenceId);
+		console.log("DEBUG - Computed Remote Path:", remotePath);
+		console.log("DEBUG - Raw DB file object:", file);
 
 		updateDownloadModal({
 			visible: true,
@@ -136,11 +144,12 @@ export default function EvidenceVaultDetailsScreen() {
 	};
 
 	const handleDownloadAll = async () => {
+		setBanner(null);
 		if (!evidenceItem.files?.length) {
-			Alert.alert(
-				"Empty Collection",
-				"No files found to compile into a zip bundle.",
-			);
+			setBanner({
+				message: "No files found to compile into a zip bundle.",
+				type: "error",
+			});
 			return;
 		}
 
@@ -196,11 +205,15 @@ export default function EvidenceVaultDetailsScreen() {
 	};
 
 	const confirmDeleteFile = async () => {
+		setBanner(null);
 		const fileId = fileToDelete?.evidence_id || fileToDelete?.evidenceId;
 		const userId = user?.userId || user?.user_id;
 
 		if (!db || !fileId || !userId) {
-			Alert.alert("Error", "Missing required parameters for deletion.");
+			setBanner({
+				message: "Missing required parameters for deletion.",
+				type: "error",
+			});
 			return;
 		}
 
@@ -210,8 +223,11 @@ export default function EvidenceVaultDetailsScreen() {
 			setFileToDelete(null);
 			navigation.replace("EvidenceVaultScreen");
 		} catch (error) {
+			setBanner({
+				message: "Failed to delete local evidence file",
+				type: "Error",
+			});
 			console.error("Failed to delete local evidence file:", error);
-			Alert.alert("Error", "Could not delete file from local database.");
 		} finally {
 			setIsDeleting(false);
 		}
@@ -222,6 +238,7 @@ export default function EvidenceVaultDetailsScreen() {
 			title="Evidence Details"
 			onBack={() => navigation.replace("EvidenceVaultScreen")}
 			tab="Vault"
+			banner={banner}
 			navigation={navigation}
 			actionButton={{
 				label: "Download All",

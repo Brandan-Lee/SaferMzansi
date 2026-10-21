@@ -6,7 +6,6 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 	Platform,
-	Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { CustomInput } from "@components/forms/CustomInput";
@@ -42,7 +41,7 @@ const AddContactScreen = ({ navigation }) => {
 		cancelLabel: "Cancel",
 		isDestructive: false,
 		iconName: "alert-circle-outline",
-		onConfirm: () => {},
+		onConfirm: () => { },
 	});
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);

@@ -37,6 +37,7 @@ const formatEvidenceRowsToGroups = (rows, dateField) => {
 
 		groupsMap[formattedDate].files.push({
 			evidenceId: row.evidence_id,
+			cloud_file_url: row.cloud_file_url,
 			mimeType: row.file_type,
 			type,
 			icon,
@@ -140,7 +141,7 @@ export const purgeExpiredDeletedEvidence = async (db, userId) => {
 
 export const getLocalEvidenceGroupedByDate = async (db, userId) => {
 	const query = `
-        SELECT evidence_id, user_id, file_type, local_file_url, file_size, captured_at
+        SELECT evidence_id, user_id, file_type, local_file_url, cloud_file_url, file_size, captured_at
         FROM Local_Evidence_Vault
         WHERE user_id = ? AND is_deleted = 0
         ORDER BY captured_at DESC;

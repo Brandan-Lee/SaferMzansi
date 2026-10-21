@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { useAuth } from "@context/AuthContext";
@@ -17,6 +17,7 @@ const RecycleBinScreen = () => {
     const navigation = useNavigation();
     const db = useSQLiteContext();
     const { user } = useAuth();
+    const [banner, setBanner] = useState(null);
 
     const [deletedGroups, setDeletedGroups] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -52,7 +53,10 @@ const RecycleBinScreen = () => {
             setIsActionLoading(true);
             if (action === "restore") {
                 await restoreEvidence(db, fileId, userId);
-                Alert.alert("Success", "Evidence restored successfully to your vault.");
+                setBanner({
+                    message: "Evidence restored successfully to your vault.",
+                    type: "success",
+                });
             } else {
                 await permanentlyDeleteEvidence(db, fileId, userId);
             }
@@ -60,7 +64,10 @@ const RecycleBinScreen = () => {
             loadDeletedItems();
         } catch (error) {
             console.error(`Failed to ${action} file:`, error);
-            Alert.alert("Error", `Could not ${action} file.`);
+            setBanner({
+                message: `Could not ${action} file.`,
+                type: "error",
+            });
         } finally {
             setIsActionLoading(false);
         }
@@ -78,6 +85,7 @@ const RecycleBinScreen = () => {
             title="Recycle Bin"
             onBack={() => navigation.goBack()}
             tab="Settings"
+            banner={banner}
             navigation={navigation}
         >
             <ScrollView

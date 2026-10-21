@@ -1,10 +1,12 @@
 import * as FileSystem from 'expo-file-system/legacy';
 import { StorageAccessFramework } from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
-import { Platform, Alert } from 'react-native';
+import { Platform } from 'react-native';
 import { supabase } from '@config/supabase_client';
 import JSZip from 'jszip';
 import { Buffer } from 'buffer';
+
+const EVIDENCE_BUCKET = 'EvidenceVault';
 
 const cleanupFiles = async (paths) => {
     await Promise.all(paths.map(p => FileSystem.deleteAsync(p, { idempotent: true }).catch(() => { })));
@@ -12,18 +14,14 @@ const cleanupFiles = async (paths) => {
 
 export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
     try {
-        // Generate a short-lived Signed URL from EvidenceVault
         const { data, error } = await supabase.storage
-            .from('EvidenceVault')
+            .from(EVIDENCE_BUCKET)
             .createSignedUrl(filePath, 60);
-
         if (error) throw error;
         const signedUrl = data.signedUrl;
 
         const tempLocalUri = `${FileSystem.documentDirectory}${localFileName}`;
-
         const downloadRes = await FileSystem.downloadAsync(signedUrl, tempLocalUri);
-        console.log('Downloaded temporarily to:', downloadRes.uri);
 
         if (Platform.OS === 'android') {
             const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
@@ -43,35 +41,20 @@ export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
                     encoding: FileSystem.EncodingType.Base64,
                 });
 
-                try {
-                    await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true });
-                } catch (cleanupError) {
-                    console.warn("Non-blocking error cleaning up cache file:", cleanupError);
-                }
-
-                Alert.alert('Success', 'File saved directly to your selected folder.');
+                await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true }).catch(() => { });
             } else {
-                Alert.alert('Permission Denied', 'Cannot save file without folder access.');
+                throw new Error('Folder access permission denied.');
             }
         } else {
-            // iOS Implementation
             await Sharing.shareAsync(downloadRes.uri, {
                 UTI: 'public.item',
                 dialogTitle: 'Save File',
             });
 
-            // Clear iOS temporary cache
-            try {
-                await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true });
-                console.log("Temporary iOS cache cleared successfully.");
-            } catch (cleanupError) {
-                console.warn("Non-blocking error cleaning up cache file:", cleanupError);
-            }
+            await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true }).catch(() => { });
         }
-
     } catch (error) {
         console.error('Download failed:', error);
-        Alert.alert('Error', 'Failed to download file.');
         throw error;
     }
 };
@@ -79,12 +62,20 @@ export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
 export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.zip") => {
     const zip = new JSZip();
     const tempPaths = [];
+    let androidDirectoryUri = null;
 
     try {
-        // Download and add files sequentially to cleanly allow UI text updates
+        if (Platform.OS === 'android') {
+            const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
+            if (!permissions.granted) {
+                throw new Error('Folder access permission denied.');
+            }
+            androidDirectoryUri = permissions.directoryUri;
+        }
+
         for (const file of files) {
             const { data, error } = await supabase.storage
-                .from('EvidenceVault')
+                .from(EVIDENCE_BUCKET)
                 .createSignedUrl(file.remotePath, 60);
 
             if (error) throw error;
@@ -100,7 +91,6 @@ export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.z
             zip.file(file.localName, Buffer.from(base64Data, 'base64'));
         }
 
-        // Generate ZIP base64
         const zipBase64 = await zip.generateAsync({ type: 'base64' });
         const tempZipUri = `${FileSystem.documentDirectory}${zipFileName}`;
         tempPaths.push(tempZipUri);
@@ -109,13 +99,9 @@ export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.z
             encoding: FileSystem.EncodingType.Base64,
         });
 
-        // Export based on platform
         if (Platform.OS === 'android') {
-            const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
-            if (!permissions.granted) throw new Error('Folder access permission denied.');
-
             const createdUri = await StorageAccessFramework.createFileAsync(
-                permissions.directoryUri,
+                androidDirectoryUri,
                 zipFileName,
                 'application/zip'
             );
@@ -130,14 +116,12 @@ export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.z
             });
         }
 
-        // Cleanup
         await cleanupFiles(tempPaths);
         return true;
 
     } catch (error) {
         console.error('ZIP compilation failed:', error);
         await cleanupFiles(tempPaths);
-        Alert.alert('Error', 'Failed to compile and package the zipped download bundle.');
         throw error;
     }
 };

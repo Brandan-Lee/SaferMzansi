@@ -8,6 +8,7 @@ import AuthStack from "./AuthStack";
 import MainStack from "./MainStack";
 import DecoyScreen from "@screens/decoy/DecoyScreen";
 import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
+import SplashScreen from "@screens/main/SplashScreen";
 
 const Stack = createNativeStackNavigator();
 const DECOY_LAUNCH_KEY = "@setting_launch_decoy";
@@ -96,8 +97,8 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 							<AuthStack
 								initialRoute={
 									isDecoyUnlocked
-										? "LoginScreen"
-										: pendingAuthRoute || "LoginScreen"
+										? "SplashScreen"
+										: pendingAuthRoute || "SplashScreen"
 								}
 								initialParams={
 									isDecoyUnlocked ? undefined : pendingAuthParams

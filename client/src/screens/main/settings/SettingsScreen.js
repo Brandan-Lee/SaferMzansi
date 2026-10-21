@@ -109,6 +109,7 @@ const SettingsScreen = ({ navigation, route }) => {
 		}
 	};
 
+	//MUST FUCK OFF
 	const showTemporaryAlert = (title) => {
 		Alert.alert(title, "This function will be connected later.");
 	};
@@ -283,14 +284,14 @@ const SettingsScreen = ({ navigation, route }) => {
 					icon="shield-lock-outline"
 					materialIcon
 					title="Privacy policy"
-					onPress={() => showTemporaryAlert("Privacy policy")}
+					onPress={() => showTemporaryAlert("Privacy policy")} //ADD PAGE HERE
 				/>
 
 				<SettingRow
 					icon="check-circle-outline"
 					materialIcon
 					title="Terms of Service"
-					onPress={() => showTemporaryAlert("Terms of Service")}
+					onPress={() => showTemporaryAlert("Terms of Service")} //ADD PAGE HERE
 				/>
 
 				{/* LOGOUT BUTTON */}

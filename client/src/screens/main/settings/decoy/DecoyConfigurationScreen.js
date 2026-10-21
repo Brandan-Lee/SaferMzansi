@@ -20,6 +20,8 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 	const [isConfigured, setIsConfigured] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [showPins, setShowPins] = useState(false);
+	const [banner, setBanner] = useState(null);
+
 
 	useEffect(() => {
 		const loadDecoyData = async () => {
@@ -47,6 +49,13 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 
 	const toggleDecoyLaunch = async (value) => {
 		try {
+			if (!isConfigured) {
+				setBanner({
+					message: "Please configure the decoy pin before activating.",
+					type: "error",
+				});
+				return;
+			}
 			setLaunchAsDecoy(value);
 			await AsyncStorage.setItem(DECOY_LAUNCH_KEY, String(value));
 		} catch (error) {
@@ -65,6 +74,7 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 			title="Decoy Configuration"
 			onBack={() => navigation.goBack()}
 			tab="Settings"
+			banner={banner}
 			navigation={navigation}
 		>
 			<ScrollView
