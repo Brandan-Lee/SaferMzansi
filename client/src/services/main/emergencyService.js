@@ -370,19 +370,24 @@ export const executeEmergencyDispatch = async (
 							: "No emergency contact email or phone is available. Call emergency services.",
 				};
 			}
-			const broadcastResponse = await postApi("/emergency/broadcast", {
-				incident_id: incidentId,
-				location_id: locationId,
-				user_id: emergencyUserId,
-				trigger_type: triggerType,
-				status: "ACTIVE",
-				start_time: startTime,
-				tracking_token: trackingToken,
-				location: locationCoords,
-				contacts: allContacts,
-				nearest_police_station: nearestPolice,
-				message: emergencyMessage,
-			});
+			// Wait for the dispatch result instead of retrying while emails are sending.
+			const broadcastResponse = await postApi(
+				"/emergency/broadcast",
+				{
+					incident_id: incidentId,
+					location_id: locationId,
+					user_id: emergencyUserId,
+					trigger_type: triggerType,
+					status: "ACTIVE",
+					start_time: startTime,
+					tracking_token: trackingToken,
+					location: locationCoords,
+					contacts: allContacts,
+					nearest_police_station: nearestPolice,
+					message: emergencyMessage,
+				},
+				{ timeoutMs: 0 },
+			);
 			if (!broadcastResponse.ok || !broadcastResponse.data?.success) {
 				throw new Error(
 					broadcastResponse.data?.error ||

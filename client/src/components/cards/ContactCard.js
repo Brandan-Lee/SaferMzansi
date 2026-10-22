@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import SurfaceCard from "@components/common/SurfaceCard";
+import { COLORS } from "@constants/uiTokens";
 
-const PURPLE = "#6B21A8";
 const AVATAR_BACKGROUND = "#F3E8FF";
 
 const ContactCard = ({ item, onPress }) => {
@@ -18,12 +19,11 @@ const ContactCard = ({ item, onPress }) => {
 		.join("");
 
 	return (
-		<TouchableOpacity
-			style={styles.card}
-			activeOpacity={0.75}
+		<SurfaceCard
 			onPress={onPress}
-			accessibilityRole="button"
+			style={styles.card}
 			accessibilityLabel={`${name}, emergency contact. Open details.`}
+			accessibilityHint="Opens contact details"
 		>
 			<View style={styles.avatar}>
 				<Text style={styles.initials}>{initials || "?"}</Text>
@@ -50,8 +50,8 @@ const ContactCard = ({ item, onPress }) => {
 					) : null}
 				</View>
 			</View>
-			<Feather name="chevron-right" size={20} color={PURPLE} />
-		</TouchableOpacity>
+			<Feather name="chevron-right" size={20} color={COLORS.primary} />
+		</SurfaceCard>
 	);
 };
 
@@ -59,10 +59,6 @@ const styles = StyleSheet.create({
 	card: {
 		flexDirection: "row",
 		alignItems: "center",
-		backgroundColor: "#FFFFFF",
-		borderWidth: 1,
-		borderColor: "#E5D8F0",
-		borderRadius: 16,
 		paddingVertical: 14,
 		paddingHorizontal: 16,
 		minHeight: 80,
@@ -76,7 +72,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	initials: { fontSize: 17, fontWeight: "700", color: PURPLE },
+	initials: { fontSize: 17, fontWeight: "700", color: COLORS.primary },
 	cardText: { flex: 1, gap: 5 },
 	name: { fontSize: 16, fontWeight: "700", color: "#1F2937" },
 	details: { gap: 3 },

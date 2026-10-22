@@ -6,21 +6,14 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const TOKEN_KEY = "user_jwt_token";
 const REQUEST_TIMEOUT_MS = 4000;
 
-// Keeps server calls bounded so screens can recover promptly from slow networks.
-export const postApi = async (endpoint, body) => {
+// Normal API calls time out quickly; urgent calls can opt out when needed.
+export const postApi = async (
+	endpoint,
+	body,
+	{ timeoutMs = REQUEST_TIMEOUT_MS } = {},
+) => {
 	const controller = new AbortController();
 	let timeoutId;
-	const timeoutResponse = new Promise((resolve) => {
-		timeoutId = setTimeout(() => {
-			controller.abort();
-			resolve({
-				ok: false,
-				status: 0,
-				data: null,
-				error: "The request timed out. Please try again.",
-			});
-		}, REQUEST_TIMEOUT_MS);
-	});
 
 	const request = async () => {
 		const token = await SecureStore.getItemAsync(TOKEN_KEY);
@@ -99,15 +92,31 @@ export const postApi = async (endpoint, body) => {
 	};
 
 	try {
-		return await Promise.race([
-			request().catch((error) => ({
-				ok: false,
-				status: 0,
-				data: null,
-				error: error.message || "Network connection failed",
-			})),
-			timeoutResponse,
-		]);
+		const pendingRequest = request().catch((error) => ({
+			ok: false,
+			status: 0,
+			data: null,
+			error: error.message || "Network connection failed",
+		}));
+
+		// A zero timeout lets an urgent request wait for the server's full response.
+		if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+			return await pendingRequest;
+		}
+
+		const timeoutResponse = new Promise((resolve) => {
+			timeoutId = setTimeout(() => {
+				controller.abort();
+				resolve({
+					ok: false,
+					status: 0,
+					data: null,
+					error: "The request timed out. Please try again.",
+				});
+			}, timeoutMs);
+		});
+
+		return await Promise.race([pendingRequest, timeoutResponse]);
 	} finally {
 		clearTimeout(timeoutId);
 	}

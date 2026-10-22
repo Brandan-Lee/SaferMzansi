@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
-const PURPLE = "#6B21A8";
+import SurfaceCard from "@components/common/SurfaceCard";
+import { COLORS } from "@constants/uiTokens";
 
 const ProfileDetailCard = ({ icon, label, value }) => {
 	return (
-		<View style={styles.row}>
+		<SurfaceCard style={styles.row}>
 			<View style={styles.rowIcon}>
-				<Ionicons name={icon} size={18} color={PURPLE} />
+				<Ionicons name={icon} size={18} color={COLORS.primary} />
 			</View>
 			<View style={styles.content}>
 				<Text style={styles.rowLabel}>{label}</Text>
@@ -19,7 +19,7 @@ const ProfileDetailCard = ({ icon, label, value }) => {
 					{value || "Not provided"}
 				</Text>
 			</View>
-		</View>
+		</SurfaceCard>
 	);
 };
 
@@ -27,16 +27,9 @@ const styles = StyleSheet.create({
 	row: {
 		flexDirection: "row",
 		alignItems: "center",
-		backgroundColor: "#FFFFFF",
-		borderRadius: 10,
 		paddingVertical: 10,
 		paddingHorizontal: 12,
 		marginBottom: 12,
-		shadowColor: "#000",
-		shadowOpacity: 0.06,
-		shadowRadius: 4,
-		shadowOffset: { width: 0, height: 2 },
-		elevation: 1,
 	},
 	rowIcon: {
 		width: 32,

@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { AlertBadge } from "@components/common/AlertBadge";
+import AppButton from "@components/common/AppButton";
 import { NavigationBar } from "@components/common/NavigationBar";
-
-const PURPLE = "#6B21A8";
+import { COLORS } from "@constants/uiTokens";
 
 const MainLayout = ({
 	title,
@@ -36,7 +36,11 @@ const MainLayout = ({
 									accessibilityRole="button"
 									accessibilityLabel="Go back"
 								>
-									<Ionicons name="chevron-back" size={24} color={PURPLE} />
+									<Ionicons
+										name="chevron-back"
+										size={24}
+										color={COLORS.primary}
+									/>
 								</TouchableOpacity>
 							)}
 							<Text style={styles.title}>{title}</Text>
@@ -54,42 +58,17 @@ const MainLayout = ({
 					<View style={styles.content}>{children}</View>
 
 					{actionButton ? (
-						<TouchableOpacity
-							style={[
-								styles.button,
-								actionButton.variant === "secondary" && styles.secondaryButton,
-								actionButton.variant === "destructive" && styles.destructiveButton,
-								actionButton.style,
-							]}
-							activeOpacity={actionButton.activeOpacity || 0.8}
+						<AppButton
+							title={actionButton.label}
 							onPress={actionButton.onPress}
-							disabled={actionButton.disabled || actionButton.loading}
-							accessibilityRole="button"
+							variant={actionButton.variant}
+							disabled={actionButton.disabled}
+							loading={actionButton.loading}
+							icon={actionButton.icon}
+							iconColor={actionButton.iconColor}
+							style={[styles.button, actionButton.style]}
 							accessibilityLabel={actionButton.label}
-							accessibilityState={{
-								disabled: actionButton.disabled || actionButton.loading,
-								busy: actionButton.loading,
-							}}
-						>
-							{actionButton.icon && (
-								<Ionicons
-									name={actionButton.icon}
-									size={24}
-									color={
-										actionButton.iconColor ||
-										(actionButton.variant === "secondary" ? PURPLE : "#fff")
-									}
-								/>
-							)}
-							<Text
-								style={[
-									styles.buttonText,
-									actionButton.variant === "secondary" && styles.secondaryButtonText,
-								]}
-							>
-								{actionButton.label}
-							</Text>
-						</TouchableOpacity>
+						/>
 					) : null}
 				</View>
 			</SafeAreaView>
@@ -120,27 +99,15 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	title: { flex: 1, flexShrink: 1, fontSize: 22, fontWeight: "700", color: PURPLE },
+	title: {
+		flex: 1,
+		flexShrink: 1,
+		fontSize: 22,
+		fontWeight: "700",
+		color: COLORS.primary,
+	},
 	content: { flex: 1 },
-	button: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: PURPLE,
-		borderRadius: 8,
-		minHeight: 52,
-		paddingVertical: 12,
-		marginBottom: 12,
-		gap: 12,
-	},
-	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
-	secondaryButton: {
-		backgroundColor: "#FFFFFF",
-		borderWidth: 1,
-		borderColor: PURPLE,
-	},
-	secondaryButtonText: { color: PURPLE },
-	destructiveButton: { backgroundColor: "#B42318" },
+	button: { minHeight: 52, marginBottom: 12 },
 	navWrapper: { width: "100%" },
 });
 

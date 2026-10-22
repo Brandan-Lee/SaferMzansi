@@ -1,5 +1,7 @@
+import { COLORS } from "./uiTokens";
+
 export const THEME = {
-	purple: "#6B21A8",
+	purple: COLORS.primary,
 	title: "#111111",
 	userPin: "#9B1C1C",
 };

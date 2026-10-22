@@ -1,13 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import AppButton from "@components/common/AppButton";
+import DetailRow from "@components/common/DetailRow";
+import SurfaceCard from "@components/common/SurfaceCard";
 import { CATEGORIES, THEME } from "@constants/supportConstants";
 import {
 	formatDistance,
 	openDirections,
 	isValidPhoneNumber,
 } from "@utils/location/geoUtils";
-import DetailRow from "@components/common/DetailRow";
 
 export default function ServiceCard({
 	place,
@@ -28,10 +30,12 @@ export default function ServiceCard({
 	};
 
 	return (
-		<TouchableOpacity
-			style={[styles.card, selected && styles.cardSelected]}
+		<SurfaceCard
 			onPress={handlePress}
-			activeOpacity={0.85}
+			style={[styles.card, selected && styles.cardSelected]}
+			accessibilityLabel={`${cat.cardTitle}, ${place.name}`}
+			accessibilityHint="Selects this place and shows its details"
+			accessibilityState={{ selected }}
 		>
 			<View style={styles.cardRow}>
 				<View style={[styles.cardIcon, { backgroundColor: cat.color }]}>
@@ -65,43 +69,42 @@ export default function ServiceCard({
 
 					{/* Action Buttons Row */}
 					<View style={styles.actionButtonsRow}>
-						<TouchableOpacity
+						<AppButton
+							title="Directions"
+							icon="navigate-outline"
 							style={[styles.actionButton, styles.directionsButton]}
-							onPress={(e) => {
-								e.stopPropagation?.();
+							fullWidth={false}
+							onPress={(event) => {
+								event.stopPropagation?.();
 								openDirections(place);
 							}}
-						>
-							<Ionicons name="navigate-outline" size={16} color="#fff" />
-							<Text style={styles.actionButtonText}>Directions</Text>
-						</TouchableOpacity>
+						/>
 
 						{/* Conditionally render the Call button ONLY if valid phone details exist */}
 						{hasValidPhone && (
-							<TouchableOpacity
+							<AppButton
+								title="Call"
+								icon="call-outline"
+								iconColor="#FFFFFF"
 								style={[styles.actionButton, styles.callButton]}
-								onPress={(e) => {
-									e.stopPropagation?.();
+								fullWidth={false}
+								onPress={(event) => {
+									event.stopPropagation?.();
 									onAttemptCall?.();
 								}}
-							>
-								<Ionicons name="call-outline" size={16} color="#fff" />
-								<Text style={styles.actionButtonText}>Call</Text>
-							</TouchableOpacity>
+							/>
 						)}
 					</View>
 				</View>
 			)}
-		</TouchableOpacity>
+		</SurfaceCard>
 	);
 }
 
 const styles = StyleSheet.create({
 	card: {
 		backgroundColor: "#F3EBFB",
-		borderWidth: 1,
 		borderColor: THEME.purple,
-		borderRadius: 10,
 		padding: 12,
 		marginTop: 12,
 	},
@@ -135,22 +138,14 @@ const styles = StyleSheet.create({
 	},
 	actionButton: {
 		flex: 1,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
-		paddingVertical: 10,
-		borderRadius: 8,
-		gap: 6,
 	},
 	directionsButton: {
-		backgroundColor: THEME.purple || "#6A1B9A",
+		backgroundColor: THEME.purple,
+		marginTop: 0,
 	},
 	callButton: {
 		backgroundColor: "#2E7D32",
-	},
-	actionButtonText: {
-		color: "#fff",
-		fontWeight: "600",
-		fontSize: 13,
+		borderColor: "#2E7D32",
+		marginTop: 0,
 	},
 });

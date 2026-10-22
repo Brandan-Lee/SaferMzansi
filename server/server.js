@@ -10,6 +10,11 @@ const RESPONSE_DEADLINE_MS = 3900;
 // Middleware
 app.use(cors());
 app.use((req, res, next) => {
+	// Emergency dispatch can wait for contact email delivery, so do not cut it off.
+	if (req.method === "POST" && req.path === "/api/emergency/broadcast") {
+		return next();
+	}
+
 	const deadline = setTimeout(() => {
 		if (!res.headersSent) {
 			res.status(504).json({
