@@ -1,12 +1,7 @@
-import {
-	decryptData,
-	generateBlindIndex,
-} from "@utils/securityAndValidation/securityUtil";
+import { generateBlindIndex } from "@utils/securityAndValidation/securityUtil";
+import { logLocalTable } from "@database/logLocalTable";
 
-const normalizeEmail = (email) =>
-	String(email ?? "")
-		.trim()
-		.toLowerCase();
+export const logLocalUsers = (db) => logLocalTable(db, "Local_Users");
 
 //Helper to update local user fields by user id
 const updateLocalUserField = async (db, userId, fields) => {
@@ -20,54 +15,6 @@ const updateLocalUserField = async (db, userId, fields) => {
 		`UPDATE Local_Users SET ${assignments} WHERE user_id = ?`,
 		values,
 	);
-};
-
-//TODO: Remove this when project is complete
-// Method to log all local user records in full detail to the console
-export const logLocalUsersDatabase = async (db) => {
-	try {
-		const users = await db.getAllAsync("SELECT * FROM Local_Users");
-
-		console.log(
-			"\n================ [SQLITE LOCAL USERS TABLE - FULL DATA] ================",
-		);
-
-		if (!users || users.length === 0) {
-			console.log("No user records found in Local_Users.");
-		} else {
-			console.log(`Total Records: ${users.length}\n`);
-
-			users.forEach((user, index) => {
-				// Safely attempt decryption on encrypted fields
-				const decryptField = (value) => {
-					if (!value) return value;
-					try {
-						return decryptData(value) || value;
-					} catch {
-						return `[Decryption Failed: ${value}]`;
-					}
-				};
-
-				const decryptedUser = {
-					...user,
-					_decrypted_name: decryptField(user.encrypted_name),
-					_decrypted_surname: decryptField(user.encrypted_surname),
-					_decrypted_email: decryptField(user.encrypted_email),
-					_decrypted_phone_num: decryptField(user.encrypted_phone_num),
-				};
-
-				console.log(`--- Record #${index + 1} ---`);
-				console.log(JSON.stringify(decryptedUser, null, 2));
-				console.log("----------------------------------------\n");
-			});
-		}
-
-		console.log(
-			"========================================================================\n",
-		);
-	} catch (error) {
-		console.error("Failed to log Local_Users database:", error);
-	}
 };
 
 // Method that finds all local users with their login credentials from SQLite

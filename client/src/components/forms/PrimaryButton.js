@@ -1,21 +1,37 @@
 import React from "react";
-import { Pressable, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
+import { Pressable, Text, ActivityIndicator, StyleSheet } from "react-native";
 
-export const PrimaryButton = ({ title, onPress, loading, disabled }) => {
+export const PrimaryButton = ({
+	title,
+	onPress,
+	loading,
+	disabled,
+	variant = "primary",
+}) => {
+	let buttonStyle = styles.primaryButton;
+	if (variant === "secondary") buttonStyle = styles.secondaryButton;
+	if (variant === "destructive") buttonStyle = styles.destructiveButton;
 	return (
 		<Pressable
 			style={({ pressed }) => [
 				styles.button,
+				buttonStyle,
 				(disabled || loading) && styles.disabled,
 				pressed && !disabled && !loading && styles.pressed,
 			]}
 			onPress={onPress}
 			disabled={disabled || loading}
+			accessibilityRole="button"
+			accessibilityState={{ disabled: disabled || loading, busy: loading }}
 		>
 			{loading ? (
-				<ActivityIndicator color="#FFFFFF" />
+				<ActivityIndicator
+					color={variant === "secondary" ? "#6B21A8" : "#FFFFFF"}
+				/>
 			) : (
-				<Text style={styles.text}>{title}</Text>
+				<Text style={[styles.text, variant === "secondary" && styles.secondaryText]}>
+					{title}
+				</Text>
 			)}
 		</Pressable>
 	);
@@ -23,7 +39,7 @@ export const PrimaryButton = ({ title, onPress, loading, disabled }) => {
 
 const styles = StyleSheet.create({
 	button: {
-		backgroundColor: "#6B21A8",
+		minHeight: 48,
 		paddingVertical: 12,
 		paddingHorizontal: 20,
 		borderRadius: 8,
@@ -35,8 +51,16 @@ const styles = StyleSheet.create({
 	pressed: {
 		opacity: 0.85,
 	},
+	primaryButton: { backgroundColor: "#6B21A8" },
+	secondaryButton: {
+		backgroundColor: "#FFFFFF",
+		borderWidth: 1,
+		borderColor: "#6B21A8",
+	},
+	destructiveButton: { backgroundColor: "#B42318" },
+	secondaryText: { color: "#6B21A8" },
 	disabled: {
-		backgroundColor: "#A855F7",
+		backgroundColor: "#9CA3AF",
 		opacity: 0.6,
 	},
 	text: {

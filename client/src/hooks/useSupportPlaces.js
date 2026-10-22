@@ -18,11 +18,6 @@ export function useSupportPlaces(userLocation) {
 	// Fetch nearby services whenever location changes or manual refresh is triggered
 	useEffect(() => {
 		let isMounted = true;
-		console.log(
-			"[useSupportPlaces] useEffect triggered with location:",
-			userLocation,
-		);
-
 		const loadApiData = async () => {
 			if (
 				!Number.isFinite(userLocation?.latitude) ||
@@ -38,16 +33,10 @@ export function useSupportPlaces(userLocation) {
 			setLoadingApi(true);
 			setLiveServices([]);
 			try {
-				console.log("[useSupportPlaces] Calling fetchGeoapifyServices...");
 				const results = await fetchGeoapifyServices(
 					userLocation.latitude,
 					userLocation.longitude,
 				);
-				console.log(
-					"[useSupportPlaces] Results received from service:",
-					results?.length || 0,
-				);
-
 				if (isMounted) {
 					setLiveServices(results || []);
 				}

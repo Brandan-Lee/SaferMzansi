@@ -4,7 +4,7 @@ const { supabase } = require("#config/supabase_db.js");
 const createUser = async (payload) => {
 	const cleanPayload = Object.fromEntries(
 		Object.entries(payload).filter(
-			([_, value]) => value !== null && value !== undefined,
+			([, value]) => value !== null && value !== undefined,
 		),
 	);
 
@@ -106,13 +106,11 @@ const updateUser = async (payload) => {
 		throw new Error("Update user in supabase");
 	}
 
-	console.log("entered in model");
-
 	const { user_id, ...updateFields } = payload;
 
 	const cleanFields = Object.fromEntries(
 		Object.entries(updateFields).filter(
-			([_, value]) => value !== null && value !== undefined,
+			([, value]) => value !== null && value !== undefined,
 		),
 	);
 

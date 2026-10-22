@@ -1,7 +1,7 @@
 const CACHE_TTL_MS = 10 * 60 * 1000;
 const SEARCH_RADIUS_METRES = 20000;
 const GEOAPIFY_PLACES_URL = "https://api.geoapify.com/v2/places";
-const REQUEST_TIMEOUT_MS = 12000;
+const REQUEST_TIMEOUT_MS = 2000;
 const PLACE_CATEGORIES = [
 	"service.police",
 	"healthcare.hospital",
@@ -128,6 +128,7 @@ const getNearbyServices = async (latitude, longitude) => {
 	const pending = pendingRequests.get(key);
 	if (pending) return pending;
 
+	// Bound each external lookup so the API can return before the client deadline.
 	const request = (async () => {
 		const fetchPlaces = async (categories, name) => {
 			const url = new URL(GEOAPIFY_PLACES_URL);

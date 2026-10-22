@@ -15,7 +15,7 @@ import { useAuth } from "@context/AuthContext";
 import { deleteEmergencyContact } from "@services/main/contactService";
 import ProfileDetailCard from "@components/cards/ProfileDetailCard";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 const ContactDetailsScreen = ({ navigation, route }) => {
 	const contact = route.params?.contact;

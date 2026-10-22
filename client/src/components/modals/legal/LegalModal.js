@@ -92,6 +92,8 @@ export default function LegalModal({
               activeOpacity={0.6}
               onPress={onClose}
               style={styles.xButton}
+              accessibilityRole="button"
+              accessibilityLabel="Close legal information"
             >
               <Feather name="x" size={25} color={PURPLE} />
             </TouchableOpacity>
@@ -117,6 +119,7 @@ export default function LegalModal({
               activeOpacity={0.8}
               onPress={onClose}
               style={styles.closeButton}
+              accessibilityRole="button"
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
@@ -130,16 +133,19 @@ export default function LegalModal({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(20, 8, 30, 0.60)",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 12,
+    backgroundColor: "rgba(20, 8, 30, 0.68)",
   },
   modalContainer: {
-    maxHeight: "88%",
+    maxHeight: "94%",
     width: "100%",
-    backgroundColor: BACKGROUND,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
+    backgroundColor: WHITE,
+    borderRadius: 24,
     overflow: "hidden",
+    borderWidth: 1,
+    borderColor: BORDER,
   },
   handle: {
     width: 46,
@@ -153,15 +159,18 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 8,
-    paddingBottom: 14,
+    paddingHorizontal: 18,
+    paddingTop: 18,
+    paddingBottom: 18,
+    backgroundColor: BACKGROUND,
   },
   headerIcon: {
     width: 46,
     height: 46,
     borderRadius: 23,
-    backgroundColor: LIGHT_PURPLE,
+    backgroundColor: WHITE,
+    borderWidth: 1,
+    borderColor: BORDER,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -171,7 +180,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: PURPLE,
-    fontSize: 21,
+    fontSize: 22,
     fontWeight: "700",
   },
   updated: {
@@ -180,9 +189,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   xButton: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
+    width: 48,
+    height: 48,
+    borderRadius: 16,
+    backgroundColor: WHITE,
+    borderWidth: 1,
+    borderColor: BORDER,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -195,22 +207,27 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 20,
-    paddingTop: 22,
+    paddingTop: 18,
     paddingBottom: 24,
   },
   paragraph: {
-    color: MUTED,
-    fontSize: 14,
-    lineHeight: 22,
-    marginBottom: 13,
+    color: TEXT,
+    fontSize: 15,
+    lineHeight: 24,
+    marginBottom: 16,
   },
   section: {
-    marginBottom: 27,
+    padding: 16,
+    marginBottom: 14,
+    backgroundColor: "#FCFAFE",
+    borderWidth: 1,
+    borderColor: BORDER,
+    borderRadius: 16,
   },
   sectionHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 14,
   },
   numberCircle: {
     width: 31,
@@ -229,13 +246,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     flex: 1,
     color: TEXT,
-    fontSize: 15,
+    fontSize: 14,
     lineHeight: 20,
     fontWeight: "700",
+    letterSpacing: 0.35,
   },
-  sectionContent: {
-    paddingLeft: 41,
-  },
+  sectionContent: { paddingLeft: 0 },
   subheading: {
     color: TEXT,
     fontSize: 14,
@@ -259,9 +275,9 @@ const styles = StyleSheet.create({
   },
   bulletText: {
     flex: 1,
-    color: MUTED,
+    color: TEXT,
     fontSize: 14,
-    lineHeight: 22,
+    lineHeight: 23,
   },
   contactRow: {
     marginBottom: 12,
@@ -279,13 +295,13 @@ const styles = StyleSheet.create({
   },
   footer: {
     paddingHorizontal: 20,
-    paddingTop: 12,
+    paddingTop: 14,
     backgroundColor: WHITE,
     borderTopWidth: 1,
     borderTopColor: BORDER,
   },
   closeButton: {
-    height: 50,
+    minHeight: 52,
     borderRadius: 14,
     backgroundColor: PURPLE,
     justifyContent: "center",

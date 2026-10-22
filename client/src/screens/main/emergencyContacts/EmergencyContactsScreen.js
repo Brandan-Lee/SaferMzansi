@@ -13,7 +13,7 @@ import ContactCard from "@components/cards/ContactCard";
 import MainLayout from "@components/layouts/MainLayout";
 import { getEmergencyContacts, getTotalContacts } from "@services/main/contactService";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 export default function EmergencyContactsScreen({ navigation }) {
 	const db = useSQLiteContext();
@@ -27,16 +27,22 @@ export default function EmergencyContactsScreen({ navigation }) {
 	const [loading, setLoading] = useState(true);
 
 	const loadContacts = useCallback(async () => {
-		if (!db || !userId) return setLoading(false);
+		if (!db || !userId) {
+			setLoading(false);
+			return;
+		}
 		try {
 			setLoading(true);
+			setBanner(null);
 			const res = await getEmergencyContacts(db, userId);
 
-			// Safely set array directly
 			setContacts(Array.isArray(res?.contacts) ? res.contacts : []);
 		} catch (error) {
+			setBanner({
+				message: "Emergency contacts could not be loaded. Please try again.",
+				type: "error",
+			});
 			console.error("Failed to load emergency contacts:", error);
-			setContacts([]);
 		} finally {
 			setLoading(false);
 		}
@@ -56,12 +62,10 @@ export default function EmergencyContactsScreen({ navigation }) {
 					const countResult = await getTotalContacts(db, currentUserId);
 
 					if (isMounted) {
-						// countResult is a number directly
 						setContactCount(countResult ?? 0);
 					}
 				} catch (error) {
 					console.error("Failed to fetch total contacts count:", error);
-					if (isMounted) setContactCount(0);
 				}
 			};
 
@@ -123,8 +127,8 @@ export default function EmergencyContactsScreen({ navigation }) {
 				/>
 			)}
 
-			<View styles={styles.center}>
-				<Text style={styles.total}>{contactCount}/5 Contacts</Text>
+			<View style={styles.totalContainer}>
+				<Text style={styles.total}>{contactCount} of 5 emergency contacts</Text>
 			</View>
 
 		</MainLayout>
@@ -133,8 +137,8 @@ export default function EmergencyContactsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
 	center: { flex: 1, justifyContent: "center", alignItems: "center" },
-	list: { gap: 12, paddingBottom: 20, marginTop: 40, },
-	empty: { textAlign: "center", color: "#555", fontSize: 16, marginTop: 40 },
+	list: { gap: 12, paddingBottom: 12, paddingTop: 8 },
+	empty: { textAlign: "center", color: "#475467", fontSize: 16, marginTop: 32 },
 	button: {
 		flexDirection: "row",
 		alignItems: "center",
@@ -145,10 +149,7 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		gap: 12,
 	},
-	total: {
-		bottom: 5,
-		color: "#454545",
-		marginRight: "auto",
-	},
+	totalContainer: { paddingVertical: 10, alignItems: "center" },
+	total: { color: "#475467", fontSize: 13, fontWeight: "600" },
 	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 });

@@ -8,6 +8,7 @@ const CENTER_BUTTON_SIZE = 88;
 const ACTION_BUTTON_SIZE = 46;
 
 const getRadialPosition = (angleInDegrees) => {
+	// Place each shortcut around the center SOS button.
 	const radius = RADAR_SIZE / 2;
 	const radians = (angleInDegrees * Math.PI) / 180;
 	return {
@@ -16,63 +17,53 @@ const getRadialPosition = (angleInDegrees) => {
 	};
 };
 
-export const ProtectionRadar = ({ actions = [], navigation }) => {
-	return (
-		<View style={styles.radarSection}>
-			<View style={styles.radarContainer}>
-				<View style={styles.outerRing} />
-				<View style={styles.innerRing} />
+export const ProtectionRadar = ({ actions = [], navigation }) => (
+	<View style={styles.radarSection}>
+		<View style={styles.radarContainer}>
+			<View style={styles.outerRing} />
+			<View style={styles.innerRing} />
+			<TouchableOpacity
+				activeOpacity={0.8}
+				style={styles.centerShield}
+				onPress={() => navigation.navigate("SOSScreen")}
+				accessibilityRole="button"
+				accessibilityLabel="Open emergency SOS"
+			>
+				<View style={styles.logoBadge}>
+					<Icon name="shield" size={42} color="#FFFFFF" />
+					<Icon name="heart" size={18} color="#6B21A8" style={styles.heart} />
+				</View>
+			</TouchableOpacity>
 
-				{/* Interactive Center Emergency Shield Button */}
-				<TouchableOpacity
-					activeOpacity={0.8}
-					style={styles.centerShield}
-					onPress={() => navigation.navigate("SOSScreen")}
-				>
-					<View style={styles.logoBadge}>
-						<Icon name="shield" size={42} color="#FFFFFF" />
-						<Icon
-							name="heart"
-							size={18}
-							color="#6B21A8"
-							style={styles.logoBadgeHeart}
-						/>
-					</View>
-				</TouchableOpacity>
-
-				{/* Orbiting Action Buttons */}
-				{actions.map((action) => {
-					const pos = getRadialPosition(action.angle);
-					const IconComponent = action.icon;
-
-					return (
-						<TouchableOpacity
-							key={action.id}
-							style={[
-								styles.radialButton,
-								pos,
-								{ backgroundColor: action.bg || "#7E22CE" },
-							]}
-							activeOpacity={0.7}
-							onPress={() => action.route && navigation.navigate(action.route)}
-						>
-							{IconComponent ? (
-								<IconComponent size={20} color={action.color || "#FFFFFF"} />
-							) : null}
-						</TouchableOpacity>
-					);
-				})}
-			</View>
+			{actions.map((action) => {
+				const IconComponent = action.icon;
+				return (
+					<TouchableOpacity
+						key={action.id}
+						style={[
+							styles.radialButton,
+							getRadialPosition(action.angle),
+							{ backgroundColor: action.bg || "#7E22CE" },
+						]}
+						activeOpacity={0.7}
+						onPress={() =>
+							action.route && navigation.navigate(action.route)
+						}
+						accessibilityRole="button"
+						accessibilityLabel={`${action.id} shortcut`}
+					>
+						{IconComponent ? (
+							<IconComponent size={20} color={action.color || "#FFFFFF"} />
+						) : null}
+					</TouchableOpacity>
+				);
+			})}
 		</View>
-	);
-};
+	</View>
+);
 
 const styles = StyleSheet.create({
-	radarSection: {
-		alignItems: "center",
-		justifyContent: "center",
-		paddingVertical: 12,
-	},
+	radarSection: { alignItems: "center", justifyContent: "center", paddingVertical: 12 },
 	radarContainer: {
 		width: RADAR_SIZE,
 		height: RADAR_SIZE,
@@ -114,14 +105,8 @@ const styles = StyleSheet.create({
 		borderWidth: 3,
 		borderColor: "#FFFFFF",
 	},
-	logoBadge: {
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	logoBadgeHeart: {
-		position: "absolute",
-		top: 11,
-	},
+	logoBadge: { alignItems: "center", justifyContent: "center" },
+	heart: { position: "absolute", top: 11 },
 	radialButton: {
 		position: "absolute",
 		width: ACTION_BUTTON_SIZE,

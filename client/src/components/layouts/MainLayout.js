@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { AlertBadge } from "@components/common/AlertBadge";
 import { NavigationBar } from "@components/common/NavigationBar";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 const MainLayout = ({
 	title,
@@ -30,8 +30,11 @@ const MainLayout = ({
 						<View style={styles.header}>
 							{onBack && (
 								<TouchableOpacity
+									style={styles.backButton}
 									onPress={onBack}
 									hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+									accessibilityRole="button"
+									accessibilityLabel="Go back"
 								>
 									<Ionicons name="chevron-back" size={24} color={PURPLE} />
 								</TouchableOpacity>
@@ -41,31 +44,55 @@ const MainLayout = ({
 					)}
 
 					{banner?.message ? (
-						<AlertBadge message={banner.message} type={banner.type} />
+						<AlertBadge
+							message={banner.message}
+							type={banner.type}
+							onDismiss={banner.onDismiss}
+						/>
 					) : null}
 
 					<View style={styles.content}>{children}</View>
 
 					{actionButton ? (
 						<TouchableOpacity
-							style={[styles.button, actionButton.style]}
+							style={[
+								styles.button,
+								actionButton.variant === "secondary" && styles.secondaryButton,
+								actionButton.variant === "destructive" && styles.destructiveButton,
+								actionButton.style,
+							]}
 							activeOpacity={actionButton.activeOpacity || 0.8}
 							onPress={actionButton.onPress}
+							disabled={actionButton.disabled || actionButton.loading}
+							accessibilityRole="button"
+							accessibilityLabel={actionButton.label}
+							accessibilityState={{
+								disabled: actionButton.disabled || actionButton.loading,
+								busy: actionButton.loading,
+							}}
 						>
 							{actionButton.icon && (
 								<Ionicons
 									name={actionButton.icon}
 									size={24}
-									color={actionButton.iconColor || "#fff"}
+									color={
+										actionButton.iconColor ||
+										(actionButton.variant === "secondary" ? PURPLE : "#fff")
+									}
 								/>
 							)}
-							<Text style={styles.buttonText}>{actionButton.label}</Text>
+							<Text
+								style={[
+									styles.buttonText,
+									actionButton.variant === "secondary" && styles.secondaryButtonText,
+								]}
+							>
+								{actionButton.label}
+							</Text>
 						</TouchableOpacity>
 					) : null}
 				</View>
 			</SafeAreaView>
-
-			{/* Render navigation bar outside SafeAreaView to span full edge-to-edge width */}
 			<View style={styles.navWrapper}>
 				<NavigationBar activeTab={tab} navigation={navigation} />
 			</View>
@@ -79,7 +106,6 @@ const styles = StyleSheet.create({
 	innerContainer: {
 		flex: 1,
 		paddingHorizontal: 24,
-		paddingBottom: 70, // Leaves space so content isn't hidden behind the bottom bar
 	},
 	header: {
 		flexDirection: "row",
@@ -88,7 +114,13 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		gap: 10,
 	},
-	title: { fontSize: 22, fontWeight: "700", color: PURPLE },
+	backButton: {
+		width: 48,
+		height: 48,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	title: { flex: 1, flexShrink: 1, fontSize: 22, fontWeight: "700", color: PURPLE },
 	content: { flex: 1 },
 	button: {
 		flexDirection: "row",
@@ -96,18 +128,20 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		backgroundColor: PURPLE,
 		borderRadius: 8,
+		minHeight: 52,
 		paddingVertical: 12,
-		marginBottom: 30,
+		marginBottom: 12,
 		gap: 12,
 	},
 	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
-	navWrapper: {
-		position: "absolute",
-		bottom: 0,
-		left: 0,
-		right: 0,
-		width: "100%",
+	secondaryButton: {
+		backgroundColor: "#FFFFFF",
+		borderWidth: 1,
+		borderColor: PURPLE,
 	},
+	secondaryButtonText: { color: PURPLE },
+	destructiveButton: { backgroundColor: "#B42318" },
+	navWrapper: { width: "100%" },
 });
 
 export default MainLayout;

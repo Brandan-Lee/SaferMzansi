@@ -2,7 +2,6 @@ const contactService = require("#services/main/contactServiceServer.js");
 
 const addContact = async (req, res, next) => {
 	try {
-		console.log("[Backend Body Received]:", req.body);
 		const contact = await contactService.addEmergencyContact(req.body);
 		return res.status(201).json({
 			success: true,

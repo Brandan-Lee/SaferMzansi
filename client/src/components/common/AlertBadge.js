@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-export const AlertBadge = ({ message, type = "error" }) => {
-	if (!message) {
+export const AlertBadge = ({ message, type = "error", duration = 4000, onDismiss }) => {
+	const [visible, setVisible] = useState(true);
+
+	useEffect(() => {
+		setVisible(true);
+		if (!message || duration <= 0) return undefined;
+		const timer = setTimeout(() => {
+			setVisible(false);
+			onDismiss?.();
+		}, duration);
+		return () => clearTimeout(timer);
+	}, [message, duration, onDismiss]);
+
+	if (!message || !visible) {
 		return null;
 	}
 
-	const isError = type === "error";
+	const isError = String(type).toLowerCase() === "error";
 	const bgStyle = isError ? styles.errorBg : styles.successBg;
 	const textStyle = isError ? styles.errorText : styles.successText;
 	const iconName = isError ? "alert-circle" : "check-circle";

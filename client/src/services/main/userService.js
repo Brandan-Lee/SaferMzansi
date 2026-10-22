@@ -1,5 +1,3 @@
-import { softDeleteEvidenceAndLocationsLocally } from "@database/repositories/evidenceRepository";
-import { softDeleteIncidentsLocally } from "@database/repositories/incidentRepository";
 import {
 	deleteUserLocally,
 	getUserDetails,
@@ -42,7 +40,7 @@ export const getLocalUserDetails = async (db, userId) => {
 			return val;
 		} catch (err) {
 			console.error(
-				`[DEBUG] Decryption failed for user field ${fieldName}:`,
+				`Could not decrypt user field ${fieldName}:`,
 				err,
 			);
 			return val;
@@ -243,7 +241,6 @@ export const hardDeleteAccount = async (db, userId) => {
 	);
 
 	if (result?.success) {
-		console.log("[User Service] Backend hard delete successful");
 	} else {
 		console.warn(
 			"[User Service] Backend hard delete failed or offline, proceeding with local deletion:",
@@ -271,7 +268,6 @@ export const restoreLocalAccountAfterLogin = async (db, userId) => {
 
 	try {
 		await restoreUserLocally(db, userId);
-		console.log("[User Service] Local user soft-delete flags successfully cleared.");
 	} catch (error) {
 		console.error("[User Service] Failed to restore user locally:", error);
 		throw new Error("Failed to restore user profile locally");

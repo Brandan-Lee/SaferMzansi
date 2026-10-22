@@ -42,6 +42,9 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 								}
 							}}
 							activeOpacity={0.7}
+							accessibilityRole="button"
+							accessibilityLabel={`${tab.name} tab`}
+							accessibilityState={{ selected: isActive }}
 						>
 							<View style={styles.tabContent}>
 								<FontAwesome6
@@ -66,10 +69,6 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 
 const styles = StyleSheet.create({
 	tabContainer: {
-		position: "absolute",
-		bottom: 0,
-		left: 0,
-		right: 0,
 		backgroundColor: "#FFFFFF",
 		borderTopWidth: 1,
 		borderTopColor: "#F3E8FF",
@@ -80,13 +79,14 @@ const styles = StyleSheet.create({
 		elevation: 10,
 	},
 	tabBar: {
-		height: 60,
+		minHeight: 64,
 		flexDirection: "row",
 		alignItems: "center",
 		width: "100%",
 	},
 	tabItem: {
 		flex: 1,
+		minHeight: 48,
 		alignItems: "center",
 		justifyContent: "center",
 		height: "100%",

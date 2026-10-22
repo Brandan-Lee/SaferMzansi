@@ -1,8 +1,11 @@
 import {
-	encryptData,
 	decryptData,
 	generateBlindIndex,
 } from "@utils/securityAndValidation/securityUtil";
+import { logLocalTable } from "@database/logLocalTable";
+
+export const logLocalContacts = (db) =>
+	logLocalTable(db, "Local_Emergency_Contacts");
 
 // Method to save or update an emergency contact in local SQLite
 export const saveOrUpdateLocalEmergencyContact = async (
@@ -140,59 +143,6 @@ export const replaceLocalContactId = async (db, currentId, canonicalId) => {
 	);
 };
 
-// Debugging helper to log local emergency contacts in full detail
-export const logLocalEmergencyContactsDatabase = async (db) => {
-	try {
-		const contacts = await db.getAllAsync(
-			"SELECT * FROM Local_Emergency_Contacts",
-		);
-
-		console.log(
-			"\n================ [SQLITE LOCAL EMERGENCY CONTACTS] ================",
-		);
-
-		if (!contacts || contacts.length === 0) {
-			console.log("No contact records found in Local_Emergency_Contacts.");
-		} else {
-			console.log(`Total Contacts: ${contacts.length}\n`);
-
-			contacts.forEach((contact, index) => {
-				const decryptField = (value) => {
-					if (!value) return value;
-					try {
-						return decryptData(value) || value;
-					} catch {
-						return `[Decryption Failed: ${value}]`;
-					}
-				};
-
-				const decryptedContact = {
-					...contact,
-					_decrypted_contact_name: decryptField(contact.encrypted_contact_name),
-					_decrypted_contact_surname: decryptField(
-						contact.encrypted_contact_surname,
-					),
-					_decrypted_contact_email: decryptField(
-						contact.encrypted_contact_email,
-					),
-					_decrypted_contact_phone_num: decryptField(
-						contact.encrypted_contact_phone_num,
-					),
-				};
-
-				console.log(`--- Contact #${index + 1} ---`);
-				console.log(JSON.stringify(decryptedContact, null, 2));
-				console.log("----------------------------------------\n");
-			});
-		}
-		console.log(
-			"========================================================================\n",
-		);
-	} catch (error) {
-		console.error("Failed to log Local_Emergency_Contacts database:", error);
-	}
-};
-
 export const softDeleteLocalEmergencyContact = async (
 	db,
 	userId,
@@ -223,7 +173,7 @@ export const getLocalContactTotal = async (db, userId) => {
 		throw new Error("There is no User Id to search the database");
 	}
 
-	const countQuery = `SELECT COUNT(*) AS total_contacts FROM Local_Emergency_Contacts WHERE user_id = ? AND (is_deleted = 0 OR deleted_at IS NULL)`;
+	const countQuery = `SELECT COUNT(*) AS total_contacts FROM Local_Emergency_Contacts WHERE user_id = ? AND is_deleted = 0`;
 	const result = await db.getFirstAsync(countQuery, [userId]);
 	return result?.total_contacts ?? 0;
 };

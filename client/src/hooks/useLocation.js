@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Alert, Platform } from "react-native";
+import { Platform } from "react-native";
 import * as Location from "expo-location";
 
 export function useLocation() {
@@ -12,9 +12,11 @@ export function useLocation() {
 		setLoading(true);
 		setError(null);
 		try {
-			let { status } = await Location.requestForegroundPermissionsAsync();
+			// Settings is the only place that initiates the permission prompt.
+			const { status } = await Location.getForegroundPermissionsAsync();
 			if (status !== "granted") {
-				const errMsg = "Permission to access location was denied";
+				const errMsg =
+					"Location access is off. Enable it in Settings to include your location in emergency alerts.";
 				setError(errMsg);
 				return { success: false, error: errMsg };
 			}
@@ -23,9 +25,8 @@ export function useLocation() {
 			if (wantExact && Platform.OS === "ios") {
 				const permission = await Location.getForegroundPermissionsAsync();
 				if (permission.ios?.accuracy === "reduced") {
-					Alert.alert(
-						"Precise location is off",
-						"Your phone is only sharing an approximate location. To share your exact location, turn on Precise Location in Settings.",
+					setError(
+						"Your phone is sharing an approximate location. Turn on Precise Location in device settings for an exact location.",
 					);
 				}
 			}

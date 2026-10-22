@@ -2,33 +2,34 @@ import React, { useEffect, useState, useRef } from "react";
 import {
 	StyleSheet,
 	Text,
-	View,
 	TouchableOpacity,
 	ScrollView,
-	Alert,
 	Animated,
 } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import * as Location from "expo-location";
+import { AudioModule } from "expo-audio";
+import * as TaskManager from "expo-task-manager";
 import MainLayout from "@components/layouts/MainLayout";
 import { useAuth } from "@context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useModal } from "@context/ModalContext";
+import { BACKGROUND_LOCATION_TASK } from "@constants/locationConstants";
+import SettingsRow from "@components/settings/SettingsRow";
 
 const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
 	AUTO_RECORD: "@setting_auto_record",
-	EMAIL: "@setting_email",
 	GESTURE: "@setting_gesture",
 };
 
 const SettingsScreen = ({ navigation, route }) => {
 	const [shareLocation, setShareLocation] = useState(false);
 	const [autoRecord, setAutoRecord] = useState(false);
-	const [EmailTrigger, setEmailTrigger] = useState(false);
-	const [GestureTrigger, setGestureTrigger] = useState(false);
+	const [gestureTrigger, setGestureTrigger] = useState(false);
 	const { logOut } = useAuth();
 	const [highlightedKey, setHighlightedKey] = useState(null);
+	const [banner, setBanner] = useState(null);
 
 	const { openModal } = useModal();
 
@@ -80,21 +81,18 @@ const SettingsScreen = ({ navigation, route }) => {
 					setAutoRecord(savedRecord === "true");
 				}
 
-				//For Emailing with event details
-				const savedEmail = await AsyncStorage.getItem(KEYS.EMAIL);
-
-				if (savedEmail !== null) {
-					setEmailTrigger(savedEmail === "true");
-				}
-
-				//For gesture activation
+				// Restore the saved gesture preference.
 				const gesture = await AsyncStorage.getItem(KEYS.GESTURE);
 
 				if (gesture !== null) {
 					setGestureTrigger(gesture === "true");
 				}
 			} catch (error) {
-				console.log(error);
+				setBanner({
+					message: "Settings could not be loaded. Please reopen this screen.",
+					type: "error",
+				});
+				console.error("Failed to load settings:", error);
 			}
 		};
 
@@ -102,101 +100,66 @@ const SettingsScreen = ({ navigation, route }) => {
 	}, []);
 
 	const toggleSetting = async (key, currentValue, stateSetter) => {
+		const newValue = !currentValue;
+		setBanner(null);
 		try {
-			const newValue = !currentValue;
-			stateSetter(newValue);
+			if (key === KEYS.SHARE_LOCATION && newValue) {
+				const foreground = await Location.requestForegroundPermissionsAsync();
+				if (foreground.status !== "granted") {
+					throw new Error(
+					"Location permission is needed to include your location in emergency alerts.",
+					);
+				}
+
+				const background = await Location.requestBackgroundPermissionsAsync();
+				if (background.status !== "granted") {
+					throw new Error(
+						"Background location permission is needed for emergency alerts while the app is closed.",
+					);
+				}
+
+				const isRegistered = await TaskManager.isTaskRegisteredAsync(
+					BACKGROUND_LOCATION_TASK,
+				);
+				if (!isRegistered) {
+					await Location.startLocationUpdatesAsync(
+						BACKGROUND_LOCATION_TASK,
+						{
+							accuracy: Location.Accuracy.Balanced,
+							timeInterval: 5000,
+							distanceInterval: 1,
+							showsBackgroundLocationIndicator: true,
+							foregroundService: {
+								notificationTitle: "Safer Mzansi Active",
+								notificationBody:
+									"Location access is active for emergency alerts.",
+								notificationColor: "#FF0000",
+							},
+						},
+					);
+				}
+			} else if (key === KEYS.SHARE_LOCATION && !newValue) {
+				const isRegistered = await TaskManager.isTaskRegisteredAsync(
+					BACKGROUND_LOCATION_TASK,
+				);
+				if (isRegistered) {
+					await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
+				}
+			} else if (key === KEYS.AUTO_RECORD && newValue) {
+				const permission = await AudioModule.requestRecordingPermissionsAsync();
+				if (permission.status !== "granted") {
+					throw new Error(
+						"Microphone permission is needed to record audio during an emergency.",
+					);
+				}
+			}
+
 			await AsyncStorage.setItem(key, String(newValue));
+			stateSetter(newValue);
 		} catch (error) {
+			setBanner({ message: error.message, type: "error" });
 			console.error(`Failed to save setting for key: ${key}`, error);
 		}
-	};
-
-	const SettingRow = ({
-		icon,
-		title,
-		danger = false,
-		onPress,
-		materialIcon = false,
-		isHighlighted = false,
-	}) => {
-		return (
-			<TouchableOpacity
-				style={styles.rowWrapper}
-				onPress={onPress}
-				activeOpacity={0.7}
-			>
-				<Animated.View
-					style={[
-						styles.row,
-						isHighlighted && { backgroundColor: animatedBgColor },
-					]}
-				>
-					<View style={styles.rowLeft}>
-						{materialIcon ? (
-							<MaterialCommunityIcons
-								name={icon}
-								size={26}
-								color={danger ? "#DC2626" : "#2D1638"}
-							/>
-						) : (
-							<Feather
-								name={icon}
-								size={25}
-								color={danger ? "#DC2626" : "#2D1638"}
-							/>
-						)}
-
-						<Text style={[styles.rowText, danger && styles.dangerText]}>
-							{title}
-						</Text>
-					</View>
-
-					<Feather
-						name="chevron-right"
-						size={27}
-						color={danger ? "#DC2626" : "#2D1638"}
-					/>
-				</Animated.View>
-			</TouchableOpacity>
-		);
-	};
-
-	const ToggleRow = ({
-		icon,
-		title,
-		value,
-		onPress,
-		materialIcon = false,
-		isHighlighted = false,
-	}) => {
-		return (
-			<TouchableOpacity
-				style={styles.rowWrapper}
-				onPress={onPress}
-				activeOpacity={0.7}
-			>
-				<Animated.View
-					style={[
-						styles.row,
-						isHighlighted && { backgroundColor: animatedBgColor },
-					]}
-				>
-					<View style={styles.rowLeft}>
-						{materialIcon ? (
-							<MaterialCommunityIcons name={icon} size={26} color="#2D1638" />
-						) : (
-							<Feather name={icon} size={25} color="#2D1638" />
-						)}
-
-						<Text style={styles.rowText}>{title}</Text>
-					</View>
-
-					<View style={[styles.checkbox, value && styles.checkboxActive]}>
-						{value && <Feather name="check" size={17} color="#FFFFFF" />}
-					</View>
-				</Animated.View>
-			</TouchableOpacity>
-		);
 	};
 
 	const handleLogout = async () => {
@@ -207,6 +170,7 @@ const SettingsScreen = ({ navigation, route }) => {
 		<MainLayout
 			title="Settings"
 			onBack={() => navigation.goBack()}
+			banner={banner}
 			tab="Settings"
 			navigation={navigation}
 		>
@@ -216,19 +180,19 @@ const SettingsScreen = ({ navigation, route }) => {
 				showsVerticalScrollIndicator={false}
 			>
 				{/* PROFILE */}
-				<SettingRow
+				<SettingsRow
 					icon="user"
 					title="Profile"
 					onPress={() => navigation.navigate("ProfileScreen")}
 				/>
 
-				<SettingRow
+				<SettingsRow
 					icon="clock"
 					title="Panic Cancel Configuration"
 					onPress={() => navigation.navigate("EmergencyTimerConfigScreen")}
 				/>
 
-				<SettingRow
+				<SettingsRow
 					icon="trash-2"
 					title="Recycling Bin"
 					onPress={() => navigation.navigate("RecycleBinScreen")}
@@ -237,38 +201,42 @@ const SettingsScreen = ({ navigation, route }) => {
 				{/* ALERTS */}
 				<Text style={styles.sectionTitle}>Alerts</Text>
 
-				<ToggleRow
+				<SettingsRow
 					icon="map-pin"
-					title="Share Live Location"
+					title="Location for emergency alerts"
+					isToggle
 					value={shareLocation}
 					isHighlighted={highlightedKey === "shareLocation"}
+					highlightColor={animatedBgColor}
 					onPress={() =>
 						toggleSetting(KEYS.SHARE_LOCATION, shareLocation, setShareLocation)
 					}
 				/>
 
-				<ToggleRow
+				<SettingsRow
 					icon="mic"
-					title="Auto-record on Trigger"
+					title="Voice recording on trigger"
+					isToggle
 					value={autoRecord}
 					onPress={() =>
 						toggleSetting(KEYS.AUTO_RECORD, autoRecord, setAutoRecord)
 					}
 				/>
 
-				<ToggleRow
+				<SettingsRow
 					icon="smartphone"
 					title="Gesture Activation"
-					value={GestureTrigger}
+					isToggle
+					value={gestureTrigger}
 					onPress={() =>
-						toggleSetting(KEYS.GESTURE, GestureTrigger, setGestureTrigger)
+						toggleSetting(KEYS.GESTURE, gestureTrigger, setGestureTrigger)
 					}
 				/>
 
 				{/* SECURITY */}
 				<Text style={styles.sectionTitle}>Security</Text>
 
-				<SettingRow
+				<SettingsRow
 					icon="lock"
 					title="Decoy Configuration"
 					onPress={() => navigation.navigate("DecoyConfigurationScreen")}
@@ -277,14 +245,14 @@ const SettingsScreen = ({ navigation, route }) => {
 				{/* ABOUT */}
 				<Text style={styles.sectionTitle}>About</Text>
 
-				<SettingRow
+				<SettingsRow
 					icon="shield-lock-outline"
 					materialIcon
 					title="Privacy policy"
 					onPress={() => openModal('privacy')}
 				/>
 
-				<SettingRow
+				<SettingsRow
 					icon="check-circle-outline"
 					materialIcon
 					title="Terms of Service"
@@ -306,31 +274,6 @@ const SettingsScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-
-	header: {
-		flexDirection: "row",
-		alignItems: "center",
-		paddingHorizontal: 20,
-		paddingTop: 8,
-		paddingBottom: 12,
-	},
-
-	backButton: {
-		width: 36,
-		height: 40,
-		justifyContent: "center",
-		alignItems: "flex-start",
-	},
-
-	headerTitle: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "#6B21A8",
-	},
-
 	scrollView: {
 		flex: 1,
 	},
@@ -346,51 +289,6 @@ const styles = StyleSheet.create({
 		color: "#111827",
 		marginTop: 22,
 		marginBottom: 5,
-	},
-
-	rowWrapper: {
-		borderBottomWidth: 1,
-		borderBottomColor: "#D8C7E8",
-	},
-
-	row: {
-		minHeight: 64,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-		paddingHorizontal: 4,
-	},
-
-	rowLeft: {
-		flexDirection: "row",
-		alignItems: "center",
-		flex: 1,
-	},
-
-	rowText: {
-		fontSize: 17,
-		fontWeight: "500",
-		color: "#111827",
-		marginLeft: 15,
-	},
-
-	dangerText: {
-		color: "#DC2626",
-	},
-
-	checkbox: {
-		width: 23,
-		height: 23,
-		borderWidth: 1.5,
-		borderColor: "#374151",
-		backgroundColor: "#FFFFFF",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-
-	checkboxActive: {
-		backgroundColor: "#6B21A8",
-		borderColor: "#6B21A8",
 	},
 
 	logoutButton: {

@@ -1,3 +1,8 @@
+import { logLocalTable } from "@database/logLocalTable";
+
+export const logLocalEvidence = (db) =>
+	logLocalTable(db, "Local_Evidence_Vault");
+
 const getTimestamp = () => {
 	const now = new Date();
 	const localTime = new Date(now.getTime() + (2 * 60 * 60 * 1000));
@@ -36,13 +41,17 @@ const formatEvidenceRowsToGroups = (rows, dateField) => {
 		const { type, icon } = getFileTypeInfo(row.file_type);
 
 		groupsMap[formattedDate].files.push({
+			evidence_id: row.evidence_id,
 			evidenceId: row.evidence_id,
 			cloud_file_url: row.cloud_file_url,
 			mimeType: row.file_type,
 			type,
 			icon,
-			uri: row.local_file_url,
-			name: row.local_file_url?.split("/").pop() || "Evidence File",
+			uri: row.local_file_url || "",
+			name:
+				row.local_file_url?.split(/[\\/]/).pop() ||
+				row.cloud_file_url?.split("/").pop() ||
+				"Evidence File",
 			sizeFormatted: formatFileSize(row.file_size),
 			size: row.file_size,
 			...(row.deleted_at && { deletedAt: row.deleted_at }),
@@ -87,8 +96,17 @@ export const saveOrUpdateLocalEvidence = async (db, userId, evidenceData) => {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(evidence_id) DO UPDATE SET
             file_type = excluded.file_type,
-            local_file_url = excluded.local_file_url,
-            cloud_file_url = excluded.cloud_file_url,
+            local_file_url = CASE
+                WHEN excluded.local_file_url != '' THEN excluded.local_file_url
+                WHEN Local_Evidence_Vault.local_file_url LIKE 'file://%'
+                    OR Local_Evidence_Vault.local_file_url LIKE 'content://%'
+                THEN Local_Evidence_Vault.local_file_url
+                ELSE ''
+            END,
+            cloud_file_url = CASE
+                WHEN excluded.cloud_file_url != '' THEN excluded.cloud_file_url
+                ELSE Local_Evidence_Vault.cloud_file_url
+            END,
             sha256_hash = excluded.sha256_hash,
             file_size = excluded.file_size,
             is_synched = excluded.is_synched,
@@ -152,7 +170,7 @@ export const getLocalEvidenceGroupedByDate = async (db, userId) => {
 
 export const getDeletedEvidenceGroupedByDate = async (db, userId) => {
 	const query = `
-        SELECT evidence_id, user_id, file_type, local_file_url, file_size, captured_at, deleted_at
+        SELECT evidence_id, user_id, file_type, local_file_url, cloud_file_url, file_size, captured_at, deleted_at
         FROM Local_Evidence_Vault
         WHERE user_id = ? AND is_deleted = 1
         ORDER BY deleted_at DESC;
@@ -207,22 +225,3 @@ export const getPendingEvidence = async (db, userId) =>
 		`SELECT * FROM Local_Evidence_Vault WHERE user_id = ? AND is_synched = 0 ORDER BY captured_at ASC`,
 		[userId],
 	);
-
-export const logLocalEvidenceDatabase = async (db) => {
-	try {
-		const records = await db.getAllAsync("SELECT * FROM Local_Evidence_Vault ORDER BY captured_at DESC;");
-		console.log("\n================ [SQLITE LOCAL EVIDENCE VAULT] ================");
-
-		if (!records?.length) {
-			console.log("No evidence records found in Local_Evidence_Vault.");
-		} else {
-			console.log(`Total Evidence Records (Including Deleted): ${records.length}\n`);
-			records.forEach((record, index) => {
-				console.log(`--- Evidence Record #${index + 1} ---\n${JSON.stringify(record, null, 2)}\n----------------------------------------\n`);
-			});
-		}
-		console.log("========================================================================\n");
-	} catch (error) {
-		console.error("Failed to log Local_Evidence_Vault database:", error);
-	}
-};

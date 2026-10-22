@@ -8,7 +8,6 @@ import AuthStack from "./AuthStack";
 import MainStack from "./MainStack";
 import DecoyScreen from "@screens/decoy/DecoyScreen";
 import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
-import SplashScreen from "@screens/main/SplashScreen";
 
 const Stack = createNativeStackNavigator();
 const DECOY_LAUNCH_KEY = "@setting_launch_decoy";
@@ -52,30 +51,7 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 	return (
 		<NavigationContainer
 			ref={navigationRef}
-			onReady={() => {
-				console.log(
-					"[SOS debug] NavigationContainer onReady:",
-					navigationRef?.getCurrentRoute()?.name,
-				);
-				console.log(
-					"[SOS debug] Registered root routes:",
-					navigationRef
-						?.getRootState()
-						?.routes?.map((route) => route.name),
-				);
-				onNavigationReady?.();
-			}}
-			onStateChange={() => {
-				console.log(
-					"[SOS debug] Navigation state changed:",
-					{
-						currentRoute: navigationRef?.getCurrentRoute()?.name,
-						rootRoutes: navigationRef
-							?.getRootState()
-							?.routes?.map((route) => route.name),
-					},
-				);
-			}}
+			onReady={onNavigationReady}
 		>
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="AppContent">

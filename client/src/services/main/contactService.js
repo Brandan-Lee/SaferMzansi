@@ -134,7 +134,7 @@ export const getEmergencyContacts = async (db, userId) => {
 			if (decrypted) return decrypted;
 			return val;
 		} catch (err) {
-			console.error(`[DEBUG] Decryption failed for field ${fieldName}:`, err);
+			console.error(`Could not decrypt contact field ${fieldName}:`, err);
 			return val;
 		}
 	};

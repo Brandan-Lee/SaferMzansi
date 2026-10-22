@@ -47,8 +47,6 @@ const addEmergencyContact = async (contactData) => {
 
 const getEmergencyContacts = async (payload) => {
 	const user_id = payload;
-	console.log(payload);
-	console.log("Fetching emergency contacts for user_id:", user_id);
 
 	if (!user_id) {
 		throw new Error("user_id is required to fetch contacts");
@@ -64,17 +62,7 @@ const getEmergencyContacts = async (payload) => {
 };
 
 const updateContact = async (payload) => {
-	//const { contact_id } = payload;
-
-	// const existingContact = await contactModel.findContactById(contact_id);
-	// console.log(existingContact, "This is giving me a hard time");
-
-	// if (existingContact) {
-	// 	return existingContact;
-	// }
-
 	const updatedContact = await contactModel.updateContact(payload);
-	console.log("Updated contact or well it should:::::", updatedContact);
 
 	if (!updatedContact) {
 		throw new Error("Failed to update emergency contact in database");
@@ -85,7 +73,6 @@ const updateContact = async (payload) => {
 
 const deleteContact = async (contactId, userId) => {
 	const existingContact = await contactModel.findContactById(contactId);
-	console.log(existingContact, "This is giving me a hard time");
 
 	if (!existingContact) {
 		throw new Error("This contact does not exist");

@@ -81,7 +81,6 @@ export default function SupportHubScreen({ navigation }) {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			if (locationLoading) {
-				console.log("Location fetch timed out, clearing loader.");
 			}
 		}, 5000);
 		return () => clearTimeout(timer);
@@ -109,10 +108,10 @@ export default function SupportHubScreen({ navigation }) {
 			>
 				<View style={styles.restrictedContainer}>
 					<Ionicons name="location-outline" size={64} color={THEME.purple} />
-					<Text style={styles.restrictedTitle}>Location Sharing Disabled</Text>
+					<Text style={styles.restrictedTitle}>Location Access Disabled</Text>
 					<Text style={styles.restrictedText}>
 						The Support Hub requires live location access to find nearby safety
-						and medical facilities. Please enable "Share Live Location" in your
+						and medical facilities. Please enable "Location for emergency alerts" in your
 						Settings to use this feature.
 					</Text>
 					<TouchableOpacity

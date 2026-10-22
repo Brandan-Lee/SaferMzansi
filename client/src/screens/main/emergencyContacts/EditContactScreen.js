@@ -18,7 +18,7 @@ import { updateEmergencyContact } from "@services/main/contactService";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import MainLayout from "@components/layouts/MainLayout";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 const EditContactScreen = ({ navigation, route }) => {
 	const db = useSQLiteContext();

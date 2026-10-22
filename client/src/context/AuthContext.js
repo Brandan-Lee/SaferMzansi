@@ -121,8 +121,6 @@ export const AuthProvider = ({ children }) => {
 					const isSoftDeleted = result.is_deleted || result.deleted_at;
 
 					if (isSoftDeleted) {
-						console.log("[Auth] Reactivated account detected. Clearing local soft-delete state...");
-
 						await restoreLocalAccountAfterLogin(db, result.userId);
 					}
 
@@ -185,7 +183,17 @@ export const AuthProvider = ({ children }) => {
 			pendingAuthParams,
 			pendingAuthRoute,
 		}),
-		[user, sessionToken, loading, register, login, logOut, checkAuthSession],
+		[
+			user,
+			sessionToken,
+			loading,
+			register,
+			login,
+			logOut,
+			checkAuthSession,
+			pendingAuthRoute,
+			pendingAuthParams,
+		],
 	);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

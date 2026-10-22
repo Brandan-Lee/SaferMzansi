@@ -9,18 +9,32 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
-export default function DownloadModal({ visible, title, message, loading, onClose }) {
+export default function DownloadModal({
+	visible,
+	title,
+	message,
+	loading,
+	result,
+	onClose,
+}) {
+	const resultColor = result === "error" ? "#B42318" : PURPLE;
+	const resultIcon =
+		result === "error" ? "close-circle-outline" : "checkmark-circle-outline";
+
     return (
         <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
             <View style={styles.overlay}>
                 <View style={styles.modalCard}>
-                    <View style={[styles.iconContainer, { backgroundColor: "#EFE3FA" }]}>
+                    <View style={[
+						styles.iconContainer,
+						{ backgroundColor: result === "error" ? "#FEF3F2" : "#EFE3FA" },
+					]}>
                         <Ionicons
-                            name={loading ? "cloud-download-outline" : "checkmark-circle-outline"}
+                            name={loading ? "cloud-download-outline" : resultIcon}
                             size={28}
-                            color={PURPLE}
+                            color={resultColor}
                         />
                     </View>
 
@@ -102,7 +116,8 @@ const styles = StyleSheet.create({
     },
     button: {
         width: "100%",
-        height: 44,
+        minHeight: 48,
+		paddingVertical: 12,
         backgroundColor: PURPLE,
         borderRadius: 8,
         justifyContent: "center",

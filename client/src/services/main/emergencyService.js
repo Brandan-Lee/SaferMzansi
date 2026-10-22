@@ -53,6 +53,20 @@ const openEmergencyDialer = async () => {
 	return true;
 };
 
+const fetchNearestPoliceQuickly = async (latitude, longitude) => {
+	let timeoutId;
+	try {
+		return await Promise.race([
+			fetchNearestPoliceStation(latitude, longitude),
+			new Promise((resolve) => {
+				timeoutId = setTimeout(() => resolve(null), 500);
+			}),
+		]);
+	} finally {
+		clearTimeout(timeoutId);
+	}
+};
+
 export const updateEmergencyTimerConfig = async (userId, timerSeconds) => {
 	if (!userId) {
 		throw new Error("User session is required to update emergency settings");
@@ -106,10 +120,6 @@ export const executeEmergencyDispatch = async (
 	let locationCoords = null;
 	let displayName = "The user";
 	try {
-		console.log(
-			"[Emergency Dispatch] Timer expired. Executing emergency dispatch sequence...",
-		);
-
 		if (!emergencyUserId) {
 			try {
 				emergencyUserId = await getEmergencyUserId();
@@ -190,7 +200,6 @@ export const executeEmergencyDispatch = async (
 				altitude: fallbackLocation.altitude || null,
 				accuracy: fallbackLocation.accuracy || null,
 			};
-			console.log("[Emergency Dispatch] Using trigger-time GPS coordinates.");
 		}
 		if (!locationCoords && typeof getLocationFn === "function") {
 			try {
@@ -202,7 +211,6 @@ export const executeEmergencyDispatch = async (
 						altitude: locResult.location.altitude || null,
 						accuracy: locResult.location.accuracy || null,
 					};
-					console.log("[Emergency Dispatch] Using fresh GPS coordinates.");
 				}
 			} catch (error) {
 				console.warn(
@@ -222,12 +230,6 @@ export const executeEmergencyDispatch = async (
 				"[Emergency Dispatch] No valid location is available; sending alert without coordinates.",
 			);
 		}
-		console.log("[Emergency Dispatch] Coordinates selected for alert:", {
-			latitude: locationCoords.latitude,
-			longitude: locationCoords.longitude,
-			accuracy: locationCoords.accuracy,
-		});
-
 		const incidentId = Crypto.randomUUID();
 		const trackingToken = Crypto.randomUUID();
 		const locationId = Crypto.randomUUID();
@@ -276,12 +278,7 @@ export const executeEmergencyDispatch = async (
 				: `EMERGENCY! ${displayName} is in danger. Their current location is: ${mapsLink}`;
 
 		if (!isOnline) {
-			// ==========================================
 			// OFFLINE MODE: Deep link native SMS app with primary contact
-			// ==========================================
-			console.log(
-				"[Emergency Dispatch] Device is offline. Triggering native SMS fallback...",
-			);
 			let smsOpened = false;
 			const primaryContact = await getPrimaryEmergencyContact(
 				db,
@@ -309,52 +306,14 @@ export const executeEmergencyDispatch = async (
 						: "No emergency SMS could be prepared and the emergency dialer could not be opened.",
 			};
 		} else {
-			// ==========================================
 			// ONLINE MODE: Background Sync + Nominatim + Server Email Broadcast
-			// ==========================================
-			console.log(
-				"[Emergency Dispatch] Device is online. Executing full cloud broadcast & sync...",
-			);
-
-			// A. Background sync incident & location to server
-			const incidentSync = await postIncidentOnline(db, {
-				incident_id: incidentId,
-				user_id: emergencyUserId,
-				evidence_id: null,
-				trigger_type: triggerType,
-				status: "ACTIVE",
-				start_time: startTime,
-				tracking_token: trackingToken,
-			});
-			if (!incidentSync?.success) {
-				console.error(
-					"[Emergency Dispatch] Incident server sync failed:",
-					incidentSync?.error,
-				);
-			}
-
-			const locationSync = await postLocationOnline(db, {
-				location_id: locationId,
-				incident_id: incidentId,
-				latitude: locationCoords.latitude,
-				longitude: locationCoords.longitude,
-				altitude: locationCoords.altitude,
-				accuracy: locationCoords.accuracy,
-			});
-			if (!locationSync?.success) {
-				console.error(
-					"[Emergency Dispatch] Location server sync failed:",
-					locationSync?.error,
-				);
-			}
-
-			// B. Query Nominatim and select the station nearest to the incident coordinates
+			//Query Nominatim and select the station nearest to the incident coordinates
 			let nearestPolice = null;
 			try {
 				if (locationCoords.latitude === 0 && locationCoords.longitude === 0) {
 					throw new Error("No valid incident coordinates are available.");
 				}
-				nearestPolice = await fetchNearestPoliceStation(
+				nearestPolice = await fetchNearestPoliceQuickly(
 					locationCoords.latitude,
 					locationCoords.longitude,
 				);
@@ -362,10 +321,29 @@ export const executeEmergencyDispatch = async (
 				console.warn("[Emergency Dispatch] Nominatim lookup warning:", nomErr);
 			}
 
-			// C. Fetch all contacts and trigger backend Nodemailer email broadcast
+			//Fetch all contacts and trigger backend Nodemailer email broadcast
 			const allContacts = await getLocalEmergencyContacts(db, emergencyUserId);
 			const contactsWithEmail = allContacts.filter((contact) => contact.email);
 			if (contactsWithEmail.length === 0) {
+				const [incidentSync, locationSync] = await Promise.all([
+					postIncidentOnline(db, {
+						incident_id: incidentId,
+						user_id: emergencyUserId,
+						evidence_id: null,
+						trigger_type: triggerType,
+						status: "ACTIVE",
+						start_time: startTime,
+						tracking_token: trackingToken,
+					}),
+					postLocationOnline(db, {
+						location_id: locationId,
+						incident_id: incidentId,
+						latitude: locationCoords.latitude,
+						longitude: locationCoords.longitude,
+						altitude: locationCoords.altitude,
+						accuracy: locationCoords.accuracy,
+					}),
+				]);
 				const primaryContact = await getPrimaryEmergencyContact(
 					db,
 					emergencyUserId,
@@ -382,8 +360,8 @@ export const executeEmergencyDispatch = async (
 					incidentId,
 					localSaved,
 					localSaveError,
-					incidentSaved: incidentSync.success,
-					locationSaved: locationSync.success,
+					incidentSaved: incidentSync?.success || false,
+					locationSaved: locationSync?.success || false,
 					smsOpened,
 					emergencyDialerOpened,
 					error:
@@ -408,7 +386,7 @@ export const executeEmergencyDispatch = async (
 			if (!broadcastResponse.ok || !broadcastResponse.data?.success) {
 				throw new Error(
 					broadcastResponse.data?.error ||
-						"The server rejected the emergency broadcast.",
+					"The server rejected the emergency broadcast.",
 				);
 			}
 			const emailsSent = broadcastResponse.data.data?.emails_sent ?? 0;
@@ -430,10 +408,8 @@ export const executeEmergencyDispatch = async (
 						smsOpened: true,
 						emergencyDialerOpened: false,
 						incidentSaved:
-							incidentSync.success ||
 							broadcastResponse.data.data?.incident_saved === true,
 						locationSaved:
-							locationSync.success ||
 							broadcastResponse.data.data?.location_saved === true,
 					};
 				}
@@ -447,16 +423,14 @@ export const executeEmergencyDispatch = async (
 						smsOpened: false,
 						emergencyDialerOpened: true,
 						incidentSaved:
-							incidentSync.success ||
 							broadcastResponse.data.data?.incident_saved === true,
 						locationSaved:
-							locationSync.success ||
 							broadcastResponse.data.data?.location_saved === true,
 					};
 				}
 				throw new Error(
 					broadcastResponse.data.data?.warning ||
-						"No emergency contact email could be sent.",
+					"No emergency contact email could be sent.",
 				);
 			}
 
@@ -465,13 +439,13 @@ export const executeEmergencyDispatch = async (
 				incidentId,
 				localSaved,
 				localSaveError,
-				incidentSynced: incidentSync.success,
-				locationSynced: locationSync.success,
+				incidentSynced:
+					broadcastResponse.data.data?.incident_saved === true,
+				locationSynced:
+					broadcastResponse.data.data?.location_saved === true,
 				incidentSaved:
-					incidentSync.success ||
 					broadcastResponse.data.data?.incident_saved === true,
 				locationSaved:
-					locationSync.success ||
 					broadcastResponse.data.data?.location_saved === true,
 				emailsSent,
 				emailsFailed: broadcastResponse.data.data?.emails_failed ?? 0,
@@ -540,8 +514,6 @@ export const finalizeEmergencyOnCancel = async (
 	finalStatus = "CANCELLED",
 ) => {
 	try {
-		console.log("[Emergency Dispatch] Finalizing emergency on cancel/close...");
-
 		const savedAudioSetting = await AsyncStorage.getItem(KEYS.AUDIO_RECORDING);
 		const isAudioAllowed = savedAudioSetting === "true";
 

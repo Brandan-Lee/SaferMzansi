@@ -11,7 +11,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { AlertBadge } from "@components/common/AlertBadge";
 
-const PURPLE = "#5E0A9E";
 const RED = "#D92D20";
 const WARNING_ORANGE = "#B54708";
 

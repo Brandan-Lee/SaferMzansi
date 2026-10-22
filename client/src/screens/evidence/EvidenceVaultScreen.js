@@ -6,7 +6,7 @@ import {
 	ActivityIndicator,
 	FlatList,
 } from "react-native";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { useAuth } from "@context/AuthContext";
 import { Feather } from "@expo/vector-icons";
@@ -74,6 +74,10 @@ export default function EvidenceVaultScreen({ navigation }) {
 		} catch (error) {
 			console.error("[Evidence Vault] Failed to load local evidence:", error);
 			setEvidenceItems([]);
+			setBanner({
+				message: "The local vault could not be loaded. Please try again.",
+				type: "error",
+			});
 		} finally {
 			setLoading(false);
 		}
@@ -85,7 +89,7 @@ export default function EvidenceVaultScreen({ navigation }) {
 		}, [loadEvidence]),
 	);
 
-	const selectAndBackupFile = async () => {
+	const selectAndSaveFiles = async () => {
 		if (uploading || !db || !user.userId) return;
 
 		try {
@@ -115,9 +119,10 @@ export default function EvidenceVaultScreen({ navigation }) {
 				type: "success",
 			});
 		} catch (error) {
-			console.error("Picker error detailed log: ", error);
+			console.error("Could not add files to the local evidence vault:", error);
 			setBanner({
-				message: "An issue occurred while picking your file.",
+				message:
+					error.message || "Could not add the selected files to your vault.",
 				type: "error",
 			});
 		} finally {
@@ -128,14 +133,19 @@ export default function EvidenceVaultScreen({ navigation }) {
 	return (
 		<MainLayout
 			title="Evidence Vault"
-			onBack={() => navigation.replace("HomeScreen")}
+			onBack={() =>
+				navigation.canGoBack()
+					? navigation.goBack()
+					: navigation.navigate("HomeScreen")
+			}
 			banner={banner}
 			tab="Vault"
 			navigation={navigation}
 			actionButton={{
-				label: uploading ? "Uploading..." : "Upload",
-				icon: "cloud-upload-outline",
-				onPress: selectAndBackupFile,
+				label: uploading ? "Adding..." : "Add evidence",
+				icon: "add-outline",
+				onPress: selectAndSaveFiles,
+				loading: uploading,
 			}}
 		>
 			{loading ? (
@@ -152,10 +162,10 @@ export default function EvidenceVaultScreen({ navigation }) {
 					showsVerticalScrollIndicator={false}
 					ListEmptyComponent={
 						<View style={styles.emptyContainer}>
-							<Feather name="alert-circle" size={80} color="#2D1638" />
+							<Feather name="shield" size={64} color={PURPLE} />
 							<Text style={styles.emptyTitle}>Nothing uploaded yet</Text>
 							<Text style={styles.emptySubtitle}>
-								Everything uploaded here{"\n"}is encrypted locally.
+								Add important files to keep an encrypted copy in your local vault.
 							</Text>
 						</View>
 					}
@@ -163,7 +173,7 @@ export default function EvidenceVaultScreen({ navigation }) {
 						<EvidenceCard
 							item={item}
 							onPress={() =>
-								navigation.replace("EvidenceVaultDetailsScreen", {
+								navigation.navigate("EvidenceVaultDetailsScreen", {
 									evidenceItem: item,
 								})
 							}
@@ -177,12 +187,13 @@ export default function EvidenceVaultScreen({ navigation }) {
 
 const styles = StyleSheet.create({
 	center: { flex: 1, justifyContent: "center", alignItems: "center" },
-	list: { gap: 16, paddingBottom: 20, marginTop: 20 },
+	list: { flexGrow: 1, gap: 16, paddingTop: 16, paddingBottom: 20 },
 	emptyContainer: {
+		flexGrow: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 60,
 		paddingHorizontal: 20,
+		paddingVertical: 32,
 	},
 	emptyTitle: {
 		fontSize: 20,

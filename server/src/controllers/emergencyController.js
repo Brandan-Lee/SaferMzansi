@@ -2,7 +2,6 @@ const emergencyService = require("#services/main/emergencyServiceServer.js");
 
 const broadcastEmergency = async (req, res, next) => {
 	try {
-		console.log("[Backend Emergency Broadcast Received]:", req.body);
 		const result = await emergencyService.handleEmergencyBroadcast(req.body);
 		return res.status(200).json({
 			success: true,

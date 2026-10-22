@@ -27,7 +27,7 @@ import {
 	finalizeEmergencyOnCancel,
 } from "@services/main/emergencyService";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 const RED = "#EF4444";
 const BACKGROUND = "#FFF5F5";
 const TITLE = "#1F2937";
@@ -66,6 +66,7 @@ export default function SOSScreen({
 	const [isFinalizing, setIsFinalizing] = useState(false);
 	const [incidentId, setIncidentId] = useState(null);
 	const [recordingWarning, setRecordingWarning] = useState(null);
+	const [isRecording, setIsRecording] = useState(false);
 
 	const pulse = useRef(new Animated.Value(1)).current;
 	const intervalRef = useRef(null);
@@ -84,6 +85,7 @@ export default function SOSScreen({
 
 		recordingStartedRef.current = false;
 		await audioRecorder.stop();
+		setIsRecording(false);
 		recordingUriRef.current = audioRecorder.uri || null;
 		return recordingUriRef.current;
 	}, [audioRecorder]);
@@ -95,10 +97,7 @@ export default function SOSScreen({
 		const startAutoRecording = async () => {
 			if ((await AsyncStorage.getItem(AUTO_RECORD_KEY)) !== "true") return;
 
-			let permission = await AudioModule.getRecordingPermissionsAsync();
-			if (permission.status !== "granted") {
-				permission = await AudioModule.requestRecordingPermissionsAsync();
-			}
+			const permission = await AudioModule.getRecordingPermissionsAsync();
 			if (permission.status !== "granted") {
 				setRecordingWarning(
 					"Automatic recording is off because microphone permission was not granted.",
@@ -116,6 +115,7 @@ export default function SOSScreen({
 			}
 			audioRecorder.record();
 			recordingStartedRef.current = true;
+			setIsRecording(true);
 		};
 
 		startAutoRecording().catch((error) => {
@@ -155,23 +155,12 @@ export default function SOSScreen({
 		setIsDispatching(true);
 		Vibration.vibrate([0, 300, 150, 300]);
 		try {
-			console.log("[SOS dispatch] Starting dispatch.", {
-				hasSessionUser: Boolean(user?.userId),
-				hasCapturedLocation: Boolean(route?.params?.initialLocation),
-			});
 			const result = await executeEmergencyDispatch(
 				db,
 				user?.userId || null,
 				getLocation,
 				route?.params?.initialLocation,
 			);
-			console.log("[SOS dispatch] Dispatch result.", {
-				success: result?.success,
-				smsOpened: result?.smsOpened,
-				emergencyDialerOpened: result?.emergencyDialerOpened,
-				error: result?.error,
-				warning: result?.warning,
-			});
 			if (result?.incidentId) setIncidentId(result.incidentId);
 			if (!result?.success) {
 				setDispatchError(
@@ -344,7 +333,7 @@ export default function SOSScreen({
 	};
 
 	return (
-		<LinearGradient colors={["#D9D9D9", "#DCCBF3"]} style={styles.container}>
+		<LinearGradient colors={["#FAF7FF", "#EDE4F7"]} style={styles.container}>
 			<SafeAreaView style={styles.safe}>
 				<View style={styles.inner}>
 					<View style={styles.content}>
@@ -422,6 +411,14 @@ export default function SOSScreen({
 						)}
 
 						<View style={styles.card}>
+							{isRecording ? (
+								<View style={styles.recordingStatus}>
+									<Ionicons name="mic" size={19} color={RED} />
+									<Text style={styles.recordingText}>
+										Audio recording is active
+									</Text>
+								</View>
+							) : null}
 							<View style={styles.cardItem}>
 								<Ionicons name="location-outline" size={22} color={TITLE} />
 								<Text style={styles.cardText}>Share current location</Text>
@@ -477,7 +474,7 @@ export default function SOSScreen({
 					smsPrepared ||
 					emergencyDialerOpened ? (
 						<TouchableOpacity
-							style={styles.button}
+							style={[styles.button, styles.primaryButton]}
 							activeOpacity={0.8}
 							onPress={handleClose}
 							disabled={isFinalizing}
@@ -493,7 +490,7 @@ export default function SOSScreen({
 						</TouchableOpacity>
 					) : (
 						<TouchableOpacity
-							style={styles.button}
+							style={[styles.button, styles.dangerButton]}
 							activeOpacity={0.8}
 							onPress={handleCancel}
 							disabled={isDispatching}
@@ -534,14 +531,14 @@ const styles = StyleSheet.create({
 	content: {
 		flex: 1,
 		alignItems: "center",
-		paddingTop: 70,
+		paddingTop: 28,
 	},
 	title: {
 		fontSize: 24,
 		fontWeight: "700",
 		color: TITLE,
 		marginTop: 16,
-		marginBottom: 32,
+		marginBottom: 18,
 	},
 	message: {
 		fontSize: 15,
@@ -554,32 +551,40 @@ const styles = StyleSheet.create({
 		color: BODY,
 		lineHeight: 22,
 		alignSelf: "stretch",
-		marginBottom: 60,
+		marginBottom: 20,
 	},
 	card: {
 		backgroundColor: "#FFFFFF",
-		flexDirection: "row",
+		flexDirection: "column",
 		alignSelf: "stretch",
 		borderWidth: 1,
 		borderColor: "#CDBBE0",
 		borderRadius: 14,
-		paddingVertical: 14,
+		paddingVertical: 18,
 		paddingHorizontal: 14,
-		gap: 10,
+		gap: 16,
 	},
 	cardItem: {
-		flex: 1,
+		flexDirection: "row",
 		alignItems: "center",
-		gap: 8,
+		gap: 12,
 	},
 	cardText: {
 		fontSize: 14,
 		color: TITLE,
 		lineHeight: 20,
-		alignSelf: "flex-start",
 	},
+	recordingStatus: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 10,
+		paddingBottom: 12,
+		borderBottomWidth: 1,
+		borderBottomColor: "#F3D1D1",
+	},
+	recordingText: { color: RED, fontSize: 14, fontWeight: "700" },
 	timerItem: {
-		justifyContent: "flex-start",
+		justifyContent: "space-between",
 	},
 	timerBox: {
 		backgroundColor: "#D9D9D9",
@@ -587,7 +592,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 		minWidth: 80,
 		alignItems: "center",
-		marginTop: 8,
+		marginTop: 0,
 	},
 	timerBoxSent: {
 		backgroundColor: "#2E7D32",
@@ -605,13 +610,15 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: PURPLE,
 		borderRadius: 10,
+		minHeight: 54,
 		paddingVertical: 12,
 		marginHorizontal: 16,
 		marginBottom: 32,
 		gap: 10,
 	},
+	primaryButton: { backgroundColor: PURPLE },
+	dangerButton: { backgroundColor: "#B42318" },
 	buttonText: {
 		color: "#FFF",
 		fontSize: 17,

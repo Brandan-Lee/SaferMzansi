@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 const ProfileDetailCard = ({ icon, label, value }) => {
 	return (

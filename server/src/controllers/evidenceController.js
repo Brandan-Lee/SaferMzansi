@@ -17,7 +17,6 @@ const sendResponse = (res, statusCode, message, data = null) => {
 
 const addEvidence = async (req, res, next) => {
     try {
-        console.log("[Backend Evidence Body Received]:", req.body);
         const evidence = await evidenceService.addEvidence(req.body);
         return sendResponse(res, 201, "Evidence record added successfully", evidence);
     } catch (error) {

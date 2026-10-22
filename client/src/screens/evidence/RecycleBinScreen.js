@@ -1,5 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+	ActivityIndicator,
+	StyleSheet,
+	Text,
+	View,
+	ScrollView,
+} from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { useAuth } from "@context/AuthContext";
@@ -24,23 +30,32 @@ const RecycleBinScreen = () => {
     const [modalConfig, setModalConfig] = useState(null);
     const [isActionLoading, setIsActionLoading] = useState(false);
 
-    const loadDeletedItems = async () => {
-        if (!db || !user?.userId) return;
+    const loadDeletedItems = useCallback(async () => {
+        if (!db || !user?.userId) {
+            setLoading(false);
+            return;
+        }
         try {
             setLoading(true);
+			setBanner(null);
             const result = await getDeletedEvidence(db, user.userId);
-            if (result.success) setDeletedGroups(result.data);
+            if (!result.success) throw new Error("Deleted evidence could not be loaded.");
+            setDeletedGroups(result.data || []);
         } catch (error) {
             console.error("Failed to load recycle bin items:", error);
+			setBanner({
+				message: "Deleted evidence could not be loaded. Please try again.",
+				type: "error",
+			});
         } finally {
             setLoading(false);
         }
-    };
+    }, [db, user?.userId]);
 
     useFocusEffect(
         useCallback(() => {
             loadDeletedItems();
-        }, [db, user])
+        }, [loadDeletedItems])
     );
 
     const handleConfirmAction = async () => {
@@ -53,15 +68,18 @@ const RecycleBinScreen = () => {
             setIsActionLoading(true);
             if (action === "restore") {
                 await restoreEvidence(db, fileId, userId);
-                setBanner({
-                    message: "Evidence restored successfully to your vault.",
-                    type: "success",
-                });
             } else {
                 await permanentlyDeleteEvidence(db, fileId, userId);
             }
             setModalConfig(null);
-            loadDeletedItems();
+            await loadDeletedItems();
+			setBanner({
+				message:
+					action === "restore"
+						? "Evidence restored successfully to your vault."
+						: "Evidence permanently deleted.",
+				type: "success",
+			});
         } catch (error) {
             console.error(`Failed to ${action} file:`, error);
             setBanner({
@@ -104,7 +122,12 @@ const RecycleBinScreen = () => {
                     </Text>
                 </View>
 
-                {totalFilesCount === 0 ? (
+                {loading ? (
+					<View style={styles.loadingCard}>
+						<ActivityIndicator size="large" color="#6B21A8" />
+						<Text style={styles.loadingText}>Loading deleted evidence…</Text>
+					</View>
+				) : totalFilesCount === 0 ? (
                     <View style={styles.emptyCard}>
                         <Feather name="trash-2" size={42} color="#9ca3af" />
                         <Text style={styles.emptyTitle}>Your Recycle Bin is empty</Text>
@@ -112,11 +135,16 @@ const RecycleBinScreen = () => {
                     </View>
                 ) : (
                     deletedGroups.map((group, groupIndex) => (
-                        <View key={groupIndex} style={{ marginBottom: 20 }}>
+                        <View key={`${group.date}-${groupIndex}`} style={styles.group}>
                             <View style={styles.dateBanner}>
-                                <Text style={styles.bannerTitle}>{group.date}</Text>
+								<View style={styles.dateInfo}>
+									<Text style={styles.dateLabel}>DELETED ON</Text>
+									<Text style={styles.bannerTitle}>{group.date}</Text>
+								</View>
                                 <View style={styles.badgeContainer}>
-                                    <Text style={styles.badgeText}>{group.files.length} Files</Text>
+                                    <Text style={styles.badgeText}>
+										{group.files.length} {group.files.length === 1 ? "file" : "files"}
+									</Text>
                                 </View>
                             </View>
 
@@ -150,6 +178,7 @@ const RecycleBinScreen = () => {
                 loading={isActionLoading}
                 onConfirm={handleConfirmAction}
                 onCancel={() => !isActionLoading && setModalConfig(null)}
+				banner={banner}
             />
         </MainLayout>
     );
@@ -158,7 +187,15 @@ const RecycleBinScreen = () => {
 const styles = StyleSheet.create({
     scrollView: { flex: 1 },
     content: { paddingHorizontal: 20, paddingTop: 14, paddingBottom: 32 },
-    intro: { alignItems: "center", marginBottom: 30 },
+    intro: {
+		alignItems: "center",
+		backgroundColor: "#FFFFFF",
+		borderRadius: 18,
+		borderWidth: 1,
+		borderColor: "#E9E1F0",
+		padding: 18,
+		marginBottom: 20,
+	},
     iconBadge: {
         width: 68,
         height: 68,
@@ -166,12 +203,19 @@ const styles = StyleSheet.create({
         backgroundColor: "#f0e4fa",
         alignItems: "center",
         justifyContent: "center",
-        marginBottom: 14,
+        marginBottom: 12,
     },
-    title: { fontSize: 24, fontWeight: "800", color: "#6b21a8", marginBottom: 8 },
-    subtitle: { fontSize: 14, lineHeight: 21, color: "#6b7280", textAlign: "center" },
+    title: { fontSize: 21, fontWeight: "800", color: "#6b21a8", marginBottom: 8 },
+    subtitle: { fontSize: 14, lineHeight: 21, color: "#6b7280" },
+	loadingCard: {
+		minHeight: 180,
+		alignItems: "center",
+		justifyContent: "center",
+		gap: 12,
+	},
+	loadingText: { color: "#475467", fontSize: 14 },
     emptyCard: {
-        alignItems: "center",
+        alignItems: "flex-start",
         backgroundColor: "#fff",
         borderRadius: 16,
         borderWidth: 1,
@@ -181,19 +225,22 @@ const styles = StyleSheet.create({
     },
     emptyTitle: { fontSize: 17, fontWeight: "700", color: "#1f2937", marginTop: 14, marginBottom: 7 },
     emptyText: { fontSize: 14, color: "#6b7280", textAlign: "center" },
+	group: { marginBottom: 18 },
     dateBanner: {
-        backgroundColor: "#F3E8FF",
+        backgroundColor: "#FFFFFF",
         borderWidth: 1,
-        borderColor: "#6B21A8",
-        borderRadius: 16,
-        padding: 16,
+        borderColor: "#E9E1F0",
+        borderRadius: 14,
+        padding: 14,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 12,
     },
-    bannerTitle: { fontSize: 16, fontWeight: "bold", color: "#111827" },
-    badgeContainer: { backgroundColor: "#E9D5FF", paddingHorizontal: 10, paddingVertical: 4, borderRadius: 16 },
+	dateInfo: { flex: 1, gap: 3 },
+	dateLabel: { fontSize: 10, fontWeight: "700", letterSpacing: 0.7, color: "#6B21A8" },
+    bannerTitle: { fontSize: 15, fontWeight: "700", color: "#111827" },
+    badgeContainer: { backgroundColor: "#F3E8FF", paddingHorizontal: 12, paddingVertical: 8, borderRadius: 16 },
     badgeText: { color: "#6B21A8", fontWeight: "bold", fontSize: 12 },
     fileCardWrapper: { marginBottom: 12 },
 });

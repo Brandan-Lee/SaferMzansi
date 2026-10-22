@@ -2,7 +2,6 @@ const incidentService = require("#services/main/incidentServiceServer.js");
 
 const addOrUpdateIncident = async (req, res, next) => {
 	try {
-		console.log("[Backend Incident Body Received]:", req.body);
 		const incident = await incidentService.addOrUpdateIncident(req.body);
 		return res.status(200).json({
 			success: true,

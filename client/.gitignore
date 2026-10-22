@@ -1,8 +1,34 @@
-# local env files
+# Environment files
 .env
-.env*.local
+.env.*
+!.env.example
 
+# Dependencies and Expo output
 node_modules/
+.npm/
 .expo/
+.expo-shared/
 dist/
-.expo/dev/logs/*.log
+web-build/
+
+# Tests, logs, and temporary files
+coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+tmp/
+temp/
+
+# Native build output and local signing files
+android/.gradle/
+android/local.properties
+android/app/build/
+android/app/debug.keystore
+android/app/release.keystore
+ios/Pods/
+ios/build/
+*.keystore
+*.jks
+*.p8
+*.p12
+*.mobileprovision

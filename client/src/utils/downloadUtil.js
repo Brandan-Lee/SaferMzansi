@@ -14,11 +14,7 @@ const cleanupFiles = async (paths) => {
 
 export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
     try {
-        const { data, error } = await supabase.storage
-            .from(EVIDENCE_BUCKET)
-            .createSignedUrl(filePath, 60);
-        if (error) throw error;
-        const signedUrl = data.signedUrl;
+        const signedUrl = await getDownloadUrl(filePath);
 
         const tempLocalUri = `${FileSystem.documentDirectory}${localFileName}`;
         const downloadRes = await FileSystem.downloadAsync(signedUrl, tempLocalUri);
@@ -74,16 +70,12 @@ export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.z
         }
 
         for (const file of files) {
-            const { data, error } = await supabase.storage
-                .from(EVIDENCE_BUCKET)
-                .createSignedUrl(file.remotePath, 60);
-
-            if (error) throw error;
+            const signedUrl = await getDownloadUrl(file.remotePath);
 
             const tempUri = `${FileSystem.documentDirectory}${Date.now()}_${file.localName}`;
             tempPaths.push(tempUri);
 
-            await FileSystem.downloadAsync(data.signedUrl, tempUri);
+            await FileSystem.downloadAsync(signedUrl, tempUri);
             const base64Data = await FileSystem.readAsStringAsync(tempUri, {
                 encoding: FileSystem.EncodingType.Base64,
             });
@@ -124,4 +116,14 @@ export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.z
         await cleanupFiles(tempPaths);
         throw error;
     }
+};
+
+const getDownloadUrl = async (filePath) => {
+    if (filePath.startsWith("http")) return filePath;
+
+    const { data, error } = await supabase.storage
+        .from(EVIDENCE_BUCKET)
+        .createSignedUrl(filePath, 60);
+    if (error) throw error;
+    return data.signedUrl;
 };

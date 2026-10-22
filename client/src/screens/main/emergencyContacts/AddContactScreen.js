@@ -18,7 +18,7 @@ import { useAuth } from "@context/AuthContext";
 import MainLayout from "@components/layouts/MainLayout";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 const INITIAL_STATE = {
 	name: "",

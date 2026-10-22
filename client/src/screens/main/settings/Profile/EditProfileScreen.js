@@ -3,9 +3,7 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	TouchableOpacity,
 	ScrollView,
-	TextInput,
 	Platform,
 	KeyboardAvoidingView,
 } from "react-native";
@@ -18,7 +16,7 @@ import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { useFormHandler } from "@hooks/useFormHandler";
 import { validateUserForm } from "@utils/securityAndValidation/validationUtil";
 import { updateUser } from "@services/main/userService";
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 const EditProfileScreen = ({ navigation, route }) => {
 	const db = useSQLiteContext();
@@ -62,8 +60,6 @@ const EditProfileScreen = ({ navigation, route }) => {
 		}
 
 		const userId = user?.userId || user?.user_id;
-
-		console.log(userId);
 
 		setIsLoading(true);
 
@@ -259,7 +255,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		marginBottom: 10,
 	},
-	logoBadgeHeart: { position: "absolute" },
 	logoText: {
 		fontSize: 24,
 		fontWeight: "800",

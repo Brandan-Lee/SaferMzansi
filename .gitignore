@@ -1,1 +1,40 @@
-client/.expo/dev/logs/start.log
+# Dependencies and package-manager caches
+node_modules/
+.npm/
+.yarn/
+.pnp.*
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keystore
+
+# Generated build and test output
+coverage/
+dist/
+build/
+out/
+tmp/
+temp/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Expo and native build artifacts
+.expo/
+.expo-shared/
+android/.gradle/
+android/local.properties
+android/app/build/
+ios/Pods/
+ios/build/

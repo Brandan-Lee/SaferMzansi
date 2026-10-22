@@ -1,4 +1,4 @@
-import { Alert, Linking, Platform } from "react-native";
+import { Linking, Platform } from "react-native";
 
 export const roundCoordinates = ({ latitude, longitude }) => ({
 	latitude: Math.round(latitude * 100) / 100,
@@ -34,9 +34,9 @@ export const isValidPhoneNumber = (phone) => {
 	);
 };
 
-export const handlePhoneCall = (phone, isSample) => {
+export const handlePhoneCall = (phone) => {
 	if (!isValidPhoneNumber(phone)) {
-		false;
+		return false;
 	}
 
 	Linking.openURL(`tel:${phone.replace(/\s+/g, "")}`);

@@ -20,14 +20,8 @@ import {
 	saveOrUpdateLocalEvidence,
 	markEvidenceAsSynched,
 } from "@database/repositories/evidenceRepository";
-import {
-	saveOrUpdateLocalIncident,
-	logLocalIncidentsDatabase,
-} from "@database/repositories/incidentRepository";
-import {
-	saveOrUpdateLocalIncidentLocation,
-	logLocalIncidentLocationsDatabase,
-} from "@database/repositories/incidentLocationRepository";
+import { saveOrUpdateLocalIncident } from "@database/repositories/incidentRepository";
+import { saveOrUpdateLocalIncidentLocation } from "@database/repositories/incidentLocationRepository";
 
 const normalizeEmail = (email) =>
 	String(email ?? "")
@@ -40,15 +34,6 @@ const hashPasswordLocal = async (password) => {
 		Crypto.CryptoDigestAlgorithm.SHA256,
 		password,
 	);
-};
-
-const safeDecrypt = (val) => {
-	if (!val) return "";
-	try {
-		return decryptData(val) || val;
-	} catch (err) {
-		return val;
-	}
 };
 
 // Service to handle user registration
@@ -233,8 +218,8 @@ export const loginUser = async (db, email, password) => {
 					evidenceId,
 					userId: serverUser.user_id,
 					fileType: evidence.file_type || "application/octet-stream",
-					localFileUrl:
-						evidence.local_file_url || evidence.cloud_file_url || "",
+					localFileUrl: evidence.local_file_url || "",
+					cloudFileUrl: evidence.cloud_file_url || evidence.file_url || "",
 					sha256Hash: evidence.sha256_hash || "",
 					fileSize: evidence.file_size || 0,
 					isSynched: 1,

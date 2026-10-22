@@ -10,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const PURPLE = "#6B21A8";
-const LIGHT_PURPLE = "#F1E5FA";
 const LIGHTER_PURPLE = "#F8F1FD";
 const BACKGROUND = "#FAF7FF";
 const MUTED = "#777777";
@@ -71,9 +70,15 @@ const SplashScreen = () => {
                         <View style={styles.middleCircle}>
                             <View style={styles.logoCircle}>
                                 <MaterialCommunityIcons
-                                    name="shield-outline"
+                                    name="shield"
                                     size={58}
                                     color="#FFFFFF"
+                                />
+                                <MaterialCommunityIcons
+                                    name="heart"
+                                    size={18}
+                                    color={PURPLE}
+                                    style={styles.logoHeart}
                                 />
                             </View>
                         </View>
@@ -130,11 +135,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: BACKGROUND,
-        justifyContent: "center",
-        alignItems: "center",
     },
 
     centerContent: {
+        flex: 1,
         alignItems: "center",
         justifyContent: "center",
         marginTop: -20,
@@ -166,6 +170,7 @@ const styles = StyleSheet.create({
     },
 
     logoCircle: {
+        position: "relative",
         width: 94,
         height: 94,
         borderRadius: 47,
@@ -181,6 +186,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.16,
         shadowRadius: 12,
         elevation: 6,
+    },
+
+    logoHeart: {
+        position: "absolute",
+        top: 38,
     },
 
     textContainer: {
@@ -204,12 +214,11 @@ const styles = StyleSheet.create({
     },
 
     footer: {
-        position: "absolute",
-        bottom: 80,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-
+		paddingHorizontal: 20,
+		paddingVertical: 24,
     },
 
     footerText: {

@@ -19,9 +19,14 @@ const getFileId = (file) => file.evidence_id || file.evidenceId;
 const getFileName = (file) => {
 	const localUrl = file.local_file_url || file.localFileUrl || file.uri || "";
 	const evidenceId = getFileId(file);
+	const cloudUrl = file.cloud_file_url || file.cloudFileUrl || "";
 
-	if (localUrl.includes("/")) {
-		const baseName = localUrl.substring(localUrl.lastIndexOf("/") + 1);
+	const storedPath =
+		localUrl.startsWith("file://") || localUrl.startsWith("content://")
+			? localUrl
+			: cloudUrl || localUrl;
+	if (storedPath.includes("/")) {
+		const baseName = storedPath.substring(storedPath.lastIndexOf("/") + 1);
 		if (evidenceId && baseName.startsWith(`${evidenceId}_`)) {
 			return baseName.replace(`${evidenceId}_`, "");
 		}
@@ -52,6 +57,14 @@ const getRemotePath = (userId, file) => {
 	if (storedCloudPath) return storedCloudPath;
 
 	const localPath = file.local_file_url || file.localFileUrl || file.uri || "";
+	if (
+		localPath &&
+		!localPath.startsWith("file://") &&
+		!localPath.startsWith("content://") &&
+		!localPath.startsWith("http")
+	) {
+		return localPath;
+	}
 	const cachedFileName = localPath.split(/[\\/]/).pop() || getFileName(file);
 	return `${userId}/${fileId}_${cachedFileName}`;
 };
@@ -72,6 +85,7 @@ export default function EvidenceVaultDetailsScreen() {
 	const [downloadModalState, setDownloadModalState] = useState({
 		visible: false,
 		loading: false,
+		result: null,
 		title: "",
 		message: "",
 	});
@@ -83,7 +97,11 @@ export default function EvidenceVaultDetailsScreen() {
 		return (
 			<MainLayout
 				title="Evidence Details"
-				onBack={() => navigation.replace("EvidenceVaultScreen")}
+				onBack={() =>
+					navigation.canGoBack()
+						? navigation.goBack()
+						: navigation.navigate("EvidenceVaultScreen")
+				}
 				tab="Vault"
 				navigation={navigation}
 			>
@@ -114,14 +132,10 @@ export default function EvidenceVaultDetailsScreen() {
 
 		const remotePath = getRemotePath(user.userId, file);
 
-		console.log("DEBUG - User ID:", user.userId);
-		console.log("DEBUG - Evidence ID:", evidenceId);
-		console.log("DEBUG - Computed Remote Path:", remotePath);
-		console.log("DEBUG - Raw DB file object:", file);
-
 		updateDownloadModal({
 			visible: true,
 			loading: true,
+			result: null,
 			title: "Preparing Secure Download",
 			message: `Fetching file from secure repository...`,
 		});
@@ -130,6 +144,7 @@ export default function EvidenceVaultDetailsScreen() {
 			await downloadToDownloadsDirectory(remotePath, localName);
 			updateDownloadModal({
 				loading: false,
+				result: "success",
 				title: "Download Complete",
 				message: `"${localName}" has been successfully downloaded to your local device directory.`,
 			});
@@ -137,6 +152,7 @@ export default function EvidenceVaultDetailsScreen() {
 			console.error("Single download routine failed:", error);
 			updateDownloadModal({
 				loading: false,
+				result: "error",
 				title: "Download Failed",
 				message: "Failed to download item from storage vault.",
 			});
@@ -158,6 +174,7 @@ export default function EvidenceVaultDetailsScreen() {
 		updateDownloadModal({
 			visible: true,
 			loading: true,
+			result: null,
 			title: "Compiling ZIP Bundle",
 			message: `Initializing download queue for ${totalFiles} records...`,
 		});
@@ -191,6 +208,7 @@ export default function EvidenceVaultDetailsScreen() {
 
 			updateDownloadModal({
 				loading: false,
+				result: "success",
 				title: "ZIP Bundle Downloaded",
 				message: `Successfully assembled and saved "${zipFileName}" into your native downloads folder.`,
 			});
@@ -198,6 +216,7 @@ export default function EvidenceVaultDetailsScreen() {
 			console.error("ZIP pipeline initialization sequence failed:", error);
 			updateDownloadModal({
 				loading: false,
+				result: "error",
 				title: "Zip Export Failed",
 				message: "Failed to assemble compressed asset package folder bundle.",
 			});
@@ -221,7 +240,8 @@ export default function EvidenceVaultDetailsScreen() {
 			setIsDeleting(true);
 			await deleteEvidence(db, fileId, userId);
 			setFileToDelete(null);
-			navigation.replace("EvidenceVaultScreen");
+			if (navigation.canGoBack()) navigation.goBack();
+			else navigation.navigate("EvidenceVaultScreen");
 		} catch (error) {
 			setBanner({
 				message: "Failed to delete local evidence file",
@@ -236,7 +256,11 @@ export default function EvidenceVaultDetailsScreen() {
 	return (
 		<MainLayout
 			title="Evidence Details"
-			onBack={() => navigation.replace("EvidenceVaultScreen")}
+			onBack={() =>
+				navigation.canGoBack()
+					? navigation.goBack()
+					: navigation.navigate("EvidenceVaultScreen")
+			}
 			tab="Vault"
 			banner={banner}
 			navigation={navigation}
@@ -294,6 +318,7 @@ export default function EvidenceVaultDetailsScreen() {
 				title={downloadModalState.title}
 				message={downloadModalState.message}
 				loading={downloadModalState.loading}
+				result={downloadModalState.result}
 				onClose={() => updateDownloadModal({ visible: false })}
 			/>
 		</MainLayout>

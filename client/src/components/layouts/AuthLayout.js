@@ -22,6 +22,7 @@ const AuthLayout = ({
 	navActionText,
 	onNavPress,
 	scrollable = true,
+	style,
 }) => {
 	const ContainerView = scrollable ? ScrollView : View;
 
@@ -30,7 +31,7 @@ const AuthLayout = ({
 			colors={["#D9D9D9", "#DECDFA"]}
 			start={{ x: 0, y: 0 }}
 			end={{ x: 0, y: 1 }}
-			style={styles.gradient}
+			style={[styles.gradient, style]}
 		>
 			<SafeAreaView style={styles.container} edges={["top", "bottom"]}>
 				<KeyboardAvoidingView

@@ -11,7 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { AlertBadge } from "@components/common/AlertBadge";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 const RED = "#D92D20";
 
 const ConfirmationModal = ({
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		flex: 1,
-		height: 44,
+		minHeight: 48,
 		borderRadius: 8,
 		justifyContent: "center",
 		alignItems: "center",

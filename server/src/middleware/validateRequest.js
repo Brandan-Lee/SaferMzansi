@@ -1,6 +1,5 @@
 const validateBody = (requiredFields) => {
 	return (req, res, next) => {
-		console.log("Middleware Received Body:", req.body);
 		const missingFields = requiredFields.filter((field) => !req.body?.[field]);
 
 		if (missingFields.length > 0) {

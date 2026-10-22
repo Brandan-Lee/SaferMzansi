@@ -7,12 +7,7 @@ export const AppHeader = ({ title, subtitle }) => {
 		<View style={styles.container}>
 			<View style={styles.logoBadge}>
 				<Icon name="shield" size={34} color="#FFFFFF" />
-				<Icon
-					name="heart"
-					size={14}
-					color="#6B21A8"
-					style={styles.logoBadgeHeart}
-				/>
+				<Icon name="heart" size={13} color="#6B21A8" style={styles.heart} />
 			</View>
 			<Text style={styles.logoText}>SaferMzansi</Text>
 			{Boolean(title) && <Text style={styles.title}>{title}</Text>}
@@ -24,6 +19,7 @@ export const AppHeader = ({ title, subtitle }) => {
 const styles = StyleSheet.create({
 	container: { alignItems: "center", marginBottom: 24 },
 	logoBadge: {
+		position: "relative",
 		width: 56,
 		height: 56,
 		borderRadius: 16,
@@ -32,7 +28,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		marginBottom: 10,
 	},
-	logoBadgeHeart: { position: "absolute" },
+	heart: { position: "absolute", top: 19 },
 	logoText: {
 		fontSize: 24,
 		fontWeight: "800",

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
@@ -10,6 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { getLocalContactTotal } from "@database/repositories/contactRepository";
 import { getEvidenceTotal } from "@services/main/evidenceService";
+import { logAllLocalTables } from "@database/logLocalTable";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
 	Shield,
@@ -119,59 +120,54 @@ const HomeScreen = ({ navigation }) => {
 	};
 
 	const displayName = resolveDisplayName(user?.userName);
+	const userId = user?.userId;
 
-	// Fetch data whenever the screen gains focus
+	const loadSavedPreferences = useCallback(async () => {
+		try {
+			const [savedShare, savedDecoy] = await AsyncStorage.multiGet([
+				KEYS.SHARE_LOCATION,
+				KEYS.DECOY_LAUNCH_KEY,
+			]);
+			setShareLiveLocation(savedShare[1] === "true");
+			setDecoyActivated(savedDecoy[1] === "true");
+		} catch (error) {
+			console.error("[Home] Failed to load saved preferences:", error);
+		}
+	}, []);
+
+	useEffect(() => {
+		loadSavedPreferences();
+	}, [loadSavedPreferences, userId]);
+
 	useFocusEffect(
 		useCallback(() => {
 			let isMounted = true;
 
-			const fetchHomeCounts = async () => {
-				const userId = user?.userId;
-				if (!userId || !db) return;
+			const refreshHome = async () => {
+				await loadSavedPreferences();
+				if (!db || !userId) return;
 
 				try {
 					const [contactsTotal, evidenceTotal] = await Promise.all([
 						getLocalContactTotal(db, userId),
 						getEvidenceTotal(db, userId),
 					]);
-
 					if (isMounted) {
 						setContactCount(contactsTotal);
 						setEvidenceCount(evidenceTotal);
 					}
+
+					if (__DEV__) await logAllLocalTables(db);
 				} catch (error) {
-					console.error("[Home] Failed to fetch totals:", error);
+					console.error("[Home] Failed to refresh dashboard data:", error);
 				}
 			};
 
-			const checkPermissions = async () => {
-				try {
-					//Location
-					const saveShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
-
-					if (saveShare !== null) {
-						setShareLiveLocation(saveShare === "true");
-					}
-
-					//Decoy
-					const saveDecoy = await AsyncStorage.getItem(KEYS.DECOY_LAUNCH_KEY);
-
-					if (saveDecoy !== null) {
-						setDecoyActivated(saveDecoy === "true");
-					}
-				} catch (error) {
-					console.error("Error updating the home screen: ", error);
-				}
-			};
-
-			//Methods to invoke
-			fetchHomeCounts();
-			checkPermissions();
-
+			refreshHome();
 			return () => {
 				isMounted = false;
 			};
-		}, [db, user]),
+		}, [db, loadSavedPreferences, userId]),
 	);
 
 	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
@@ -244,7 +240,7 @@ const HomeScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.screenContainer}>
-			<AuthLayout title={`Welcome back ${displayName}`}>
+			<AuthLayout title={`Welcome back ${displayName}`} style={styles.authLayout}>
 				<View style={styles.content}>
 					<ProtectionRadar actions={radialActions} navigation={navigation} />
 
@@ -279,7 +275,8 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-	screenContainer: { flex: 1, position: "relative" },
+	screenContainer: { flex: 1 },
+	authLayout: { flex: 1 },
 	content: { paddingHorizontal: 20, paddingBottom: 10, alignItems: "center" },
 	toolsSection: { width: "100%" },
 	sectionTitle: {
@@ -296,12 +293,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 	},
 	navWrapper: {
-		position: "absolute",
-		bottom: 0,
-		left: 0,
-		right: 0,
+		width: "100%",
 		alignItems: "center",
-		zIndex: 99,
 	},
 });
 

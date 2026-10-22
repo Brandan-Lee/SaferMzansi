@@ -1,5 +1,5 @@
 export const THEME = {
-	purple: "#5E0A9E",
+	purple: "#6B21A8",
 	title: "#111111",
 	userPin: "#9B1C1C",
 };

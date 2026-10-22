@@ -24,9 +24,8 @@ import { forgotPasswordUser } from "@services/auth/authService";
 import { checkNetworkAndNotify } from "@utils/network/networkGuard";
 import { useNetStatus } from "@utils/network/netStatus";
 import AccountDeletionModal from "@components/modals/AccountDeletionModal";
-import { softDeleteLocalEmergencyContact } from "@database/repositories/contactRepository";
 
-const PURPLE = "#5E0A9E";
+const PURPLE = "#6B21A8";
 
 const ProfileScreen = ({ navigation }) => {
 	const [modalConfig, setModalConfig] = useState({
@@ -67,11 +66,7 @@ const ProfileScreen = ({ navigation }) => {
 	// Fetch data whenever the screen gains focus
 	useFocusEffect(
 		useCallback(() => {
-			let isMounted = true;
 			loadUser();
-			return () => {
-				isMounted = false;
-			};
 		}, [loadUser]),
 	);
 

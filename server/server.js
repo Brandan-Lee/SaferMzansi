@@ -5,9 +5,23 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 8080;
+const RESPONSE_DEADLINE_MS = 3900;
 
 // Middleware
 app.use(cors());
+app.use((req, res, next) => {
+	const deadline = setTimeout(() => {
+		if (!res.headersSent) {
+			res.status(504).json({
+				success: false,
+				error: "The request took too long. Please try again.",
+			});
+		}
+	}, RESPONSE_DEADLINE_MS);
+	res.once("finish", () => clearTimeout(deadline));
+	res.once("close", () => clearTimeout(deadline));
+	next();
+});
 app.use(express.json()); // Built-in Express JSON parser
 
 // Import Routers
@@ -37,6 +51,7 @@ app.use("/api/locations", incidentLocationRouter);
 
 // Global Error Handler Middleware (Must be at the very bottom, after routes)
 app.use((err, req, res, next) => {
+	if (res.headersSent) return next(err);
 	const statusCode = err.status || 500;
 	return res.status(statusCode).json({
 		success: false,

@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Switch,
+	Modal,
 } from "react-native";
 import { Feather, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
@@ -18,10 +19,15 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
 	const [pins, setPins] = useState({ decoyPin: null, emergencyPin: null });
 	const [isConfigured, setIsConfigured] = useState(false);
-	const [loading, setLoading] = useState(true);
 	const [showPins, setShowPins] = useState(false);
 	const [banner, setBanner] = useState(null);
+	const [showPreviewInfo, setShowPreviewInfo] = useState(false);
 
+	useEffect(() => {
+		if (!banner?.message) return undefined;
+		const timer = setTimeout(() => setBanner(null), 4000);
+		return () => clearTimeout(timer);
+	}, [banner]);
 
 	useEffect(() => {
 		const loadDecoyData = async () => {
@@ -38,8 +44,6 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 				}
 			} catch (error) {
 				console.error("Failed to load decoy settings", error);
-			} finally {
-				setLoading(false);
 			}
 		};
 
@@ -151,11 +155,7 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 							/>
 							<Text style={styles.descText}>
 								<Text style={styles.descBold}>Interactive Testing: </Text>
-								To test the decoy screen, we have pre-configured the decoy PIN
-								as <Text style={styles.codeBadge}>1234</Text> and will redirect
-								you back to this screen, and the emergency PIN as{" "}
-								<Text style={styles.codeBadgeEmergency}>0000</Text> where we
-								will show you how the panic cancel window screen looks like.
+								Preview the calculator to see the test PINs before you begin.
 							</Text>
 						</View>
 					</View>
@@ -216,9 +216,7 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 				<TouchableOpacity
 					style={styles.previewButton}
 					activeOpacity={0.8}
-					onPress={() =>
-						navigation.navigate("DecoyScreen", { isTesting: true })
-					}
+					onPress={() => setShowPreviewInfo(true)}
 				>
 					<Feather name="smartphone" size={20} color="#FFFFFF" />
 					<Text style={styles.previewButtonText}>
@@ -269,6 +267,49 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 					</TouchableOpacity>
 				)}
 			</ScrollView>
+			<Modal
+				visible={showPreviewInfo}
+				transparent
+				animationType="fade"
+				onRequestClose={() => setShowPreviewInfo(false)}
+			>
+				<View style={styles.modalBackdrop}>
+					<View style={styles.previewModal}>
+						<View style={styles.previewModalIcon}>
+							<Feather name="info" size={24} color="#6B21A8" />
+						</View>
+						<Text style={styles.previewModalTitle}>Calculator test PINs</Text>
+						<Text style={styles.previewModalText}>
+							Enter one of these PINs, then tap equals:
+						</Text>
+						<View style={styles.previewPinRow}>
+							<Text style={styles.previewPinLabel}>Decoy calculator</Text>
+							<Text style={styles.codeBadge}>1234</Text>
+						</View>
+						<View style={styles.previewPinRow}>
+							<Text style={styles.previewPinLabel}>Emergency preview</Text>
+							<Text style={styles.codeBadgeEmergency}>0000</Text>
+						</View>
+						<TouchableOpacity
+							style={styles.previewModalPrimary}
+							onPress={() => {
+								setShowPreviewInfo(false);
+								navigation.navigate("DecoyScreen", { isTesting: true });
+							}}
+							accessibilityRole="button"
+						>
+							<Text style={styles.previewModalPrimaryText}>Open test calculator</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.previewModalSecondary}
+							onPress={() => setShowPreviewInfo(false)}
+							accessibilityRole="button"
+						>
+							<Text style={styles.previewModalSecondaryText}>Not now</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</Modal>
 		</MainLayout>
 	);
 };
@@ -282,6 +323,58 @@ const styles = StyleSheet.create({
 		paddingTop: 8,
 		paddingBottom: 32,
 	},
+	modalBackdrop: {
+		flex: 1,
+		justifyContent: "center",
+		padding: 24,
+		backgroundColor: "rgba(20, 8, 30, 0.6)",
+	},
+	previewModal: {
+		backgroundColor: "#FFFFFF",
+		borderRadius: 20,
+		padding: 22,
+		borderWidth: 1,
+		borderColor: "#E5E7EB",
+	},
+	previewModalIcon: {
+		width: 48,
+		height: 48,
+		borderRadius: 16,
+		backgroundColor: "#F3E8FF",
+		alignItems: "center",
+		justifyContent: "center",
+		marginBottom: 14,
+	},
+	previewModalTitle: { fontSize: 20, fontWeight: "700", color: "#1F2937" },
+	previewModalText: { marginTop: 8, marginBottom: 14, color: "#4B5563", lineHeight: 22 },
+	previewPinRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		paddingVertical: 12,
+		borderBottomWidth: 1,
+		borderBottomColor: "#E5E7EB",
+	},
+	previewPinLabel: { color: "#374151", fontWeight: "600" },
+	previewModalPrimary: {
+		minHeight: 50,
+		marginTop: 18,
+		borderRadius: 12,
+		backgroundColor: "#6B21A8",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	previewModalPrimaryText: { color: "#FFFFFF", fontWeight: "700", fontSize: 15 },
+	previewModalSecondary: {
+		minHeight: 48,
+		marginTop: 8,
+		borderRadius: 12,
+		borderWidth: 1,
+		borderColor: "#D1D5DB",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	previewModalSecondaryText: { color: "#4B5563", fontWeight: "600" },
 	card: {
 		backgroundColor: "#F3E8FF",
 		borderRadius: 16,

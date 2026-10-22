@@ -1,7 +1,7 @@
 import { calculateDistanceKm } from "@utils/location/geoUtils";
 import { API_BASE_URL } from "@config/config";
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const REQUEST_TIMEOUT_MS = 4000;
 
 export const fetchNearestPoliceStation = async (latitude, longitude) => {
 	if (
@@ -19,18 +19,26 @@ export const fetchNearestPoliceStation = async (latitude, longitude) => {
 	const offset = 0.5;
 	const viewbox = `${longitude - offset},${latitude + offset},${longitude + offset},${latitude - offset}`;
 	const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent("police station")}&lat=${latitude}&lon=${longitude}&viewbox=${viewbox}&bounded=1&countrycodes=za&limit=50&addressdetails=1`;
-	const response = await fetch(url, {
-		headers: {
-			"User-Agent": "SaferMzansiApp/1.0 (Student Project)",
-			"Accept-Language": "en",
-		},
-	});
-
-	if (!response.ok) {
-		throw new Error(`Nominatim police lookup failed with ${response.status}.`);
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+	let response;
+	let results;
+	try {
+		response = await fetch(url, {
+			headers: {
+				"User-Agent": "SaferMzansiApp/1.0 (Student Project)",
+				"Accept-Language": "en",
+			},
+			signal: controller.signal,
+		});
+		if (!response.ok) {
+			throw new Error(`Nominatim police lookup failed with ${response.status}.`);
+		}
+		results = await response.json();
+	} finally {
+		clearTimeout(timeoutId);
 	}
 
-	const results = await response.json();
 	const nearest = (Array.isArray(results) ? results : [])
 		.map((item) => {
 			const stationLatitude = Number(item.lat);
@@ -67,9 +75,6 @@ export const fetchNearestPoliceStation = async (latitude, longitude) => {
 
 	if (!nearest) return null;
 
-	console.log(
-		`[Nominatim] Nearest police station is ${nearest.distance.toFixed(2)} km away.`,
-	);
 	return { name: nearest.name, lat: nearest.lat, lon: nearest.lon };
 };
 
@@ -82,19 +87,18 @@ export const fetchGeoapifyServices = async (latitude, longitude) => {
 		longitude < -180 ||
 		longitude > 180
 	) {
-		console.log("[Nominatim] Waiting for valid local coordinates...");
 		return [];
 	}
-
-	console.log(
-		`[Geoapify] Fetching nearby services for coordinates: Lat ${latitude}, Lon ${longitude}`,
-	);
 
 	try {
 		if (!API_BASE_URL) throw new Error("The API server URL is not configured.");
 		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 15000);
+		const timeoutId = setTimeout(
+			() => controller.abort(),
+			REQUEST_TIMEOUT_MS,
+		);
 		let response;
+		let data;
 		try {
 			response = await fetch(
 				`${API_BASE_URL}/locations/nearby-services`,
@@ -105,17 +109,17 @@ export const fetchGeoapifyServices = async (latitude, longitude) => {
 					signal: controller.signal,
 				},
 			);
+			if (!response.ok) {
+				const errorBody = await response.json().catch(() => null);
+				throw new Error(
+					errorBody?.error ||
+						`Nearby services lookup failed with HTTP ${response.status}.`,
+				);
+			}
+			data = await response.json();
 		} finally {
 			clearTimeout(timeoutId);
 		}
-		if (!response.ok) {
-			const errorBody = await response.json().catch(() => null);
-			throw new Error(
-				errorBody?.error ||
-					`Nearby services lookup failed with HTTP ${response.status}.`,
-			);
-		}
-		const data = await response.json();
 		const mappedResults = (
 			Array.isArray(data?.data?.services) ? data.data.services : []
 		)
@@ -158,9 +162,6 @@ export const fetchGeoapifyServices = async (latitude, longitude) => {
 			return true;
 		});
 
-		console.log(
-			`[Geoapify] Successfully fetched and processed ${limitedResults.length} places.`,
-		);
 		return limitedResults;
 	} catch (err) {
 		console.error("[Geoapify] Fetch error encountered:", err);

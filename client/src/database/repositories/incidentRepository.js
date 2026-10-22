@@ -1,5 +1,8 @@
 import * as Crypto from "expo-crypto";
-import { decryptData } from "@utils/securityAndValidation/securityUtil";
+import { logLocalTable } from "@database/logLocalTable";
+
+export const logLocalIncidents = (db) =>
+	logLocalTable(db, "Local_Incidents");
 
 const getTimeStamp = () =>
 	new Date().toISOString().replace("T", " ").slice(0, 23);
@@ -96,27 +99,4 @@ export const saveOrUpdateLocalIncident = async (db, userId, incidentData) => {
 		isDeleted,
 		isSynched,
 	]);
-};
-
-// Debugging helper to log Local Incidents database table
-export const logLocalIncidentsDatabase = async (db) => {
-	try {
-		const incidents = await db.getAllAsync(
-			"SELECT * FROM Local_Incidents ORDER BY start_time DESC;",
-		);
-		console.log("\n================ [SQLITE LOCAL INCIDENTS] ================");
-		if (!incidents || incidents.length === 0) {
-			console.log("No incident records found in Local_Incidents.");
-		} else {
-			console.log(`Total Incidents: ${incidents.length}\n`);
-			incidents.forEach((inc, index) => {
-				console.log(`--- Incident #${index + 1} ---`);
-				console.log(JSON.stringify(inc, null, 2));
-				console.log("----------------------------------------\n");
-			});
-		}
-		console.log("==========================================================\n");
-	} catch (error) {
-		console.error("Failed to log Local_Incidents database:", error);
-	}
 };

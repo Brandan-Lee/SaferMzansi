@@ -1,4 +1,8 @@
 import * as Crypto from "expo-crypto";
+import { logLocalTable } from "@database/logLocalTable";
+
+export const logLocalIncidentLocations = (db) =>
+	logLocalTable(db, "Local_Incident_Locations");
 
 const getTimeStamp = () =>
 	new Date().toISOString().replace("T", " ").slice(0, 23);
@@ -134,31 +138,4 @@ export const saveOrUpdateLocalIncidentLocation = async (
 		isSynched,
 	]);
 	return locationId;
-};
-
-// Debugging helper to log Local Incident Locations database table
-export const logLocalIncidentLocationsDatabase = async (db) => {
-	try {
-		const locations = await db.getAllAsync(
-			"SELECT * FROM Local_Incident_Locations ORDER BY created_at DESC;",
-		);
-		console.log(
-			"\n================ [SQLITE LOCAL INCIDENT LOCATIONS] ================",
-		);
-		if (!locations || locations.length === 0) {
-			console.log("No location records found in Local_Incident_Locations.");
-		} else {
-			console.log(`Total Location Records: ${locations.length}\n`);
-			locations.forEach((loc, index) => {
-				console.log(`--- Location Record #${index + 1} ---`);
-				console.log(JSON.stringify(loc, null, 2));
-				console.log("----------------------------------------------------\n");
-			});
-		}
-		console.log(
-			"===================================================================\n",
-		);
-	} catch (error) {
-		console.error("Failed to log Local_Incident_Locations database:", error);
-	}
 };
