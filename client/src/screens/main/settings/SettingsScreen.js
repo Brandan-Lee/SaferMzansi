@@ -109,7 +109,7 @@ const SettingsScreen = ({ navigation, route }) => {
 		}
 	};
 
-	//MUST FUCK OFF
+	//must remove
 	const showTemporaryAlert = (title) => {
 		Alert.alert(title, "This function will be connected later.");
 	};
