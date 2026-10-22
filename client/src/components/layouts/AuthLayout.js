@@ -39,12 +39,13 @@ const AuthLayout = ({
 					behavior={Platform.OS === "ios" ? "padding" : "height"}
 				>
 					<ContainerView
-						style={!scrollable && styles.flexOne}
-						contentContainerStyle={
-							scrollable ? styles.scrollContent : undefined
-						}
-						showsVerticalScrollIndicator={false}
-						keyboardShouldPersistTaps="handled"
+						{...(scrollable
+							? {
+									contentContainerStyle: styles.scrollContent,
+									showsVerticalScrollIndicator: false,
+									keyboardShouldPersistTaps: "handled",
+								}
+							: { style: styles.flexOne })}
 					>
 						<View style={scrollable ? styles.scrollBody : styles.nonScrollBody}>
 							<View style={styles.mainBlock}>

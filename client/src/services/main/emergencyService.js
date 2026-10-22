@@ -1,6 +1,7 @@
 import {
 	getEmergencyTimer,
 	getEmergencyUserId,
+	saveEmergencyUserId,
 	saveEmergencyTimer,
 } from "@utils/storage/secureStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,24 +10,18 @@ import NetInfo from "@react-native-community/netinfo";
 import { Linking, Platform } from "react-native";
 import {
 	saveOrUpdateLocalIncident,
-	updateIncidentOnCancel,
 } from "@database/repositories/incidentRepository";
 import { insertIncidentLocation } from "@database/repositories/incidentLocationRepository";
 import {
 	getPrimaryEmergencyContact,
 	getLocalEmergencyContacts,
 } from "@database/repositories/contactRepository";
-import { addEvidence } from "./evidenceService";
 import { postIncidentOnline } from "./incidentService";
 import { postLocationOnline } from "./incidentLocationService";
 import { postApi } from "@services/ApiClient";
 import { fetchNearestPoliceStation } from "./geoapifyService";
 import { decryptData } from "@utils/securityAndValidation/securityUtil";
-
-const KEYS = {
-	SHARE_LOCATION: "@setting_share_location",
-	AUDIO_RECORDING: "@setting_auto_record",
-};
+import { STORAGE_KEYS } from "@constants/storageKeys";
 
 const isValidLocation = (location) =>
 	Number.isFinite(location?.latitude) &&
@@ -72,9 +67,9 @@ export const updateEmergencyTimerConfig = async (userId, timerSeconds) => {
 		throw new Error("User session is required to update emergency settings");
 	}
 
-	const parsedTimer = parseInt(timerSeconds, 10);
+	const parsedTimer = Number(timerSeconds);
 
-	if (isNaN(parsedTimer) || parsedTimer < 3 || parsedTimer > 30) {
+	if (!Number.isInteger(parsedTimer) || parsedTimer < 3 || parsedTimer > 30) {
 		throw new Error(
 			"Please enter a valid emergency countdown between 3 and 30 seconds",
 		);
@@ -97,13 +92,7 @@ export const updateEmergencyTimerConfig = async (userId, timerSeconds) => {
 };
 
 export const fetchEmergencyTimerConfig = async () => {
-	try {
-		const timer = await getEmergencyTimer();
-		return timer;
-	} catch (error) {
-		console.error("Failed to fetch emergency timer configuration:", error);
-		return "5";
-	}
+	return getEmergencyTimer();
 };
 
 /**
@@ -185,7 +174,9 @@ export const executeEmergencyDispatch = async (
 		}
 		displayName = displayName?.trim() || "The user";
 
-		const savedShareLocation = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+		const savedShareLocation = await AsyncStorage.getItem(
+			STORAGE_KEYS.SHARE_LOCATION,
+		);
 		const isLiveSharingEnabled = savedShareLocation === "true";
 		const triggerType = isLiveSharingEnabled
 			? "LIVE_PANIC_SHARE"
@@ -504,105 +495,6 @@ export const executeEmergencyDispatch = async (
 				warning: error.message,
 			};
 		}
-		return { success: false, error: error.message };
-	}
-};
-
-/**
- * PHASE 2: User presses cancel. Vaults audio via evidenceService[cite: 11] and finalizes incident status.
- */
-export const finalizeEmergencyOnCancel = async (
-	db,
-	incidentId,
-	userId,
-	audioUri = null,
-	finalStatus = "CANCELLED",
-) => {
-	try {
-		const savedAudioSetting = await AsyncStorage.getItem(KEYS.AUDIO_RECORDING);
-		const isAudioAllowed = savedAudioSetting === "true";
-
-		let evidenceId = null;
-		let serverEvidenceId = null;
-		let evidenceError = null;
-
-		// 1. Vault audio if recorded and allowed
-		if (isAudioAllowed && audioUri) {
-			try {
-				const response = await fetch(audioUri);
-				const blob = await response.blob();
-
-				const evidencePayload = {
-					file_type: "audio/mp4",
-					local_file_url: audioUri,
-					file_size: blob.size || 0,
-					file_name: `emergency_audio_${incidentId || Date.now()}.mp4`,
-				};
-
-				// Leverages full evidenceService pipeline (Supabase bucket + local vault + API post)[cite: 11]
-				const evidenceResult = await addEvidence(db, userId, evidencePayload);
-				if (evidenceResult?.success) {
-					evidenceId = evidenceResult.evidenceId;
-					if (evidenceResult.syncedWithServer) {
-						serverEvidenceId = evidenceResult.evidenceId;
-					}
-				}
-			} catch (evidenceErr) {
-				evidenceError = evidenceErr.message;
-				console.error(
-					"[Emergency Dispatch] Failed to process audio via evidenceService:",
-					evidenceErr,
-				);
-			}
-		}
-
-		const endTime = new Date().toISOString();
-
-		// 2. Update local incident status and link evidence
-		let incident = null;
-		if (incidentId) {
-			incident = await db.getFirstAsync(
-				`SELECT trigger_type, start_time, tracking_token FROM Local_Incidents WHERE incident_id = ?`,
-				[incidentId],
-			);
-			if (!incident) {
-				throw new Error("The local emergency incident could not be found.");
-			}
-			await updateIncidentOnCancel(db, incidentId, finalStatus, evidenceId);
-		}
-
-		// 3. Push final status and evidence linkage online
-		const updatePayload = {
-			incident_id: incidentId,
-			user_id: userId,
-			trigger_type: incident?.trigger_type || "STANDARD_PANIC",
-			start_time: incident?.start_time || endTime,
-			status: finalStatus,
-			evidence_id: serverEvidenceId,
-			tracking_token: incident?.tracking_token || null,
-			end_time: endTime,
-		};
-
-		const syncResult = await postIncidentOnline(db, updatePayload);
-
-		return {
-			success: true,
-			evidenceId,
-			evidenceSyncedWithServer: !!serverEvidenceId,
-			incidentSyncedWithServer: syncResult?.success === true,
-			warning: evidenceError
-				? `Audio evidence could not be saved: ${evidenceError}`
-				: evidenceId && !serverEvidenceId
-					? "Evidence is saved locally, but could not be linked on the server because its evidence record was not synced."
-					: !syncResult?.success
-						? "Incident updates are saved locally but could not be synced to the server."
-						: null,
-		};
-	} catch (error) {
-		console.error(
-			"[Emergency Dispatch] Failed to finalize emergency on cancel:",
-			error,
-		);
 		return { success: false, error: error.message };
 	}
 };

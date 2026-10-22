@@ -1,22 +1,18 @@
 import * as SecureStore from "expo-secure-store";
-
-const DECOY_PIN_KEY = "decoy_pin";
-const EMERGENCY_PIN_KEY = "emergency_pin";
-const EMERGENCY_TIMER_KEY = "emergency_countdown_timer";
-const EMERGENCY_USER_ID_KEY = "emergency_user_id";
+import { STORAGE_KEYS } from "@constants/storageKeys";
 
 export const saveEmergencyUserId = async (userId) => {
 	if (!userId) return;
-	await SecureStore.setItemAsync(EMERGENCY_USER_ID_KEY, userId);
+	await SecureStore.setItemAsync(STORAGE_KEYS.EMERGENCY_USER_ID, userId);
 };
 
 export const getEmergencyUserId = async () => {
-	return SecureStore.getItemAsync(EMERGENCY_USER_ID_KEY);
+	return SecureStore.getItemAsync(STORAGE_KEYS.EMERGENCY_USER_ID);
 };
 
 export const saveDecoyPin = async (pin) => {
 	try {
-		await SecureStore.setItemAsync(DECOY_PIN_KEY, pin);
+		await SecureStore.setItemAsync(STORAGE_KEYS.DECOY_PIN, pin);
 		return {
 			success: true,
 		};
@@ -31,7 +27,7 @@ export const saveDecoyPin = async (pin) => {
 
 export const saveEmergencyPin = async (pin) => {
 	try {
-		await SecureStore.setItemAsync(EMERGENCY_PIN_KEY, pin);
+		await SecureStore.setItemAsync(STORAGE_KEYS.EMERGENCY_PIN, pin);
 		return {
 			success: true,
 		};
@@ -45,46 +41,34 @@ export const saveEmergencyPin = async (pin) => {
 };
 
 export const verifyPins = async (enteredPin) => {
-	try {
-		const storedDecoy = await SecureStore.getItemAsync(DECOY_PIN_KEY);
-		const storedEmergency = await SecureStore.getItemAsync(EMERGENCY_PIN_KEY);
+	const storedDecoy = await SecureStore.getItemAsync(STORAGE_KEYS.DECOY_PIN);
+	const storedEmergency = await SecureStore.getItemAsync(
+		STORAGE_KEYS.EMERGENCY_PIN,
+	);
 
-		if (storedDecoy && enteredPin === storedDecoy) {
-			return "decoy";
-		}
-
-		if (storedEmergency && enteredPin === storedEmergency) {
-			return "emergency";
-		}
-
-		return null;
-	} catch (error) {
-		console.error("Error verifying PINs:", error);
-		return null;
+	if (storedDecoy && enteredPin === storedDecoy) {
+		return "decoy";
 	}
+
+	if (storedEmergency && enteredPin === storedEmergency) {
+		return "emergency";
+	}
+
+	return null;
 };
 
 export const getStoredPins = async () => {
-	try {
-		const decoyPin = await SecureStore.getItemAsync(DECOY_PIN_KEY);
-		const emergencyPin = await SecureStore.getItemAsync(EMERGENCY_PIN_KEY);
-		return {
-			decoyPin,
-			emergencyPin,
-		};
-	} catch (error) {
-		console.error("Error retrieving stored PINs:", error);
-		return {
-			decoyPin: null,
-			emergencyPin: null,
-		};
-	}
+	const decoyPin = await SecureStore.getItemAsync(STORAGE_KEYS.DECOY_PIN);
+	const emergencyPin = await SecureStore.getItemAsync(
+		STORAGE_KEYS.EMERGENCY_PIN,
+	);
+	return { decoyPin, emergencyPin };
 };
 
 export const saveEmergencyTimer = async (timerSeconds) => {
 	try {
 		await SecureStore.setItemAsync(
-			EMERGENCY_TIMER_KEY,
+			STORAGE_KEYS.EMERGENCY_TIMER,
 			timerSeconds.toString(),
 		);
 		return {
@@ -100,11 +84,6 @@ export const saveEmergencyTimer = async (timerSeconds) => {
 };
 
 export const getEmergencyTimer = async () => {
-	try {
-		const timer = await SecureStore.getItemAsync(EMERGENCY_TIMER_KEY);
-		return timer !== null ? timer : "5";
-	} catch (error) {
-		console.error("Error retrieveing emergency timer:", error);
-		return "5";
-	}
+	const timer = await SecureStore.getItemAsync(STORAGE_KEYS.EMERGENCY_TIMER);
+	return timer !== null ? timer : "5";
 };

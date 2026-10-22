@@ -1,14 +1,14 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState } from "react";
 import TermsOfServiceModal from '@components/modals/legal/TermsOfServiceModal';
 import PrivacyPolicyModal from '@components/modals/legal/PrivacyPolicyModal';
 
-const ModalContext = createContext();
+const ModalContext = createContext(null);
 
 export function ModalProvider({ children }) {
     const [activeModal, setActiveModal] = useState(null);
 
-    const openModal = (modalName) => setActiveModal(modalName);
-    const closeModal = () => setActiveModal(null);
+    const openModal = useCallback((modalName) => setActiveModal(modalName), []);
+    const closeModal = useCallback(() => setActiveModal(null), []);
 
     return (
         <ModalContext.Provider value={{ openModal, closeModal }}>
@@ -27,4 +27,10 @@ export function ModalProvider({ children }) {
     );
 }
 
-export const useModal = () => useContext(ModalContext);
+export const useModal = () => {
+    const context = useContext(ModalContext);
+    if (!context) {
+        throw new Error("useModal must be used within a ModalProvider.");
+    }
+    return context;
+};

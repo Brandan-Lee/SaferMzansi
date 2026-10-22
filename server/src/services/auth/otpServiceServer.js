@@ -6,6 +6,8 @@ const otpStore = new Map();
 const passwordResetTokenStore = new Map();
 const otpRequestTimes = new Map();
 const OTP_REQUEST_COOLDOWN_MS = 60 * 1000;
+const OTP_EXPIRY_MS = 5 * 60 * 1000;
+const RESET_TOKEN_EXPIRY_MS = 5 * 60 * 1000;
 
 const sanitizeEmail = (email) =>
 	email ? String(email).trim().toLowerCase() : "";
@@ -38,7 +40,7 @@ const createOtpMailOptions = (
 
 	otpStore.set(sanitizedEmail, {
 		otp,
-		expiresAt: Date.now() + 5 * 60 * 1000,
+		expiresAt: Date.now() + OTP_EXPIRY_MS,
 		purpose,
 		userId,
 	});
@@ -51,7 +53,7 @@ const createOtpMailOptions = (
 };
 
 // Background cleanup interval for expired records
-setInterval(
+const cleanupInterval = setInterval(
 	() => {
 		const now = Date.now();
 
@@ -70,6 +72,7 @@ setInterval(
 	},
 	5 * 60 * 1000,
 );
+cleanupInterval.unref();
 
 const sendOtpEmail = async (email) => {
 	const sanitizedEmail = sanitizeEmail(email);
@@ -158,7 +161,7 @@ const verifyOtpCode = async (email, otp, purpose = "verification") => {
 		const resetToken = crypto.randomBytes(32).toString("hex");
 		passwordResetTokenStore.set(resetToken, {
 			userId: record.userId,
-			expiresAt: Date.now() + 5 * 60 * 1000,
+			expiresAt: Date.now() + RESET_TOKEN_EXPIRY_MS,
 		});
 
 		return {

@@ -1,16 +1,4 @@
-const nodemailer = require("nodemailer");
-
-const port = parseInt(process.env.SMTP_PORT, 10) || 587;
-
-const transporter = nodemailer.createTransport({
-	host: process.env.SMTP_HOST,
-	port: port,
-	secure: port === 465,
-	auth: {
-		user: process.env.SMTP_USER,
-		pass: process.env.SMTP_PASS,
-	},
-});
+const { sendMail: deliverMail } = require("#utils/mailTransport.js");
 
 const generateOtpEmailHTML = (otp) => {
 	return `
@@ -19,7 +7,7 @@ const generateOtpEmailHTML = (otp) => {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your OTP Code</title>
+    <title>Your SaferMzansi verification code</title>
 </head>
 <body style="margin: 0; padding: 20px; background-color: #F9FAFB; font-family: Arial, sans-serif; color: #374151;">
     <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -85,13 +73,12 @@ const generateOtpEmailHTML = (otp) => {
 };
 
 const sendMail = async ({ to, subject, html }) => {
-	const mailOptions = {
-		from: `${process.env.FROM_NAME || "SaferMzansi"} <${process.env.FROM_EMAIL}>`,
+	return deliverMail({
+		from: `"${process.env.FROM_NAME || "SaferMzansi"}" <${process.env.FROM_EMAIL || process.env.SMTP_FROM || "alert@safermzansi.com"}>`,
 		to,
 		subject,
 		html,
-	};
-	return transporter.sendMail(mailOptions);
+	});
 };
 
 module.exports = {

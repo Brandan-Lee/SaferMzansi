@@ -7,6 +7,31 @@ import { logLocalTable } from "@database/logLocalTable";
 export const logLocalContacts = (db) =>
 	logLocalTable(db, "Local_Emergency_Contacts");
 
+const decryptContactValue = (value) => {
+	if (!value) return "";
+	try {
+		return decryptData(value) || value;
+	} catch (error) {
+		console.warn("[Contact Repository] Could not decrypt a saved contact field.");
+		return "";
+	}
+};
+
+const addDecryptedContactFields = (contact) => {
+	const firstName = decryptContactValue(contact.encrypted_contact_name);
+	const surname = decryptContactValue(contact.encrypted_contact_surname);
+
+	return {
+		...contact,
+		firstName,
+		surname,
+		name: `${firstName} ${surname}`.trim(),
+		phone: decryptContactValue(contact.encrypted_contact_phone_num),
+		email: decryptContactValue(contact.encrypted_contact_email),
+		contactId: contact.contact_id,
+	};
+};
+
 // Method to save or update an emergency contact in local SQLite
 export const saveOrUpdateLocalEmergencyContact = async (
 	db,
@@ -28,9 +53,9 @@ export const saveOrUpdateLocalEmergencyContact = async (
 		isDeleted = 0,
 	} = contactData;
 
-	if (!contactId || !emailBlindIndex || !userId) {
+	if (!contactId || !userId) {
 		throw new Error(
-			"contactId, emailBlindIndex, and userId are required to save or update an emergency contact.",
+			"contactId and userId are required to save or update an emergency contact.",
 		);
 	}
 
@@ -69,7 +94,7 @@ export const saveOrUpdateLocalEmergencyContact = async (
 	const params = [
 		contactId,
 		userId,
-		emailBlindIndex,
+		emailBlindIndex || null,
 		encryptedName,
 		encryptedSurname,
 		resolvedPhone,
@@ -94,30 +119,8 @@ export const getLocalEmergencyContacts = async (db, userId) => {
     `;
 	const rows = await db.getAllAsync(query, [userId]);
 
-	// Decrypt fields for client-side consumption when needed
-	return rows.map((contact) => {
-		const decryptField = (value) => {
-			if (!value) return "";
-			try {
-				return decryptData(value) || value;
-			} catch {
-				return "[Decryption Failed]";
-			}
-		};
-
-		const firstName = decryptField(contact.encrypted_contact_name);
-		const surname = decryptField(contact.encrypted_contact_surname);
-
-		return {
-			...contact,
-			firstName,
-			surname,
-			name: `${firstName} ${surname}`.trim(),
-			phone: decryptField(contact.encrypted_contact_phone_num),
-			email: decryptField(contact.encrypted_contact_email),
-			contactId: contact.contact_id,
-		};
-	});
+	// Decrypt fields only when the app needs to display or use them.
+	return rows.map(addDecryptedContactFields);
 };
 
 // Method to mark a local emergency contact as synched with the server
@@ -203,26 +206,8 @@ export const getPrimaryEmergencyContact = async (db, userId) => {
 	const row = await db.getFirstAsync(query, [userId]);
 	if (!row) return null;
 
-	const decryptField = (value) => {
-		if (!value) return "";
-		try {
-			return decryptData(value) || value;
-		} catch {
-			return "[Decryption Failed]";
-		}
-	};
-
-	const firstName = decryptField(row.encrypted_contact_name);
-	const surname = decryptField(row.encrypted_contact_surname);
-
 	return {
-		...row,
-		firstName,
-		surname,
-		name: `${firstName} ${surname}`.trim(),
-		phone_number: decryptField(row.encrypted_contact_phone_num),
-		phone: decryptField(row.encrypted_contact_phone_num),
-		email: decryptField(row.encrypted_contact_email),
-		contactId: row.contact_id,
+		...addDecryptedContactFields(row),
+		phone_number: decryptContactValue(row.encrypted_contact_phone_num),
 	};
 };

@@ -1,11 +1,9 @@
 import * as Crypto from "expo-crypto";
 import { logLocalTable } from "@database/logLocalTable";
+import { getDatabaseTimestamp } from "@database/timeUtil";
 
 export const logLocalIncidentLocations = (db) =>
 	logLocalTable(db, "Local_Incident_Locations");
-
-const getTimeStamp = () =>
-	new Date().toISOString().replace("T", " ").slice(0, 23);
 
 const resolveCoordinates = ({ latitude, longitude, coordinates }) => {
 	let point = coordinates;
@@ -40,7 +38,11 @@ const resolveCoordinates = ({ latitude, longitude, coordinates }) => {
 		longitude === null ||
 		longitude === undefined ||
 		!Number.isFinite(resolvedLatitude) ||
-		!Number.isFinite(resolvedLongitude)
+		!Number.isFinite(resolvedLongitude) ||
+		resolvedLatitude < -90 ||
+		resolvedLatitude > 90 ||
+		resolvedLongitude < -180 ||
+		resolvedLongitude > 180
 	) {
 		throw new Error("Incident location is missing valid coordinates.");
 	}
@@ -56,7 +58,7 @@ export const insertIncidentLocation = async (
 ) => {
 	const { latitude, longitude } = resolveCoordinates(locationData);
 	const { altitude = null, accuracy = null } = locationData;
-	const timeStamp = getTimeStamp();
+	const timeStamp = getDatabaseTimestamp();
 
 	const query = `
         INSERT INTO Local_Incident_Locations (
@@ -100,7 +102,7 @@ export const saveOrUpdateLocalIncidentLocation = async (
 	} = locationData;
 	const { latitude, longitude } = resolveCoordinates(locationData);
 
-	const timeStamp = getTimeStamp();
+	const timeStamp = getDatabaseTimestamp();
 
 	const query = `
 		INSERT INTO Local_Incident_Locations (

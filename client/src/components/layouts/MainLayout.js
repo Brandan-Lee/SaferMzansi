@@ -64,10 +64,12 @@ const MainLayout = ({
 							variant={actionButton.variant}
 							disabled={actionButton.disabled}
 							loading={actionButton.loading}
+							accessibilityLabel={
+								actionButton.accessibilityLabel || actionButton.label
+							}
 							icon={actionButton.icon}
 							iconColor={actionButton.iconColor}
 							style={[styles.button, actionButton.style]}
-							accessibilityLabel={actionButton.label}
 						/>
 					) : null}
 				</View>

@@ -17,5 +17,8 @@ export const LOCAL_EVIDENCE_VAULT_SCHEMA = `
         FOREIGN KEY (user_id) REFERENCES Local_Users(user_id) ON DELETE CASCADE
     );
 
+    CREATE INDEX IF NOT EXISTS idx_local_evidence_vault_user_id
+    ON Local_Evidence_Vault(user_id);
+
     ${createSyncIndex("Local_Evidence_Vault", "captured_at")}
 `;

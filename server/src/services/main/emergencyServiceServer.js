@@ -17,6 +17,7 @@ const handleEmergencyBroadcast = async (payload) => {
 		message,
 	} = payload;
 
+	// Skip malformed contact values so one bad record does not stop the alert.
 	const emergencyContacts = Array.isArray(contacts) ? contacts : [];
 
 	const saveIncident = async () => {
@@ -53,12 +54,10 @@ const handleEmergencyBroadcast = async (payload) => {
 		}
 	};
 
-	let policeInfoText = "";
-	if (nearest_police_station) {
-		policeInfoText = `\n\nNearest Police Station: ${nearest_police_station.name} (Lat: ${nearest_police_station.lat}, Lon: ${nearest_police_station.lon})`;
-	}
-
-	const fullMessage = message + policeInfoText;
+	const policeInfoText = nearest_police_station
+		? `\n\nNearest Police Station: ${nearest_police_station.name} (Lat: ${nearest_police_station.lat}, Lon: ${nearest_police_station.lon})`
+		: "";
+	const fullMessage = `${message}${policeInfoText}`;
 
 	const contactsWithEmail = emergencyContacts.filter((contact) => contact.email);
 	const sendContactEmail = async (contact) => {

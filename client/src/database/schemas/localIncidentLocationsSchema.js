@@ -16,5 +16,8 @@ export const LOCAL_INCIDENT_LOCATIONS_SCHEMA = `
         FOREIGN KEY (incident_id) REFERENCES Local_Incidents(incident_id) ON DELETE CASCADE
     );
 
+    CREATE INDEX IF NOT EXISTS idx_local_incident_locations_incident_id
+    ON Local_Incident_Locations(incident_id);
+
     ${createSyncIndex("Local_Incident_Locations", "updated_at")}
 `;

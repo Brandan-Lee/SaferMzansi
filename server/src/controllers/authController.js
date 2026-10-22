@@ -1,5 +1,26 @@
 const authService = require("#services/auth/authServiceServer.js");
 
+const serializeAuthUser = (user, includePasswordHash = false) => {
+	const fields = [
+		"user_id",
+		"email_blind_index",
+		"encrypted_name",
+		"encrypted_surname",
+		"encrypted_email",
+		"encrypted_phone_num",
+		"created_at",
+		"updated_at",
+		"deleted_at",
+		"is_deleted",
+		"is_verified",
+	];
+
+	// Registration returns the stored hash needed by the client; login omits it.
+	if (includePasswordHash) fields.push("password_hash");
+
+	return Object.fromEntries(fields.map((field) => [field, user[field]]));
+};
+
 const formatAuthSuccess = (
 	res,
 	statusCode,
@@ -8,6 +29,7 @@ const formatAuthSuccess = (
 	encryptedEmail,
 	token,
 	extraData = {},
+	includePasswordHash = false,
 ) => {
 	return res.status(statusCode).json({
 		message,
@@ -15,29 +37,18 @@ const formatAuthSuccess = (
 		user: {
 			user_id: userId,
 			email: encryptedEmail,
-			...extraData,
+			...serializeAuthUser(extraData, includePasswordHash),
 		},
 	});
 };
 
 const register = async (req, res) => {
 	try {
-		const { user, token, password } = await authService.registerUser(req.body);
+		const { user, token } = await authService.registerUser(req.body);
 		return res.status(201).json({
 			message: "User successfully registered and synched with database",
 			token,
-			user: {
-				user_id: user.user_id,
-				email_blind_index: user.email_blind_index,
-				encrypted_name: user.encrypted_name,
-				encrypted_surname: user.encrypted_surname,
-				encrypted_email: user.encrypted_email,
-				encrypted_phone_num: user.encrypted_phone_num,
-				password_hash: user.password_hash,
-				is_verified: user.is_verified,
-				created_at: user.created_at,
-				updated_at: user.updated_at,
-			},
+			user: serializeAuthUser(user, true),
 		});
 	} catch (error) {
 		if (error.statusCode === 409 || error.code === "23505") {
@@ -74,20 +85,8 @@ const login = async (req, res) => {
 		return res.status(200).json({
 			message: "Login Successful",
 			token,
-			user: {
-				user_id: user.user_id,
-				email_blind_index: user.email_blind_index,
-				encrypted_name: user.encrypted_name,
-				encrypted_surname: user.encrypted_surname,
-				encrypted_email: user.encrypted_email,
-				encrypted_phone_num: user.encrypted_phone_num,
-				created_at: user.created_at,
-				updated_at: user.updated_at,
-				deleted_at: user.deleted_at,
-				is_deleted: user.is_deleted,
-				is_verified: user.is_verified,
-			},
-			contacts: contacts || [], 
+			user: serializeAuthUser(user),
+			contacts: contacts || [],
 			evidence: evidence || [],
 			incidents: incidents || [],
 			incident_locations: incident_locations || [],
@@ -114,9 +113,8 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
 	try {
-		const { user, token, resolvedUserId } = await authService.resetPassword(
-			req.body,
-		);
+		const { user, token, resolvedUserId, passwordHash } =
+			await authService.resetPassword(req.body);
 
 		return formatAuthSuccess(
 			res,
@@ -137,25 +135,30 @@ const resetPassword = async (req, res) => {
 				deleted_at: user.deleted_at,
 				is_deleted: user.is_deleted,
 				is_verified: user.is_verified,
+				password_hash: passwordHash,
 			},
+			true,
 		);
 	} catch (error) {
-		if (error.message === "INVALID_TOKEN") {
-			return res.status(400).json({
-				error:
+		const knownErrors = {
+			INVALID_TOKEN: {
+				status: 400,
+				message:
 					"Unable to reset password. Please restart the password reset process.",
-			});
-		}
-		if (error.message === "SAME_PASSWORD") {
-			return res.status(400).json({
-				error: "Cannot use the same password. Please choose a new password.",
-			});
-		}
-		if (error.message === "MISSING_CREDENTIALS") {
-			return res.status(500).json({
-				error:
+			},
+			SAME_PASSWORD: {
+				status: 400,
+				message: "Cannot use the same password. Please choose a new password.",
+			},
+			MISSING_CREDENTIALS: {
+				status: 500,
+				message:
 					"User record is missing password credentials. Please contact support.",
-			});
+			},
+		};
+		const knownError = knownErrors[error.message];
+		if (knownError) {
+			return res.status(knownError.status).json({ error: knownError.message });
 		}
 		console.error("Fatal exception during reset password:", error);
 		return res.status(500).json({ error: "Failed to reset password request" });

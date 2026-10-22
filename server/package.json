@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "main": "server.js",
   "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "eslint .",
+    "test": "node --test"
   },
   "imports": {
     "#controllers/*": "./src/controllers/*",
@@ -23,13 +28,10 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.3",
-    "nodemailer": "^10.0.14",
-    "pg": "^8.11.5"
+    "nodemailer": "^10.0.14"
   },
   "devDependencies": {
     "eslint": "^8.57.1",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-react": "^7.37.5",
     "nodemon": "^3.1.0"
   }
 }

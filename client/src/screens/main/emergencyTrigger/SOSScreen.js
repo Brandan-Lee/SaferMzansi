@@ -14,18 +14,12 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useSQLiteContext } from "expo-sqlite";
 import { useAuth } from "@context/AuthContext";
 import { useLocation } from "@hooks/useLocation";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-	AudioModule,
-	RecordingPresets,
-	setAudioModeAsync,
-	useAudioRecorder,
-} from "expo-audio";
 import {
 	executeEmergencyDispatch,
 	fetchEmergencyTimerConfig,
-	finalizeEmergencyOnCancel,
 } from "@services/main/emergencyService";
+import { finalizeEmergencyOnCancel } from "@services/main/emergencyFinalizationService";
+import { useEmergencyRecording } from "@hooks/useEmergencyRecording";
 
 const PURPLE = "#6B21A8";
 const RED = "#EF4444";
@@ -33,8 +27,6 @@ const BACKGROUND = "#FFF5F5";
 const TITLE = "#1F2937";
 const BODY = "#6B7280";
 const DEFAULT_TESTING_DURATION = 5;
-const AUTO_RECORD_KEY = "@setting_auto_record";
-
 const formatTime = (totalSeconds) => {
 	const minutes = Math.floor(totalSeconds / 60);
 	const seconds = totalSeconds % 60;
@@ -65,76 +57,16 @@ export default function SOSScreen({
 	const [emergencyDialerOpened, setEmergencyDialerOpened] = useState(false);
 	const [isFinalizing, setIsFinalizing] = useState(false);
 	const [incidentId, setIncidentId] = useState(null);
-	const [recordingWarning, setRecordingWarning] = useState(null);
-	const [isRecording, setIsRecording] = useState(false);
+	const { isRecording, warning: recordingWarning, stopRecording } =
+		useEmergencyRecording(isTesting);
 
 	const pulse = useRef(new Animated.Value(1)).current;
 	const intervalRef = useRef(null);
 	const dispatchStartedRef = useRef(false);
-	const recordingUriRef = useRef(null);
-	const recordingStartedRef = useRef(false);
-	const screenActiveRef = useRef(true);
 	const finalizationCompleteRef = useRef(false);
-	const audioRecorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
 	const db = useSQLiteContext();
 	const { user } = useAuth();
 	const { getLocation } = useLocation();
-
-	const stopEmergencyRecording = useCallback(async () => {
-		if (!recordingStartedRef.current) return recordingUriRef.current;
-
-		recordingStartedRef.current = false;
-		await audioRecorder.stop();
-		setIsRecording(false);
-		recordingUriRef.current = audioRecorder.uri || null;
-		return recordingUriRef.current;
-	}, [audioRecorder]);
-
-	useEffect(() => {
-		screenActiveRef.current = true;
-		if (isTesting) return undefined;
-
-		const startAutoRecording = async () => {
-			if ((await AsyncStorage.getItem(AUTO_RECORD_KEY)) !== "true") return;
-
-			const permission = await AudioModule.getRecordingPermissionsAsync();
-			if (permission.status !== "granted") {
-				setRecordingWarning(
-					"Automatic recording is off because microphone permission was not granted.",
-				);
-				return;
-			}
-
-			await setAudioModeAsync({
-				allowsRecording: true,
-				playsInSilentMode: true,
-			});
-			await audioRecorder.prepareToRecordAsync();
-			if (!screenActiveRef.current) {
-				return;
-			}
-			audioRecorder.record();
-			recordingStartedRef.current = true;
-			setIsRecording(true);
-		};
-
-		startAutoRecording().catch((error) => {
-			console.error("[Emergency SOS] Failed to start automatic recording:", error);
-			setRecordingWarning(
-				"Automatic recording could not start. Your SOS alert will still be sent.",
-			);
-		});
-
-		return () => {
-			screenActiveRef.current = false;
-			if (recordingStartedRef.current) {
-				recordingStartedRef.current = false;
-				audioRecorder.stop().catch((error) => {
-					console.warn("[Emergency SOS] Failed to stop recording:", error);
-				});
-			}
-		};
-	}, [audioRecorder, isTesting]);
 
 	const handleTimerExpired = useCallback(async () => {
 		if (dispatchStartedRef.current) return;
@@ -282,25 +214,26 @@ export default function SOSScreen({
 		if (intervalRef.current) clearInterval(intervalRef.current);
 		Vibration.cancel();
 		try {
-			await stopEmergencyRecording();
+			await stopRecording();
 		} catch (error) {
 			console.warn("[Emergency SOS] Failed to stop recording on cancel:", error);
 		}
 		if (onCancel) onCancel();
+		else if (onClose) onClose();
 		else if (navigation?.canGoBack()) navigation.goBack();
 	};
 
 	const handleClose = async () => {
 		if (isFinalizing) return;
-		if (incidentId && !isTesting && !finalizationCompleteRef.current) {
+		if (!isTesting && !finalizationCompleteRef.current) {
 			setIsFinalizing(true);
 			try {
-				await stopEmergencyRecording();
+				const audioUri = await stopRecording();
 				const result = await finalizeEmergencyOnCancel(
 					db,
 					incidentId,
 					user?.userId,
-					recordingUriRef.current,
+					audioUri,
 					"COMPLETED",
 				);
 				if (!result.success) {
@@ -309,10 +242,15 @@ export default function SOSScreen({
 					);
 					return;
 				}
+				if (result.evidenceRequired && !result.evidenceSaved) {
+					setDispatchWarning(
+						result.warning || "Emergency evidence could not be saved. Please try again.",
+					);
+					return;
+				}
 				finalizationCompleteRef.current = true;
 				if (result.warning) {
 					setDispatchWarning(result.warning);
-					return;
 				}
 			} catch (error) {
 				setDispatchWarning(error.message || "Emergency evidence could not be saved.");
@@ -322,7 +260,7 @@ export default function SOSScreen({
 			}
 		} else {
 			try {
-				await stopEmergencyRecording();
+				await stopRecording();
 			} catch (error) {
 				console.warn("[Emergency SOS] Failed to stop recording:", error);
 			}

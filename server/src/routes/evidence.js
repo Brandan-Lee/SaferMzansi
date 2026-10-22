@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const evidenceController = require("#controllers/evidenceController.js");
+const asyncHandler = require("#middleware/asyncHandler.js");
 const { validateBody } = require("#middleware/validateRequest.js");
 
 const REQUIRED_EVIDENCE_FIELDS = [
@@ -19,31 +20,31 @@ const REQUIRED_DELETE_EVIDENCE_FIELDS = ["evidence_id", "user_id"];
 router.post(
     "/add",
     validateBody(REQUIRED_EVIDENCE_FIELDS),
-    evidenceController.addEvidence,
+    asyncHandler(evidenceController.addEvidence),
 );
 
 router.post(
     "/get-evidence",
     validateBody(REQUIRED_GET_EVIDENCE_FIELDS),
-    evidenceController.getEvidence,
+    asyncHandler(evidenceController.getEvidence),
 );
 
 router.post(
     "/delete",
     validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
-    evidenceController.deleteEvidence,
+    asyncHandler(evidenceController.deleteEvidence),
 );
 
 router.post(
     "/restore",
     validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
-    evidenceController.restoreEvidence,
+    asyncHandler(evidenceController.restoreEvidence),
 );
 
 router.post(
     "/permanent-delete",
     validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
-    evidenceController.permanentDeleteEvidence,
+    asyncHandler(evidenceController.permanentDeleteEvidence),
 );
 
 module.exports = router;

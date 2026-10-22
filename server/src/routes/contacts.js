@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const contactController = require("#controllers/contactController.js");
+const asyncHandler = require("#middleware/asyncHandler.js");
 const { validateBody } = require("#middleware/validateRequest.js");
 
 const REQUIRED_CONTACT_FIELDS = [
@@ -21,25 +22,25 @@ const REQUIRED_DELETE_CONTACT_FIELDS = ["contact_id", "user_id"];
 router.post(
 	"/add",
 	validateBody(REQUIRED_CONTACT_FIELDS),
-	contactController.addContact,
+	asyncHandler(contactController.addContact),
 );
 
 router.post(
 	"/get-contacts",
 	validateBody(REQUIRED_GET_CONTACT_FIELDS),
-	contactController.getContacts,
+	asyncHandler(contactController.getContacts),
 );
 
 router.post(
 	"/update",
 	validateBody(REQUIRED_CONTACT_FIELDS),
-	contactController.updateContact,
+	asyncHandler(contactController.updateContact),
 );
 
 router.post(
 	"/delete",
 	validateBody(REQUIRED_DELETE_CONTACT_FIELDS),
-	contactController.deleteContact,
+	asyncHandler(contactController.deleteContact),
 );
 
 module.exports = router;

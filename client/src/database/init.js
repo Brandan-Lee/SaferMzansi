@@ -14,20 +14,20 @@ const TABLE_SCHEMAS = [
 ];
 
 export const initDatabase = async (db) => {
-	try {
-		// Allow foreign key constraints
-		await db.execAsync(`PRAGMA foreign_keys = ON;`);
+	// Enable relationships before creating tables that depend on foreign keys.
+	await db.execAsync("PRAGMA foreign_keys = ON;");
 
-		// Create all tables that are part of the TABLE_SCHEMAS array
-		for (const schema of TABLE_SCHEMAS) {
-			await db.execAsync(schema);
-		}
-
-		if (__DEV__) {
-			await logAllLocalTables(db);
-		}
-	} catch (error) {
-		console.error("Error initializing database:", error);
-		throw error;
+	for (const schema of TABLE_SCHEMAS) {
+		await db.execAsync(schema);
 	}
+
+	// Older installs need this field added without deleting their local data.
+	const userColumns = await db.getAllAsync("PRAGMA table_info(Local_Users)");
+	if (!userColumns.some((column) => column.name === "offline_password_verifier")) {
+		await db.execAsync(
+			"ALTER TABLE Local_Users ADD COLUMN offline_password_verifier TEXT",
+		);
+	}
+
+	if (__DEV__) await logAllLocalTables(db);
 };

@@ -1,4 +1,5 @@
 const contactModel = require("#models/contactModel.js");
+const { createHttpError } = require("#utils/httpError.js");
 
 const addEmergencyContact = async (contactData) => {
 	const { contact_email_blind_index } = contactData;
@@ -22,9 +23,7 @@ const addEmergencyContact = async (contactData) => {
 			return reconciledContact;
 		}
 
-		const err = new Error("This contact already exists.");
-		err.status = 400;
-		throw err;
+		throw createHttpError("This contact already exists.", 400);
 	}
 
 	try {
@@ -35,30 +34,22 @@ const addEmergencyContact = async (contactData) => {
 		return newContact;
 	} catch (error) {
 		if (error.code === "23505") {
-			const duplicateErr = new Error(
+			const duplicateError = createHttpError(
 				"A contact with this email has already been registered on the server.",
+				409,
 			);
-			duplicateErr.status = 409; // Conflict
-			throw duplicateErr;
+			throw duplicateError;
 		}
 		throw error;
 	}
 };
 
 const getEmergencyContacts = async (payload) => {
-	const user_id = payload;
-
-	if (!user_id) {
+	if (!payload) {
 		throw new Error("user_id is required to fetch contacts");
 	}
 
-	const contacts = await contactModel.getEmergencyContacts(user_id);
-
-	if (!contacts) {
-		throw new Error("Failed to retrieve emergency contacts from database");
-	}
-
-	return contacts;
+	return contactModel.getEmergencyContacts(payload);
 };
 
 const updateContact = async (payload) => {

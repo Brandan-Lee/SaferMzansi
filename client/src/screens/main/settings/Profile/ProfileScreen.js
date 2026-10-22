@@ -6,13 +6,12 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Platform,
+	KeyboardAvoidingView,
 } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
-import { KeyboardAvoidingView } from "react-native";
 import ProfileDetailCard from "@components/cards/ProfileDetailCard";
 import { useAuth } from "@context/AuthContext";
-import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { useSQLiteContext } from "expo-sqlite";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -28,22 +27,13 @@ import AccountDeletionModal from "@components/modals/AccountDeletionModal";
 const PURPLE = "#6B21A8";
 
 const ProfileScreen = ({ navigation }) => {
-	const [modalConfig, setModalConfig] = useState({
-		visible: false,
-		title: "",
-		message: "",
-		confirmLabel: "Confirm",
-		cancelLabel: "Cancel",
-		isDestructive: false,
-		iconName: "alert-circle-outline",
-		onConfirm: () => {},
-	});
 	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 	const [banner, setBanner] = useState(null);
 	const { user, logOut } = useAuth();
 	const [userDetails, setUserDetails] = useState(null);
 	const db = useSQLiteContext();
 	const [loading, setLoading] = useState(false);
+	const [deletionAction, setDeletionAction] = useState(null);
 	const { isOnline } = useNetStatus();
 
 	const firstName = userDetails?.firstName || user?.name || "";
@@ -52,6 +42,12 @@ const ProfileScreen = ({ navigation }) => {
 		`${firstName} ${surname}`.trim() || user?.userName || "User Profile";
 
 	const loadUser = useCallback(async () => {
+		if (!db || !user?.userId) {
+			setUserDetails(null);
+			setLoading(false);
+			return;
+		}
+
 		try {
 			setLoading(true);
 			const userRecord = await getLocalUserDetails(db, user.userId);
@@ -61,7 +57,7 @@ const ProfileScreen = ({ navigation }) => {
 		} finally {
 			setLoading(false);
 		}
-	}, [db, user.userId]);
+	}, [db, user?.userId]);
 
 	// Fetch data whenever the screen gains focus
 	useFocusEffect(
@@ -82,6 +78,17 @@ const ProfileScreen = ({ navigation }) => {
 	const handleSendOTP = async () => {
 		setBanner(null);
 
+		const sanitizedEmail =
+			userDetails?.email?.trim().toLowerCase() ||
+			user?.email?.trim().toLowerCase();
+		if (!sanitizedEmail) {
+			setBanner({
+				message: "An email address is required to reset your password.",
+				type: "error",
+			});
+			return;
+		}
+
 		if (!checkNetworkAndNotify(isOnline, setBanner)) {
 			return;
 		}
@@ -89,10 +96,6 @@ const ProfileScreen = ({ navigation }) => {
 		setLoading(true);
 
 		try {
-			const sanitizedEmail =
-				userDetails?.email?.trim().toLowerCase() ||
-				user?.email?.trim().toLowerCase();
-
 			await forgotPasswordUser(sanitizedEmail);
 			setBanner({
 				message: "Password reset code sent successfully.",
@@ -117,6 +120,7 @@ const ProfileScreen = ({ navigation }) => {
 
 	const handleSoftDelete = async () => {
 		setBanner(null);
+		setDeletionAction("soft");
 		setLoading(true);
 
 		try {
@@ -124,14 +128,8 @@ const ProfileScreen = ({ navigation }) => {
 				return;
 			}
 
-			setLoading(true);
-
 			await softDeleteUser(db, user.userId);
 
-			setBanner({
-				message: "Account has been deleted successfully.",
-				type: "success",
-			});
 			setTimeout(async () => {
 				setDeleteModalVisible(false);
 				await logOut("LoginScreen");
@@ -143,11 +141,13 @@ const ProfileScreen = ({ navigation }) => {
 			});
 		} finally {
 			setLoading(false);
+			setDeletionAction(null);
 		}
 	};
 
 	const handleHardDelete = async () => {
 		setBanner(null);
+		setDeletionAction("hard");
 		setLoading(true);
 
 		try {
@@ -157,7 +157,6 @@ const ProfileScreen = ({ navigation }) => {
 
 			await hardDeleteAccount(db, user.userId);
 
-			setBanner({ message: "Account permanently deleted.", type: "success" });
 			setTimeout(async () => {
 				setDeleteModalVisible(false);
 				await logOut("LoginScreen");
@@ -167,16 +166,15 @@ const ProfileScreen = ({ navigation }) => {
 				message: error.message || "Failed to permanently delete account",
 				type: "error",
 			});
+		} finally {
+			setLoading(false);
+			setDeletionAction(null);
 		}
-	};
-
-	const hideModal = () => {
-		setModalConfig((prev) => ({ ...prev, visible: false }));
 	};
 
 	return (
 		<MainLayout
-			title="User Profle"
+			title="User Profile"
 			onBack={() => navigation.goBack()}
 			tab="Settings"
 			navigation={navigation}
@@ -269,20 +267,10 @@ const ProfileScreen = ({ navigation }) => {
 				</ScrollView>
 			</KeyboardAvoidingView>
 
-			<ConfirmationModal
-				visible={modalConfig.visible}
-				title={modalConfig.title}
-				message={modalConfig.message}
-				confirmLabel={modalConfig.confirmLabel}
-				cancelLabel={modalConfig.cancelLabel}
-				isDestructive={modalConfig.isDestructive}
-				iconName={modalConfig.iconName}
-				onConfirm={modalConfig.onConfirm}
-				onCancel={hideModal}
-			/>
 			<AccountDeletionModal
 				visible={deleteModalVisible}
 				loading={loading}
+				action={deletionAction}
 				banner={banner}
 				onCancel={() => setDeleteModalVisible(false)}
 				onSoftDelete={handleSoftDelete}

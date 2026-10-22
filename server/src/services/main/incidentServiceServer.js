@@ -13,8 +13,7 @@ const getIncidents = async (userId) => {
 		throw new Error("user_id is required to fetch incidents");
 	}
 
-	const incidentsList = await incidentModel.getIncidentsByUserId(userId);
-	return incidentsList || [];
+	return incidentModel.getIncidentsByUserId(userId);
 };
 
 module.exports = {

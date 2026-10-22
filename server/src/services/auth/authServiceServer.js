@@ -1,4 +1,3 @@
-const { supabase } = require("#config/supabase_db.js");
 const contactModel = require("#models/contactModel.js");
 const evidenceModel = require("#models/evidenceModel.js");
 const locationModel = require("#models/incidentLocationModel.js");
@@ -9,8 +8,16 @@ const {
 	isPasswordResetTokenValid,
 	consumePasswordResetToken,
 } = require("#services/auth/otpServiceServer.js");
+const { createHttpError } = require("#utils/httpError.js");
 const { hashPassword, verifyPassword } = require("#utils/securityUtil.js");
 const { generateToken } = require("#utils/tokenUtil.js");
+
+const getIncidentLocations = async (incidents) => {
+	if (!incidents.length) return [];
+
+	const incidentIds = incidents.map((incident) => incident.incident_id);
+	return locationModel.getLocationsByIncidentId(incidentIds);
+};
 
 const registerUser = async (userData) => {
 	const existingUser = await userModel.findUserByEmailBlindIndex(
@@ -18,13 +25,12 @@ const registerUser = async (userData) => {
 	);
 
 	if (existingUser) {
-		const error = new Error("User already exists");
-		error.statusCode = 409;
-		throw error;
+		throw createHttpError("User already exists", 409);
 	}
 
 	const password_hash = await hashPassword(userData.password);
-	const { password, ...otherUserData } = userData;
+	const otherUserData = { ...userData };
+	delete otherUserData.password;
 
 	const newUser = await userModel.createUser({
 		...otherUserData,
@@ -46,7 +52,7 @@ const registerUser = async (userData) => {
 		email: newUser.encrypted_email,
 	});
 
-	return { user: newUser, token, password };
+	return { user: newUser, token };
 };
 
 const authenticateUser = async ({ email_blind_index, password }) => {
@@ -64,38 +70,18 @@ const authenticateUser = async ({ email_blind_index, password }) => {
 
 	// Reactivate account if the user deactivated it previously
 	if (user.is_deleted) {
-		const now = new Date().toISOString();
-
-		await supabase
-			.from("Users")
-			.update({ is_deleted: false, deleted_at: null, updated_at: now })
-			.eq("user_id", user.user_id);
-
-		await supabase
-			.from("Emergency_Contacts")
-			.update({ is_deleted: false, deleted_at: null, updated_at: now })
-			.eq("user_id", user.user_id);
-
-		await supabase
-			.from("Evidence_Vault")
-			.update({ is_deleted: false, deleted_at: null, updated_at: now })
-			.eq("user_id", user.user_id);
-
-		user.is_deleted = false;
+		const restoredUser = await userModel.restoreUserAccount(user.user_id);
+		Object.assign(user, restoredUser);
 	}
 
 	const contacts = await contactModel.getEmergencyContacts(user.user_id);
 	const evidence = await evidenceModel.getEvidenceByUserId(user.user_id);
 	const incidents = await incidentModel.getIncidentsByUserId(user.user_id);
-
-	let allLocations = [];
 	const incidentList = incidents || [];
-	if (incidentList.length > 0) {
-		const incidentIds = incidentList.map((i) => i.incident_id);
-		allLocations = await locationModel.getLocationsByIncidentId(incidentIds);
-	}
+	const allLocations = await getIncidentLocations(incidentList);
 
-	const { password_hash, ...safeUser } = user;
+	const safeUser = { ...user };
+	delete safeUser.password_hash;
 	const token = generateToken({
 		userId: user.user_id,
 		email: user.encrypted_email,
@@ -125,6 +111,7 @@ const requestForgotPassword = async (email, email_blind_index) => {
 			}
 		}
 	} catch (error) {
+		// Keep the public response identical whether or not the account exists.
 		console.error("[Forgot Password Service] Error:", error);
 	} finally {
 		const elapsed = Date.now() - startedAt;
@@ -146,11 +133,11 @@ const resetPassword = async ({ email_blind_index, password, reset_token }) => {
 	const isValid = isPasswordResetTokenValid(reset_token, resolvedUserId);
 
 	if (!isValid) {
-		throw new Error("Invalid Token");
+		throw new Error("INVALID_TOKEN");
 	}
 
 	if (!user.password_hash) {
-		throw new Error("Missing Credentials (password)");
+		throw new Error("MISSING_CREDENTIALS");
 	}
 
 	const isSamePassword = await verifyPassword(user.password_hash, password);
@@ -162,7 +149,7 @@ const resetPassword = async ({ email_blind_index, password, reset_token }) => {
 	const tokenConsumed = consumePasswordResetToken(reset_token, resolvedUserId);
 
 	if (!tokenConsumed) {
-		throw new Error("Invalid token");
+		throw new Error("INVALID_TOKEN");
 	}
 
 	const hashedPassword = await hashPassword(password);
@@ -176,14 +163,11 @@ const resetPassword = async ({ email_blind_index, password, reset_token }) => {
 	}
 
 	const incidents = await incidentModel.getIncidentsByUserId(resolvedUserId);
-	let allLocations = [];
 	const incidentList = incidents || [];
-	if (incidentList.length > 0) {
-		const incidentIds = incidentList.map((i) => i.incident_id);
-		allLocations = await locationModel.getLocationsByIncidentId(incidentIds);
-	}
+	const allLocations = await getIncidentLocations(incidentList);
 
-	const { password_hash, ...safeUser } = user;
+	const safeUser = { ...user };
+	delete safeUser.password_hash;
 	const token = generateToken({
 		userId: resolvedUserId,
 		email: user.encrypted_email,
@@ -191,6 +175,7 @@ const resetPassword = async ({ email_blind_index, password, reset_token }) => {
 
 	return {
 		user: safeUser,
+		passwordHash: hashedPassword,
 		incidents: incidentList,
 		incident_locations: allLocations,
 		token,

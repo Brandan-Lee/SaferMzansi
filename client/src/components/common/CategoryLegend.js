@@ -20,6 +20,9 @@ export default function CategoryLegend({ selectedCategory, onSelectCategory }) {
 						]}
 						onPress={() => onSelectCategory(key)}
 						activeOpacity={0.7}
+						accessibilityRole="button"
+						accessibilityLabel={`${cat.label} services`}
+						accessibilityState={{ selected }}
 					>
 						<MaterialCommunityIcons
 							name={selected ? "check-circle" : "map-marker"}

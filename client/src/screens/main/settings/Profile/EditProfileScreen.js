@@ -12,10 +12,12 @@ import { useAuth } from "@context/AuthContext";
 import { USER_FORM_FIELDS } from "@constants/UserFields";
 import MainLayout from "@components/layouts/MainLayout";
 import { CustomInput } from "@components/forms/CustomInput";
+import { Ionicons } from "@expo/vector-icons";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { useFormHandler } from "@hooks/useFormHandler";
 import { validateUserForm } from "@utils/securityAndValidation/validationUtil";
 import { updateUser } from "@services/main/userService";
+
 const PURPLE = "#6B21A8";
 
 const EditProfileScreen = ({ navigation, route }) => {
@@ -35,7 +37,7 @@ const EditProfileScreen = ({ navigation, route }) => {
 	const userDetails = route?.params?.userDetails || null;
 	const { user } = useAuth();
 
-	const INITIAL_STATE = {
+	const initialState = {
 		name: userDetails?.firstName || userDetails?.name || "",
 		surname: userDetails?.surname || "",
 		phone: userDetails?.userNumber || "",
@@ -43,7 +45,7 @@ const EditProfileScreen = ({ navigation, route }) => {
 	};
 
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
-		useFormHandler(INITIAL_STATE);
+		useFormHandler(initialState);
 
 	const hideModal = () => {
 		setModalConfig((prev) => ({ ...prev, visible: false }));
@@ -60,6 +62,13 @@ const EditProfileScreen = ({ navigation, route }) => {
 		}
 
 		const userId = user?.userId || user?.user_id;
+		if (!db || !userId) {
+			setBanner({
+				message: "A signed-in user is required to update this profile.",
+				type: "error",
+			});
+			return;
+		}
 
 		setIsLoading(true);
 
@@ -110,10 +119,10 @@ const EditProfileScreen = ({ navigation, route }) => {
 		const currentPhone = (formData.phone || "").trim();
 		const currentEmail = (formData.email || "").trim();
 
-		const initialName = (INITIAL_STATE.name || "").trim();
-		const initialSurname = (INITIAL_STATE.surname || "").trim();
-		const initialPhone = (INITIAL_STATE.phone || "").trim();
-		const initialEmail = (INITIAL_STATE.email || "").trim();
+		const initialName = (initialState.name || "").trim();
+		const initialSurname = (initialState.surname || "").trim();
+		const initialPhone = (initialState.phone || "").trim();
+		const initialEmail = (initialState.email || "").trim();
 
 		const isFormDirty =
 			currentName !== initialName ||
@@ -157,6 +166,7 @@ const EditProfileScreen = ({ navigation, route }) => {
 				label: loading ? "Updating..." : "Update User Profile",
 				icon: "person-add-outline",
 				onPress: handleSave,
+				loading,
 			}}
 		>
 			<KeyboardAvoidingView

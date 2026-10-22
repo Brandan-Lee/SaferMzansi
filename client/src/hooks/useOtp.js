@@ -1,55 +1,68 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Keyboard } from "react-native";
 
 export const useOtp = (length = 6) => {
-	const [otp, setOtp] = useState(Array(length).fill(""));
+	const otpLength =
+		Number.isSafeInteger(length) && length > 0 ? length : 6;
+	const [otp, setOtp] = useState(() => Array(otpLength).fill(""));
+	const otpRef = useRef(otp);
 	const inputRefs = useRef([]);
+
+	useEffect(() => {
+		const emptyOtp = Array(otpLength).fill("");
+		otpRef.current = emptyOtp;
+		setOtp(emptyOtp);
+	}, [otpLength]);
 
 	const focusInput = (index) => inputRefs.current[index]?.focus();
 
-	//Method to handle the changing of the OTP input
+	const updateOtp = (nextOtp) => {
+		otpRef.current = nextOtp;
+		setOtp(nextOtp);
+	};
+
 	const handleOtpChange = (text, index) => {
+		if (!Number.isInteger(index) || index < 0 || index >= otpLength) return;
 		const digits = text.replace(/[^0-9]/g, "");
 
-		//Handle the pasting of OTP from the user
 		if (digits.length > 1) {
-			const pastedDigits = digits.slice(0, length).split("");
-			const newOtp = Array(length)
-				.fill("")
-				.map((_, i) => pastedDigits[i] || "");
+			const pastedDigits = digits.slice(0, otpLength).split("");
+			const nextOtp = Array.from(
+				{ length: otpLength },
+				(_, position) => pastedDigits[position] || "",
+			);
+			updateOtp(nextOtp);
 
-			setOtp(newOtp);
-			const targetIndex = Math.min(digits.length, length - 1);
-			focusInput(targetIndex);
-
-			if (pastedDigits.length === length) {
+			if (pastedDigits.length === otpLength) {
 				Keyboard.dismiss();
+			} else {
+				focusInput(pastedDigits.length);
 			}
 
 			return;
 		}
 
-		//Handling single digit inputs
-		const updatedOtp = [...otp];
+		const updatedOtp = [...otpRef.current];
 		updatedOtp[index] = digits;
-		setOtp(updatedOtp);
+		updateOtp(updatedOtp);
 
-		if (digits !== "" && index < length - 1) {
+		if (digits !== "" && index < otpLength - 1) {
 			focusInput(index + 1);
 		}
 	};
 
-	//Method to handle backspace keypress
 	const handleKeyPress = (e, index) => {
-		if (e.nativeEvent.key === "Backspace" && otp[index] === "" && index > 0) {
+		if (
+			e.nativeEvent.key === "Backspace" &&
+			otpRef.current[index] === "" &&
+			index > 0
+		) {
 			inputRefs.current[index - 1]?.focus();
 		}
 	};
 
-	//Method to handle the reset of the OTP input
-	const resetOtp = () => setOtp(Array(length).fill(""));
+	const resetOtp = () => updateOtp(Array(otpLength).fill(""));
 
-	//Data that has to be returned
 	return {
 		otp,
 		otpString: otp.join(""),

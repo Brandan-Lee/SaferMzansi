@@ -16,5 +16,8 @@ export const LOCAL_EMERGENCY_CONTACTS_SCHEMA = `
     CREATE INDEX IF NOT EXISTS idx_local_emergency_contacts_email_blind_index 
     ON Local_Emergency_Contacts(contact_email_blind_index);
 
+    CREATE INDEX IF NOT EXISTS idx_local_emergency_contacts_user_id
+    ON Local_Emergency_Contacts(user_id);
+
     ${createSyncIndex("Local_Emergency_Contacts", "created_at")}
 `;

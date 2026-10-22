@@ -1,6 +1,6 @@
 import { postApi, safeApiCall } from "@services/ApiClient";
 import { saveOrUpdateLocalIncident } from "@database/repositories/incidentRepository";
-import { syncQueuedEvidence } from "./evidenceService";
+import { syncQueuedEvidence } from "./evidenceSyncService";
 
 export const syncIncidents = async (db, userId) => {
 	if (!userId) {
@@ -17,9 +17,16 @@ export const syncIncidents = async (db, userId) => {
 	}
 
 	const serverIncidents = response.data.incidents;
+	const pendingIncidents = await db.getAllAsync(
+		"SELECT incident_id FROM Local_Incidents WHERE is_synched = 0",
+	);
+	const pendingIncidentIds = new Set(
+		pendingIncidents.map((incident) => incident.incident_id),
+	);
 
 	for (const item of serverIncidents) {
 		const incidentId = item.incident_id || item.id;
+		if (pendingIncidentIds.has(incidentId)) continue;
 
 		const localPayload = {
 			incidentId,

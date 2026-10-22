@@ -1,6 +1,10 @@
 const { supabase } = require("#config/supabase_db.js");
+const { omitNullish } = require("#utils/databaseUtil.js");
 
 const TABLE_NAME = "Evidence_Vault";
+const STORAGE_BUCKET = "EvidenceVault";
+const STORAGE_PAGE_SIZE = 100;
+const STORAGE_REMOVE_BATCH_SIZE = 100;
 
 const validateIds = (evidenceId, userId, actionName) => {
     if (!evidenceId || !userId) {
@@ -10,6 +14,59 @@ const validateIds = (evidenceId, userId, actionName) => {
         safeEvidenceId: String(evidenceId).trim(),
         safeUserId: String(userId).trim(),
     };
+};
+
+const listStoragePaths = async (folderPath, evidenceId = null) => {
+    const paths = [];
+    let offset = 0;
+    let hasMoreEntries = true;
+
+    while (hasMoreEntries) {
+        const { data: entries, error } = await supabase.storage
+            .from(STORAGE_BUCKET)
+            .list(folderPath, {
+                limit: STORAGE_PAGE_SIZE,
+                offset,
+                ...(evidenceId ? { search: evidenceId } : {}),
+            });
+
+        if (error) throw error;
+        if (!entries?.length) {
+            hasMoreEntries = false;
+            continue;
+        }
+
+        for (const entry of entries) {
+            const entryPath = folderPath
+                ? `${folderPath}/${entry.name}`
+                : entry.name;
+            if (entry.id || entry.metadata) {
+                paths.push(entryPath);
+            } else {
+                paths.push(
+                    ...(await listStoragePaths(entryPath, evidenceId)),
+                );
+            }
+        }
+
+        hasMoreEntries = entries.length === STORAGE_PAGE_SIZE;
+        offset += entries.length;
+    }
+
+    return paths;
+};
+
+const removeStoragePaths = async (paths) => {
+    for (
+        let offset = 0;
+        offset < paths.length;
+        offset += STORAGE_REMOVE_BATCH_SIZE
+    ) {
+        const { error } = await supabase.storage
+            .from(STORAGE_BUCKET)
+            .remove(paths.slice(offset, offset + STORAGE_REMOVE_BATCH_SIZE));
+        if (error) throw error;
+    }
 };
 
 const updateEvidenceRecord = async (evidenceId, userId, updatePayload) => {
@@ -27,9 +84,7 @@ const updateEvidenceRecord = async (evidenceId, userId, updatePayload) => {
 };
 
 const createEvidence = async (payload) => {
-    const cleanPayload = Object.fromEntries(
-        Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined)
-    );
+    const cleanPayload = omitNullish(payload);
 
     if (cleanPayload.is_deleted === 0 || cleanPayload.is_deleted === "0") cleanPayload.is_deleted = false;
     if (cleanPayload.is_deleted === 1 || cleanPayload.is_deleted === "1") cleanPayload.is_deleted = true;
@@ -91,11 +146,16 @@ const permanentDeleteEvidence = async (evidenceId, userId) => {
         .maybeSingle();
 
     if (fetchError) throw fetchError;
-    if (!evidence) return null;
 
+    const storagePaths = new Set(
+        await listStoragePaths(safeUserId, safeEvidenceId),
+    );
     if (evidence.cloud_file_url) {
-        await supabase.storage.from("EvidenceVault").remove([evidence.cloud_file_url]);
+        storagePaths.add(evidence.cloud_file_url);
     }
+    await removeStoragePaths([...storagePaths]);
+
+    if (!evidence) return { evidence_id: safeEvidenceId, user_id: safeUserId };
 
     const { data, error: deleteError } = await supabase
         .from(TABLE_NAME)
@@ -103,9 +163,40 @@ const permanentDeleteEvidence = async (evidenceId, userId) => {
         .match({ evidence_id: safeEvidenceId, user_id: safeUserId })
         .select()
         .maybeSingle();
-
     if (deleteError) throw deleteError;
     return data;
+};
+
+const permanentDeleteEvidenceForUser = async (userId) => {
+    if (!userId) {
+        throw new Error("A user ID is required to remove account evidence.");
+    }
+
+    const safeUserId = String(userId).trim();
+    const { data: evidence, error: fetchError } = await supabase
+        .from(TABLE_NAME)
+        .select("cloud_file_url")
+        .eq("user_id", safeUserId);
+
+    if (fetchError) throw fetchError;
+
+    const storagePaths = new Set(
+        (evidence || [])
+            .map((item) => item.cloud_file_url)
+            .filter(Boolean),
+    );
+    (await listStoragePaths(safeUserId)).forEach((path) =>
+        storagePaths.add(path),
+    );
+    await removeStoragePaths([...storagePaths]);
+
+    const { error: deleteError } = await supabase
+        .from(TABLE_NAME)
+        .delete()
+        .eq("user_id", safeUserId);
+    if (deleteError) throw deleteError;
+
+    return { deletedCount: evidence?.length || 0 };
 };
 
 const purgeExpiredServerEvidence = async (userId) => {
@@ -119,13 +210,21 @@ const purgeExpiredServerEvidence = async (userId) => {
         .match({ user_id: String(userId).trim(), is_deleted: true })
         .lte("deleted_at", thirtyDaysAgo);
 
-    if (error || !expiredRecords?.length) return;
+    if (error) throw error;
+    if (!expiredRecords?.length) return;
 
     for (const record of expiredRecords) {
         if (record.cloud_file_url) {
-            await supabase.storage.from("EvidenceVault").remove([record.cloud_file_url]);
+            const { error: storageError } = await supabase.storage
+                .from(STORAGE_BUCKET)
+                .remove([record.cloud_file_url]);
+            if (storageError) throw storageError;
         }
-        await supabase.from(TABLE_NAME).delete().eq("evidence_id", record.evidence_id);
+        const { error: deleteError } = await supabase
+            .from(TABLE_NAME)
+            .delete()
+            .match({ evidence_id: record.evidence_id, user_id: String(userId).trim() });
+        if (deleteError) throw deleteError;
     }
 };
 
@@ -136,5 +235,6 @@ module.exports = {
     deleteEvidence,
     restoreEvidence,
     permanentDeleteEvidence,
+    permanentDeleteEvidenceForUser,
     purgeExpiredServerEvidence,
 };

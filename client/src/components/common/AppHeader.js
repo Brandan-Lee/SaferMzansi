@@ -5,7 +5,7 @@ import Icon from "@expo/vector-icons/Ionicons";
 export const AppHeader = ({ title, subtitle }) => {
 	return (
 		<View style={styles.container}>
-			<View style={styles.logoBadge}>
+			<View style={styles.logoBadge} accessibilityElementsHidden>
 				<Icon name="shield" size={34} color="#FFFFFF" />
 				<Icon name="heart" size={13} color="#6B21A8" style={styles.heart} />
 			</View>

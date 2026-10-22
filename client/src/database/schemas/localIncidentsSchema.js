@@ -18,5 +18,8 @@ export const LOCAL_INCIDENTS_SCHEMA = `
         FOREIGN KEY (evidence_id) REFERENCES Local_Evidence_Vault(evidence_id) ON DELETE SET NULL
     );
 
+    CREATE INDEX IF NOT EXISTS idx_local_incidents_user_id
+    ON Local_Incidents(user_id);
+
     ${createSyncIndex("Local_Incidents", "start_time")}
 `;

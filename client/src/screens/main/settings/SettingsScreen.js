@@ -5,23 +5,22 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Animated,
+	Alert,
+	Linking,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { AudioModule } from "expo-audio";
-import * as TaskManager from "expo-task-manager";
 import MainLayout from "@components/layouts/MainLayout";
 import { useAuth } from "@context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useModal } from "@context/ModalContext";
-import { BACKGROUND_LOCATION_TASK } from "@constants/locationConstants";
 import SettingsRow from "@components/settings/SettingsRow";
-
-const KEYS = {
-	SHARE_LOCATION: "@setting_share_location",
-	AUTO_RECORD: "@setting_auto_record",
-	GESTURE: "@setting_gesture",
-};
+import { STORAGE_KEYS } from "@constants/storageKeys";
+import {
+	startBackgroundLocationTracking,
+	stopBackgroundLocationTracking,
+} from "@services/main/backgroundLocationService";
 
 const SettingsScreen = ({ navigation, route }) => {
 	const [shareLocation, setShareLocation] = useState(false);
@@ -68,21 +67,27 @@ const SettingsScreen = ({ navigation, route }) => {
 		const loadSettings = async () => {
 			try {
 				//For location Sharing
-				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+				const savedShare = await AsyncStorage.getItem(
+					STORAGE_KEYS.SHARE_LOCATION,
+				);
 
 				if (savedShare !== null) {
 					setShareLocation(savedShare === "true");
 				}
 
 				//For auto-recording
-				const savedRecord = await AsyncStorage.getItem(KEYS.AUTO_RECORD);
+				const savedRecord = await AsyncStorage.getItem(
+					STORAGE_KEYS.AUTO_RECORDING,
+				);
 
 				if (savedRecord !== null) {
 					setAutoRecord(savedRecord === "true");
 				}
 
 				// Restore the saved gesture preference.
-				const gesture = await AsyncStorage.getItem(KEYS.GESTURE);
+				const gesture = await AsyncStorage.getItem(
+					STORAGE_KEYS.EMERGENCY_GESTURE,
+				);
 
 				if (gesture !== null) {
 					setGestureTrigger(gesture === "true");
@@ -103,11 +108,11 @@ const SettingsScreen = ({ navigation, route }) => {
 		const newValue = !currentValue;
 		setBanner(null);
 		try {
-			if (key === KEYS.SHARE_LOCATION && newValue) {
+			if (key === STORAGE_KEYS.SHARE_LOCATION && newValue) {
 				const foreground = await Location.requestForegroundPermissionsAsync();
 				if (foreground.status !== "granted") {
 					throw new Error(
-					"Location permission is needed to include your location in emergency alerts.",
+						"Location permission is needed to include your location in emergency alerts.",
 					);
 				}
 
@@ -118,34 +123,36 @@ const SettingsScreen = ({ navigation, route }) => {
 					);
 				}
 
-				const isRegistered = await TaskManager.isTaskRegisteredAsync(
-					BACKGROUND_LOCATION_TASK,
-				);
-				if (!isRegistered) {
-					await Location.startLocationUpdatesAsync(
-						BACKGROUND_LOCATION_TASK,
+				const trackingStarted = await startBackgroundLocationTracking();
+				if (!trackingStarted) {
+					throw new Error("Background location permission was not granted.");
+				}
+			} else if (key === STORAGE_KEYS.SHARE_LOCATION && !newValue) {
+				// Disable location use first so a background task will stop even if
+				// stopping the native task itself fails.
+				await AsyncStorage.setItem(key, "false");
+				stateSetter(false);
+				await stopBackgroundLocationTracking();
+				Alert.alert(
+					"Location sharing is off",
+					"To revoke foreground and background location permissions, open this app's device settings and change its Location permission.",
+					[
+						{ text: "Not now", style: "cancel" },
 						{
-							accuracy: Location.Accuracy.Balanced,
-							timeInterval: 5000,
-							distanceInterval: 1,
-							showsBackgroundLocationIndicator: true,
-							foregroundService: {
-								notificationTitle: "Safer Mzansi Active",
-								notificationBody:
-									"Location access is active for emergency alerts.",
-								notificationColor: "#FF0000",
-							},
+							text: "Open Settings",
+							onPress: () =>
+								Linking.openSettings().catch((error) => {
+									console.error("Could not open app settings:", error);
+									setBanner({
+										message: "Open this app's settings to revoke location permission.",
+										type: "error",
+									});
+								}),
 						},
-					);
-				}
-			} else if (key === KEYS.SHARE_LOCATION && !newValue) {
-				const isRegistered = await TaskManager.isTaskRegisteredAsync(
-					BACKGROUND_LOCATION_TASK,
+					],
 				);
-				if (isRegistered) {
-					await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
-				}
-			} else if (key === KEYS.AUTO_RECORD && newValue) {
+				return;
+			} else if (key === STORAGE_KEYS.AUTO_RECORDING && newValue) {
 				const permission = await AudioModule.requestRecordingPermissionsAsync();
 				if (permission.status !== "granted") {
 					throw new Error(
@@ -203,13 +210,17 @@ const SettingsScreen = ({ navigation, route }) => {
 
 				<SettingsRow
 					icon="map-pin"
-					title="Location for emergency alerts"
+					title="Share Live Location"
 					isToggle
 					value={shareLocation}
 					isHighlighted={highlightedKey === "shareLocation"}
 					highlightColor={animatedBgColor}
 					onPress={() =>
-						toggleSetting(KEYS.SHARE_LOCATION, shareLocation, setShareLocation)
+						toggleSetting(
+							STORAGE_KEYS.SHARE_LOCATION,
+							shareLocation,
+							setShareLocation,
+						)
 					}
 				/>
 
@@ -219,7 +230,11 @@ const SettingsScreen = ({ navigation, route }) => {
 					isToggle
 					value={autoRecord}
 					onPress={() =>
-						toggleSetting(KEYS.AUTO_RECORD, autoRecord, setAutoRecord)
+						toggleSetting(
+							STORAGE_KEYS.AUTO_RECORDING,
+							autoRecord,
+							setAutoRecord,
+						)
 					}
 				/>
 
@@ -229,7 +244,11 @@ const SettingsScreen = ({ navigation, route }) => {
 					isToggle
 					value={gestureTrigger}
 					onPress={() =>
-						toggleSetting(KEYS.GESTURE, gestureTrigger, setGestureTrigger)
+						toggleSetting(
+							STORAGE_KEYS.EMERGENCY_GESTURE,
+							gestureTrigger,
+							setGestureTrigger,
+						)
 					}
 				/>
 
@@ -249,14 +268,14 @@ const SettingsScreen = ({ navigation, route }) => {
 					icon="shield-lock-outline"
 					materialIcon
 					title="Privacy policy"
-					onPress={() => openModal('privacy')}
+					onPress={() => openModal("privacy")}
 				/>
 
 				<SettingsRow
 					icon="check-circle-outline"
 					materialIcon
 					title="Terms of Service"
-					onPress={() => openModal('terms')}
+					onPress={() => openModal("terms")}
 				/>
 
 				{/* LOGOUT BUTTON */}

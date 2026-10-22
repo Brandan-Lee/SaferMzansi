@@ -1,12 +1,12 @@
 import React, { createContext, useContext } from "react";
 import { useNetInfo } from "@react-native-community/netinfo";
 
-//Default values for context
+// Treat an unavailable network provider as offline until connectivity is known.
 const NetworkContext = createContext({
-	isOnline: true,
-	isConnected: true,
-	isInternetReachable: true,
-	connectionType: "unknown",
+	isOnline: false,
+	isConnected: false,
+	isInternetReachable: false,
+	connectionType: "none",
 });
 
 export const NetStatusProvider = ({ children }) => {

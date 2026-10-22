@@ -8,29 +8,47 @@ import AuthStack from "./AuthStack";
 import MainStack from "./MainStack";
 import DecoyScreen from "@screens/decoy/DecoyScreen";
 import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
+import { STORAGE_KEYS } from "@constants/storageKeys";
 
 const Stack = createNativeStackNavigator();
-const DECOY_LAUNCH_KEY = "@setting_launch_decoy";
 
 export default function AppNavigator({ navigationRef, onNavigationReady }) {
-	const { sessionToken, user, pendingAuthRoute, pendingAuthParams, logOut } =
-		useContext(AuthContext);
+	const {
+		sessionToken,
+		hasActiveLogin,
+		user,
+		pendingAuthRoute,
+		pendingAuthParams,
+		checkAuthSession,
+		logOut,
+	} = useContext(AuthContext);
 
 	const [isCheckingLaunch, setIsCheckingLaunch] = useState(true);
 	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
 	const [isDecoyUnlocked, setIsDecoyUnlocked] = useState(false);
-	const [emergencyTriggered, setEmergencyTriggered] = useState(false);
+	const returnFromSos = async () => {
+		setIsDecoyUnlocked(false);
+		await logOut();
+		if (navigationRef?.current?.isReady()) {
+			navigationRef.current.reset({
+				index: 0,
+				routes: [{ name: "AppContent" }],
+			});
+		}
+	};
 
 	useEffect(() => {
 		const initializeApp = async () => {
 			try {
-				await logOut();
+				await checkAuthSession();
 			} catch (error) {
-				console.error("Failed to clear the previous app session", error);
+				console.error("Failed to restore the previous app session", error);
 			}
 
 			try {
-				const savedToggle = await AsyncStorage.getItem(DECOY_LAUNCH_KEY);
+				const savedToggle = await AsyncStorage.getItem(
+					STORAGE_KEYS.LAUNCH_DECOY,
+				);
 				if (savedToggle === "true") {
 					setLaunchAsDecoy(true);
 				}
@@ -42,7 +60,7 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 		};
 
 		initializeApp();
-	}, [logOut]);
+	}, [checkAuthSession]);
 
 	if (isCheckingLaunch) {
 		return null;
@@ -56,34 +74,37 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				<Stack.Screen name="AppContent">
 					{() =>
-						(emergencyTriggered && !isDecoyUnlocked) || Boolean(sessionToken) ? (
-							<MainStack user={user} />
-						) : launchAsDecoy && !isDecoyUnlocked ? (
+						// The decoy launch preference must take priority over a saved session.
+						launchAsDecoy && !isDecoyUnlocked ? (
 							<Stack.Navigator screenOptions={{ headerShown: false }}>
 								<Stack.Screen name="DecoyScreen">
 									{() => (
 										<DecoyScreen
 											onDecoyUnlock={() => setIsDecoyUnlocked(true)}
-											onEmergencyUnlock={() => setEmergencyTriggered(true)}
+											onEmergencyUnlock={({ isTesting }) =>
+												navigationRef?.current?.navigate("SOSScreen", {
+													isTesting,
+												})
+											}
 										/>
 									)}
 								</Stack.Screen>
 							</Stack.Navigator>
+						) : hasActiveLogin && sessionToken ? (
+							<MainStack user={user} onSosClose={returnFromSos} />
 						) : (
 							<AuthStack
-								initialRoute={
-									isDecoyUnlocked
-										? "SplashScreen"
-										: pendingAuthRoute || "SplashScreen"
-								}
-								initialParams={
-									isDecoyUnlocked ? undefined : pendingAuthParams
-								}
+								initialRoute={pendingAuthRoute || "SplashScreen"}
+								initialParams={pendingAuthParams}
 							/>
 						)
 					}
 				</Stack.Screen>
-				<Stack.Screen name="SOSScreen" component={SOSScreen} />
+				<Stack.Screen name="SOSScreen">
+					{(screenProps) => (
+						<SOSScreen {...screenProps} onClose={returnFromSos} />
+					)}
+				</Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

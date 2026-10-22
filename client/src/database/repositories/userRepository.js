@@ -17,6 +17,12 @@ const updateLocalUserField = async (db, userId, fields) => {
 	);
 };
 
+export const updateLocalPasswordVerifier = async (db, userId, verifier) => {
+	await updateLocalUserField(db, userId, {
+		offline_password_verifier: verifier,
+	});
+};
+
 // Method that finds all local users with their login credentials from SQLite
 export const findLocalUserEmails = async (db) => {
 	return await db.getAllAsync(
@@ -34,6 +40,7 @@ export const insertLocalUser = async (db, user) => {
 		encryptedEmail,
 		encryptedPhoneNum,
 		passwordHash,
+		offlinePasswordVerifier,
 	} = user;
 
 	//Data that has to be sent to the SQLite table
@@ -46,9 +53,10 @@ export const insertLocalUser = async (db, user) => {
             encrypted_email,
             encrypted_phone_num,
 			password_hash,
+            offline_password_verifier,
             is_verified,
             is_synched
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0)`,
 		[
 			userId,
 			emailBlindIndex,
@@ -56,7 +64,8 @@ export const insertLocalUser = async (db, user) => {
 			encryptedSurname,
 			encryptedEmail,
 			encryptedPhoneNum,
-			passwordHash,
+			passwordHash || offlinePasswordVerifier,
+			offlinePasswordVerifier,
 		],
 	);
 };
@@ -107,6 +116,7 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 		encryptedEmail,
 		encryptedPhoneNum,
 		passwordHash,
+		offlinePasswordVerifier,
 		isVerified,
 		createdAt,
 		updatedAt,
@@ -124,7 +134,7 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 	const now = new Date().toISOString();
 	const resolvedCreatedAt = createdAt || now;
 	const resolvedUpdatedAt = updatedAt || now;
-	const resolvedPhone = encryptedPhoneNum || encryptedPhoneNum || "";
+	const resolvedPhone = encryptedPhoneNum || "";
 
 	const query = `
 		INSERT INTO Local_Users (
@@ -135,20 +145,25 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 			encrypted_email,
 			encrypted_phone_num,
 			password_hash,
+			offline_password_verifier,
 			is_verified,
 			is_synched,
 			is_deleted,
 			created_at,
 			updated_at,
 			deleted_at
-		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		ON CONFLICT(user_id) DO UPDATE SET
 			email_blind_index = excluded.email_blind_index,
 			encrypted_name = excluded.encrypted_name,
 			encrypted_surname = excluded.encrypted_surname,
 			encrypted_email = excluded.encrypted_email,
 			encrypted_phone_num = excluded.encrypted_phone_num,
-			password_hash = excluded.password_hash,
+			password_hash = COALESCE(excluded.password_hash, Local_Users.password_hash),
+			offline_password_verifier = COALESCE(
+				excluded.offline_password_verifier,
+				Local_Users.offline_password_verifier
+			),
 			is_verified = excluded.is_verified,
 			is_synched = excluded.is_synched,
 			is_deleted = excluded.is_deleted,
@@ -164,6 +179,7 @@ export const saveOrUpdateLocalUser = async (db, userData) => {
 		encryptedEmail,
 		resolvedPhone,
 		passwordHash,
+		offlinePasswordVerifier,
 		isVerified,
 		isSynched,
 		isDeleted,

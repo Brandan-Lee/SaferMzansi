@@ -8,15 +8,23 @@ import {
 	useRef,
 } from "react";
 import { useSQLiteContext } from "expo-sqlite";
-import * as SecureStore from "expo-secure-store";
 import NetInfo from "@react-native-community/netinfo";
 import { loginUser, registerUser } from "@services/auth/authService";
 import { syncOfflineChanges } from "@services/main/offlineSyncService";
-import { restoreLocalAccountAfterLogin } from "@services/main/userService";
-import { isTokenExpired } from "@utils/auth/authTokenUtil";
+import {
+	getLocalUserDetails,
+	restoreLocalAccountAfterLogin,
+} from "@services/main/userService";
+import {
+	getAuthToken,
+	getOfflineUserId,
+	isOfflineToken,
+	isTokenExpired,
+	parseJwt,
+	removeAuthToken,
+	saveToken,
+} from "@utils/auth/authTokenUtil";
 import { saveEmergencyUserId } from "@utils/storage/secureStore";
-
-const TOKEN_KEY = "user_jwt_token";
 
 export const AuthContext = createContext(null);
 
@@ -24,14 +32,32 @@ export const AuthProvider = ({ children }) => {
 	const db = useSQLiteContext();
 	const [user, setUser] = useState(null);
 	const [sessionToken, setSessionToken] = useState(null);
+	const [hasActiveLogin, setHasActiveLogin] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [pendingAuthRoute, setPendingAuthRoute] = useState(null);
 	const [pendingAuthParams, setPendingAuthParams] = useState(null);
 	const isSyncingOfflineChanges = useRef(false);
 
+	const setSession = useCallback((token, userData) => {
+		setSessionToken(token);
+		setUser(
+			userData
+				? {
+						userId: userData.userId,
+						email: userData.email,
+						userName: userData.userName,
+						userSurname: userData.userSurname,
+						userNumber: userData.userNumber,
+					}
+				: null,
+		);
+	}, []);
+
 	useEffect(() => {
 		const syncWhenOnline = async (state) => {
 			if (
+				!sessionToken ||
+				isOfflineToken(sessionToken) ||
 				!state.isConnected ||
 				state.isInternetReachable === false ||
 				isSyncingOfflineChanges.current
@@ -57,40 +83,24 @@ export const AuthProvider = ({ children }) => {
 			);
 
 		return unsubscribe;
-	}, [db]);
+	}, [db, sessionToken]);
 
-	// Helper method to persist the authentication session upon successful login
-	const updateSession = useCallback(async (token, userData) => {
-		try {
-			if (token) {
-				await SecureStore.setItemAsync(TOKEN_KEY, token);
-				setSessionToken(token);
-			} else {
-				await SecureStore.deleteItemAsync(TOKEN_KEY);
-				setSessionToken(null);
-			}
-
-			setUser(
-				userData
-					? {
-						userId: userData.userId,
-						email: userData.email,
-						userName: userData.userName,
-						userSurname: userData.userSurname,
-						userNumber: userData.userNumber,
-					}
-					: null,
-			);
-
-			if (userData?.userId) {
-				saveEmergencyUserId(userData.userId).catch((error) => {
-					console.error("Failed to save the local emergency profile:", error);
-				});
-			}
-		} catch (error) {
-			console.error("Failed to update session storage:", error);
+	// Keep the current account in memory after the auth service returns.
+	const updateSession = useCallback((token, userData) => {
+		if (token) {
+			setSession(token, userData);
+			setHasActiveLogin(true);
+		} else {
+			setSession(null, null);
+			setHasActiveLogin(false);
 		}
-	}, []);
+
+		if (userData?.userId) {
+			saveEmergencyUserId(userData.userId).catch((error) => {
+				console.error("Failed to save the local emergency profile:", error);
+			});
+		}
+	}, [setSession]);
 
 	const register = useCallback(
 		async (userData) => {
@@ -99,7 +109,7 @@ export const AuthProvider = ({ children }) => {
 				const result = await registerUser(db, userData);
 
 				if (result?.token) {
-					await SecureStore.setItemAsync(TOKEN_KEY, result.token);
+					await saveToken(result.token);
 				}
 
 				return result;
@@ -118,13 +128,14 @@ export const AuthProvider = ({ children }) => {
 				const result = await loginUser(db, email, password);
 
 				if (result?.token && result?.userId) {
-					const isSoftDeleted = result.is_deleted || result.deleted_at;
+					const isSoftDeleted =
+						result.user?.is_deleted || result.user?.deleted_at;
 
 					if (isSoftDeleted) {
 						await restoreLocalAccountAfterLogin(db, result.userId);
 					}
 
-					await SecureStore.setItemAsync(TOKEN_KEY, result.token);
+					await saveToken(result.token);
 				}
 
 				return result;
@@ -135,39 +146,62 @@ export const AuthProvider = ({ children }) => {
 		[db],
 	);
 
-	// Optional manually triggered method if needed elsewhere in the app
+	// Restore either a server session or a locally verified offline session.
 	const checkAuthSession = useCallback(async () => {
 		try {
-			const token = await SecureStore.getItemAsync(TOKEN_KEY);
-
-			if (!token || isTokenExpired(token)) {
-				await SecureStore.deleteItemAsync(TOKEN_KEY);
-				setSessionToken(null);
-				setUser(null);
+			const token = await getAuthToken();
+			if (!token) {
+				setSession(null, null);
 				return { isAuthenticated: false, user: null };
 			}
 
-			setSessionToken(token);
-			return { isAuthenticated: true, token };
+			const userId = isOfflineToken(token)
+				? getOfflineUserId(token)
+				: parseJwt(token)?.userId;
+
+			if (isTokenExpired(token) && !isOfflineToken(token)) {
+				await removeAuthToken();
+				setSession(null, null);
+				return { isAuthenticated: false, user: null };
+			}
+
+			const localUser = userId ? await getLocalUserDetails(db, userId) : null;
+			if (isOfflineToken(token) && !localUser) {
+				await removeAuthToken();
+				setSession(null, null);
+				return { isAuthenticated: false, user: null };
+			}
+
+			const restoredUser = localUser
+				? {
+						userId: localUser.user_id,
+						email: localUser.email,
+						userName: localUser.encrypted_name,
+						userSurname: localUser.encrypted_surname,
+						userNumber: localUser.encrypted_phone_num,
+					}
+				: null;
+			setSession(token, restoredUser);
+			return { isAuthenticated: true, token, user: restoredUser };
 		} catch (error) {
 			console.error("Error checking auth session:", error);
 			return { isAuthenticated: false, user: null };
 		}
-	}, []);
+	}, [db, setSession]);
 
 	// Logout clears state and SecureStore
 	const logOut = useCallback(async (nextRoute = null, nextParams = null) => {
 		setLoading(true);
 		try {
-			await SecureStore.deleteItemAsync(TOKEN_KEY);
+			await removeAuthToken();
 			setPendingAuthRoute(nextRoute);
 			setPendingAuthParams(nextParams);
-			setSessionToken(null);
-			setUser(null);
+			setSession(null, null);
+			setHasActiveLogin(false);
 		} finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [setSession]);
 
 	const value = useMemo(
 		() => ({
@@ -180,6 +214,7 @@ export const AuthProvider = ({ children }) => {
 			updateSession,
 			checkAuthSession,
 			isAuthenticated: !!sessionToken,
+			hasActiveLogin,
 			pendingAuthParams,
 			pendingAuthRoute,
 		}),
@@ -187,10 +222,12 @@ export const AuthProvider = ({ children }) => {
 			user,
 			sessionToken,
 			loading,
+			hasActiveLogin,
 			register,
 			login,
 			logOut,
 			checkAuthSession,
+			updateSession,
 			pendingAuthRoute,
 			pendingAuthParams,
 		],

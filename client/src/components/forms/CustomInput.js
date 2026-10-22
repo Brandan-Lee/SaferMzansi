@@ -14,6 +14,7 @@ export const CustomInput = ({
 	keyboardType = "default",
 	autoCapitalize = "none",
 	error,
+	maxLength,
 }) => {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -43,6 +44,9 @@ export const CustomInput = ({
 					secureTextEntry={isSecure}
 					keyboardType={keyboardType}
 					autoCapitalize={autoCapitalize}
+					maxLength={maxLength}
+					accessibilityLabel={label || placeholder}
+					accessibilityHint={error || undefined}
 				/>
 				{Boolean(secureTextEntry) && (
 					<Pressable

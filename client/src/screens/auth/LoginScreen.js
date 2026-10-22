@@ -41,24 +41,9 @@ const LoginScreen = () => {
 				password: formData.password,
 			});
 
-			//Token has been found in the local hardware
+			// A token means either the server or local offline login succeeded.
 			if (result?.token) {
-				//User logged in offline
-				const isOffline = result?.isOffline;
-				setBanner({
-					message: isOffline
-						? "Logged in locally (offline). Your data will sync once online."
-						: "Login successful! Redirecting...",
-					type: isOffline ? "warning" : "success",
-				});
-
-				// Navigate to the home screen
-				setTimeout(
-					() => {
-						updateSession(result.token, result);
-					},
-					isOffline ? 1200 : 800,
-				);
+				updateSession(result.token, result);
 			} else {
 				setBanner({
 					message:

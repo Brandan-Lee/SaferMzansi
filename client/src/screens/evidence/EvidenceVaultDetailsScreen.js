@@ -57,15 +57,14 @@ const getRemotePath = (userId, file) => {
 	if (storedCloudPath) return storedCloudPath;
 
 	const localPath = file.local_file_url || file.localFileUrl || file.uri || "";
-	if (
-		localPath &&
-		!localPath.startsWith("file://") &&
-		!localPath.startsWith("content://") &&
-		!localPath.startsWith("http")
-	) {
+	const isLocalPath =
+		localPath.startsWith("file://") || localPath.startsWith("content://");
+	if (localPath && !isLocalPath && !localPath.startsWith("http") && localPath.includes("/")) {
 		return localPath;
 	}
-	const cachedFileName = localPath.split(/[\\/]/).pop() || getFileName(file);
+	const cachedFileName = isLocalPath
+		? localPath.split(/[\\/]/).pop()
+		: getFileName(file);
 	return `${userId}/${fileId}_${cachedFileName}`;
 };
 
@@ -119,6 +118,14 @@ export default function EvidenceVaultDetailsScreen() {
 	const handleDownloadSingle = async (file) => {
 		setBanner(null);
 
+		if (!user?.userId) {
+			setBanner({
+				message: "Log in to download evidence from your vault.",
+				type: "error",
+			});
+			return;
+		}
+
 		const evidenceId = getFileId(file);
 		const localName = getFileName(file);
 
@@ -141,7 +148,11 @@ export default function EvidenceVaultDetailsScreen() {
 		});
 
 		try {
-			await downloadToDownloadsDirectory(remotePath, localName);
+			await downloadToDownloadsDirectory(
+				remotePath,
+				localName,
+				file.local_file_url || file.localFileUrl || file.uri,
+			);
 			updateDownloadModal({
 				loading: false,
 				result: "success",
@@ -161,15 +172,23 @@ export default function EvidenceVaultDetailsScreen() {
 
 	const handleDownloadAll = async () => {
 		setBanner(null);
-		if (!evidenceItem.files?.length) {
+		const files = Array.isArray(evidenceItem.files) ? evidenceItem.files : [];
+		if (!files.length) {
 			setBanner({
 				message: "No files found to compile into a zip bundle.",
 				type: "error",
 			});
 			return;
 		}
+		if (!user?.userId) {
+			setBanner({
+				message: "Log in to download evidence from your vault.",
+				type: "error",
+			});
+			return;
+		}
 
-		const totalFiles = evidenceItem.files.length;
+		const totalFiles = files.length;
 
 		updateDownloadModal({
 			visible: true,
@@ -183,7 +202,7 @@ export default function EvidenceVaultDetailsScreen() {
 			const filesToZip = [];
 
 			for (let i = 0; i < totalFiles; i++) {
-				const file = evidenceItem.files[i];
+				const file = files[i];
 				const remotePath = getRemotePath(user.userId, file);
 				const localName = getFileName(file);
 
@@ -191,7 +210,11 @@ export default function EvidenceVaultDetailsScreen() {
 					message: `Fetching file ${i + 1} of ${totalFiles}: ${localName}...`,
 				});
 
-				filesToZip.push({ remotePath, localName });
+				filesToZip.push({
+					remotePath,
+					localName,
+					localUri: file.local_file_url || file.localFileUrl || file.uri,
+				});
 			}
 
 			updateDownloadModal({
@@ -282,22 +305,24 @@ export default function EvidenceVaultDetailsScreen() {
 					</View>
 					<View style={styles.badgeContainer}>
 						<Text style={styles.badgeText}>
-							{evidenceItem.files.length} Files
+							{Array.isArray(evidenceItem.files) ? evidenceItem.files.length : 0} Files
 						</Text>
 					</View>
 				</View>
 
 				<Text style={styles.sectionHeader}>Attached Evidence Files</Text>
 
-				{evidenceItem.files.map((file, index) => (
+				{(Array.isArray(evidenceItem.files) ? evidenceItem.files : []).map(
+					(file, index) => (
 					<EvidenceDetailCard
-						key={index}
+						key={getFileId(file) || index}
 						file={file}
 						index={index}
 						onDownload={() => handleDownloadSingle(file)}
 						onDelete={() => setFileToDelete(file)}
 					/>
-				))}
+					),
+				)}
 			</ScrollView>
 
 			<ConfirmationModal

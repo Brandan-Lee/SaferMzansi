@@ -51,12 +51,24 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 		.map((w) => w[0].toUpperCase())
 		.join("");
 
-	const handleCall = () => {
-		if (contact.phone) Linking.openURL(`tel:${contact.phone}`);
+	const handleCall = async () => {
+		if (!contact.phone) return;
+		try {
+			await Linking.openURL(`tel:${contact.phone}`);
+		} catch (error) {
+			setBanner({ message: "Could not open the phone dialer.", type: "error" });
+			console.error("Could not open contact phone number:", error);
+		}
 	};
 
-	const handleEmail = () => {
-		if (contact.email) Linking.openURL(`mailto:${contact.email}`);
+	const handleEmail = async () => {
+		if (!contact.email) return;
+		try {
+			await Linking.openURL(`mailto:${contact.email}`);
+		} catch (error) {
+			setBanner({ message: "Could not open the email app.", type: "error" });
+			console.error("Could not open contact email address:", error);
+		}
 	};
 
 	const hideModal = () => {
@@ -64,7 +76,40 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 	};
 
 	const handleUpdate = () => {
-		navigation.navigate("EditContactScreen", { contact });
+		navigation.navigate("EditContactScreen", {
+			contact,
+			userId: user?.userId,
+		});
+	};
+
+	const handleConfirmDelete = async () => {
+		const contactId = contact?.contactId || contact?.contact_id;
+		const userId = user?.userId;
+		if (!db || !contactId || !userId) {
+			setBanner({
+				message: "The contact or user session could not be identified.",
+				type: "error",
+			});
+			return;
+		}
+
+		setIsLoading(true);
+		try {
+			const result = await deleteEmergencyContact(db, contactId, userId);
+			if (!result?.success) {
+				throw new Error(result?.error || "Failed to delete contact.");
+			}
+			hideModal();
+			navigation.goBack();
+		} catch (error) {
+			setBanner({
+				message: error.message || "Failed to delete emergency contact.",
+				type: "error",
+			});
+			console.error("Failed to delete emergency contact:", error);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	const handleDeleteContact = () => {
@@ -78,32 +123,7 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 			cancelLabel: "Cancel",
 			isDestructive: true,
 			iconName: "trash-outline",
-			onConfirm: async () => {
-				setIsLoading(true);
-				const contactId = contact?.contactId || contact?.contact_id;
-				const userId = user?.id || user?.userId || user?.user_id;
-
-				const result = await deleteEmergencyContact(db, contactId, userId);
-
-				if (!result.success) {
-					setBanner({
-						message: result?.error || "Failed to delete contact",
-						type: "error",
-					});
-					return;
-				}
-
-				setBanner({
-					message: "Emergency contact has been successfully removed.",
-					type: "success",
-				});
-
-				setTimeout(() => {
-					hideModal();
-					setIsLoading(false);
-					navigation.goBack();
-				}, 800);
-			},
+			onConfirm: handleConfirmDelete,
 		});
 	};
 

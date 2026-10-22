@@ -1,4 +1,4 @@
-export const LOGIN_FORM_FIELDS = [
+export const LOGIN_FORM_FIELDS = Object.freeze([
 	{
 		key: "email",
 		label: "Email",
@@ -14,9 +14,9 @@ export const LOGIN_FORM_FIELDS = [
 		placeholder: "••••••••",
 		secureTextEntry: true,
 	},
-];
+]);
 
-export const REGISTRATION_FORM_FIELDS = [
+export const REGISTRATION_FORM_FIELDS = Object.freeze([
 	{
 		key: "name",
 		label: "Name",
@@ -60,9 +60,9 @@ export const REGISTRATION_FORM_FIELDS = [
 		placeholder: "••••••••",
 		secureTextEntry: true,
 	},
-];
+]);
 
-export const FORGOT_PASSWORD_FORM_FIELDS = [
+export const FORGOT_PASSWORD_FORM_FIELDS = Object.freeze([
 	{
 		key: "email",
 		label: "Email",
@@ -71,9 +71,9 @@ export const FORGOT_PASSWORD_FORM_FIELDS = [
 		keyboardType: "email-address",
 		autoCapitalize: "none",
 	},
-];
+]);
 
-export const RESET_PASSWORD_FORM_FIELDS = [
+export const RESET_PASSWORD_FORM_FIELDS = Object.freeze([
 	{
 		key: "password",
 		label: "Password",
@@ -88,4 +88,4 @@ export const RESET_PASSWORD_FORM_FIELDS = [
 		placeholder: "••••••••",
 		secureTextEntry: true,
 	},
-];
+]);

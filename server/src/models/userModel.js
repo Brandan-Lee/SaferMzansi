@@ -1,24 +1,18 @@
 const { supabase } = require("#config/supabase_db.js");
+const { omitNullish } = require("#utils/databaseUtil.js");
 
-//Method to create a user in supabase during registration
+const USER_TABLE = "Users";
+
 const createUser = async (payload) => {
-	const cleanPayload = Object.fromEntries(
-		Object.entries(payload).filter(
-			([, value]) => value !== null && value !== undefined,
-		),
-	);
-
 	const { data, error } = await supabase
-		.from("Users")
-		.insert([cleanPayload])
+		.from(USER_TABLE)
+		.insert([omitNullish(payload)])
 		.select();
 
-	//There was an error inserting the user into supabase
 	if (error) {
 		throw error;
 	}
 
-	//Return the user object
 	return data?.[0] || null;
 };
 
@@ -30,7 +24,7 @@ const findUserByEmailBlindIndex = async (emailBlindIndex) => {
 	}
 
 	const { data: user, error } = await supabase
-		.from("Users")
+		.from(USER_TABLE)
 		.select("*")
 		.eq("email_blind_index", emailBlindIndex)
 		.maybeSingle();
@@ -48,19 +42,22 @@ const findUserById = async (userId) => {
 	}
 
 	const { data: user, error } = await supabase
-		.from("Users")
+		.from(USER_TABLE)
 		.select("*")
 		.eq("user_id", userId)
 		.maybeSingle();
 
-	if (error || !user) {
+	if (error) {
+		throw error;
+	}
+
+	if (!user) {
 		return null;
 	}
 
 	return user;
 };
 
-// // Method that helps to mark the user as verified within Supabase
 const updateUserVerification = async (userId) => {
 	if (!userId) {
 		throw new Error(
@@ -69,7 +66,7 @@ const updateUserVerification = async (userId) => {
 	}
 
 	const { data, error } = await supabase
-		.from("Users")
+		.from(USER_TABLE)
 		.update({
 			is_verified: true,
 		})
@@ -85,11 +82,11 @@ const updateUserVerification = async (userId) => {
 
 const updateUserPassword = async (userId, passwordHash) => {
 	if (!userId || !passwordHash) {
-		throw new Error("updatePasswordInSupabase");
+		throw new Error("A user ID and password hash are required.");
 	}
 
 	const { data, error } = await supabase
-		.from("Users")
+		.from(USER_TABLE)
 		.update({ password_hash: passwordHash })
 		.eq("user_id", userId)
 		.select();
@@ -101,23 +98,37 @@ const updateUserPassword = async (userId, passwordHash) => {
 	return data?.[0] || null;
 };
 
+const restoreUserAccount = async (userId) => {
+	if (!userId) {
+		throw new Error("A user ID is required to restore an account.");
+	}
+
+	const now = new Date().toISOString();
+	const { data, error } = await supabase
+		.from(USER_TABLE)
+		.update({ is_deleted: false, deleted_at: null, updated_at: now })
+		.eq("user_id", userId)
+		.select()
+		.maybeSingle();
+
+	if (error) throw error;
+	if (!data) throw new Error("The account could not be restored.");
+	return data;
+};
+
 const updateUser = async (payload) => {
 	if (!payload) {
-		throw new Error("Update user in supabase");
+		throw new Error("User details are required for an update.");
 	}
 
 	const { user_id, ...updateFields } = payload;
 
-	const cleanFields = Object.fromEntries(
-		Object.entries(updateFields).filter(
-			([, value]) => value !== null && value !== undefined,
-		),
-	);
+	const cleanFields = omitNullish(updateFields);
 
 	cleanFields.updated_at = new Date().toISOString();
 
 	const { data: user, error } = await supabase
-		.from("Users")
+		.from(USER_TABLE)
 		.update(cleanFields)
 		.eq("user_id", user_id)
 		.select()
@@ -132,13 +143,13 @@ const updateUser = async (payload) => {
 
 const softDeleteUser = async (userId) => {
 	if (!userId) {
-		throw new Error("User ID is need for soft delete operations");
+		throw new Error("A user ID is required to deactivate an account.");
 	}
 
 	const now = new Date().toISOString();
 
 	const { data: userData, error: userError } = await supabase
-		.from("Users")
+		.from(USER_TABLE)
 		.update({
 			is_deleted: true,
 			deleted_at: now,
@@ -160,7 +171,7 @@ const handleDeleteUser = async (userId) => {
 	}
 
 	const { data: userData, error: userError } = await supabase
-		.from("Users")
+		.from(USER_TABLE)
 		.delete()
 		.eq("user_id", userId)
 		.select()
@@ -179,6 +190,7 @@ module.exports = {
 	findUserById,
 	updateUserVerification,
 	updateUserPassword,
+	restoreUserAccount,
 	updateUser,
 	softDeleteUser,
 	handleDeleteUser,

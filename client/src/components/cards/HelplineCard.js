@@ -9,7 +9,8 @@ export default function HelplineCard({ helpline, onPress }) {
 		<SurfaceCard
 			onPress={onPress}
 			style={styles.helpline}
-			accessibilityLabel={`${helpline.name}, ${helpline.phone}`}
+			accessibilityRole="button"
+			accessibilityLabel={`${helpline.name}, ${helpline.phone}. ${helpline.description || ""}`}
 			accessibilityHint="Calls this helpline"
 		>
 			<Text style={styles.helplineName}>{helpline.name}</Text>

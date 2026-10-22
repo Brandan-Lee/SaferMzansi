@@ -42,6 +42,7 @@ export default function EvidenceDetailCard({
 					<TouchableOpacity
 						style={styles.actionButton}
 						onPress={onDownload}
+						disabled={!onDownload}
 						activeOpacity={0.7}
 						accessibilityRole="button"
 					>

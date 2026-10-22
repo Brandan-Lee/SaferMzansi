@@ -8,7 +8,10 @@ export const LOCAL_USERS_SCHEMA = `
         encrypted_surname TEXT NOT NULL,
         encrypted_email TEXT NOT NULL,
         encrypted_phone_num TEXT NOT NULL,
+        -- Keep the server hash returned at registration separate from offline checks.
         password_hash TEXT NOT NULL,
+        -- A separate device-keyed verifier allows password checks without a network.
+        offline_password_verifier TEXT,
         is_verified INTEGER NOT NULL DEFAULT 0,
         ${COMMON_SYNC_COLUMNS}
     );

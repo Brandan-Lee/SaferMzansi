@@ -13,9 +13,7 @@ const getLocations = async (incidentId) => {
 		throw new Error("incident_id is required to fetch locations");
 	}
 
-	const locationsList =
-		await locationModel.getLocationsByIncidentId(incidentId);
-	return locationsList || [];
+	return locationModel.getLocationsByIncidentId(incidentId);
 };
 
 module.exports = {

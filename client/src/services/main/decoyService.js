@@ -4,57 +4,47 @@ import {
 	verifyPins,
 } from "@utils/storage/secureStore";
 
-export const addDecoyConfiguration = async (userId, decoyData) => {
-	const { decoyPin, emergencyPin } = decoyData;
+const saveDecoyConfiguration = async (userId, decoyData, action) => {
+	const decoyPin = String(decoyData?.decoyPin ?? "").trim();
+	const emergencyPin = String(decoyData?.emergencyPin ?? "").trim();
 
 	if (!userId) {
-		throw new Error("User session is required to add a decoy configraation");
+		throw new Error("User session is required to save decoy settings.");
 	}
 
-	//Validation
-	if (!decoyPin || decoyPin.length < 4) {
-		throw new Error(
-			"Invalid Decoy PIN",
-			"Please enter a Decoy PIN that is atleast 4 digits",
-		);
+	if (decoyPin.length < 4) {
+		throw new Error("Please enter a decoy PIN with at least 4 digits.");
 	}
 
-	if (!emergencyPin || emergencyPin.length < 4) {
-		throw new Error(
-			"Invalid trigger PIN",
-			"Please enter a trigger PIN that is atleast 4 digits",
-		);
+	if (emergencyPin.length < 4) {
+		throw new Error("Please enter an emergency PIN with at least 4 digits.");
 	}
 
 	if (decoyPin === emergencyPin) {
 		throw new Error("Decoy PIN and Emergency Trigger PIN cannot be the same");
 	}
 
-	try {
-		const decoyResult = await saveDecoyPin(decoyPin);
+	const decoyResult = await saveDecoyPin(decoyPin);
+	if (!decoyResult.success) {
+		throw new Error(decoyResult.error?.message || "Failed to save decoy PIN.");
+	}
 
-		if (!decoyResult.success) {
-			throw new Error("Failed to save Decoy PIN");
-		}
-
-		const emergencyResult = await saveEmergencyPin(emergencyPin);
-
-		if (!emergencyResult.success) {
-			throw new Error("Failed to save Trigger PIN");
-		}
-
-		return {
-			success: true,
-		};
-	} catch (error) {
+	const emergencyResult = await saveEmergencyPin(emergencyPin);
+	if (!emergencyResult.success) {
 		console.error(
-			"Failed to save decoy configuration to secure storage:",
-			error,
+			`Failed to ${action} decoy configuration to secure storage:`,
+			emergencyResult.error,
 		);
 		throw new Error(
-			error.message || "Failed to save PIN configuration securely",
+			emergencyResult.error?.message || "Failed to save emergency PIN.",
 		);
 	}
+
+	return { success: true };
+};
+
+export const addDecoyConfiguration = async (userId, decoyData) => {
+	return saveDecoyConfiguration(userId, decoyData, "add");
 };
 
 export const verifyDecoyAttempt = async (enteredPin) => {
@@ -62,60 +52,9 @@ export const verifyDecoyAttempt = async (enteredPin) => {
 		return null;
 	}
 
-	try {
-		const matchType = await verifyPins(enteredPin.trim());
-		return matchType;
-	} catch (error) {
-		console.error("Error during PIN verification service", error);
-		return null;
-	}
+	return verifyPins(enteredPin.trim());
 };
 
 export const updateDecoyConfiguration = async (userId, decoyData) => {
-	const { decoyPin, emergencyPin } = decoyData;
-
-	if (!userId) {
-		throw new Error("User session is required to add a decoy configraation");
-	}
-
-	//Validation
-	if (!decoyPin || decoyPin.length < 4) {
-		throw new Error(
-			"Invalid Decoy PIN",
-			"Please enter a Decoy PIN that is atleast 4 digits",
-		);
-	}
-
-	if (!emergencyPin || emergencyPin.length < 4) {
-		throw new Error(
-			"Invalid trigger PIN",
-			"Please enter a trigger PIN that is atleast 4 digits",
-		);
-	}
-
-	if (decoyPin === emergencyPin) {
-		throw new Error("Decoy PIN and Emergency Trigger PIN cannot be the same");
-	}
-
-	try {
-		const decoyResult = await saveDecoyPin(decoyPin);
-		if (!decoyResult.success) {
-			throw new Error("Failed to update Decoy PIN.");
-		}
-
-		const emergencyResult = await saveEmergencyPin(emergencyPin);
-		if (!emergencyResult.success) {
-			throw new Error("Failed to update Trigger PIN.");
-		}
-
-		return { success: true };
-	} catch (error) {
-		console.error(
-			"Failed to update decoy configuration in secure storage:",
-			error,
-		);
-		throw new Error(
-			error.message || "Failed to update PIN configuration securely.",
-		);
-	}
+	return saveDecoyConfiguration(userId, decoyData, "update");
 };

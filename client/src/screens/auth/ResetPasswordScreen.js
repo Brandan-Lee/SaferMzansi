@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { CustomInput } from "@components/forms/CustomInput";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { useFormHandler } from "@hooks/useFormHandler";
-import AuthLayout, { MainLayout } from "@components/layouts/AuthLayout";
+import AuthLayout from "@components/layouts/AuthLayout";
 import { RESET_PASSWORD_FORM_FIELDS } from "@constants/AuthFields";
 import PasswordStrengthMeter from "@components/forms/PasswordStrengthMeter";
 import { validateResetPasswordForm } from "@utils/securityAndValidation/validationUtil";

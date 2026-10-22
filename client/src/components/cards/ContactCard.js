@@ -6,7 +6,7 @@ import { COLORS } from "@constants/uiTokens";
 
 const AVATAR_BACKGROUND = "#F3E8FF";
 
-const ContactCard = ({ item, onPress }) => {
+const ContactCard = ({ item = {}, onPress }) => {
 	const name =
 		item.name ||
 		`${item.firstName || ""} ${item.surname || ""}`.trim() ||
@@ -36,13 +36,17 @@ const ContactCard = ({ item, onPress }) => {
 					{item.phone ? (
 						<View style={styles.detailLine}>
 							<Feather name="phone" size={14} color="#667085" />
-							<Text style={styles.info} numberOfLines={1}>{item.phone}</Text>
+							<Text style={styles.info} numberOfLines={1}>
+								{item.phone}
+							</Text>
 						</View>
 					) : null}
 					{item.email ? (
 						<View style={styles.detailLine}>
 							<Feather name="mail" size={14} color="#667085" />
-							<Text style={styles.info} numberOfLines={1}>{item.email}</Text>
+							<Text style={styles.info} numberOfLines={1}>
+								{item.email}
+							</Text>
 						</View>
 					) : null}
 					{!item.phone && !item.email ? (

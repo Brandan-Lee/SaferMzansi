@@ -180,17 +180,13 @@ export const getDeletedEvidenceGroupedByDate = async (db, userId) => {
 };
 
 export const getLocalEvidenceTotal = async (db, userId) => {
-	try {
-		const query = `
+	const query = `
             SELECT COUNT(*) as total 
             FROM Local_Evidence_Vault 
             WHERE user_id = ? AND is_deleted = 0;
         `;
-		const result = await db.getFirstAsync(query, [userId]);
-		return result?.total || 0;
-	} catch (error) {
-		return 0;
-	}
+	const result = await db.getFirstAsync(query, [userId]);
+	return result?.total ?? 0;
 };
 
 export const markEvidenceAsSynched = async (db, evidenceId) => {

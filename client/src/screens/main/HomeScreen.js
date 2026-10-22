@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
 import { SafetyToolCard } from "@components/home/SafetyToolCard";
-import { decryptData } from "@utils/securityAndValidation/securityUtil";
+import { decryptOrKeepValue } from "@utils/securityAndValidation/decryptionUtil";
 import { useAuth } from "@context/AuthContext";
+import { STORAGE_KEYS } from "@constants/storageKeys";
 import AuthLayout from "@components/layouts/AuthLayout";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
@@ -21,11 +22,6 @@ import {
 	Lock,
 	AlertTriangle,
 } from "lucide-react-native";
-
-const KEYS = {
-	SHARE_LOCATION: "@setting_share_location",
-	DECOY_LAUNCH_KEY: "@setting_launch_decoy",
-};
 
 const INITIAL_QUICK_ACTIONS = [
 	{
@@ -102,72 +98,93 @@ const INITIAL_RADIAL_ACTIONS = [
 	},
 ];
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
 	const { user } = useAuth();
 	const db = useSQLiteContext();
-	const [contactCount, setContactCount] = useState(0);
-	const [evidenceCount, setEvidenceCount] = useState(0);
-	const [shareLiveLocation, setShareLiveLocation] = useState(false);
+	const [contactCount, setContactCount] = useState(null);
+	const [evidenceCount, setEvidenceCount] = useState(null);
+	const [shareLiveLocation, setShareLiveLocation] = useState(null);
 	const [decoyActivated, setDecoyActivated] = useState(false);
+	const isMountedRef = useRef(true);
+	const refreshInFlightRef = useRef(null);
 
 	const resolveDisplayName = (name) => {
 		if (!name) return "User";
-		try {
-			return decryptData(name);
-		} catch (error) {
-			return name;
-		}
+		return decryptOrKeepValue(name, "user", "name") || "User";
 	};
 
 	const displayName = resolveDisplayName(user?.userName);
-	const userId = user?.userId;
+	const userId = route?.params?.userId || user?.userId;
 
-	const loadSavedPreferences = useCallback(async () => {
-		try {
-			const [savedShare, savedDecoy] = await AsyncStorage.multiGet([
-				KEYS.SHARE_LOCATION,
-				KEYS.DECOY_LAUNCH_KEY,
-			]);
-			setShareLiveLocation(savedShare[1] === "true");
-			setDecoyActivated(savedDecoy[1] === "true");
-		} catch (error) {
-			console.error("[Home] Failed to load saved preferences:", error);
-		}
-	}, []);
+	const refreshHome = useCallback(() => {
+		if (refreshInFlightRef.current) return refreshInFlightRef.current;
 
+		const refresh = (async () => {
+			try {
+				const [savedShare, savedDecoy] = await AsyncStorage.multiGet([
+					STORAGE_KEYS.SHARE_LOCATION,
+					STORAGE_KEYS.LAUNCH_DECOY,
+				]);
+				if (isMountedRef.current) {
+					setShareLiveLocation(savedShare[1] === "true");
+					setDecoyActivated(savedDecoy[1] === "true");
+				}
+			} catch (error) {
+				console.error("[Home] Failed to load saved preferences:", error);
+			}
+
+			if (!db || !userId) {
+				if (isMountedRef.current) {
+					setContactCount(-1);
+					setEvidenceCount(-1);
+				}
+				return;
+			}
+
+			try {
+				const [contactsTotal, evidenceTotal] = await Promise.all([
+					getLocalContactTotal(db, userId),
+					getEvidenceTotal(db, userId),
+				]);
+				if (isMountedRef.current) {
+					setContactCount(contactsTotal);
+					setEvidenceCount(evidenceTotal);
+				}
+
+				if (__DEV__) await logAllLocalTables(db);
+			} catch (error) {
+				console.error("[Home] Failed to refresh dashboard data:", error);
+				if (isMountedRef.current) {
+					setContactCount(-1);
+					setEvidenceCount(-1);
+				}
+			}
+		})();
+
+		refreshInFlightRef.current = refresh;
+		const clearRefresh = () => {
+			if (refreshInFlightRef.current === refresh) {
+				refreshInFlightRef.current = null;
+			}
+		};
+		refresh.then(clearRefresh, clearRefresh);
+		return refresh;
+	}, [db, userId]);
+
+	// Run on mount even if navigation does not emit an initial focus event.
 	useEffect(() => {
-		loadSavedPreferences();
-	}, [loadSavedPreferences, userId]);
+		isMountedRef.current = true;
+		refreshHome();
+		return () => {
+			isMountedRef.current = false;
+		};
+	}, [refreshHome]);
 
+	// Refresh counts and preferences whenever the user returns to Home.
 	useFocusEffect(
 		useCallback(() => {
-			let isMounted = true;
-
-			const refreshHome = async () => {
-				await loadSavedPreferences();
-				if (!db || !userId) return;
-
-				try {
-					const [contactsTotal, evidenceTotal] = await Promise.all([
-						getLocalContactTotal(db, userId),
-						getEvidenceTotal(db, userId),
-					]);
-					if (isMounted) {
-						setContactCount(contactsTotal);
-						setEvidenceCount(evidenceTotal);
-					}
-
-					if (__DEV__) await logAllLocalTables(db);
-				} catch (error) {
-					console.error("[Home] Failed to refresh dashboard data:", error);
-				}
-			};
-
 			refreshHome();
-			return () => {
-				isMounted = false;
-			};
-		}, [db, loadSavedPreferences, userId]),
+		}, [refreshHome]),
 	);
 
 	const quickActions = INITIAL_QUICK_ACTIONS.map((item) => {
@@ -175,9 +192,13 @@ const HomeScreen = ({ navigation }) => {
 			return {
 				...item,
 				subtitle:
-					contactCount === 0
-						? "No emergency contacts saved"
-						: `${contactCount} saved emergency contact${contactCount === 1 ? "" : "s"}`,
+					contactCount === null
+						? "Loading emergency contacts..."
+						: contactCount < 0
+							? "Contacts could not be loaded"
+							: contactCount === 0
+							? "No emergency contacts saved"
+							: `${contactCount} saved emergency contact${contactCount === 1 ? "" : "s"}`,
 			};
 		}
 
@@ -185,9 +206,13 @@ const HomeScreen = ({ navigation }) => {
 			return {
 				...item,
 				subtitle:
-					evidenceCount === 0
-						? "No incident evidence stored yet"
-						: `${evidenceCount} encrypted file${evidenceCount === 1 ? "" : "s"} in vault`,
+					evidenceCount === null
+						? "Loading secure vault..."
+						: evidenceCount < 0
+							? "Vault could not be loaded"
+							: evidenceCount === 0
+							? "No incident evidence stored yet"
+							: `${evidenceCount} encrypted file${evidenceCount === 1 ? "" : "s"} in vault`,
 			};
 		}
 
@@ -195,12 +220,14 @@ const HomeScreen = ({ navigation }) => {
 			return {
 				...item,
 				subtitle:
-					shareLiveLocation === false
-						? "You are not sharing your live location"
-						: "You are sharing your live location",
-				icon: shareLiveLocation === false ? MapPinOff : MapPin,
-				color: shareLiveLocation === false ? "#c01414" : "#10B981",
-				bg: shareLiveLocation === false ? "#ffe7e7" : "#ECFDF5",
+					shareLiveLocation === null
+						? "Checking location setting..."
+						: shareLiveLocation
+							? "You are sharing your live location"
+							: "You are not sharing your live location",
+				icon: shareLiveLocation ? MapPin : MapPinOff,
+				color: shareLiveLocation ? "#10B981" : "#c01414",
+				bg: shareLiveLocation ? "#ECFDF5" : "#ffe7e7",
 			};
 		}
 

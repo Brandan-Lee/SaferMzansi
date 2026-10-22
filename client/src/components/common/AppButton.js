@@ -34,6 +34,7 @@ export default function AppButton({
 			accessibilityRole="button"
 			accessibilityLabel={accessibilityLabel || title}
 			accessibilityState={{ disabled: isDisabled, busy: loading }}
+			accessibilityHint={loading ? "Please wait for the action to finish" : undefined}
 		>
 			{loading ? (
 				<ActivityIndicator

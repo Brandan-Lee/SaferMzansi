@@ -1,5 +1,7 @@
 const { supabase } = require("#config/supabase_db.js");
 
+const TABLE_NAME = "Incident";
+
 const insertIncident = async (payload) => {
 	const cleanPayload = Object.fromEntries(
 		Object.entries(payload).filter(
@@ -11,7 +13,7 @@ const insertIncident = async (payload) => {
 	);
 
 	const { data, error } = await supabase
-		.from("Incident")
+		.from(TABLE_NAME)
 		.upsert([cleanPayload], { onConflict: "incident_id" })
 		.select()
 		.single();
@@ -31,7 +33,7 @@ const getIncidentsByUserId = async (userId) => {
 	const safeUserId = String(userId).trim();
 
 	const { data: incidentsList, error } = await supabase
-		.from("Incident")
+		.from(TABLE_NAME)
 		.select("*")
 		.eq("user_id", safeUserId);
 

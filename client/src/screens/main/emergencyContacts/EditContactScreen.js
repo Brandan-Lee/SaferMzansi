@@ -63,12 +63,12 @@ const EditContactScreen = ({ navigation, route }) => {
 		}
 
 		const contactId = contact?.contactId || contact?.contact_id;
-		const userId = user?.id || user?.user_id || contact?.user_id;
+		const userId = user?.userId || route?.params?.userId || contact?.user_id;
 
-		if (!contactId) {
+		if (!db || !contactId || !userId) {
 			setBanner({
 				message:
-					"A contact must be selected from the Emergency Contacts Screen",
+					"A contact and signed-in user are required to update this contact.",
 				type: "error",
 			});
 			return;
@@ -183,6 +183,7 @@ const EditContactScreen = ({ navigation, route }) => {
 				label: loading ? "Saving..." : "Save Contact",
 				icon: "person-add-outline",
 				onPress: handleSave,
+				loading,
 			}}
 		>
 			<KeyboardAvoidingView

@@ -11,7 +11,7 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useAuth } from "@context/AuthContext";
 import ContactCard from "@components/cards/ContactCard";
 import MainLayout from "@components/layouts/MainLayout";
-import { getEmergencyContacts, getTotalContacts } from "@services/main/contactService";
+import { getEmergencyContacts } from "@services/main/contactService";
 
 const PURPLE = "#6B21A8";
 
@@ -21,13 +21,16 @@ export default function EmergencyContactsScreen({ navigation }) {
 	const { user } = useAuth();
 	const userId = route.params?.userId || user?.userId;
 	const [banner, setBanner] = useState(null);
-	const [contactCount, setContactCount] = useState(0);
-
 	const [contacts, setContacts] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	const loadContacts = useCallback(async () => {
 		if (!db || !userId) {
+			setContacts([]);
+			setBanner({
+				message: "A signed-in user is required to load emergency contacts.",
+				type: "error",
+			});
 			setLoading(false);
 			return;
 		}
@@ -38,6 +41,7 @@ export default function EmergencyContactsScreen({ navigation }) {
 
 			setContacts(Array.isArray(res?.contacts) ? res.contacts : []);
 		} catch (error) {
+			setContacts([]);
 			setBanner({
 				message: "Emergency contacts could not be loaded. Please try again.",
 				type: "error",
@@ -48,35 +52,13 @@ export default function EmergencyContactsScreen({ navigation }) {
 		}
 	}, [db, userId]);
 
-	//Fetch data whenever the screen gains focus
 	useFocusEffect(
 		useCallback(() => {
-			let isMounted = true;
-
-			const contactFetchCount = async () => {
-				const currentUserId = user?.userId;
-
-				if (!currentUserId || !db) return;
-
-				try {
-					const countResult = await getTotalContacts(db, currentUserId);
-
-					if (isMounted) {
-						setContactCount(countResult ?? 0);
-					}
-				} catch (error) {
-					console.error("Failed to fetch total contacts count:", error);
-				}
-			};
-
-			contactFetchCount();
 			loadContacts();
-
-			return () => {
-				isMounted = false;
-			};
-		}, [db, user, loadContacts])
+		}, [loadContacts])
 	);
+
+	const contactCount = contacts.length;
 
 	const getItemKey = (item, index) =>
 		item.contactId?.toString() ||
@@ -96,7 +78,8 @@ export default function EmergencyContactsScreen({ navigation }) {
 					{
 						label: "Add contact",
 						icon: "person-add-outline",
-						onPress: () => navigation.navigate("AddContactScreen", { userId: user?.userId })
+						onPress: () =>
+							navigation.navigate("AddContactScreen", { userId }),
 					}
 					: null
 			}
@@ -130,7 +113,6 @@ export default function EmergencyContactsScreen({ navigation }) {
 			<View style={styles.totalContainer}>
 				<Text style={styles.total}>{contactCount} of 5 emergency contacts</Text>
 			</View>
-
 		</MainLayout>
 	);
 }
@@ -139,17 +121,6 @@ const styles = StyleSheet.create({
 	center: { flex: 1, justifyContent: "center", alignItems: "center" },
 	list: { gap: 12, paddingBottom: 12, paddingTop: 8 },
 	empty: { textAlign: "center", color: "#475467", fontSize: 16, marginTop: 32 },
-	button: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: PURPLE,
-		borderRadius: 8,
-		paddingVertical: 12,
-		marginBottom: 20,
-		gap: 12,
-	},
 	totalContainer: { paddingVertical: 10, alignItems: "center" },
 	total: { color: "#475467", fontSize: 13, fontWeight: "600" },
-	buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 });

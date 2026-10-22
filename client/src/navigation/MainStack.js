@@ -22,7 +22,11 @@ import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function MainStack({ user, initialRouteName = "HomeScreen" }) {
+export default function MainStack({
+	user,
+	onSosClose,
+	initialRouteName = "HomeScreen",
+}) {
 	return (
 		<Stack.Navigator
 			screenOptions={{ headerShown: false }}
@@ -36,7 +40,6 @@ export default function MainStack({ user, initialRouteName = "HomeScreen" }) {
 					userId: user?.userId,
 				}}
 			/>
-			{/* DecoyScreen is now available inside MainStack for testing/previews */}
 			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />
 			<Stack.Screen
 				name="EmergencyContactsScreen"
@@ -70,11 +73,12 @@ export default function MainStack({ user, initialRouteName = "HomeScreen" }) {
 				name="EvidenceVaultDetailsScreen"
 				component={EvidenceVaultDetailsScreen}
 			/>
-			<Stack.Screen
-				name="RecycleBinScreen"
-				component={RecycleBinScreen}
-			/>
-			<Stack.Screen name="SOSScreen" component={SOSScreen} />
+			<Stack.Screen name="RecycleBinScreen" component={RecycleBinScreen} />
+			<Stack.Screen name="SOSScreen">
+				{(screenProps) => (
+					<SOSScreen {...screenProps} onClose={onSosClose} />
+				)}
+			</Stack.Screen>
 		</Stack.Navigator>
 	);
 }

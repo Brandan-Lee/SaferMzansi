@@ -4,9 +4,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { THEME } from "@constants/supportConstants";
 
 export default function DetailRow({ icon, text }) {
-	if (!text) return null;
+	if (text === null || text === undefined || text === "") return null;
 	return (
-		<View style={styles.detailRow}>
+		<View style={styles.detailRow} accessible accessibilityLabel={text}>
 			<Ionicons name={icon} size={16} color={THEME.purple} />
 			<Text style={styles.detailText}>{text}</Text>
 		</View>

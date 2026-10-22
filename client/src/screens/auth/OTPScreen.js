@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNetStatus } from "@utils/network/netStatus";
-import AuthLayout, { MainLayout } from "@components/layouts/AuthLayout";
+import AuthLayout from "@components/layouts/AuthLayout";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { sendOtpEmail, verifyOtpCode } from "@services/auth/otpService";
 import { forgotPasswordUser } from "@services/auth/authService";
@@ -68,16 +68,20 @@ const OTPScreen = ({ navigation, route }) => {
 
 				if (!isMounted) return;
 
-				const attempts = savedAttempts ? parseInt(savedAttempts, 10) : 0;
+				const parsedAttempts = Number(savedAttempts);
+				const attempts =
+					Number.isSafeInteger(parsedAttempts) && parsedAttempts >= 0
+						? parsedAttempts
+						: 0;
 				setResendAttempts(attempts);
 
 				if (savedExpiry) {
-					const expiryTimestamp = parseInt(savedExpiry, 10);
+					const expiryTimestamp = Number(savedExpiry);
 					const remainingSeconds = Math.ceil(
 						(expiryTimestamp - Date.now()) / 1000,
 					);
 
-					if (remainingSeconds > 0) {
+					if (Number.isFinite(expiryTimestamp) && remainingSeconds > 0) {
 						setLockoutTimer(remainingSeconds);
 					} else {
 						// Lockout expired while away — clean up storage
@@ -156,8 +160,8 @@ const OTPScreen = ({ navigation, route }) => {
 				? await forgotPasswordUser(sanitizedEmail)
 				: await sendOtpEmail(sanitizedEmail);
 
-			if (response?.error) {
-				throw new Error(response.error);
+			if (!response?.success) {
+				throw new Error(response?.error || "Could not resend the OTP.");
 			}
 
 			setBanner({

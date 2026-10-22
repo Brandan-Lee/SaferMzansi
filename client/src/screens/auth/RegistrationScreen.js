@@ -76,24 +76,17 @@ const RegistrationScreen = () => {
 				return;
 			}
 
-			setBanner({
-				message: "Sending verification code...",
-				type: "success",
-			});
-
-			setTimeout(() => {
-				navigation.navigate("OTPScreen", {
+			navigation.navigate("OTPScreen", {
+				email: sanitizedEmail,
+				isRegistration: true,
+				pendingUserData: {
+					name: formData.name,
+					surname: formData.surname,
 					email: sanitizedEmail,
-					isRegistration: true,
-					pendingUserData: {
-						name: formData.name,
-						surname: formData.surname,
-						email: sanitizedEmail,
-						phoneNum: formData.phone,
-						password: formData.password,
-					},
-				});
-			}, 800);
+					phoneNum: formData.phone,
+					password: formData.password,
+				},
+			});
 		} catch (error) {
 			setBanner({
 				message:

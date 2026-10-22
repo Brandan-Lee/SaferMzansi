@@ -1,129 +1,226 @@
-import * as FileSystem from 'expo-file-system/legacy';
-import { StorageAccessFramework } from 'expo-file-system/legacy';
-import * as Sharing from 'expo-sharing';
-import { Platform } from 'react-native';
-import { supabase } from '@config/supabase_client';
-import JSZip from 'jszip';
-import { Buffer } from 'buffer';
+import * as FileSystem from "expo-file-system/legacy";
+import { StorageAccessFramework } from "expo-file-system/legacy";
+import * as Sharing from "expo-sharing";
+import { Platform } from "react-native";
+import { supabase } from "@config/supabase_client";
+import JSZip from "jszip";
+import { Buffer } from "buffer";
 
-const EVIDENCE_BUCKET = 'EvidenceVault';
+const EVIDENCE_BUCKET = "EvidenceVault";
+const MIME_TYPES = {
+	zip: "application/zip",
+	file: "application/octet-stream",
+};
+
+const sanitizeFileName = (name) => {
+	const safeName = String(name || "evidence")
+		.replace(/[\\/:*?"<>|]/g, "_")
+		.trim();
+	return safeName && safeName !== "." && safeName !== ".."
+		? safeName
+		: "evidence";
+};
 
 const cleanupFiles = async (paths) => {
-    await Promise.all(paths.map(p => FileSystem.deleteAsync(p, { idempotent: true }).catch(() => { })));
-};
-
-export const downloadToDownloadsDirectory = async (filePath, localFileName) => {
-    try {
-        const signedUrl = await getDownloadUrl(filePath);
-
-        const tempLocalUri = `${FileSystem.documentDirectory}${localFileName}`;
-        const downloadRes = await FileSystem.downloadAsync(signedUrl, tempLocalUri);
-
-        if (Platform.OS === 'android') {
-            const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
-
-            if (permissions.granted) {
-                const fileString = await FileSystem.readAsStringAsync(downloadRes.uri, {
-                    encoding: FileSystem.EncodingType.Base64,
-                });
-
-                const createdUri = await StorageAccessFramework.createFileAsync(
-                    permissions.directoryUri,
-                    localFileName,
-                    'application/octet-stream'
-                );
-
-                await FileSystem.writeAsStringAsync(createdUri, fileString, {
-                    encoding: FileSystem.EncodingType.Base64,
-                });
-
-                await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true }).catch(() => { });
-            } else {
-                throw new Error('Folder access permission denied.');
-            }
-        } else {
-            await Sharing.shareAsync(downloadRes.uri, {
-                UTI: 'public.item',
-                dialogTitle: 'Save File',
-            });
-
-            await FileSystem.deleteAsync(downloadRes.uri, { idempotent: true }).catch(() => { });
-        }
-    } catch (error) {
-        console.error('Download failed:', error);
-        throw error;
-    }
-};
-
-export const downloadFilesAsZip = async (files, zipFileName = "Evidence_Bundle.zip") => {
-    const zip = new JSZip();
-    const tempPaths = [];
-    let androidDirectoryUri = null;
-
-    try {
-        if (Platform.OS === 'android') {
-            const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync();
-            if (!permissions.granted) {
-                throw new Error('Folder access permission denied.');
-            }
-            androidDirectoryUri = permissions.directoryUri;
-        }
-
-        for (const file of files) {
-            const signedUrl = await getDownloadUrl(file.remotePath);
-
-            const tempUri = `${FileSystem.documentDirectory}${Date.now()}_${file.localName}`;
-            tempPaths.push(tempUri);
-
-            await FileSystem.downloadAsync(signedUrl, tempUri);
-            const base64Data = await FileSystem.readAsStringAsync(tempUri, {
-                encoding: FileSystem.EncodingType.Base64,
-            });
-
-            zip.file(file.localName, Buffer.from(base64Data, 'base64'));
-        }
-
-        const zipBase64 = await zip.generateAsync({ type: 'base64' });
-        const tempZipUri = `${FileSystem.documentDirectory}${zipFileName}`;
-        tempPaths.push(tempZipUri);
-
-        await FileSystem.writeAsStringAsync(tempZipUri, zipBase64, {
-            encoding: FileSystem.EncodingType.Base64,
-        });
-
-        if (Platform.OS === 'android') {
-            const createdUri = await StorageAccessFramework.createFileAsync(
-                androidDirectoryUri,
-                zipFileName,
-                'application/zip'
-            );
-
-            await FileSystem.writeAsStringAsync(createdUri, zipBase64, {
-                encoding: FileSystem.EncodingType.Base64,
-            });
-        } else {
-            await Sharing.shareAsync(tempZipUri, {
-                UTI: 'com.pkware.zip',
-                dialogTitle: 'Save Zip Bundle Archive',
-            });
-        }
-
-        await cleanupFiles(tempPaths);
-        return true;
-
-    } catch (error) {
-        console.error('ZIP compilation failed:', error);
-        await cleanupFiles(tempPaths);
-        throw error;
-    }
+	const results = await Promise.allSettled(
+		paths.map((path) =>
+			FileSystem.deleteAsync(path, { idempotent: true }),
+		),
+	);
+	results.forEach((result) => {
+		if (result.status === "rejected") {
+			console.warn("[Evidence Download] Could not remove a temporary file.");
+		}
+	});
 };
 
 const getDownloadUrl = async (filePath) => {
-    if (filePath.startsWith("http")) return filePath;
+	if (typeof filePath !== "string" || !filePath.trim()) {
+		throw new Error("A valid evidence file path is required.");
+	}
 
-    const { data, error } = await supabase.storage
-        .from(EVIDENCE_BUCKET)
-        .createSignedUrl(filePath, 60);
-    if (error) throw error;
-    return data.signedUrl;
+	if (filePath.startsWith("https://")) return filePath;
+	if (filePath.startsWith("http://")) {
+		throw new Error("Evidence downloads must use a secure HTTPS link.");
+	}
+
+	const { data, error } = await supabase.storage
+		.from(EVIDENCE_BUCKET)
+		.createSignedUrl(filePath, 60);
+	if (error) throw error;
+	if (!data?.signedUrl) {
+		throw new Error("The evidence download link could not be created.");
+	}
+	return data.signedUrl;
+};
+
+const downloadEvidenceToTemporaryFile = async (
+	filePath,
+	temporaryUri,
+	localFileUri,
+) => {
+	try {
+		const signedUrl = await getDownloadUrl(filePath);
+		return await FileSystem.downloadAsync(signedUrl, temporaryUri);
+	} catch (error) {
+		const isLocalUri =
+			typeof localFileUri === "string" &&
+			(localFileUri.startsWith("file://") ||
+				localFileUri.startsWith("content://"));
+		if (!isLocalUri) throw error;
+
+		const localFile = await FileSystem.getInfoAsync(localFileUri);
+		if (!localFile.exists) throw error;
+		await FileSystem.copyAsync({ from: localFileUri, to: temporaryUri });
+		return { uri: temporaryUri };
+	}
+};
+
+export const downloadToDownloadsDirectory = async (
+	filePath,
+	localFileName,
+	localFileUri = null,
+) => {
+	const fileName = sanitizeFileName(localFileName);
+	let temporaryUri = null;
+
+	try {
+		temporaryUri = `${FileSystem.documentDirectory}${Date.now()}_${fileName}`;
+		const downloadResult = await downloadEvidenceToTemporaryFile(
+			filePath,
+			temporaryUri,
+			localFileUri,
+		);
+
+		if (Platform.OS === "android") {
+			const permissions =
+				await StorageAccessFramework.requestDirectoryPermissionsAsync();
+			if (!permissions.granted) {
+				throw new Error("Folder access permission denied.");
+			}
+
+			const fileData = await FileSystem.readAsStringAsync(downloadResult.uri, {
+				encoding: FileSystem.EncodingType.Base64,
+			});
+			const destinationUri = await StorageAccessFramework.createFileAsync(
+				permissions.directoryUri,
+				fileName,
+				MIME_TYPES.file,
+			);
+			await FileSystem.writeAsStringAsync(destinationUri, fileData, {
+				encoding: FileSystem.EncodingType.Base64,
+			});
+			return true;
+		}
+
+		if (!(await Sharing.isAvailableAsync())) {
+			throw new Error("File sharing is not available on this device.");
+		}
+		await Sharing.shareAsync(downloadResult.uri, {
+			UTI: "public.item",
+			dialogTitle: "Save File",
+		});
+		return true;
+	} catch (error) {
+		console.error("[Evidence Download] Could not download the evidence file:", error);
+		throw error;
+	} finally {
+		if (temporaryUri) await cleanupFiles([temporaryUri]);
+	}
+};
+
+export const downloadFilesAsZip = async (
+	files,
+	zipFileName = "Evidence_Bundle.zip",
+) => {
+	if (!Array.isArray(files) || files.length === 0) {
+		throw new Error("Select at least one evidence file to create a ZIP bundle.");
+	}
+
+	const zip = new JSZip();
+	const temporaryPaths = [];
+	let androidDirectoryUri = null;
+	const usedNames = new Set();
+
+	try {
+		if (Platform.OS === "android") {
+			const permissions =
+				await StorageAccessFramework.requestDirectoryPermissionsAsync();
+			if (!permissions.granted) {
+				throw new Error("Folder access permission denied.");
+			}
+			androidDirectoryUri = permissions.directoryUri;
+		} else if (!(await Sharing.isAvailableAsync())) {
+			throw new Error("File sharing is not available on this device.");
+		}
+
+		for (const file of files) {
+			const fileName = getUniqueFileName(file.localName, usedNames);
+			const temporaryUri = `${FileSystem.documentDirectory}${Date.now()}_${fileName}`;
+			temporaryPaths.push(temporaryUri);
+
+			const downloadResult = await downloadEvidenceToTemporaryFile(
+				file.remotePath,
+				temporaryUri,
+				file.localUri,
+			);
+			const base64Data = await FileSystem.readAsStringAsync(
+				downloadResult.uri,
+				{ encoding: FileSystem.EncodingType.Base64 },
+			);
+			zip.file(fileName, Buffer.from(base64Data, "base64"));
+		}
+
+		const zipBase64 = await zip.generateAsync({ type: "base64" });
+		const safeZipName = sanitizeFileName(zipFileName);
+		const zipUri = `${FileSystem.documentDirectory}${Date.now()}_${safeZipName}`;
+		temporaryPaths.push(zipUri);
+		await FileSystem.writeAsStringAsync(zipUri, zipBase64, {
+			encoding: FileSystem.EncodingType.Base64,
+		});
+
+		if (Platform.OS === "android") {
+			const destinationUri = await StorageAccessFramework.createFileAsync(
+				androidDirectoryUri,
+				safeZipName,
+				MIME_TYPES.zip,
+			);
+			await FileSystem.writeAsStringAsync(destinationUri, zipBase64, {
+				encoding: FileSystem.EncodingType.Base64,
+			});
+		} else {
+			await Sharing.shareAsync(zipUri, {
+				UTI: "com.pkware.zip",
+				dialogTitle: "Save Zip Bundle Archive",
+			});
+		}
+
+		return true;
+	} catch (error) {
+		console.error("[Evidence Download] Could not create the ZIP bundle:", error);
+		throw error;
+	} finally {
+		await cleanupFiles(temporaryPaths);
+	}
+};
+
+const getUniqueFileName = (name, usedNames) => {
+	const safeName = sanitizeFileName(name);
+	if (!usedNames.has(safeName)) {
+		usedNames.add(safeName);
+		return safeName;
+	}
+
+	const extensionIndex = safeName.lastIndexOf(".");
+	const hasExtension = extensionIndex > 0;
+	const baseName = hasExtension ? safeName.slice(0, extensionIndex) : safeName;
+	const extension = hasExtension ? safeName.slice(extensionIndex) : "";
+	let index = 2;
+	let uniqueName = `${baseName}_${index}${extension}`;
+	while (usedNames.has(uniqueName)) {
+		index += 1;
+		uniqueName = `${baseName}_${index}${extension}`;
+	}
+	usedNames.add(uniqueName);
+	return uniqueName;
 };

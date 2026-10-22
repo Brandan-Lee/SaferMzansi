@@ -47893,3 +47893,806 @@
 {"_e":"metro:client_log","_t":1792682024496,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","[\n  {\n    \"evidence_id\": \"3d2cab0b-4bb8-4e8a-99d7-69bbfe5be384\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"file_type\": \"image/webp\",\n    \"local_file_url\": \"\",\n    \"cloud_file_url\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b/3d2cab0b-4bb8-4e8a-99d7-69bbfe5be384_3d2cab0b-4bb8-4e8a-99d7-69bbfe5be384_images.webp\",\n    \"sha256_hash\": \"3521021a2e875fbc52ae82e2a3fea5024d507bbc919f504ca8521292c3fe14d3\",\n    \"file_size\": 21916,\n    \"is_deleted\": 1,\n    \"deleted_at\": \"2026-10-22 16:46:54.274\",\n    \"captured_at\": \"2026-10-22 15:41:01.194\",\n    \"updated_at\": \"2026-10-22 16:46:54.751\",\n    \"is_synched\": 1\n  },\n  {\n    \"evidence_id\": \"30d4b465-e99c-46ba-a1b9-7e22b699234c\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"file_type\": \"image/jpeg\",\n    \"local_file_url\": \"\",\n    \"cloud_file_url\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b/30d4b465-e99c-46ba-a1b9-7e22b699234c_30d4b465-e99c-46ba-a1b9-7e22b699234c_images.jpeg\",\n    \"sha256_hash\": \"3521021a2e875fbc52ae82e2a3fea5024d507bbc919f504ca8521292c3fe14d3\",\n    \"file_size\": 31270,\n    \"is_deleted\": 1,\n    \"deleted_at\": null,\n    \"captured_at\": \"2026-10-22 15:41:10.437\",\n    \"updated_at\": \"2026-10-22 17:13:11.596\",\n    \"is_synched\": 1\n  },\n  {\n    \"evidence_id\": \"adfdc573-9e0d-46b2-9ac3-14a5151676df\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"file_type\": \"audio/mp4\",\n    \"local_file_url\": \"\",\n    \"cloud_file_url\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b/adfdc573-9e0d-46b2-9ac3-14a5151676df_adfdc573-9e0d-46b2-9ac3-14a5151676df_emergency_audio_6b4a878f-bbe9-4307-acb9-020c9ce58779.mp4\",\n    \"sha256_hash\": \"3521021a2e875fbc52ae82e2a3fea5024d507bbc919f504ca8521292c3fe14d3\",\n    \"file_size\": 14,\n    \"is_deleted\": 1,\n    \"deleted_at\": null,\n    \"captured_at\": \"2026-10-22 16:08:38.936\",\n    \"updated_at\": \"2026-10-22 17:13:11.587\",\n    \"is_synched\": 1\n  },\n  {\n    \"evidence_id\": \"d4ddce9d-9aa1-4dd2-bc3d-8b2c3479afee\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"file_type\": \"audio/mp4\",\n    \"local_file_url\": \"file:///data/user/0/host.exp.exponent/files/ExperienceData/%2540anonymous%252FSaferMzansi-cdfb73bc-4af4-4884-ae5e-8ee81b6469ae/d4ddce9d-9aa1-4dd2-bc3d-8b2c3479afee_emergency_audio_31fdab46-6253-4679-a4d1-309d4646c187.mp4\",\n    \"cloud_file_url\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b/d4ddce9d-9aa1-4dd2-bc3d-8b2c3479afee_d4ddce9d-9aa1-4dd2-bc3d-8b2c3479afee_emergency_audio_31fdab46-6253-4679-a4d1-309d4646c187.mp4\",\n    \"sha256_hash\": \"3521021a2e875fbc52ae82e2a3fea5024d507bbc919f504ca8521292c3fe14d3\",\n    \"file_size\": 14,\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"captured_at\": \"2026-10-22 17:13:42.135\",\n    \"updated_at\": \"2026-10-22 17:13:43.729\",\n    \"is_synched\": 1\n  }\n]"]}
 {"_e":"metro:client_log","_t":1792682024497,"level":"log","data":["[Local SQLite] Local_Incidents:","[\n  {\n    \"incident_id\": \"2d83fa52-0280-48e6-8057-f5f5fbf515f9\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"evidence_id\": null,\n    \"trigger_type\": \"LIVE_PANIC_SHARE\",\n    \"status\": \"COMPLETED\",\n    \"tracking_token\": \"ac4a15d8-36cc-442e-a53b-f553294985df\",\n    \"start_time\": \"2026-10-21T21:51:28.074+02:00\",\n    \"end_time\": \"2026-10-21T21:51:59.936+02:00\",\n    \"updated_at\": \"2026-10-22 15:13:11.604\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"incident_id\": \"1643e692-d6dd-41c5-afbe-74440a1681e4\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"evidence_id\": null,\n    \"trigger_type\": \"LIVE_PANIC_SHARE\",\n    \"status\": \"ACTIVE\",\n    \"tracking_token\": \"c6cee478-7a24-49ac-ae61-92774558ee19\",\n    \"start_time\": \"2026-10-22T15:21:55.281+02:00\",\n    \"end_time\": null,\n    \"updated_at\": \"2026-10-22 15:13:11.609\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"incident_id\": \"3e4eef5f-8f1d-4be1-819b-e4088100f8c3\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"evidence_id\": null,\n    \"trigger_type\": \"LIVE_PANIC_SHARE\",\n    \"status\": \"ACTIVE\",\n    \"tracking_token\": \"2b1ead65-59c3-4cbe-b844-3cb2e73ae1b0\",\n    \"start_time\": \"2026-10-22T14:07:17.246Z\",\n    \"end_time\": null,\n    \"updated_at\": \"2026-10-22 15:13:11.614\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"incident_id\": \"6b4a878f-bbe9-4307-acb9-020c9ce58779\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"evidence_id\": \"adfdc573-9e0d-46b2-9ac3-14a5151676df\",\n    \"trigger_type\": \"LIVE_PANIC_SHARE\",\n    \"status\": \"COMPLETED\",\n    \"tracking_token\": \"00196fde-248e-4f17-ad50-bc3bf9748537\",\n    \"start_time\": \"2026-10-22T14:08:21.243Z\",\n    \"end_time\": \"2026-10-22T16:08:40.305+02:00\",\n    \"updated_at\": \"2026-10-22 15:13:11.621\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"incident_id\": \"10ee67f5-35d0-4fe8-957e-8779f2b31cf6\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"evidence_id\": null,\n    \"trigger_type\": \"LIVE_PANIC_SHARE\",\n    \"status\": \"ACTIVE\",\n    \"tracking_token\": \"e4759569-d71d-49f9-a9cb-97acf8e65f2c\",\n    \"start_time\": \"2026-10-22T15:06:37.117Z\",\n    \"end_time\": null,\n    \"updated_at\": \"2026-10-22 15:13:11.625\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"incident_id\": \"a1708b8e-d7af-411c-8c8c-13b9a12b599a\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"evidence_id\": null,\n    \"trigger_type\": \"LIVE_PANIC_SHARE\",\n    \"status\": \"ACTIVE\",\n    \"tracking_token\": \"c023c956-58c2-41ec-a65e-6c70db58c79e\",\n    \"start_time\": \"2026-10-22T15:07:15.123Z\",\n    \"end_time\": null,\n    \"updated_at\": \"2026-10-22 15:13:11.629\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"incident_id\": \"31fdab46-6253-4679-a4d1-309d4646c187\",\n    \"user_id\": \"9d7d5c21-4f6e-483f-9786-08634c0f4a0b\",\n    \"evidence_id\": \"d4ddce9d-9aa1-4dd2-bc3d-8b2c3479afee\",\n    \"trigger_type\": \"LIVE_PANIC_SHARE\",\n    \"status\": \"COMPLETED\",\n    \"tracking_token\": \"4fcc17f7-a39d-49f5-aae2-c72f687d2b06\",\n    \"start_time\": \"2026-10-22T15:13:28.229Z\",\n    \"end_time\": \"2026-10-22 15:13:43.739\",\n    \"updated_at\": \"2026-10-22 15:13:43.739\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  }\n]"]}
 {"_e":"metro:client_log","_t":1792682024499,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","[\n  {\n    \"location_id\": \"34928df2-2d79-4289-bd84-0aaab96d5147\",\n    \"incident_id\": \"2d83fa52-0280-48e6-8057-f5f5fbf515f9\",\n    \"latitude\": -26.259975,\n    \"longitude\": 28.2917617,\n    \"altitude\": null,\n    \"accuracy\": null,\n    \"created_at\": \"2026-10-22 13:39:56.713\",\n    \"updated_at\": \"2026-10-22 15:13:11.638\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"location_id\": \"b9003941-360f-412c-b7ab-790a60cf7cfd\",\n    \"incident_id\": \"1643e692-d6dd-41c5-afbe-74440a1681e4\",\n    \"latitude\": -26.259975,\n    \"longitude\": 28.2917617,\n    \"altitude\": null,\n    \"accuracy\": null,\n    \"created_at\": \"2026-10-22 13:39:56.721\",\n    \"updated_at\": \"2026-10-22 15:13:11.644\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"location_id\": \"cca3de14-31f1-45b3-8848-0b6a56cd6c4f\",\n    \"incident_id\": \"3e4eef5f-8f1d-4be1-819b-e4088100f8c3\",\n    \"latitude\": -26.259975,\n    \"longitude\": 28.2917617,\n    \"altitude\": null,\n    \"accuracy\": null,\n    \"created_at\": \"2026-10-22 14:07:17.276\",\n    \"updated_at\": \"2026-10-22 15:13:11.647\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"location_id\": \"1dd59c4b-4a3a-4b3e-afa7-59b9a90bea22\",\n    \"incident_id\": \"6b4a878f-bbe9-4307-acb9-020c9ce58779\",\n    \"latitude\": -26.259975,\n    \"longitude\": 28.2917617,\n    \"altitude\": null,\n    \"accuracy\": null,\n    \"created_at\": \"2026-10-22 14:08:21.267\",\n    \"updated_at\": \"2026-10-22 15:13:11.653\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"location_id\": \"724f2eba-c397-4f5a-aadb-bfcdbe8f676f\",\n    \"incident_id\": \"10ee67f5-35d0-4fe8-957e-8779f2b31cf6\",\n    \"latitude\": -26.259975,\n    \"longitude\": 28.2917617,\n    \"altitude\": null,\n    \"accuracy\": null,\n    \"created_at\": \"2026-10-22 15:06:37.148\",\n    \"updated_at\": \"2026-10-22 15:13:11.656\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"location_id\": \"99cc2fa7-d35c-4e89-afe6-e13b7c4c03eb\",\n    \"incident_id\": \"a1708b8e-d7af-411c-8c8c-13b9a12b599a\",\n    \"latitude\": -26.259975,\n    \"longitude\": 28.2917617,\n    \"altitude\": null,\n    \"accuracy\": null,\n    \"created_at\": \"2026-10-22 15:07:15.144\",\n    \"updated_at\": \"2026-10-22 15:13:11.660\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 1\n  },\n  {\n    \"location_id\": \"19f19fd4-08e9-4e7b-ba5b-9671592fef93\",\n    \"incident_id\": \"31fdab46-6253-4679-a4d1-309d4646c187\",\n    \"latitude\": -26.259975,\n    \"longitude\": 28.2917617,\n    \"altitude\": null,\n    \"accuracy\": null,\n    \"created_at\": \"2026-10-22 15:13:28.256\",\n    \"updated_at\": \"2026-10-22 15:13:28.256\",\n    \"is_deleted\": 0,\n    \"deleted_at\": null,\n    \"is_synched\": 0\n  }\n]"]}
+{"_e":"root:init","_t":1792690100068,"format":"v0-jsonl","version":"57.0.32"}
+{"_e":"env:mode","_t":1792690100072,"nodeEnv":"development","babelEnv":"development","mode":"development"}
+{"_e":"env:load","_t":1792690100086,"mode":"development","files":["../..\\..\\.env"],"env":{"EXPO_PUBLIC_AES_256_SECRET_KEY":"e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8","EXPO_PUBLIC_API_URL":"http://10.0.2.2:8080/api","EXPO_PUBLIC_DATABASE_NAME":"safer_mzansi.db","EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY":"sb_publishable_MuoAjgtm9_d-KRe0ZFGGrg_B6AWapXo","EXPO_PUBLIC_SUPABASE_URL":"https://lhrfmvheuxnoeburgbok.supabase.co"}}
+{"_e":"devserver:start","_t":1792690101716,"mode":"development","web":true,"baseUrl":"","asyncRoutes":false,"routerRoot":"../..\\..\\app","serverComponents":false,"serverActions":false,"serverRendering":false,"apiRoutes":false,"exporting":false}
+{"_e":"metro:config","_t":1792690102622,"serverRoot":"../..\\..","projectRoot":"../..\\..","exporting":false,"flags":{"autolinkingModuleResolution":false,"serverActions":false,"serverComponents":false,"reactCompiler":false,"optimizeGraph":false,"treeshaking":false,"logbox":false}}
+{"_e":"expo:dev-tools-plugin:load","_t":1792690104977,"plugins":[{"packageName":"expo-sqlite","bannerTitle":"expo-sqlite","cliBanner":false,"webpageEndpoint":"/_expo/plugins/expo-sqlite"}]}
+{"_e":"metro:instantiate","_t":1792690121731,"atlas":false,"workers":6,"host":"::","port":8081}
+{"_e":"metro:bundling:started","_t":1792690133527,"id":"1","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792690133527,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792690133532,"id":"1","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792690135375,"id":"1","progress":0.010000000000000002,"total":1,"current":1}
+{"_e":"metro:bundling:progress","_t":1792690135475,"id":"1","progress":0.010000000000000002,"total":3,"current":1}
+{"_e":"metro:bundling:progress","_t":1792690135612,"id":"1","progress":0.04000000000000001,"total":3,"current":2}
+{"_e":"metro:bundling:progress","_t":1792690135715,"id":"1","progress":0.04000000000000001,"total":21,"current":2}
+{"_e":"metro:bundling:progress","_t":1792690135737,"id":"1","progress":0.04000000000000001,"total":21,"current":3}
+{"_e":"metro:bundling:progress","_t":1792690135854,"id":"1","progress":0.04000000000000001,"total":22,"current":3}
+{"_e":"metro:bundling:progress","_t":1792690135890,"id":"1","progress":0.04000000000000001,"total":22,"current":4}
+{"_e":"metro:bundling:progress","_t":1792690135992,"id":"1","progress":0.04000000000000001,"total":28,"current":5}
+{"_e":"metro:bundling:progress","_t":1792690136098,"id":"1","progress":0.04280618311533888,"total":29,"current":6}
+{"_e":"metro:bundling:progress","_t":1792690136299,"id":"1","progress":0.044995408631772274,"total":33,"current":7}
+{"_e":"metro:bundling:progress","_t":1792690136413,"id":"1","progress":0.05224489795918367,"total":35,"current":8}
+{"_e":"metro:bundling:progress","_t":1792690136561,"id":"1","progress":0.06612244897959182,"total":35,"current":9}
+{"_e":"metro:bundling:progress","_t":1792690136684,"id":"1","progress":0.06612244897959182,"total":54,"current":11}
+{"_e":"metro:bundling:progress","_t":1792690136863,"id":"1","progress":0.06612244897959182,"total":56,"current":12}
+{"_e":"metro:bundling:progress","_t":1792690137028,"id":"1","progress":0.06612244897959182,"total":56,"current":13}
+{"_e":"metro:bundling:progress","_t":1792690137127,"id":"1","progress":0.06612244897959182,"total":58,"current":14}
+{"_e":"metro:bundling:progress","_t":1792690137233,"id":"1","progress":0.06612244897959182,"total":61,"current":15}
+{"_e":"metro:bundling:progress","_t":1792690137336,"id":"1","progress":0.06634527089072544,"total":66,"current":17}
+{"_e":"metro:bundling:progress","_t":1792690137480,"id":"1","progress":0.07438016528925619,"total":66,"current":18}
+{"_e":"metro:bundling:progress","_t":1792690137620,"id":"1","progress":0.07438016528925619,"total":73,"current":18}
+{"_e":"metro:bundling:progress","_t":1792690137652,"id":"1","progress":0.07438016528925619,"total":73,"current":19}
+{"_e":"metro:bundling:progress","_t":1792690137755,"id":"1","progress":0.07438016528925619,"total":74,"current":20}
+{"_e":"metro:bundling:progress","_t":1792690137861,"id":"1","progress":0.0763504155124654,"total":76,"current":21}
+{"_e":"metro:bundling:progress","_t":1792690137982,"id":"1","progress":0.07955292570677186,"total":78,"current":22}
+{"_e":"metro:bundling:progress","_t":1792690138217,"id":"1","progress":0.08694937541091388,"total":78,"current":23}
+{"_e":"metro:bundling:progress","_t":1792690138366,"id":"1","progress":0.08694937541091388,"total":82,"current":24}
+{"_e":"metro:bundling:progress","_t":1792690138477,"id":"1","progress":0.08694937541091388,"total":91,"current":25}
+{"_e":"metro:bundling:progress","_t":1792690138593,"id":"1","progress":0.08694937541091388,"total":96,"current":27}
+{"_e":"metro:bundling:progress","_t":1792690138735,"id":"1","progress":0.08694937541091388,"total":97,"current":27}
+{"_e":"metro:bundling:progress","_t":1792690138845,"id":"1","progress":0.08694937541091388,"total":207,"current":30}
+{"_e":"metro:bundling:progress","_t":1792690138949,"id":"1","progress":0.08694937541091388,"total":222,"current":30}
+{"_e":"metro:bundling:progress","_t":1792690139025,"id":"1","progress":0.08694937541091388,"total":222,"current":31}
+{"_e":"metro:bundling:progress","_t":1792690139165,"id":"1","progress":0.08694937541091388,"total":228,"current":34}
+{"_e":"metro:bundling:progress","_t":1792690139265,"id":"1","progress":0.08694937541091388,"total":235,"current":40}
+{"_e":"metro:bundling:progress","_t":1792690139369,"id":"1","progress":0.08694937541091388,"total":235,"current":41}
+{"_e":"metro:bundling:progress","_t":1792690139479,"id":"1","progress":0.08694937541091388,"total":241,"current":46}
+{"_e":"metro:bundling:progress","_t":1792690139593,"id":"1","progress":0.08694937541091388,"total":276,"current":51}
+{"_e":"metro:bundling:progress","_t":1792690139693,"id":"1","progress":0.08694937541091388,"total":279,"current":58}
+{"_e":"metro:bundling:progress","_t":1792690139794,"id":"1","progress":0.08694937541091388,"total":282,"current":61}
+{"_e":"metro:bundling:progress","_t":1792690139906,"id":"1","progress":0.08694937541091388,"total":294,"current":67}
+{"_e":"metro:bundling:progress","_t":1792690140002,"id":"1","progress":0.08694937541091388,"total":302,"current":72}
+{"_e":"metro:bundling:progress","_t":1792690140106,"id":"1","progress":0.08694937541091388,"total":308,"current":81}
+{"_e":"metro:bundling:progress","_t":1792690140215,"id":"1","progress":0.08694937541091388,"total":311,"current":84}
+{"_e":"metro:bundling:progress","_t":1792690140333,"id":"1","progress":0.08694937541091388,"total":321,"current":88}
+{"_e":"metro:bundling:progress","_t":1792690140379,"id":"1","progress":0.08694937541091388,"total":321,"current":89}
+{"_e":"metro:bundling:progress","_t":1792690140481,"id":"1","progress":0.08694937541091388,"total":326,"current":92}
+{"_e":"metro:bundling:progress","_t":1792690140590,"id":"1","progress":0.08694937541091388,"total":333,"current":96}
+{"_e":"metro:bundling:progress","_t":1792690140645,"id":"1","progress":0.08694937541091388,"total":333,"current":97}
+{"_e":"metro:bundling:progress","_t":1792690140763,"id":"1","progress":0.08805219734258467,"total":337,"current":100}
+{"_e":"metro:bundling:progress","_t":1792690140919,"id":"1","progress":0.09262759924385634,"total":345,"current":105}
+{"_e":"metro:bundling:progress","_t":1792690141026,"id":"1","progress":0.09262759924385634,"total":362,"current":110}
+{"_e":"metro:bundling:progress","_t":1792690141134,"id":"1","progress":0.10053539559785842,"total":369,"current":117}
+{"_e":"metro:bundling:progress","_t":1792690141239,"id":"1","progress":0.101783237139633,"total":373,"current":119}
+{"_e":"metro:bundling:progress","_t":1792690141314,"id":"1","progress":0.10350106735475709,"total":373,"current":120}
+{"_e":"metro:bundling:progress","_t":1792690141428,"id":"1","progress":0.10816008464640109,"total":374,"current":123}
+{"_e":"metro:bundling:progress","_t":1792690141533,"id":"1","progress":0.1111111111111111,"total":387,"current":129}
+{"_e":"metro:bundling:progress","_t":1792690141631,"id":"1","progress":0.11735370442043284,"total":397,"current":136}
+{"_e":"metro:bundling:progress","_t":1792690141736,"id":"1","progress":0.12518035122457727,"total":407,"current":144}
+{"_e":"metro:bundling:progress","_t":1792690141843,"id":"1","progress":0.14219559013676158,"total":419,"current":158}
+{"_e":"metro:bundling:progress","_t":1792690141978,"id":"1","progress":0.14624720013992248,"total":421,"current":161}
+{"_e":"metro:bundling:progress","_t":1792690142114,"id":"1","progress":0.14806957758080805,"total":421,"current":162}
+{"_e":"metro:bundling:progress","_t":1792690142257,"id":"1","progress":0.151438456746173,"total":424,"current":165}
+{"_e":"metro:bundling:progress","_t":1792690142380,"id":"1","progress":0.151438456746173,"total":425,"current":165}
+{"_e":"metro:bundling:progress","_t":1792690142503,"id":"1","progress":0.15600696399157649,"total":438,"current":173}
+{"_e":"metro:bundling:progress","_t":1792690142603,"id":"1","progress":0.17020249753664865,"total":446,"current":184}
+{"_e":"metro:bundling:progress","_t":1792690142712,"id":"1","progress":0.1899571227190853,"total":452,"current":197}
+{"_e":"metro:bundling:progress","_t":1792690142867,"id":"1","progress":0.20034419633492875,"total":458,"current":205}
+{"_e":"metro:bundling:progress","_t":1792690142956,"id":"1","progress":0.2014230044474822,"total":459,"current":206}
+{"_e":"metro:bundling:progress","_t":1792690143061,"id":"1","progress":0.2039542143600416,"total":465,"current":210}
+{"_e":"metro:bundling:progress","_t":1792690143196,"id":"1","progress":0.20714168310322156,"total":468,"current":213}
+{"_e":"metro:bundling:progress","_t":1792690143305,"id":"1","progress":0.21063268698060938,"total":475,"current":218}
+{"_e":"metro:bundling:progress","_t":1792690143409,"id":"1","progress":0.21063268698060938,"total":487,"current":223}
+{"_e":"metro:bundling:progress","_t":1792690143510,"id":"1","progress":0.21063268698060938,"total":510,"current":230}
+{"_e":"metro:bundling:progress","_t":1792690143613,"id":"1","progress":0.21705064046297243,"total":513,"current":239}
+{"_e":"metro:bundling:progress","_t":1792690143719,"id":"1","progress":0.22370343316289262,"total":518,"current":245}
+{"_e":"metro:bundling:progress","_t":1792690143819,"id":"1","progress":0.22370343316289262,"total":534,"current":251}
+{"_e":"metro:bundling:progress","_t":1792690143920,"id":"1","progress":0.22997194621412084,"total":538,"current":258}
+{"_e":"metro:bundling:progress","_t":1792690144026,"id":"1","progress":0.24172090829922796,"total":539,"current":265}
+{"_e":"metro:bundling:progress","_t":1792690144132,"id":"1","progress":0.24632357947195707,"total":542,"current":269}
+{"_e":"metro:bundling:progress","_t":1792690144243,"id":"1","progress":0.2554842975206612,"total":550,"current":278}
+{"_e":"metro:bundling:progress","_t":1792690144355,"id":"1","progress":0.2554842975206612,"total":589,"current":288}
+{"_e":"metro:bundling:progress","_t":1792690144457,"id":"1","progress":0.2554842975206612,"total":639,"current":304}
+{"_e":"metro:bundling:progress","_t":1792690144557,"id":"1","progress":0.2554842975206612,"total":642,"current":314}
+{"_e":"metro:bundling:progress","_t":1792690144659,"id":"1","progress":0.2554842975206612,"total":647,"current":322}
+{"_e":"metro:bundling:progress","_t":1792690144765,"id":"1","progress":0.2554842975206612,"total":695,"current":335}
+{"_e":"metro:bundling:progress","_t":1792690144873,"id":"1","progress":0.2554842975206612,"total":695,"current":337}
+{"_e":"metro:bundling:progress","_t":1792690144978,"id":"1","progress":0.2554842975206612,"total":698,"current":347}
+{"_e":"metro:bundling:progress","_t":1792690145079,"id":"1","progress":0.2554842975206612,"total":718,"current":359}
+{"_e":"metro:bundling:progress","_t":1792690145185,"id":"1","progress":0.25962773500434333,"total":734,"current":374}
+{"_e":"metro:bundling:progress","_t":1792690145285,"id":"1","progress":0.2686530343226509,"total":737,"current":382}
+{"_e":"metro:bundling:progress","_t":1792690145390,"id":"1","progress":0.27141421040392144,"total":739,"current":385}
+{"_e":"metro:bundling:progress","_t":1792690145496,"id":"1","progress":0.27141421040392144,"total":764,"current":391}
+{"_e":"metro:bundling:progress","_t":1792690145603,"id":"1","progress":0.27141421040392144,"total":775,"current":403}
+{"_e":"metro:bundling:progress","_t":1792690145703,"id":"1","progress":0.27273079537400163,"total":787,"current":411}
+{"_e":"metro:bundling:progress","_t":1792690145805,"id":"1","progress":0.28355624999999995,"total":800,"current":426}
+{"_e":"metro:bundling:progress","_t":1792690145942,"id":"1","progress":0.28684649805720375,"total":801,"current":429}
+{"_e":"metro:bundling:progress","_t":1792690146045,"id":"1","progress":0.2901474493317827,"total":802,"current":432}
+{"_e":"metro:bundling:progress","_t":1792690146147,"id":"1","progress":0.2927938575031051,"total":815,"current":441}
+{"_e":"metro:bundling:progress","_t":1792690146250,"id":"1","progress":0.2958298631766806,"total":820,"current":446}
+{"_e":"metro:bundling:progress","_t":1792690146367,"id":"1","progress":0.30316301349978225,"total":830,"current":457}
+{"_e":"metro:bundling:progress","_t":1792690146486,"id":"1","progress":0.30316301349978225,"total":843,"current":463}
+{"_e":"metro:bundling:progress","_t":1792690146587,"id":"1","progress":0.3092252815339646,"total":847,"current":471}
+{"_e":"metro:bundling:progress","_t":1792690146689,"id":"1","progress":0.3149190311418685,"total":850,"current":477}
+{"_e":"metro:bundling:progress","_t":1792690146801,"id":"1","progress":0.3244335009062617,"total":855,"current":487}
+{"_e":"metro:bundling:progress","_t":1792690146923,"id":"1","progress":0.3244335009062617,"total":884,"current":498}
+{"_e":"metro:bundling:progress","_t":1792690147045,"id":"1","progress":0.3244335009062617,"total":893,"current":506}
+{"_e":"metro:bundling:progress","_t":1792690147151,"id":"1","progress":0.32689392861429273,"total":899,"current":514}
+{"_e":"metro:bundling:progress","_t":1792690147257,"id":"1","progress":0.3364,"total":900,"current":522}
+{"_e":"metro:bundling:progress","_t":1792690147369,"id":"1","progress":0.35072716049382713,"total":900,"current":533}
+{"_e":"metro:bundling:progress","_t":1792690147480,"id":"1","progress":0.3525802505786516,"total":901,"current":535}
+{"_e":"metro:bundling:progress","_t":1792690147609,"id":"1","progress":0.36186700927936766,"total":901,"current":542}
+{"_e":"metro:bundling:progress","_t":1792690147715,"id":"1","progress":0.3642650498093595,"total":903,"current":545}
+{"_e":"metro:bundling:progress","_t":1792690147827,"id":"1","progress":0.36881436486803976,"total":904,"current":549}
+{"_e":"metro:bundling:progress","_t":1792690147928,"id":"1","progress":0.370336305401662,"total":912,"current":555}
+{"_e":"metro:bundling:progress","_t":1792690148031,"id":"1","progress":0.3802552638113942,"total":913,"current":563}
+{"_e":"metro:bundling:progress","_t":1792690148145,"id":"1","progress":0.38755392652107507,"total":914,"current":569}
+{"_e":"metro:bundling:progress","_t":1792690148257,"id":"1","progress":0.39678996395949734,"total":916,"current":577}
+{"_e":"metro:bundling:progress","_t":1792690148359,"id":"1","progress":0.41116485053318563,"total":917,"current":588}
+{"_e":"metro:bundling:progress","_t":1792690148481,"id":"1","progress":0.42391422495274095,"total":920,"current":599}
+{"_e":"metro:bundling:progress","_t":1792690148584,"id":"1","progress":0.4295947542533082,"total":920,"current":603}
+{"_e":"metro:bundling:progress","_t":1792690148686,"id":"1","progress":0.4338799621928166,"total":920,"current":606}
+{"_e":"metro:bundling:progress","_t":1792690148788,"id":"1","progress":0.4454111531190927,"total":920,"current":614}
+{"_e":"metro:bundling:progress","_t":1792690148895,"id":"1","progress":0.45562500000000006,"total":920,"current":621}
+{"_e":"metro:bundling:progress","_t":1792690148994,"id":"1","progress":0.4600378071833648,"total":920,"current":624}
+{"_e":"metro:bundling:progress","_t":1792690149125,"id":"1","progress":0.46346380332947823,"total":921,"current":627}
+{"_e":"metro:bundling:progress","_t":1792690149246,"id":"1","progress":0.4708850432836894,"total":921,"current":632}
+{"_e":"metro:bundling:progress","_t":1792690149374,"id":"1","progress":0.47237636473596534,"total":921,"current":633}
+{"_e":"metro:bundling:progress","_t":1792690149490,"id":"1","progress":0.47237636473596534,"total":930,"current":638}
+{"_e":"metro:bundling:progress","_t":1792690149595,"id":"1","progress":0.47358076078159334,"total":930,"current":640}
+{"_e":"metro:bundling:progress","_t":1792690149695,"id":"1","progress":0.4765452653485952,"total":930,"current":642}
+{"_e":"metro:bundling:progress","_t":1792690149798,"id":"1","progress":0.4765452653485952,"total":943,"current":647}
+{"_e":"metro:bundling:progress","_t":1792690149899,"id":"1","progress":0.47658304929215556,"total":943,"current":651}
+{"_e":"metro:bundling:progress","_t":1792690150025,"id":"1","progress":0.47804833067003727,"total":943,"current":652}
+{"_e":"metro:bundling:progress","_t":1792690150125,"id":"1","progress":0.4843806108158575,"total":944,"current":657}
+{"_e":"metro:bundling:progress","_t":1792690150230,"id":"1","progress":0.4901478464199177,"total":947,"current":663}
+{"_e":"metro:bundling:progress","_t":1792690150347,"id":"1","progress":0.5020478162016662,"total":947,"current":671}
+{"_e":"metro:bundling:progress","_t":1792690150874,"id":"1","progress":0.5095577765165158,"total":947,"current":676}
+{"_e":"metro:bundling:progress","_t":1792690151307,"id":"1","progress":0.5095577765165158,"total":948,"current":676}
+{"_e":"metro:bundling:progress","_t":1792690151729,"id":"1","progress":0.5095577765165158,"total":2849,"current":677}
+{"_e":"metro:bundling:progress","_t":1792690151842,"id":"1","progress":0.5095577765165158,"total":2852,"current":678}
+{"_e":"metro:bundling:progress","_t":1792690151844,"id":"1","progress":0.5095577765165158,"total":2852,"current":679}
+{"_e":"metro:bundling:progress","_t":1792690151947,"id":"1","progress":0.5095577765165158,"total":2870,"current":689}
+{"_e":"metro:bundling:progress","_t":1792690152049,"id":"1","progress":0.5095577765165158,"total":2876,"current":699}
+{"_e":"metro:bundling:progress","_t":1792690152152,"id":"1","progress":0.5095577765165158,"total":2882,"current":708}
+{"_e":"metro:bundling:progress","_t":1792690152217,"id":"1","progress":0.5095577765165158,"total":2882,"current":709}
+{"_e":"metro:bundling:progress","_t":1792690152343,"id":"1","progress":0.5095577765165158,"total":2891,"current":715}
+{"_e":"metro:bundling:progress","_t":1792690152448,"id":"1","progress":0.5095577765165158,"total":2892,"current":721}
+{"_e":"metro:bundling:progress","_t":1792690152616,"id":"1","progress":0.5095577765165158,"total":2892,"current":722}
+{"_e":"metro:bundling:progress","_t":1792690152790,"id":"1","progress":0.5095577765165158,"total":2898,"current":724}
+{"_e":"metro:bundling:progress","_t":1792690152960,"id":"1","progress":0.5095577765165158,"total":2898,"current":727}
+{"_e":"metro:bundling:progress","_t":1792690153070,"id":"1","progress":0.5095577765165158,"total":2905,"current":730}
+{"_e":"metro:bundling:progress","_t":1792690153173,"id":"1","progress":0.5095577765165158,"total":2912,"current":743}
+{"_e":"metro:bundling:progress","_t":1792690153277,"id":"1","progress":0.5095577765165158,"total":2913,"current":755}
+{"_e":"metro:bundling:progress","_t":1792690153379,"id":"1","progress":0.5095577765165158,"total":2916,"current":765}
+{"_e":"metro:bundling:progress","_t":1792690153486,"id":"1","progress":0.5095577765165158,"total":2922,"current":784}
+{"_e":"metro:bundling:progress","_t":1792690153597,"id":"1","progress":0.5095577765165158,"total":2929,"current":797}
+{"_e":"metro:bundling:progress","_t":1792690153709,"id":"1","progress":0.5095577765165158,"total":2931,"current":809}
+{"_e":"metro:bundling:progress","_t":1792690153820,"id":"1","progress":0.5095577765165158,"total":2931,"current":818}
+{"_e":"metro:bundling:progress","_t":1792690153952,"id":"1","progress":0.5095577765165158,"total":2939,"current":830}
+{"_e":"metro:bundling:progress","_t":1792690154057,"id":"1","progress":0.5095577765165158,"total":2943,"current":837}
+{"_e":"metro:bundling:progress","_t":1792690154183,"id":"1","progress":0.5095577765165158,"total":2949,"current":845}
+{"_e":"metro:bundling:progress","_t":1792690154298,"id":"1","progress":0.5095577765165158,"total":3321,"current":847}
+{"_e":"metro:bundling:progress","_t":1792690154397,"id":"1","progress":0.5095577765165158,"total":3625,"current":851}
+{"_e":"metro:bundling:progress","_t":1792690154499,"id":"1","progress":0.5095577765165158,"total":3631,"current":862}
+{"_e":"metro:bundling:progress","_t":1792690154617,"id":"1","progress":0.5095577765165158,"total":3631,"current":867}
+{"_e":"metro:bundling:progress","_t":1792690154718,"id":"1","progress":0.5095577765165158,"total":3636,"current":893}
+{"_e":"metro:bundling:progress","_t":1792690154827,"id":"1","progress":0.5095577765165158,"total":3639,"current":900}
+{"_e":"metro:bundling:progress","_t":1792690154930,"id":"1","progress":0.5095577765165158,"total":3639,"current":911}
+{"_e":"metro:bundling:progress","_t":1792690155034,"id":"1","progress":0.5095577765165158,"total":3654,"current":919}
+{"_e":"metro:bundling:progress","_t":1792690155239,"id":"1","progress":0.5095577765165158,"total":3658,"current":926}
+{"_e":"metro:bundling:progress","_t":1792690155343,"id":"1","progress":0.5095577765165158,"total":3658,"current":927}
+{"_e":"metro:bundling:progress","_t":1792690155443,"id":"1","progress":0.5095577765165158,"total":3666,"current":933}
+{"_e":"metro:bundling:progress","_t":1792690155586,"id":"1","progress":0.5095577765165158,"total":3674,"current":941}
+{"_e":"metro:bundling:progress","_t":1792690155689,"id":"1","progress":0.5095577765165158,"total":3676,"current":952}
+{"_e":"metro:bundling:progress","_t":1792690155790,"id":"1","progress":0.5095577765165158,"total":3676,"current":962}
+{"_e":"metro:bundling:progress","_t":1792690155893,"id":"1","progress":0.5095577765165158,"total":3676,"current":969}
+{"_e":"metro:bundling:progress","_t":1792690156027,"id":"1","progress":0.5095577765165158,"total":3676,"current":977}
+{"_e":"metro:bundling:progress","_t":1792690156136,"id":"1","progress":0.5095577765165158,"total":3677,"current":987}
+{"_e":"metro:bundling:progress","_t":1792690156239,"id":"1","progress":0.5095577765165158,"total":3677,"current":989}
+{"_e":"metro:bundling:progress","_t":1792690156364,"id":"1","progress":0.5095577765165158,"total":3677,"current":990}
+{"_e":"metro:bundling:progress","_t":1792690156561,"id":"1","progress":0.5095577765165158,"total":3677,"current":997}
+{"_e":"metro:bundling:progress","_t":1792690156668,"id":"1","progress":0.5095577765165158,"total":3677,"current":1011}
+{"_e":"metro:bundling:progress","_t":1792690156788,"id":"1","progress":0.5095577765165158,"total":3677,"current":1021}
+{"_e":"metro:bundling:progress","_t":1792690156897,"id":"1","progress":0.5095577765165158,"total":3677,"current":1035}
+{"_e":"metro:bundling:progress","_t":1792690156997,"id":"1","progress":0.5095577765165158,"total":3677,"current":1054}
+{"_e":"metro:bundling:progress","_t":1792690157110,"id":"1","progress":0.5095577765165158,"total":3677,"current":1071}
+{"_e":"metro:bundling:progress","_t":1792690157219,"id":"1","progress":0.5095577765165158,"total":3677,"current":1086}
+{"_e":"metro:bundling:progress","_t":1792690157324,"id":"1","progress":0.5095577765165158,"total":3677,"current":1104}
+{"_e":"metro:bundling:progress","_t":1792690157428,"id":"1","progress":0.5095577765165158,"total":3677,"current":1123}
+{"_e":"metro:bundling:progress","_t":1792690157531,"id":"1","progress":0.5095577765165158,"total":3677,"current":1143}
+{"_e":"metro:bundling:progress","_t":1792690157632,"id":"1","progress":0.5095577765165158,"total":3677,"current":1155}
+{"_e":"metro:bundling:progress","_t":1792690157734,"id":"1","progress":0.5095577765165158,"total":3677,"current":1176}
+{"_e":"metro:bundling:progress","_t":1792690157836,"id":"1","progress":0.5095577765165158,"total":3677,"current":1190}
+{"_e":"metro:bundling:progress","_t":1792690157938,"id":"1","progress":0.5095577765165158,"total":3677,"current":1205}
+{"_e":"metro:bundling:progress","_t":1792690158043,"id":"1","progress":0.5095577765165158,"total":3677,"current":1224}
+{"_e":"metro:bundling:progress","_t":1792690158146,"id":"1","progress":0.5095577765165158,"total":3677,"current":1247}
+{"_e":"metro:bundling:progress","_t":1792690158246,"id":"1","progress":0.5095577765165158,"total":3677,"current":1259}
+{"_e":"metro:bundling:progress","_t":1792690158354,"id":"1","progress":0.5095577765165158,"total":3677,"current":1284}
+{"_e":"metro:bundling:progress","_t":1792690158454,"id":"1","progress":0.5095577765165158,"total":3677,"current":1303}
+{"_e":"metro:bundling:progress","_t":1792690158565,"id":"1","progress":0.5095577765165158,"total":3677,"current":1321}
+{"_e":"metro:bundling:progress","_t":1792690158666,"id":"1","progress":0.5095577765165158,"total":3677,"current":1344}
+{"_e":"metro:bundling:progress","_t":1792690158775,"id":"1","progress":0.5095577765165158,"total":3677,"current":1364}
+{"_e":"metro:bundling:progress","_t":1792690158893,"id":"1","progress":0.5095577765165158,"total":3677,"current":1377}
+{"_e":"metro:bundling:progress","_t":1792690158997,"id":"1","progress":0.5095577765165158,"total":3677,"current":1396}
+{"_e":"metro:bundling:progress","_t":1792690159102,"id":"1","progress":0.5095577765165158,"total":3677,"current":1414}
+{"_e":"metro:bundling:progress","_t":1792690159226,"id":"1","progress":0.5095577765165158,"total":3677,"current":1429}
+{"_e":"metro:bundling:progress","_t":1792690159306,"id":"1","progress":0.5095577765165158,"total":3677,"current":1430}
+{"_e":"metro:bundling:progress","_t":1792690159415,"id":"1","progress":0.5095577765165158,"total":3677,"current":1448}
+{"_e":"metro:bundling:progress","_t":1792690159523,"id":"1","progress":0.5095577765165158,"total":3677,"current":1467}
+{"_e":"metro:bundling:progress","_t":1792690159628,"id":"1","progress":0.5095577765165158,"total":3677,"current":1488}
+{"_e":"metro:bundling:progress","_t":1792690159747,"id":"1","progress":0.5095577765165158,"total":3677,"current":1510}
+{"_e":"metro:bundling:progress","_t":1792690159848,"id":"1","progress":0.5095577765165158,"total":3677,"current":1534}
+{"_e":"metro:bundling:progress","_t":1792690159948,"id":"1","progress":0.5095577765165158,"total":3677,"current":1559}
+{"_e":"metro:bundling:progress","_t":1792690160060,"id":"1","progress":0.5095577765165158,"total":3677,"current":1575}
+{"_e":"metro:bundling:progress","_t":1792690160168,"id":"1","progress":0.5095577765165158,"total":3677,"current":1601}
+{"_e":"metro:bundling:progress","_t":1792690160269,"id":"1","progress":0.5095577765165158,"total":3677,"current":1624}
+{"_e":"metro:bundling:progress","_t":1792690160369,"id":"1","progress":0.5095577765165158,"total":3677,"current":1646}
+{"_e":"metro:bundling:progress","_t":1792690160469,"id":"1","progress":0.5095577765165158,"total":3677,"current":1670}
+{"_e":"metro:bundling:progress","_t":1792690160572,"id":"1","progress":0.5095577765165158,"total":3677,"current":1686}
+{"_e":"metro:bundling:progress","_t":1792690160672,"id":"1","progress":0.5095577765165158,"total":3677,"current":1696}
+{"_e":"metro:bundling:progress","_t":1792690160775,"id":"1","progress":0.5095577765165158,"total":3677,"current":1715}
+{"_e":"metro:bundling:progress","_t":1792690160887,"id":"1","progress":0.5095577765165158,"total":3677,"current":1740}
+{"_e":"metro:bundling:progress","_t":1792690160987,"id":"1","progress":0.5095577765165158,"total":3677,"current":1755}
+{"_e":"metro:bundling:progress","_t":1792690161087,"id":"1","progress":0.5095577765165158,"total":3677,"current":1776}
+{"_e":"metro:bundling:progress","_t":1792690161197,"id":"1","progress":0.5095577765165158,"total":3677,"current":1796}
+{"_e":"metro:bundling:progress","_t":1792690161297,"id":"1","progress":0.5095577765165158,"total":3677,"current":1820}
+{"_e":"metro:bundling:progress","_t":1792690161397,"id":"1","progress":0.5095577765165158,"total":3677,"current":1839}
+{"_e":"metro:bundling:progress","_t":1792690161499,"id":"1","progress":0.5095577765165158,"total":3677,"current":1866}
+{"_e":"metro:bundling:progress","_t":1792690161606,"id":"1","progress":0.5095577765165158,"total":3677,"current":1886}
+{"_e":"metro:bundling:progress","_t":1792690161707,"id":"1","progress":0.5095577765165158,"total":3677,"current":1912}
+{"_e":"metro:bundling:progress","_t":1792690161813,"id":"1","progress":0.5095577765165158,"total":3677,"current":1934}
+{"_e":"metro:bundling:progress","_t":1792690161913,"id":"1","progress":0.5095577765165158,"total":3677,"current":1956}
+{"_e":"metro:bundling:progress","_t":1792690162025,"id":"1","progress":0.5095577765165158,"total":3677,"current":1963}
+{"_e":"metro:bundling:progress","_t":1792690162128,"id":"1","progress":0.5095577765165158,"total":3677,"current":1977}
+{"_e":"metro:bundling:progress","_t":1792690162233,"id":"1","progress":0.5095577765165158,"total":3677,"current":1997}
+{"_e":"metro:bundling:progress","_t":1792690162346,"id":"1","progress":0.5095577765165158,"total":3677,"current":2016}
+{"_e":"metro:bundling:progress","_t":1792690162448,"id":"1","progress":0.5095577765165158,"total":3677,"current":2038}
+{"_e":"metro:bundling:progress","_t":1792690162559,"id":"1","progress":0.5095577765165158,"total":3677,"current":2052}
+{"_e":"metro:bundling:progress","_t":1792690162659,"id":"1","progress":0.5095577765165158,"total":3677,"current":2067}
+{"_e":"metro:bundling:progress","_t":1792690162759,"id":"1","progress":0.5095577765165158,"total":3677,"current":2076}
+{"_e":"metro:bundling:progress","_t":1792690162865,"id":"1","progress":0.5095577765165158,"total":3677,"current":2085}
+{"_e":"metro:bundling:progress","_t":1792690162966,"id":"1","progress":0.5095577765165158,"total":3677,"current":2096}
+{"_e":"metro:bundling:progress","_t":1792690163071,"id":"1","progress":0.5095577765165158,"total":3677,"current":2109}
+{"_e":"metro:bundling:progress","_t":1792690163176,"id":"1","progress":0.5095577765165158,"total":3677,"current":2118}
+{"_e":"metro:bundling:progress","_t":1792690163286,"id":"1","progress":0.5095577765165158,"total":3677,"current":2130}
+{"_e":"metro:bundling:progress","_t":1792690163392,"id":"1","progress":0.5095577765165158,"total":3677,"current":2147}
+{"_e":"metro:bundling:progress","_t":1792690163496,"id":"1","progress":0.5095577765165158,"total":3677,"current":2163}
+{"_e":"metro:bundling:progress","_t":1792690163598,"id":"1","progress":0.5095577765165158,"total":3677,"current":2174}
+{"_e":"metro:bundling:progress","_t":1792690163698,"id":"1","progress":0.5095577765165158,"total":3677,"current":2195}
+{"_e":"metro:bundling:progress","_t":1792690163801,"id":"1","progress":0.5095577765165158,"total":3677,"current":2213}
+{"_e":"metro:bundling:progress","_t":1792690163916,"id":"1","progress":0.5095577765165158,"total":3677,"current":2230}
+{"_e":"metro:bundling:progress","_t":1792690164015,"id":"1","progress":0.5095577765165158,"total":3677,"current":2252}
+{"_e":"metro:bundling:progress","_t":1792690164115,"id":"1","progress":0.5095577765165158,"total":3677,"current":2272}
+{"_e":"metro:bundling:progress","_t":1792690164232,"id":"1","progress":0.5095577765165158,"total":3677,"current":2284}
+{"_e":"metro:bundling:progress","_t":1792690164334,"id":"1","progress":0.5095577765165158,"total":3677,"current":2304}
+{"_e":"metro:bundling:progress","_t":1792690164436,"id":"1","progress":0.5095577765165158,"total":3677,"current":2326}
+{"_e":"metro:bundling:progress","_t":1792690164537,"id":"1","progress":0.5095577765165158,"total":3677,"current":2349}
+{"_e":"metro:bundling:progress","_t":1792690164638,"id":"1","progress":0.5095577765165158,"total":3677,"current":2373}
+{"_e":"metro:bundling:progress","_t":1792690164749,"id":"1","progress":0.5095577765165158,"total":3677,"current":2391}
+{"_e":"metro:bundling:progress","_t":1792690164849,"id":"1","progress":0.5095577765165158,"total":3677,"current":2415}
+{"_e":"metro:bundling:progress","_t":1792690164976,"id":"1","progress":0.5095577765165158,"total":3677,"current":2422}
+{"_e":"metro:bundling:progress","_t":1792690165077,"id":"1","progress":0.5095577765165158,"total":3677,"current":2437}
+{"_e":"metro:bundling:progress","_t":1792690165206,"id":"1","progress":0.5095577765165158,"total":3677,"current":2448}
+{"_e":"metro:bundling:progress","_t":1792690165318,"id":"1","progress":0.5095577765165158,"total":3677,"current":2454}
+{"_e":"metro:bundling:progress","_t":1792690165418,"id":"1","progress":0.5095577765165158,"total":3677,"current":2466}
+{"_e":"metro:bundling:progress","_t":1792690165544,"id":"1","progress":0.5095577765165158,"total":3677,"current":2477}
+{"_e":"metro:bundling:progress","_t":1792690165662,"id":"1","progress":0.5095577765165158,"total":3677,"current":2484}
+{"_e":"metro:bundling:progress","_t":1792690165748,"id":"1","progress":0.5095577765165158,"total":3677,"current":2485}
+{"_e":"metro:bundling:progress","_t":1792690165872,"id":"1","progress":0.5095577765165158,"total":3677,"current":2497}
+{"_e":"metro:bundling:progress","_t":1792690165963,"id":"1","progress":0.5095577765165158,"total":3677,"current":2498}
+{"_e":"metro:bundling:progress","_t":1792690166072,"id":"1","progress":0.5095577765165158,"total":3677,"current":2500}
+{"_e":"metro:bundling:progress","_t":1792690166172,"id":"1","progress":0.5095577765165158,"total":3677,"current":2505}
+{"_e":"metro:bundling:progress","_t":1792690166275,"id":"1","progress":0.5095577765165158,"total":3677,"current":2506}
+{"_e":"metro:bundling:progress","_t":1792690166389,"id":"1","progress":0.5095577765165158,"total":3677,"current":2515}
+{"_e":"metro:bundling:progress","_t":1792690166516,"id":"1","progress":0.5095577765165158,"total":3677,"current":2529}
+{"_e":"metro:bundling:progress","_t":1792690166627,"id":"1","progress":0.5095577765165158,"total":3677,"current":2536}
+{"_e":"metro:bundling:progress","_t":1792690166734,"id":"1","progress":0.5095577765165158,"total":3677,"current":2544}
+{"_e":"metro:bundling:progress","_t":1792690166847,"id":"1","progress":0.5095577765165158,"total":3677,"current":2556}
+{"_e":"metro:bundling:progress","_t":1792690166957,"id":"1","progress":0.5095577765165158,"total":3677,"current":2571}
+{"_e":"metro:bundling:progress","_t":1792690167072,"id":"1","progress":0.5095577765165158,"total":3677,"current":2590}
+{"_e":"metro:bundling:progress","_t":1792690167175,"id":"1","progress":0.5095577765165158,"total":3677,"current":2609}
+{"_e":"metro:bundling:progress","_t":1792690167276,"id":"1","progress":0.5108147886046264,"total":3677,"current":2628}
+{"_e":"metro:bundling:progress","_t":1792690167376,"id":"1","progress":0.5162717564047443,"total":3677,"current":2642}
+{"_e":"metro:bundling:progress","_t":1792690167486,"id":"1","progress":0.5217577175821684,"total":3677,"current":2656}
+{"_e":"metro:bundling:progress","_t":1792690167589,"id":"1","progress":0.5241177193247295,"total":3677,"current":2662}
+{"_e":"metro:bundling:progress","_t":1792690167698,"id":"1","progress":0.528853698752449,"total":3677,"current":2674}
+{"_e":"metro:bundling:progress","_t":1792690167805,"id":"1","progress":0.5344059305065727,"total":3677,"current":2688}
+{"_e":"metro:bundling:progress","_t":1792690167905,"id":"1","progress":0.538788738055117,"total":3677,"current":2699}
+{"_e":"metro:bundling:progress","_t":1792690168016,"id":"1","progress":0.5427886407202073,"total":3677,"current":2709}
+{"_e":"metro:bundling:progress","_t":1792690168124,"id":"1","progress":0.5464012007400116,"total":3677,"current":2718}
+{"_e":"metro:bundling:progress","_t":1792690168224,"id":"1","progress":0.5540670644922916,"total":3677,"current":2737}
+{"_e":"metro:bundling:progress","_t":1792690168329,"id":"1","progress":0.5605639478151752,"total":3677,"current":2753}
+{"_e":"metro:bundling:progress","_t":1792690168436,"id":"1","progress":0.5630100421372882,"total":3677,"current":2759}
+{"_e":"metro:bundling:progress","_t":1792690168558,"id":"1","progress":0.5687383051107705,"total":3677,"current":2773}
+{"_e":"metro:bundling:progress","_t":1792690168678,"id":"1","progress":0.5757330313485715,"total":3677,"current":2790}
+{"_e":"metro:bundling:progress","_t":1792690168793,"id":"1","progress":0.5827705080253595,"total":3677,"current":2807}
+{"_e":"metro:bundling:progress","_t":1792690168902,"id":"1","progress":0.5885981768638914,"total":3677,"current":2821}
+{"_e":"metro:bundling:progress","_t":1792690169012,"id":"1","progress":0.5957136102235382,"total":3677,"current":2838}
+{"_e":"metro:bundling:progress","_t":1792690169111,"id":"1","progress":0.6001090059498158,"total":3679,"current":2850}
+{"_e":"metro:bundling:progress","_t":1792690169211,"id":"1","progress":0.6023613276899087,"total":3685,"current":2860}
+{"_e":"metro:bundling:progress","_t":1792690169337,"id":"1","progress":0.6046570357781454,"total":3687,"current":2867}
+{"_e":"metro:bundling:progress","_t":1792690169474,"id":"1","progress":0.6078927886839843,"total":3690,"current":2877}
+{"_e":"metro:bundling:progress","_t":1792690169592,"id":"1","progress":0.6092951342038193,"total":3696,"current":2885}
+{"_e":"metro:bundling:progress","_t":1792690169692,"id":"1","progress":0.6097983200766307,"total":3706,"current":2894}
+{"_e":"metro:bundling:progress","_t":1792690169799,"id":"1","progress":0.6112473365847074,"total":3708,"current":2899}
+{"_e":"metro:bundling:progress","_t":1792690169899,"id":"1","progress":0.6128797678544887,"total":3712,"current":2906}
+{"_e":"metro:bundling:progress","_t":1792690170002,"id":"1","progress":0.6155042709215168,"total":3713,"current":2913}
+{"_e":"metro:bundling:progress","_t":1792690170117,"id":"1","progress":0.6166533329394726,"total":3721,"current":2922}
+{"_e":"metro:bundling:progress","_t":1792690170221,"id":"1","progress":0.6186419402304465,"total":3729,"current":2933}
+{"_e":"metro:bundling:progress","_t":1792690170338,"id":"1","progress":0.6186419402304465,"total":3731,"current":2934}
+{"_e":"metro:bundling:progress","_t":1792690170474,"id":"1","progress":0.6186419402304465,"total":3732,"current":2935}
+{"_e":"metro:bundling:progress","_t":1792690170671,"id":"1","progress":0.6190916630829657,"total":3734,"current":2938}
+{"_e":"metro:bundling:progress","_t":1792690170774,"id":"1","progress":0.6208680505153142,"total":3735,"current":2943}
+{"_e":"metro:bundling:progress","_t":1792690170874,"id":"1","progress":0.6229794859939536,"total":3735,"current":2948}
+{"_e":"metro:bundling:progress","_t":1792690170999,"id":"1","progress":0.6251831247793331,"total":3736,"current":2954}
+{"_e":"metro:bundling:progress","_t":1792690171101,"id":"1","progress":0.6251831247793331,"total":3990,"current":2959}
+{"_e":"metro:bundling:progress","_t":1792690171205,"id":"1","progress":0.6251831247793331,"total":3991,"current":2969}
+{"_e":"metro:bundling:progress","_t":1792690171317,"id":"1","progress":0.6251831247793331,"total":3991,"current":2989}
+{"_e":"metro:bundling:progress","_t":1792690171418,"id":"1","progress":0.6251831247793331,"total":3991,"current":3011}
+{"_e":"metro:bundling:progress","_t":1792690171519,"id":"1","progress":0.6251831247793331,"total":3991,"current":3041}
+{"_e":"metro:bundling:progress","_t":1792690171618,"id":"1","progress":0.6251831247793331,"total":3991,"current":3067}
+{"_e":"metro:bundling:progress","_t":1792690171718,"id":"1","progress":0.6251831247793331,"total":3991,"current":3104}
+{"_e":"metro:bundling:progress","_t":1792690171823,"id":"1","progress":0.6251831247793331,"total":3991,"current":3142}
+{"_e":"metro:bundling:progress","_t":1792690171924,"id":"1","progress":0.6352780978449318,"total":3991,"current":3181}
+{"_e":"metro:bundling:progress","_t":1792690172032,"id":"1","progress":0.6424880059311603,"total":3991,"current":3199}
+{"_e":"metro:bundling:progress","_t":1792690172135,"id":"1","progress":0.6517598698801192,"total":3991,"current":3222}
+{"_e":"metro:bundling:progress","_t":1792690172236,"id":"1","progress":0.6586556786093691,"total":3991,"current":3239}
+{"_e":"metro:bundling:progress","_t":1792690172336,"id":"1","progress":0.6692724001089647,"total":3991,"current":3265}
+{"_e":"metro:bundling:progress","_t":1792690172436,"id":"1","progress":0.677496868580716,"total":3991,"current":3285}
+{"_e":"metro:bundling:progress","_t":1792690172556,"id":"1","progress":0.6890955037207558,"total":3991,"current":3313}
+{"_e":"metro:bundling:progress","_t":1792690172663,"id":"1","progress":0.6924274807492504,"total":3991,"current":3321}
+{"_e":"metro:bundling:progress","_t":1792690172770,"id":"1","progress":0.6943749148262612,"total":3995,"current":3329}
+{"_e":"metro:bundling:progress","_t":1792690172871,"id":"1","progress":0.6970871628911005,"total":3998,"current":3338}
+{"_e":"metro:bundling:progress","_t":1792690172981,"id":"1","progress":0.6970871628911005,"total":4004,"current":3343}
+{"_e":"metro:bundling:progress","_t":1792690173081,"id":"1","progress":0.6983348819013154,"total":4004,"current":3346}
+{"_e":"metro:bundling:progress","_t":1792690173193,"id":"1","progress":0.7014637287168219,"total":4007,"current":3356}
+{"_e":"metro:bundling:progress","_t":1792690173298,"id":"1","progress":0.7033394692819075,"total":4010,"current":3363}
+{"_e":"metro:bundling:progress","_t":1792690173405,"id":"1","progress":0.7043632197175385,"total":4019,"current":3373}
+{"_e":"metro:bundling:progress","_t":1792690173513,"id":"1","progress":0.7073563154377367,"total":4020,"current":3381}
+{"_e":"metro:bundling:progress","_t":1792690173624,"id":"1","progress":0.710420138269849,"total":4022,"current":3390}
+{"_e":"metro:bundling:progress","_t":1792690173726,"id":"1","progress":0.7172064753938776,"total":4023,"current":3407}
+{"_e":"metro:bundling:progress","_t":1792690173825,"id":"1","progress":0.7219721461363374,"total":4025,"current":3420}
+{"_e":"metro:bundling:progress","_t":1792690173953,"id":"1","progress":0.724570532472856,"total":4026,"current":3427}
+{"_e":"metro:bundling:progress","_t":1792690174053,"id":"1","progress":0.7289293342826628,"total":4028,"current":3439}
+{"_e":"metro:bundling:progress","_t":1792690174157,"id":"1","progress":0.7312350001947817,"total":4031,"current":3447}
+{"_e":"metro:bundling:progress","_t":1792690174257,"id":"1","progress":0.7359699413619615,"total":4032,"current":3459}
+{"_e":"metro:bundling:progress","_t":1792690174377,"id":"1","progress":0.7389517294186194,"total":4032,"current":3466}
+{"_e":"metro:bundling:progress","_t":1792690174507,"id":"1","progress":0.7393781912359851,"total":4032,"current":3467}
+{"_e":"metro:bundling:progress","_t":1792690174608,"id":"1","progress":0.7449333900226758,"total":4032,"current":3480}
+{"_e":"metro:bundling:progress","_t":1792690174713,"id":"1","progress":0.7509965054602529,"total":4033,"current":3495}
+{"_e":"metro:bundling:progress","_t":1792690174832,"id":"1","progress":0.7553002015543844,"total":4033,"current":3505}
+{"_e":"metro:bundling:progress","_t":1792690174960,"id":"1","progress":0.7574566607044082,"total":4033,"current":3510}
+{"_e":"metro:bundling:progress","_t":1792690175077,"id":"1","progress":0.7578883214226494,"total":4033,"current":3511}
+{"_e":"metro:bundling:progress","_t":1792690175229,"id":"1","progress":0.7583201051036365,"total":4033,"current":3512}
+{"_e":"metro:bundling:progress","_t":1792690175339,"id":"1","progress":0.7596161939230704,"total":4033,"current":3515}
+{"_e":"metro:bundling:progress","_t":1792690175453,"id":"1","progress":0.760536186096907,"total":4034,"current":3518}
+{"_e":"metro:bundling:progress","_t":1792690175577,"id":"1","progress":0.7608675620037251,"total":4040,"current":3524}
+{"_e":"metro:bundling:progress","_t":1792690175708,"id":"1","progress":0.7638933070287227,"total":4040,"current":3531}
+{"_e":"metro:bundling:progress","_t":1792690175808,"id":"1","progress":0.7656791335972822,"total":4041,"current":3536}
+{"_e":"metro:bundling:progress","_t":1792690175939,"id":"1","progress":0.76844039257583,"total":4044,"current":3545}
+{"_e":"metro:bundling:progress","_t":1792690176057,"id":"1","progress":0.7710438025439258,"total":4044,"current":3551}
+{"_e":"metro:bundling:progress","_t":1792690176231,"id":"1","progress":0.7728869483881482,"total":4046,"current":3557}
+{"_e":"metro:bundling:progress","_t":1792690176374,"id":"1","progress":0.7764709479331031,"total":4048,"current":3567}
+{"_e":"metro:bundling:progress","_t":1792690176592,"id":"1","progress":0.7769063725413614,"total":4048,"current":3568}
+{"_e":"metro:bundling:progress","_t":1792690176703,"id":"1","progress":0.7828298241003472,"total":4053,"current":3586}
+{"_e":"metro:bundling:progress","_t":1792690176813,"id":"1","progress":0.7846271316506881,"total":4054,"current":3591}
+{"_e":"metro:bundling:progress","_t":1792690176925,"id":"1","progress":0.7864256120756369,"total":4055,"current":3596}
+{"_e":"metro:bundling:progress","_t":1792690177025,"id":"1","progress":0.7865740382006495,"total":4058,"current":3599}
+{"_e":"metro:bundling:progress","_t":1792690177149,"id":"1","progress":0.7910481326894611,"total":4060,"current":3611}
+{"_e":"metro:bundling:progress","_t":1792690177254,"id":"1","progress":0.794996238685724,"total":4060,"current":3620}
+{"_e":"metro:bundling:progress","_t":1792690177358,"id":"1","progress":0.7998815890712679,"total":4061,"current":3632}
+{"_e":"metro:bundling:progress","_t":1792690177472,"id":"1","progress":0.8010866039375842,"total":4068,"current":3641}
+{"_e":"metro:bundling:progress","_t":1792690177594,"id":"1","progress":0.8015267009510881,"total":4068,"current":3642}
+{"_e":"metro:bundling:progress","_t":1792690177693,"id":"1","progress":0.8033796763035093,"total":4070,"current":3648}
+{"_e":"metro:bundling:progress","_t":1792690177813,"id":"1","progress":0.8045786382555237,"total":4077,"current":3657}
+{"_e":"metro:bundling:progress","_t":1792690177938,"id":"1","progress":0.8051543276624376,"total":4080,"current":3661}
+{"_e":"metro:bundling:progress","_t":1792690178055,"id":"1","progress":0.8055942425990005,"total":4080,"current":3662}
+{"_e":"metro:bundling:progress","_t":1792690178171,"id":"1","progress":0.806959486953754,"total":4081,"current":3666}
+{"_e":"metro:bundling:progress","_t":1792690178271,"id":"1","progress":0.806959486953754,"total":4090,"current":3673}
+{"_e":"metro:bundling:progress","_t":1792690178383,"id":"1","progress":0.8074061376001036,"total":4091,"current":3676}
+{"_e":"metro:bundling:progress","_t":1792690178491,"id":"1","progress":0.8097802346886597,"total":4095,"current":3685}
+{"_e":"metro:bundling:progress","_t":1792690178592,"id":"1","progress":0.8101316163624589,"total":4103,"current":3693}
+{"_e":"metro:bundling:progress","_t":1792690178708,"id":"1","progress":0.8112708801963245,"total":4109,"current":3701}
+{"_e":"metro:bundling:progress","_t":1792690178807,"id":"1","progress":0.8112708801963245,"total":4115,"current":3705}
+{"_e":"metro:bundling:progress","_t":1792690178919,"id":"1","progress":0.8120129108147494,"total":4116,"current":3709}
+{"_e":"metro:bundling:progress","_t":1792690179038,"id":"1","progress":0.8130181011485156,"total":4119,"current":3714}
+{"_e":"metro:bundling:progress","_t":1792690179145,"id":"1","progress":0.8144602717551364,"total":4122,"current":3720}
+{"_e":"metro:bundling:progress","_t":1792690179253,"id":"1","progress":0.8172580674342318,"total":4126,"current":3730}
+{"_e":"metro:bundling:progress","_t":1792690179361,"id":"1","progress":0.820493817751174,"total":4130,"current":3741}
+{"_e":"metro:bundling:progress","_t":1792690179472,"id":"1","progress":0.8337060661667711,"total":4130,"current":3771}
+{"_e":"metro:bundling:progress","_t":1792690179589,"id":"1","progress":0.8412398501486201,"total":4130,"current":3788}
+{"_e":"metro:bundling:progress","_t":1792690179695,"id":"1","progress":0.8510397551723935,"total":4130,"current":3810}
+{"_e":"metro:bundling:progress","_t":1792690179796,"id":"1","progress":0.8539600505271209,"total":4137,"current":3823}
+{"_e":"metro:bundling:progress","_t":1792690179896,"id":"1","progress":0.8660648589531065,"total":4137,"current":3850}
+{"_e":"metro:bundling:progress","_t":1792690179997,"id":"1","progress":0.8809753143615319,"total":4137,"current":3883}
+{"_e":"metro:bundling:progress","_t":1792690180097,"id":"1","progress":0.8928125760856018,"total":4137,"current":3909}
+{"_e":"metro:bundling:progress","_t":1792690180198,"id":"1","progress":0.9033498494779568,"total":4137,"current":3932}
+{"_e":"metro:bundling:progress","_t":1792690180302,"id":"1","progress":0.9176500717012306,"total":4137,"current":3963}
+{"_e":"metro:bundling:progress","_t":1792690180414,"id":"1","progress":0.9306629262714559,"total":4137,"current":3991}
+{"_e":"metro:bundling:progress","_t":1792690180535,"id":"1","progress":0.9306629262714559,"total":4146,"current":3993}
+{"_e":"metro:bundling:progress","_t":1792690180655,"id":"1","progress":0.9308107431383541,"total":4146,"current":4000}
+{"_e":"metro:bundling:progress","_t":1792690180765,"id":"1","progress":0.9312762066855946,"total":4146,"current":4001}
+{"_e":"metro:bundling:progress","_t":1792690180880,"id":"1","progress":0.9336210051060004,"total":4147,"current":4007}
+{"_e":"metro:bundling:progress","_t":1792690181033,"id":"1","progress":0.9354859155130228,"total":4147,"current":4011}
+{"_e":"metro:bundling:progress","_t":1792690181142,"id":"1","progress":0.9364341449307167,"total":4148,"current":4014}
+{"_e":"metro:bundling:progress","_t":1792690181250,"id":"1","progress":0.9397030809889444,"total":4148,"current":4021}
+{"_e":"metro:bundling:progress","_t":1792690181351,"id":"1","progress":0.9462835825228625,"total":4150,"current":4037}
+{"_e":"metro:bundling:progress","_t":1792690181452,"id":"1","progress":0.9463727895867798,"total":4157,"current":4044}
+{"_e":"metro:bundling:progress","_t":1792690181555,"id":"1","progress":0.9468534956750445,"total":4158,"current":4046}
+{"_e":"metro:bundling:progress","_t":1792690181656,"id":"1","progress":0.9539090814534025,"total":4160,"current":4063}
+{"_e":"metro:bundling:progress","_t":1792690181785,"id":"1","progress":0.9539090814534025,"total":4178,"current":4070}
+{"_e":"metro:bundling:progress","_t":1792690181938,"id":"1","progress":0.9539090814534025,"total":4180,"current":4075}
+{"_e":"metro:bundling:progress","_t":1792690182265,"id":"1","progress":0.9539090814534025,"total":4184,"current":4079}
+{"_e":"metro:bundling:progress","_t":1792690182392,"id":"1","progress":0.9539090814534025,"total":4188,"current":4083}
+{"_e":"metro:bundling:progress","_t":1792690182493,"id":"1","progress":0.9539090814534025,"total":4189,"current":4088}
+{"_e":"metro:bundling:progress","_t":1792690182615,"id":"1","progress":0.9539090814534025,"total":4199,"current":4099}
+{"_e":"metro:bundling:progress","_t":1792690182716,"id":"1","progress":0.9576020408163265,"total":4200,"current":4110}
+{"_e":"metro:bundling:progress","_t":1792690182826,"id":"1","progress":0.9594668934240363,"total":4200,"current":4114}
+{"_e":"metro:bundling:progress","_t":1792690182930,"id":"1","progress":0.9609035864533889,"total":4204,"current":4121}
+{"_e":"metro:bundling:progress","_t":1792690183036,"id":"1","progress":0.96232088344233,"total":4206,"current":4126}
+{"_e":"metro:bundling:progress","_t":1792690183136,"id":"1","progress":0.9656132327060981,"total":4209,"current":4136}
+{"_e":"metro:bundling:progress","_t":1792690183242,"id":"1","progress":0.9698201835989257,"total":4209,"current":4145}
+{"_e":"metro:bundling:progress","_t":1792690183343,"id":"1","progress":0.9717195580304855,"total":4213,"current":4153}
+{"_e":"metro:bundling:progress","_t":1792690183458,"id":"1","progress":0.9731239459836571,"total":4213,"current":4156}
+{"_e":"metro:bundling:progress","_t":1792690183558,"id":"1","progress":0.9731239459836571,"total":4246,"current":4175}
+{"_e":"metro:bundling:progress","_t":1792690183738,"id":"1","progress":0.9731239459836571,"total":4259,"current":4182}
+{"_e":"metro:bundling:progress","_t":1792690183760,"id":"1","progress":0.9731239459836571,"total":4259,"current":4183}
+{"_e":"metro:bundling:progress","_t":1792690183860,"id":"1","progress":0.9731239459836571,"total":4260,"current":4185}
+{"_e":"metro:bundling:progress","_t":1792690184026,"id":"1","progress":0.9731239459836571,"total":4261,"current":4187}
+{"_e":"metro:bundling:progress","_t":1792690184125,"id":"1","progress":0.9731239459836571,"total":4302,"current":4189}
+{"_e":"metro:bundling:progress","_t":1792690184225,"id":"1","progress":0.9731239459836571,"total":4303,"current":4191}
+{"_e":"metro:bundling:progress","_t":1792690184326,"id":"1","progress":0.9731239459836571,"total":4354,"current":4201}
+{"_e":"metro:bundling:progress","_t":1792690184426,"id":"1","progress":0.9731239459836571,"total":4354,"current":4207}
+{"_e":"metro:bundling:progress","_t":1792690184528,"id":"1","progress":0.9731239459836571,"total":4357,"current":4216}
+{"_e":"metro:bundling:progress","_t":1792690184629,"id":"1","progress":0.9731239459836571,"total":4368,"current":4236}
+{"_e":"metro:bundling:progress","_t":1792690184728,"id":"1","progress":0.9731239459836571,"total":4372,"current":4241}
+{"_e":"metro:bundling:progress","_t":1792690184831,"id":"1","progress":0.9731239459836571,"total":4379,"current":4252}
+{"_e":"metro:bundling:progress","_t":1792690184933,"id":"1","progress":0.9731239459836571,"total":4384,"current":4264}
+{"_e":"metro:bundling:progress","_t":1792690185040,"id":"1","progress":0.9731239459836571,"total":4384,"current":4268}
+{"_e":"metro:bundling:progress","_t":1792690185173,"id":"1","progress":0.9731239459836571,"total":4385,"current":4274}
+{"_e":"metro:bundling:progress","_t":1792690185285,"id":"1","progress":0.9731239459836571,"total":4385,"current":4279}
+{"_e":"metro:bundling:progress","_t":1792690185391,"id":"1","progress":0.9731239459836571,"total":4385,"current":4293}
+{"_e":"metro:bundling:progress","_t":1792690185503,"id":"1","progress":0.9731239459836571,"total":4386,"current":4301}
+{"_e":"metro:bundling:progress","_t":1792690185603,"id":"1","progress":0.9731239459836571,"total":4389,"current":4307}
+{"_e":"metro:bundling:progress","_t":1792690185745,"id":"1","progress":0.9731239459836571,"total":4393,"current":4312}
+{"_e":"metro:bundling:progress","_t":1792690185857,"id":"1","progress":0.9731239459836571,"total":4396,"current":4323}
+{"_e":"metro:bundling:progress","_t":1792690185956,"id":"1","progress":0.9731239459836571,"total":4400,"current":4329}
+{"_e":"metro:bundling:progress","_t":1792690186056,"id":"1","progress":0.9747188558502898,"total":4402,"current":4346}
+{"_e":"metro:bundling:progress","_t":1792690186159,"id":"1","progress":0.9787744552998671,"total":4405,"current":4358}
+{"_e":"metro:bundling:progress","_t":1792690186286,"id":"1","progress":0.9814756071704308,"total":4406,"current":4365}
+{"_e":"metro:bundling:progress","_t":1792690186386,"id":"1","progress":0.9819701690768206,"total":4417,"current":4377}
+{"_e":"metro:bundling:progress","_t":1792690186502,"id":"1","progress":0.9828831990355095,"total":4421,"current":4383}
+{"_e":"metro:bundling:progress","_t":1792690186605,"id":"1","progress":0.9846883594008025,"total":4424,"current":4390}
+{"_e":"metro:bundling:progress","_t":1792690186706,"id":"1","progress":0.9882910263911431,"total":4428,"current":4402}
+{"_e":"metro:bundling:progress","_t":1792690186806,"id":"1","progress":0.9918864432546766,"total":4428,"current":4410}
+{"_e":"metro:bundling:progress","_t":1792690186931,"id":"1","progress":0.9959409219919592,"total":4430,"current":4421}
+{"_e":"metro:bundling:progress","_t":1792690187032,"id":"1","progress":0.9972930307925135,"total":4430,"current":4424}
+{"_e":"metro:bundling:progress","_t":1792690187133,"id":"1","progress":0.9986463622532636,"total":4431,"current":4428}
+{"_e":"metro:bundling:progress","_t":1792690187239,"id":"1","progress":0.999,"total":4431,"current":4430}
+{"_e":"metro:bundling:progress","_t":1792690188754,"id":"1","progress":0.999,"total":4431,"current":4431}
+{"_e":"metro:bundling:progress","_t":1792690188864,"id":"1","progress":0.999,"total":4433,"current":4432}
+{"_e":"metro:bundling:progress","_t":1792690188933,"id":"1","progress":0.999,"total":4433,"current":4433}
+{"_e":"metro:bundling:progress","_t":1792690189025,"id":"1","progress":0.999,"total":4439,"current":4433}
+{"_e":"metro:bundling:progress","_t":1792690189137,"id":"1","progress":0.999,"total":4439,"current":4434}
+{"_e":"metro:bundling:progress","_t":1792690189237,"id":"1","progress":0.999,"total":4441,"current":4439}
+{"_e":"metro:bundling:progress","_t":1792690189450,"id":"1","progress":0.999,"total":4441,"current":4441}
+{"_e":"metro:bundling:done","_t":1792690190719,"id":"1","total":4441,"ms":57192.7076}
+{"_e":"metro:client_log","_t":1792690206883,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690206906,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690206906,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690206930,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690206932,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690227930,"level":"warn","data":["Network request failed:","fetch failed: java.net.ConnectException: Failed to connect to /10.0.2.2:8080"]}
+{"_e":"metro:client_log","_t":1792690359493,"level":"warn","data":["Network request failed:","fetch failed: java.net.ConnectException: Failed to connect to /10.0.2.2:8080"]}
+{"_e":"metro:client_log","_t":1792690380728,"level":"warn","data":["Network request failed:","fetch failed: Fetch request has been canceled"]}
+{"_e":"metro:client_log","_t":1792690470263,"level":"warn","data":["Network request failed:","fetch failed: Fetch request has been canceled"]}
+{"_e":"metro:bundling:started","_t":1792690855781,"id":"a","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792690855781,"id":"a","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792690856116,"id":"a","total":1,"ms":334.8423}
+{"_e":"metro:bundling:started","_t":1792690879431,"id":"b","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792690879431,"id":"b","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792690879775,"id":"b","total":1,"ms":343.6343}
+{"_e":"metro:client_log","_t":1792690904323,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792690904419,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690904419,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690904419,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690904419,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690910653,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792690911142,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690911143,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690911143,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792690911143,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691055680,"level":"error","data":["[ReferenceError: Property 'MainLayout' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1792691103039,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691103045,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103049,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103050,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103055,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103442,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103443,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103443,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103443,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691103443,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691107811,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691107812,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691107813,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691107815,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691107816,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691117397,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1792691123618,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691123620,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691123625,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691123627,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691123628,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:bundling:started","_t":1792691136201,"id":"h","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792691136201,"id":"h","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792691136382,"id":"h","total":1,"ms":180.7025}
+{"_e":"metro:client_log","_t":1792691148822,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691148840,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691148865,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691148866,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691148867,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691151199,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691151199,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691151201,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691151204,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691151205,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:bundling:started","_t":1792691170077,"id":"i","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792691170077,"id":"i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792691170292,"id":"i","total":1,"ms":214.9466}
+{"_e":"metro:client_log","_t":1792691184127,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691184152,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691184154,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691184174,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691184176,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691187687,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691187687,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691187688,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691187688,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691187694,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:bundling:started","_t":1792691478238,"id":"j","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792691478238,"id":"j","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792691478427,"id":"j","total":1,"ms":188.3451}
+{"_e":"metro:client_log","_t":1792691494314,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691494322,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691494324,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691494346,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691494348,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691532817,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1792691540082,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691540086,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691540091,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691540091,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691540091,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691570450,"level":"warn","data":["[Contact Service] Contact saved locally for later sync:","The request timed out. Please try again."]}
+{"_e":"metro:client_log","_t":1792691570657,"level":"warn","data":["Network request failed:","fetch failed: Fetch request has been canceled"]}
+{"_e":"metro:client_log","_t":1792691575409,"level":"warn","data":["Network request failed:","fetch failed: Fetch request has been canceled"]}
+{"_e":"metro:client_log","_t":1792691587629,"level":"error","data":["[Security Util] Failed to hash file with SHA-256:","[Error: File read failed with HTTP 404]"]}
+{"_e":"metro:client_log","_t":1792691587661,"level":"error","data":["[Evidence Service] Error adding evidence:","[Error: Failed to generate SHA-256 file hash.]"]}
+{"_e":"metro:client_log","_t":1792691587663,"level":"error","data":["Could not add files to the local evidence vault:","[Error: Failed to generate SHA-256 file hash.]"]}
+{"_e":"metro:client_log","_t":1792691661532,"level":"error","data":["[Geoapify] Fetch error encountered:","[Error: An unexpected server error occurred.]"]}
+{"_e":"metro:client_log","_t":1792691661535,"level":"error","data":["[useSupportPlaces] Error loading API data:","[Error: An unexpected server error occurred.]"]}
+{"_e":"metro:client_log","_t":1792691661557,"level":"error","data":["[Geoapify] Fetch error encountered:","[Error: An unexpected server error occurred.]"]}
+{"_e":"metro:client_log","_t":1792691661558,"level":"error","data":["[useSupportPlaces] Error loading API data:","[Error: An unexpected server error occurred.]"]}
+{"_e":"metro:client_log","_t":1792691969175,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691969238,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691969238,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792691969241,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792691969244,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692002389,"level":"warn","data":["Response.blob() is using React Native's Blob, which copies the response into the native blob store and reads it back through base64 encoding. This may be slow for large responses. Add the `expo-blob` package to your app to avoid the performance overhead."]}
+{"_e":"metro:client_log","_t":1792692002446,"level":"error","data":["[Security Util] Failed to hash file with SHA-256:","[Error: File read failed with HTTP 404]"]}
+{"_e":"metro:client_log","_t":1792692002460,"level":"error","data":["[Evidence Service] Error adding evidence:","[Error: Failed to generate SHA-256 file hash.]"]}
+{"_e":"metro:client_log","_t":1792692002461,"level":"error","data":["[Emergency Dispatch] Failed to save emergency audio:","[Error: Failed to generate SHA-256 file hash.]"]}
+{"_e":"metro:client_log","_t":1792692016641,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692016642,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692016642,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692016642,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692016643,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:bundling:started","_t":1792692073724,"id":"11","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792692073724,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792692073903,"id":"11","total":1,"ms":179.2849}
+{"_e":"metro:client_log","_t":1792692085590,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692085614,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692085641,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692085643,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692085643,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:bundling:started","_t":1792692101923,"id":"12","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792692101923,"id":"12","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792692102099,"id":"12","total":1,"ms":176.2642}
+{"_e":"metro:bundling:started","_t":1792692111686,"id":"13","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792692111687,"id":"13","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792692111882,"id":"13","total":1,"ms":195.0697}
+{"_e":"metro:client_log","_t":1792692124729,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692124750,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692124774,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692124777,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692124779,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692191559,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692191562,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692191563,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692191564,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692191565,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692258648,"level":"warn","data":["Response.blob() is using React Native's Blob, which copies the response into the native blob store and reads it back through base64 encoding. This may be slow for large responses. Add the `expo-blob` package to your app to avoid the performance overhead."]}
+{"_e":"metro:client_log","_t":1792692258905,"level":"error","data":["[Security Util] Failed to hash file with SHA-256:","[Error: File read failed with HTTP 404]"]}
+{"_e":"metro:client_log","_t":1792692258937,"level":"error","data":["[Evidence Service] Error adding evidence:","[Error: Failed to generate SHA-256 file hash.]"]}
+{"_e":"metro:client_log","_t":1792692258938,"level":"error","data":["[Emergency Dispatch] Failed to save emergency audio:","[Error: Failed to generate SHA-256 file hash.]"]}
+{"_e":"metro:bundling:started","_t":1792692281163,"id":"16","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792692281163,"id":"16","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792692281391,"id":"16","total":1,"ms":228.093}
+{"_e":"metro:client_log","_t":1792692295528,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692295552,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692295609,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692295612,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692295614,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692341498,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692341500,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692341501,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692341502,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692341502,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692354585,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692354589,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692354600,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692354600,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692354607,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:bundling:started","_t":1792692508724,"id":"17","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792692508724,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792692508922,"id":"17","total":1,"ms":198.4349}
+{"_e":"metro:client_log","_t":1792692524712,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692524733,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792692524758,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692524760,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792692524764,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792692881563,"level":"warn","data":["Response.blob() is using React Native's Blob, which copies the response into the native blob store and reads it back through base64 encoding. This may be slow for large responses. Add the `expo-blob` package to your app to avoid the performance overhead."]}
+{"_e":"metro:client_log","_t":1792692882345,"level":"warn","data":["[Evidence Sync] Evidence 377df9ff-76f2-4ff5-a141-9b9c0732adaa remains queued:","[Error: Could not read evidence file: 377df9ff-76f2-4ff5-a141-9b9c0732adaa]"]}
+{"_e":"metro:client_log","_t":1792692882420,"level":"warn","data":["[Evidence Sync] Evidence 377df9ff-76f2-4ff5-a141-9b9c0732adaa remains queued:","[Error: Could not read evidence file: 377df9ff-76f2-4ff5-a141-9b9c0732adaa]"]}
+{"_e":"metro:client_log","_t":1792692977707,"level":"warn","data":["[Evidence Sync] Evidence 377df9ff-76f2-4ff5-a141-9b9c0732adaa remains queued:","[Error: Could not read evidence file: 377df9ff-76f2-4ff5-a141-9b9c0732adaa]"]}
+{"_e":"metro:client_log","_t":1792693003741,"level":"warn","data":["[Evidence Sync] Evidence c8202df1-3d62-4634-b68f-70061f6558ad remains queued:","[Error: Could not read evidence file: c8202df1-3d62-4634-b68f-70061f6558ad]"]}
+{"_e":"metro:client_log","_t":1792693027618,"level":"error","data":["[Evidence Download] Could not download the evidence file:","[StorageApiError: Object not found]"]}
+{"_e":"metro:client_log","_t":1792693027958,"level":"error","data":["Single download routine failed:","[StorageApiError: Object not found]"]}
+{"_e":"metro:client_log","_t":1792693036649,"level":"warn","data":["[Evidence Service] Backend deletion status sync failed."]}
+{"_e":"metro:client_log","_t":1792693050511,"level":"warn","data":["[Evidence Service] Backend deletion status sync failed."]}
+{"_e":"metro:client_log","_t":1792693073120,"level":"warn","data":["[Evidence Service] Backend deletion status sync failed."]}
+{"_e":"metro:client_log","_t":1792693209629,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693209630,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792693209630,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792693209630,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693209630,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693230950,"level":"warn","data":["[Evidence Sync] Evidence 29d70260-685e-453b-b7d4-07bae970ec9a remains queued:","[Error: Could not read evidence file: 29d70260-685e-453b-b7d4-07bae970ec9a]"]}
+{"_e":"metro:client_log","_t":1792693231047,"level":"warn","data":["[Evidence Sync] Evidence 377df9ff-76f2-4ff5-a141-9b9c0732adaa remains queued:","[Error: Could not read evidence file: 377df9ff-76f2-4ff5-a141-9b9c0732adaa]"]}
+{"_e":"metro:client_log","_t":1792693231122,"level":"warn","data":["[Evidence Sync] Evidence 29d70260-685e-453b-b7d4-07bae970ec9a remains queued:","[Error: Could not read evidence file: 29d70260-685e-453b-b7d4-07bae970ec9a]"]}
+{"_e":"metro:bundling:started","_t":1792693275288,"id":"1i","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792693275288,"id":"1i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693275289,"id":"1i","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792693275570,"id":"1i","total":1,"ms":282.4865}
+{"_e":"metro:client_log","_t":1792693297555,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693297589,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:client_log","_t":1792693297597,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693297599,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 4}"]}
+{"_e":"metro:client_log","_t":1792693297608,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 4}"]}
+{"_e":"metro:bundling:started","_t":1792693528415,"id":"1j","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792693528415,"id":"1j","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792693528880,"id":"1j","total":1,"ms":464.9111}
+{"_e":"metro:client_log","_t":1792693564981,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693564981,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 4}"]}
+{"_e":"metro:client_log","_t":1792693564981,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 4}"]}
+{"_e":"metro:client_log","_t":1792693564981,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693564981,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 2}"]}
+{"_e":"metro:bundling:started","_t":1792693930531,"id":"1m","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792693930532,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693930538,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693930970,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693931914,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932014,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932114,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932214,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932314,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932414,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932514,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932614,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932714,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932815,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693932916,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693933015,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693933115,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693933220,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792693933387,"id":"1m","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792693933579,"id":"1m","total":1,"ms":3047.3807}
+{"_e":"metro:client_log","_t":1792693950795,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693950812,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792693950813,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792693950815,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792693950817,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792693984689,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1792694001397,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694001399,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792694001400,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792694001401,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694001402,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792694092774,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694092783,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694092783,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792694092787,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694092921,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694097867,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694097870,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694097872,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792694097874,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694097874,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:bundling:started","_t":1792694110304,"id":"1o","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792694110304,"id":"1o","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792694110646,"id":"1o","total":1,"ms":341.7354}
+{"_e":"metro:client_log","_t":1792694124453,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694124486,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694124490,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694124527,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694124528,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792694334745,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694334750,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694334750,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792694334758,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694334944,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694413776,"level":"warn","data":["Background location is limited in Expo Go:\nOn Android, it is not available at all.\nOn iOS, it works when running in the Simulator.\nYou can use this API, and all others, in a development build. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1792694445729,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694445740,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694445740,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 6}"]}
+{"_e":"metro:client_log","_t":1792694445740,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792694445740,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 3}"]}
+{"_e":"metro:server_log","_t":1792694588136,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.exponent","sdk_gphone16k_x86_64 - 17 - API 37","60"]}
+{"_e":"metro:bundling:started","_t":1792695023397,"id":"1q","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792695023397,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792695023399,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1792695023502,"id":"1q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792695023694,"id":"1q","total":1,"ms":296.8646}
+{"_e":"metro:client_log","_t":1792695039925,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695039950,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695039954,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695039978,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695039980,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695151685,"level":"error","data":["[ReferenceError: Property 'route' doesn't exist]"]}
+{"_e":"metro:client_log","_t":1792695164532,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695164544,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695164556,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695164565,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695164615,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695282900,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695283090,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695283093,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695283096,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695283099,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695314719,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695314779,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695314808,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695314841,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695315061,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695343247,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695343249,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695343252,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695343254,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695343257,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:bundling:started","_t":1792695422951,"id":"1t","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792695422951,"id":"1t","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792695423128,"id":"1t","total":1,"ms":177.0874}
+{"_e":"metro:client_log","_t":1792695436659,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695436687,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695436690,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695436721,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695436725,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695469603,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695469604,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695469604,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695469609,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695469629,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:bundling:started","_t":1792695671092,"id":"1u","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792695671092,"id":"1u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792695671350,"id":"1u","total":1,"ms":257.6843}
+{"_e":"metro:client_log","_t":1792695695078,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695695093,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695695094,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695695116,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695695117,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695776052,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 3}"]}
+{"_e":"metro:client_log","_t":1792695776056,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 5}"]}
+{"_e":"metro:client_log","_t":1792695776059,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:client_log","_t":1792695776060,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 1}"]}
+{"_e":"metro:client_log","_t":1792695776062,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 7}"]}
+{"_e":"metro:bundling:started","_t":1792696059934,"id":"1v","platform":"android","environment":null,"entry":"index.js"}
+{"_e":"metro:bundling:progress","_t":1792696059934,"id":"1v","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1792696060214,"id":"1v","total":1,"ms":279.4595}
+{"_e":"metro:client_log","_t":1792696088230,"level":"log","data":["[Local SQLite] Local_Users:","{\"columns\": [\"user_id\", \"email_blind_index\", \"encrypted_name\", \"encrypted_surname\", \"encrypted_email\", \"encrypted_phone_num\", \"password_hash\", \"offline_password_verifier\", \"is_verified\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792696088260,"level":"log","data":["[Local SQLite] Local_Emergency_Contacts:","{\"columns\": [\"contact_id\", \"user_id\", \"contact_email_blind_index\", \"encrypted_contact_name\", \"encrypted_contact_surname\", \"encrypted_contact_phone_num\", \"encrypted_contact_email\", \"created_at\", \"updated_at\", \"deleted_at\", \"is_synched\", \"is_deleted\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792696088263,"level":"log","data":["[Local SQLite] Local_Evidence_Vault:","{\"columns\": [\"evidence_id\", \"user_id\", \"file_type\", \"local_file_url\", \"cloud_file_url\", \"sha256_hash\", \"file_size\", \"is_deleted\", \"deleted_at\", \"captured_at\", \"updated_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792696088265,"level":"log","data":["[Local SQLite] Local_Incidents:","{\"columns\": [\"incident_id\", \"user_id\", \"evidence_id\", \"trigger_type\", \"status\", \"tracking_token\", \"start_time\", \"end_time\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}
+{"_e":"metro:client_log","_t":1792696088267,"level":"log","data":["[Local SQLite] Local_Incident_Locations:","{\"columns\": [\"location_id\", \"incident_id\", \"latitude\", \"longitude\", \"altitude\", \"accuracy\", \"created_at\", \"updated_at\", \"is_deleted\", \"deleted_at\", \"is_synched\"], \"rows\": 0}"]}

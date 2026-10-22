@@ -1,7 +1,7 @@
+const { fetchPlaces } = require("#services/main/geoapifyClientServer.js");
+const { createHttpError } = require("#utils/httpError.js");
+
 const CACHE_TTL_MS = 10 * 60 * 1000;
-const SEARCH_RADIUS_METRES = 20000;
-const GEOAPIFY_PLACES_URL = "https://api.geoapify.com/v2/places";
-const REQUEST_TIMEOUT_MS = 2000;
 const PLACE_CATEGORIES = [
 	"service.police",
 	"healthcare.hospital",
@@ -114,12 +114,27 @@ const normalizePlace = (feature) => {
 	};
 };
 
-const getNearbyServices = async (latitude, longitude) => {
-	if (!process.env.GEOAPIFY_API_KEY) {
-		throw Object.assign(new Error("Geoapify API key is not configured."), {
-			status: 503,
-		});
+const getFeatureId = (feature) => {
+	const properties = feature?.properties || {};
+	return (
+		properties.place_id ||
+		`${feature?.geometry?.coordinates?.join(",")}:${properties.name || ""}`
+	);
+};
+
+const mergeUniqueFeatures = (...groups) => {
+	const featuresById = new Map();
+
+	for (const feature of groups.flat()) {
+		featuresById.set(String(getFeatureId(feature)), feature);
 	}
+
+	return [...featuresById.values()];
+};
+
+const getNearbyServices = async (latitude, longitude) => {
+	const apiKey = process.env.GEOAPIFY_API_KEY;
+	if (!apiKey) throw createHttpError("Geoapify API key is not configured.", 503);
 
 	const key = getCacheKey(latitude, longitude);
 	const cached = cache.get(key);
@@ -128,59 +143,41 @@ const getNearbyServices = async (latitude, longitude) => {
 	const pending = pendingRequests.get(key);
 	if (pending) return pending;
 
-	// Bound each external lookup so the API can return before the client deadline.
+	// Reuse concurrent requests for the same area to avoid duplicate provider calls.
 	const request = (async () => {
-		const fetchPlaces = async (categories, name) => {
-			const url = new URL(GEOAPIFY_PLACES_URL);
-			const params = new URLSearchParams({
-				categories: categories.join(","),
-				filter: `circle:${longitude},${latitude},${SEARCH_RADIUS_METRES}`,
-				bias: `proximity:${longitude},${latitude}`,
-				limit: "500",
-				lang: "en",
-			});
-			if (name) params.set("name", name);
-			url.search = params.toString();
-			const controller = new AbortController();
-			const timeoutId = setTimeout(
-				() => controller.abort(),
-				REQUEST_TIMEOUT_MS,
-			);
-
-			try {
-				const response = await fetch(url, {
-					headers: { "x-api-key": process.env.GEOAPIFY_API_KEY },
-					signal: controller.signal,
-				});
-				if (!response.ok) {
-					const detail = (await response.text()).slice(0, 300);
-					throw Object.assign(
-						new Error(
-							`Geoapify Places request failed with HTTP ${response.status}${detail ? `: ${detail}` : ""}`,
-						),
-						{ status: response.status },
-					);
-				}
-
-				const data = await response.json();
-				return Array.isArray(data.features) ? data.features : [];
-			} finally {
-				clearTimeout(timeoutId);
-			}
-		};
-
 		try {
+			const lookups = [
+				{ categories: PLACE_CATEGORIES },
+				{ categories: ["service.social_facility.shelter"] },
+				{
+					categories: ["service.social_facility", "accommodation"],
+					name: "shelter",
+				},
+			].map(({ categories, name }) =>
+				fetchPlaces(latitude, longitude, apiKey, categories, name),
+			);
 			const [placesResult, sheltersResult, namedSheltersResult] =
-				await Promise.allSettled([
-					fetchPlaces(PLACE_CATEGORIES),
-					fetchPlaces(["service.social_facility.shelter"]),
-					fetchPlaces(
-						["service.social_facility", "accommodation"],
-						"shelter",
-					),
-				]);
-			if (placesResult.status === "rejected") throw placesResult.reason;
-			const features = placesResult.value;
+				await Promise.allSettled(lookups);
+			const successfulLookups = [
+				placesResult,
+				sheltersResult,
+				namedSheltersResult,
+			].filter((result) => result.status === "fulfilled");
+			if (successfulLookups.length === 0) {
+				throw (
+					placesResult.reason ||
+					sheltersResult.reason ||
+					namedSheltersResult.reason
+				);
+			}
+			if (placesResult.status === "rejected") {
+				console.warn(
+					"[Nearby services] The combined place lookup failed; using successful supplemental results.",
+					placesResult.reason,
+				);
+			}
+			const primaryFeatures =
+				placesResult.status === "fulfilled" ? placesResult.value : [];
 			const shelterFeatures =
 				sheltersResult.status === "fulfilled" ? sheltersResult.value : [];
 			const namedShelterFeatures =
@@ -203,19 +200,12 @@ const getNearbyServices = async (latitude, longitude) => {
 						.join("; "),
 				);
 			}
-			const uniqueFeatures = new Map();
-			for (const feature of [
-				...features,
+			const uniqueFeatures = mergeUniqueFeatures(
+				primaryFeatures,
 				...shelterFeatures,
 				...namedShelterFeatures,
-			]) {
-				const properties = feature?.properties || {};
-				const id =
-					properties.place_id ||
-					`${feature?.geometry?.coordinates?.join(",")}:${properties.name || ""}`;
-				uniqueFeatures.set(String(id), feature);
-			}
-			const services = Array.from(uniqueFeatures.values())
+			);
+			const services = uniqueFeatures
 				.map(normalizePlace)
 				.filter(Boolean);
 			cache.set(key, {
@@ -225,7 +215,10 @@ const getNearbyServices = async (latitude, longitude) => {
 			return services;
 		} catch (error) {
 			console.error("[Nearby services] Geoapify Places lookup failed:", error);
-			throw error;
+			throw createHttpError(
+				"Nearby support services are temporarily unavailable.",
+				503,
+			);
 		}
 	})();
 

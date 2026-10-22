@@ -3,7 +3,7 @@ import { fetchGeoapifyServices } from "@services/main/geoapifyService";
 import { calculateDistanceKm } from "@utils/location/geoUtils";
 import { CATEGORIES } from "@constants/supportConstants";
 
-export function useSupportPlaces(userLocation) {
+export function useSupportPlaces(userLocation, { enabled = true } = {}) {
 	const [liveServices, setLiveServices] = useState([]);
 	const [loadingApi, setLoadingApi] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
@@ -19,6 +19,13 @@ export function useSupportPlaces(userLocation) {
 	useEffect(() => {
 		let isMounted = true;
 		const loadApiData = async () => {
+			if (!enabled) {
+				// Do not query nearby places before the user enables location or connectivity.
+				setLiveServices([]);
+				setLoadingApi(false);
+				return;
+			}
+
 			if (
 				!Number.isFinite(userLocation?.latitude) ||
 				!Number.isFinite(userLocation?.longitude)
@@ -53,7 +60,7 @@ export function useSupportPlaces(userLocation) {
 		return () => {
 			isMounted = false;
 		};
-	}, [userLocation, refreshTrigger]);
+	}, [enabled, userLocation, refreshTrigger]);
 
 	// Format and calculate distances for results
 	const places = useMemo(() => {

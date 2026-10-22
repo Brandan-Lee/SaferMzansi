@@ -1,47 +1,33 @@
 const userService = require("#services/main/userServiceServer.js");
 
-const updateUser = async (req, res, next) => {
-	try {
-		const user = await userService.updateUser(req.body);
+const updateUser = async (req, res) => {
+	const user = await userService.updateUser(req.body);
 
-		return res.status(200).json({
-			success: true,
-			message: "User Profile updated successfully",
-			data: user,
-		});
-	} catch (error) {
-		next(error);
-	}
+	return res.status(200).json({
+		success: true,
+		message: "User Profile updated successfully",
+		data: user,
+	});
 };
 
-const softDeleteUser = async (req, res, next) => {
-	try {
-		const { user_id } = req.body;
-		const result = await userService.softDeleteUser(user_id);
+const softDeleteUser = async (req, res) => {
+	const result = await userService.softDeleteUser(req.body.user_id);
 
-		return res.status(200).json({
-			success: true,
-			message: "Account soft deleted successfully",
-			data: result,
-		});
-	} catch (error) {
-		next(error);
-	}
+	return res.status(200).json({
+		success: true,
+		message: "Account soft deleted successfully",
+		data: result,
+	});
 };
 
-const hardDeleteUser = async (req, res, next) => {
-	try {
-		const { user_id } = req.body;
-		const result = await userService.hardDeleteUser(user_id);
+const hardDeleteUser = async (req, res) => {
+	const result = await userService.hardDeleteUser(req.body.user_id);
 
-		return res.status(200).json({
-			success: true,
-			message: "Account permenantly deleted successfully",
-			data: result,
-		});
-	} catch (error) {
-		next(error);
-	}
+	return res.status(200).json({
+		success: true,
+		message: "Account permanently deleted successfully",
+		data: result,
+	});
 };
 
 module.exports = {

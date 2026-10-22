@@ -8,6 +8,7 @@ import RegistrationScreen from "@screens/auth/RegistrationScreen";
 import SplashScreen from "@screens/main/SplashScreen";
 
 const Stack = createNativeStackNavigator();
+const SCREEN_OPTIONS = { headerShown: false };
 
 export default function AuthStack({
 	initialRoute = "SplashScreen",
@@ -15,7 +16,7 @@ export default function AuthStack({
 }) {
 	return (
 		<Stack.Navigator
-			screenOptions={{ headerShown: false }}
+			screenOptions={SCREEN_OPTIONS}
 			initialRouteName={initialRoute}
 		>
 			<Stack.Screen name="SplashScreen" component={SplashScreen} />

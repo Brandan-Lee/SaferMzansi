@@ -1,9 +1,11 @@
 import * as Crypto from "expo-crypto";
 import * as FileSystem from "expo-file-system/legacy";
 import { File, Paths } from "expo-file-system";
-import NetInfo from "@react-native-community/netinfo";
-import { supabase } from "@config/supabase_client";
 import { postApi, safeApiCall } from "@services/ApiClient";
+import {
+	syncEvidenceDeletion,
+	syncPendingEvidence,
+} from "@services/main/evidenceSyncService";
 import {
 	saveOrUpdateLocalEvidence,
 	markEvidenceAsSynched,
@@ -14,8 +16,6 @@ import {
 	restoreLocalEvidenceQuery,
 	hardDeleteLocalEvidenceQuery,
 	purgeExpiredDeletedEvidence,
-	getPendingEvidence,
-	updateEvidenceCloudFileUrl,
 } from "@database/repositories/evidenceRepository";
 import { hashFileSHA256 } from "@utils/securityAndValidation/securityUtil";
 
@@ -104,212 +104,6 @@ export const addEvidence = async (db, userId, evidenceData) => {
 	}
 };
 
-const syncPendingEvidence = async (db, userId, onlyEvidenceId = null) => {
-	const pendingEvidence = await getPendingEvidence(db, userId);
-	const network = await NetInfo.fetch();
-	if (
-		!network.isConnected ||
-		network.isInternetReachable === false
-	) {
-		return false;
-	}
-
-	const items = onlyEvidenceId
-		? pendingEvidence.filter((item) => item.evidence_id === onlyEvidenceId)
-		: pendingEvidence;
-	let allSynced = true;
-
-	for (const item of items) {
-		try {
-			if (item.is_deleted) {
-				let cloudFileUrl = item.cloud_file_url;
-				if (!cloudFileUrl) {
-					const file = new File(item.local_file_url);
-					if (!file.exists) {
-						throw new Error(`Evidence file is missing locally: ${item.evidence_id}`);
-					}
-					const response = await fetch(file.uri);
-					const blob = await response.blob();
-					const storagePath = `${userId}/${item.evidence_id}_${file.name}`;
-					const { data: uploadData, error: uploadError } =
-						await supabase.storage
-							.from("EvidenceVault")
-							.upload(storagePath, blob, {
-								contentType: item.file_type,
-								upsert: true,
-							});
-					if (uploadError) {
-						throw new Error(`Cloud storage upload failed: ${uploadError.message}`);
-					}
-					cloudFileUrl = uploadData.path;
-					await updateEvidenceCloudFileUrl(db, item.evidence_id, cloudFileUrl);
-				}
-
-				const addResult = await safeApiCall(
-					() =>
-						postApi("/evidence/add", {
-							evidence_id: item.evidence_id,
-							user_id: userId,
-							file_type: item.file_type,
-							cloud_file_url: cloudFileUrl,
-							sha256_hash: item.sha256_hash,
-							file_size: item.file_size,
-							uploaded_at: item.captured_at,
-							is_deleted: false,
-						}),
-					"Server failed to create evidence metadata.",
-				);
-				if (!addResult.success) {
-					const fetched = await safeApiCall(
-						() => postApi("/evidence/get-evidence", { user_id: userId }),
-						"Failed to confirm evidence metadata.",
-					);
-					const serverEvidence = fetched.data?.data?.evidence;
-					const exists = Array.isArray(serverEvidence)
-						? serverEvidence.some(
-								(serverItem) =>
-									(serverItem.evidence_id || serverItem.id) ===
-									item.evidence_id,
-							)
-						: false;
-					if (!exists) {
-						throw new Error(addResult.error || "Evidence metadata sync failed.");
-					}
-				}
-
-				const deleteResult = await safeApiCall(
-					() =>
-						postApi("/evidence/delete", {
-							evidence_id: item.evidence_id,
-							user_id: userId,
-						}),
-					"Server failed to sync evidence deletion.",
-				);
-				if (!deleteResult.success) {
-					const fetched = await safeApiCall(
-						() => postApi("/evidence/get-evidence", { user_id: userId }),
-						"Failed to confirm evidence deletion.",
-					);
-					const serverEvidence = fetched.data?.data?.evidence;
-					const serverItem = Array.isArray(serverEvidence)
-						? serverEvidence.find(
-								(row) =>
-									(row.evidence_id || row.id) === item.evidence_id,
-							)
-						: null;
-					if (!serverItem?.is_deleted) {
-						throw new Error(deleteResult.error || "Evidence deletion sync failed.");
-					}
-				}
-				await markEvidenceAsSynched(db, item.evidence_id);
-				continue;
-			}
-
-			let cloudFileUrl = item.cloud_file_url;
-			if (!cloudFileUrl) {
-				const file = new File(item.local_file_url);
-				if (!file.exists) {
-					throw new Error(`Evidence file is missing locally: ${item.evidence_id}`);
-				}
-				const response = await fetch(file.uri);
-				const blob = await response.blob();
-				const storagePath = `${userId}/${item.evidence_id}_${file.name}`;
-				const { data: uploadData, error: uploadError } = await supabase.storage
-					.from("EvidenceVault")
-					.upload(storagePath, blob, {
-						contentType: item.file_type,
-						upsert: true,
-					});
-
-				if (uploadError) {
-					throw new Error(`Cloud storage upload failed: ${uploadError.message}`);
-				}
-
-				cloudFileUrl = uploadData.path;
-				await updateEvidenceCloudFileUrl(db, item.evidence_id, cloudFileUrl);
-			}
-
-			const result = await safeApiCall(
-				() =>
-					postApi("/evidence/restore", {
-						evidence_id: item.evidence_id,
-						user_id: userId,
-					}),
-				"Server failed to restore evidence.",
-			);
-			if (result.success) {
-				await markEvidenceAsSynched(db, item.evidence_id);
-				continue;
-			}
-
-			const addResult = await safeApiCall(
-				() =>
-					postApi("/evidence/add", {
-						evidence_id: item.evidence_id,
-						user_id: userId,
-						file_type: item.file_type,
-						cloud_file_url: cloudFileUrl,
-						sha256_hash: item.sha256_hash,
-						file_size: item.file_size,
-						uploaded_at: item.captured_at,
-						is_deleted: false,
-					}),
-				"Server failed to save evidence metadata.",
-			);
-
-			if (!addResult.success) {
-				const fetched = await safeApiCall(
-					() => postApi("/evidence/get-evidence", { user_id: userId }),
-					"Failed to confirm evidence metadata.",
-				);
-				const serverEvidence = fetched.data?.data?.evidence;
-				const existing = Array.isArray(serverEvidence)
-					? serverEvidence.find(
-							(serverItem) =>
-								(serverItem.evidence_id || serverItem.id) === item.evidence_id,
-						)
-					: null;
-
-				if (existing?.is_deleted) {
-					const restoreResult = await safeApiCall(
-						() =>
-							postApi("/evidence/restore", {
-								evidence_id: item.evidence_id,
-								user_id: userId,
-							}),
-						"Server failed to restore evidence.",
-					);
-					if (!restoreResult.success) {
-						throw new Error(restoreResult.error || "Evidence restore failed.");
-					}
-				} else if (!existing) {
-					throw new Error(addResult.error || "Evidence metadata sync failed.");
-				}
-			}
-			await markEvidenceAsSynched(db, item.evidence_id);
-		} catch (error) {
-			allSynced = false;
-			console.warn(
-				`[Evidence Service] Evidence ${item.evidence_id} remains queued for sync:`,
-				error,
-			);
-		}
-	}
-
-	return allSynced && items.length > 0;
-};
-
-export const syncQueuedEvidence = async (db, userId) => {
-	const pending = await getPendingEvidence(db, userId);
-	if (!pending.length) return { success: true, count: 0 };
-	await syncPendingEvidence(db, userId);
-	const remaining = await getPendingEvidence(db, userId);
-	return {
-		success: remaining.length === 0,
-		count: pending.length - remaining.length,
-	};
-};
-
 export const syncEvidenceVault = async (db, userId) => {
 	if (!userId) throw new Error("User ID is required to sync evidence vault.");
 
@@ -318,11 +112,13 @@ export const syncEvidenceVault = async (db, userId) => {
 		"Failed to fetch evidence from server."
 	);
 
-	if (!response.success || !Array.isArray(response.data?.evidence)) {
+	const serverEvidence =
+		response.data?.data?.evidence || response.data?.evidence;
+	if (!response.success || !Array.isArray(serverEvidence)) {
 		return { success: false, error: response.error || "Sync failed" };
 	}
 
-	for (const item of response.data.evidence) {
+	for (const item of serverEvidence) {
 		const evidenceId = item.evidence_id || item.id;
 		const localPayload = {
 			evidenceId, userId,
@@ -346,7 +142,7 @@ export const syncEvidenceVault = async (db, userId) => {
 		}
 	}
 
-	return { success: true, count: response.data.evidence.length };
+	return { success: true, count: serverEvidence.length };
 };
 
 export const deleteEvidence = async (db, evidenceId, userId) => {
@@ -360,12 +156,12 @@ export const deleteEvidence = async (db, evidenceId, userId) => {
 		(id, uid) => softDeleteLocalEvidence(db, uid, id)
 	);
 
-	const result = await safeApiCall(
-		() => postApi("/evidence/delete", { evidence_id: safeEvidenceId, user_id: safeUserId, is_deleted: true }),
-		"Server failed to update evidence deletion status."
+	const deletionSynced = await syncEvidenceDeletion(
+		{ evidence_id: safeEvidenceId },
+		safeUserId,
 	);
 
-	if (!result?.success) {
+	if (!deletionSynced) {
 		console.warn("[Evidence Service] Backend deletion status sync failed.");
 	} else {
 		await markEvidenceAsSynched(db, safeEvidenceId);
@@ -374,18 +170,13 @@ export const deleteEvidence = async (db, evidenceId, userId) => {
 	return {
 		success: true,
 		message: "Evidence moved to recycle bin successfully.",
-		syncedWithServer: result?.success || false,
+		syncedWithServer: deletionSynced,
 	};
 };
 
 export const getEvidenceTotal = async (db, userId) => {
 	if (!userId) return 0;
-	try {
-		return await repoGetTotal(db, userId);
-	} catch (error) {
-		console.error("[Evidence Service] Failed to get evidence total:", error);
-		return 0;
-	}
+	return repoGetTotal(db, userId);
 };
 
 export const getDeletedEvidence = async (db, userId) => {
@@ -431,34 +222,43 @@ export const permanentlyDeleteEvidence = async (db, evidenceId, userId) => {
 	const { safeEvidenceId, safeUserId } = extractIds(evidenceId, userId);
 	validateRequired([safeUserId, safeEvidenceId], "User ID and Evidence ID are required for permanent deletion.");
 
-	await executeServiceAction(
-		safeEvidenceId,
-		safeUserId,
-		"Failed to remove evidence from local database.",
-		(id, uid) => hardDeleteLocalEvidenceQuery(db, uid, id)
+	const result = await safeApiCall(
+		() =>
+			postApi("/evidence/permanent-delete", {
+				evidence_id: safeEvidenceId,
+				user_id: safeUserId,
+			}),
+		"Server failed to permanently delete evidence.",
 	);
 
-	try {
-		const { data: fileList } = await supabase.storage
-			.from("EvidenceVault")
-			.list(safeUserId, { search: safeEvidenceId });
-
-		if (fileList?.length) {
-			await supabase.storage
-				.from("EvidenceVault")
-				.remove(fileList.map((file) => `${safeUserId}/${file.name}`));
-		}
-	} catch (e) {
-		console.error("Cloud storage media purge skipped:", e);
+	if (!result.success) {
+		throw new Error(result.error || "Server failed to permanently delete evidence.");
 	}
 
 	try {
-		await safeApiCall(
-			() => postApi("/evidence/permanent-delete", { evidence_id: safeEvidenceId, user_id: safeUserId }),
-			"Server failed to permanently delete evidence."
+		const localEvidence = await db.getFirstAsync(
+			"SELECT local_file_url FROM Local_Evidence_Vault WHERE evidence_id = ? AND user_id = ?",
+			[safeEvidenceId, safeUserId],
 		);
-	} catch (apiErr) {
-		console.warn("Backend permanent delete notification warning:", apiErr);
+		await hardDeleteLocalEvidenceQuery(db, safeUserId, safeEvidenceId);
+
+		const localFileUrl = localEvidence?.local_file_url;
+		if (
+			localFileUrl?.startsWith("file://") ||
+			localFileUrl?.startsWith("content://")
+		) {
+			try {
+				await FileSystem.deleteAsync(localFileUrl, { idempotent: true });
+			} catch (error) {
+				console.warn(
+					"[Evidence Service] Could not remove the local evidence file:",
+					error,
+				);
+			}
+		}
+	} catch (error) {
+		console.error("[Evidence Service] Failed to remove local evidence:", error);
+		throw new Error("Cloud evidence was deleted, but the local record could not be removed.");
 	}
 
 	return { success: true, message: "Evidence permanently deleted." };

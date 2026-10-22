@@ -1,15 +1,12 @@
 const { supabase } = require("#config/supabase_db.js");
+const { omitNullish } = require("#utils/databaseUtil.js");
+
+const TABLE_NAME = "Emergency_Contacts";
 
 const createEmergencyContact = async (payload) => {
-	const cleanPayload = Object.fromEntries(
-		Object.entries(payload).filter(
-			([_, value]) => value !== null && value !== undefined,
-		),
-	);
-
 	const { data, error } = await supabase
-		.from("Emergency_Contacts")
-		.insert([cleanPayload])
+		.from(TABLE_NAME)
+		.insert([omitNullish(payload)])
 		.select()
 		.single();
 
@@ -26,7 +23,7 @@ const findContactById = async (contactId) => {
 	}
 
 	const { data: contact, error } = await supabase
-		.from("Emergency_Contacts")
+		.from(TABLE_NAME)
 		.select("*")
 		.eq("contact_id", contactId)
 		.maybeSingle();
@@ -46,7 +43,7 @@ const findContactByEmailBlindIndex = async (emailBlindIndex, userId) => {
 	}
 
 	const { data: contact, error } = await supabase
-		.from("Emergency_Contacts")
+		.from(TABLE_NAME)
 		.select("*")
 		.match({
 			contact_email_blind_index: emailBlindIndex,
@@ -67,7 +64,7 @@ const getEmergencyContacts = async (userId) => {
 	}
 
 	const { data: contacts, error } = await supabase
-		.from("Emergency_Contacts")
+		.from(TABLE_NAME)
 		.select("*")
 		.match({ user_id: userId, is_deleted: 0 });
 
@@ -79,28 +76,21 @@ const getEmergencyContacts = async (userId) => {
 };
 
 const updateContact = async (payload) => {
-	// 1. Separate target IDs from the fields being updated
 	const { contact_id, user_id, ...updateFields } = payload;
 
 	if (!contact_id || !user_id) {
 		throw new Error("updateContact requires both contact_id and user_id");
 	}
 
-	// 2. Clean only the fields that need updating
-	const cleanFields = Object.fromEntries(
-		Object.entries(updateFields).filter(
-			([_, value]) => value !== null && value !== undefined,
-		),
-	);
+	const cleanFields = omitNullish(updateFields);
 
 	cleanFields.updated_at = new Date().toISOString();
 	if (Object.prototype.hasOwnProperty.call(updateFields, "deleted_at")) {
 		cleanFields.deleted_at = updateFields.deleted_at;
 	}
 
-	// 3. Update using clean fields and match using extracted IDs
 	const { data: contact, error } = await supabase
-		.from("Emergency_Contacts")
+		.from(TABLE_NAME)
 		.update(cleanFields)
 		.match({ contact_id, user_id })
 		.select()
@@ -121,13 +111,13 @@ const deleteContact = async (contactId, userId) => {
 	const now = new Date().toISOString();
 
 	const { data: contact, error } = await supabase
-		.from("Emergency_Contacts") // Fixed table name (plural)
+		.from(TABLE_NAME)
 		.update({
-			is_deleted: 1, // Or true if boolean in Supabase
+			is_deleted: 1,
 			updated_at: now,
 			deleted_at: now,
 		})
-		.match({ contact_id: contactId, user_id: userId }) // Fixed column names
+		.match({ contact_id: contactId, user_id: userId })
 		.select()
 		.maybeSingle();
 

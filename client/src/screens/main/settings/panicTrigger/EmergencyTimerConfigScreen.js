@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -9,7 +9,7 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import MainLayout from "@components/layouts/MainLayout";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { CustomInput } from "@components/forms/CustomInput";
@@ -47,7 +47,7 @@ const EmergencyTimerConfigScreen = () => {
 		setFormData,
 	} = useFormHandler({ timerSeconds: "5" });
 
-	const loadTimerData = async () => {
+	const loadTimerData = useCallback(async () => {
 		try {
 			const savedTimer = await fetchEmergencyTimerConfig();
 			const timerStr =
@@ -58,15 +58,18 @@ const EmergencyTimerConfigScreen = () => {
 			setInitialTimerValue(timerStr);
 		} catch (error) {
 			console.error("Failed to load emergency timer configuration", error);
-			setFormData({ timerSeconds: "5" });
+			setBanner({
+				message: "Emergency timer settings could not be loaded securely.",
+				type: "error",
+			});
 		}
-	};
+	}, [setFormData]);
 
-	useEffect(() => {
-		loadTimerData();
-		const unsubscribe = navigation.addListener("focus", loadTimerData);
-		return unsubscribe;
-	}, [navigation]);
+	useFocusEffect(
+		useCallback(() => {
+			loadTimerData();
+		}, [loadTimerData]),
+	);
 
 	const hideModal = () => {
 		setModalConfig((prev) => ({ ...prev, visible: false }));

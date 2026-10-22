@@ -21,6 +21,7 @@ const AccountDeletionModal = ({
 	onSoftDelete,
 	onHardDelete,
 	banner,
+	action = null,
 }) => {
 	return (
 		<Modal
@@ -66,8 +67,13 @@ const AccountDeletionModal = ({
 									onPress={onSoftDelete}
 									disabled={loading}
 									activeOpacity={0.7}
+									accessibilityRole="button"
+									accessibilityState={{
+										busy: loading && action === "soft",
+										disabled: loading,
+									}}
 								>
-									{loading ? (
+									{loading && action === "soft" ? (
 										<ActivityIndicator size="small" color="#FFFFFF" />
 									) : (
 										<Text style={styles.softButtonText}>
@@ -96,8 +102,13 @@ const AccountDeletionModal = ({
 									onPress={onHardDelete}
 									disabled={loading}
 									activeOpacity={0.7}
+									accessibilityRole="button"
+									accessibilityState={{
+										busy: loading && action === "hard",
+										disabled: loading,
+									}}
 								>
-									{loading ? (
+									{loading && action === "hard" ? (
 										<ActivityIndicator size="small" color="#FFFFFF" />
 									) : (
 										<Text style={styles.hardButtonText}>
@@ -113,6 +124,7 @@ const AccountDeletionModal = ({
 								onPress={onCancel}
 								disabled={loading}
 								activeOpacity={0.7}
+								accessibilityRole="button"
 							>
 								<Text style={styles.cancelText}>Cancel</Text>
 							</TouchableOpacity>

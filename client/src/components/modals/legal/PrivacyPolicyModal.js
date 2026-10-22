@@ -1,6 +1,7 @@
 import React from "react";
 
 import LegalModal, {
+  LEGAL_DOCUMENT_LAST_UPDATED,
   LegalSection,
   LegalParagraph,
   LegalSubheading,
@@ -17,7 +18,7 @@ export default function PrivacyPolicyModal({
       visible={visible}
       onClose={onClose}
       title="Privacy Policy"
-      lastUpdated="October 21, 2026"
+      lastUpdated={LEGAL_DOCUMENT_LAST_UPDATED}
       type="privacy"
     >
       <LegalParagraph>

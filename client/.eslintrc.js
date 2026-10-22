@@ -1,40 +1,33 @@
 module.exports = {
-	extends: ["expo", "plugin:import/recommended"],
-	plugins: ["import"],
+	env: {
+		browser: true,
+		es2021: true,
+		node: true,
+	},
+	extends: ["eslint:recommended"],
+	plugins: ["react"],
+	parserOptions: {
+		ecmaVersion: 2022,
+		sourceType: "module",
+		ecmaFeatures: {
+			jsx: true,
+		},
+	},
+	globals: {
+		__DEV__: "readonly",
+	},
 	rules: {
-		"import/order": [
+		"no-unused-vars": [
 			"error",
 			{
-				groups: [
-					"builtin",
-					"external",
-					"internal",
-					["parent", "sibling", "index"],
-				],
-				pathGroups: [
-					{
-						pattern: "react*",
-						group: "external",
-						position: "before",
-					},
-					{
-						pattern: "@**",
-						group: "internal",
-						position: "before",
-					},
-				],
-				pathGroupsExcludedImportTypes: ["react"],
-				"newlines-between": "always",
-				alphabetize: {
-					order: "asc",
-					caseInsensitive: true,
-				},
+				args: "none",
+				ignoreRestSiblings: true,
+				varsIgnorePattern: "^React$",
 			},
 		],
-	},
-	settings: {
-		"import/resolver": {
-			"babel-module": {},
-		},
+		"no-duplicate-imports": "error",
+		"no-var": "error",
+		"prefer-const": "error",
+		"react/jsx-uses-vars": "error",
 	},
 };

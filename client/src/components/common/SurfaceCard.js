@@ -14,7 +14,11 @@ export default function SurfaceCard({
 }) {
 	// A static card should not be announced as a button if it cannot be pressed.
 	if (!onPress) {
-		return <View style={[styles.card, style]}>{children}</View>;
+		return (
+			<View style={[styles.card, style]} accessible={false}>
+				{children}
+			</View>
+		);
 	}
 
 	return (

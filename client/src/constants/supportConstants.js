@@ -7,8 +7,12 @@ export const THEME = {
 };
 
 export const APPROX_RADIUS_METRES = 1000;
+export const DEFAULT_LOCATION = {
+	latitude: -29.8587,
+	longitude: 31.0218,
+};
 
-export const CATEGORIES = {
+export const CATEGORIES = Object.freeze({
 	police: {
 		label: "SAPS",
 		cardTitle: "SAPS",
@@ -33,9 +37,9 @@ export const CATEGORIES = {
 		color: "#F97316",
 		icon: "medical-bag",
 	},
-};
+});
 
-export const HELPLINES = [
+export const HELPLINES = Object.freeze([
 	{
 		name: "SAPS emergency",
 		phone: "10111",
@@ -51,4 +55,4 @@ export const HELPLINES = [
 		phone: "0800 428 428",
 		description: "24/7 support for survivors of gender-based violence.",
 	},
-];
+]);

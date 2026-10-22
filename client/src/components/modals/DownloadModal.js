@@ -24,7 +24,12 @@ export default function DownloadModal({
 		result === "error" ? "close-circle-outline" : "checkmark-circle-outline";
 
     return (
-        <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+        <Modal
+			visible={visible}
+			transparent
+			animationType="fade"
+			onRequestClose={loading ? undefined : onClose}
+		>
             <View style={styles.overlay}>
                 <View style={styles.modalCard}>
                     <View style={[
@@ -49,7 +54,13 @@ export default function DownloadModal({
                     )}
 
                     {!loading && (
-                        <TouchableOpacity style={styles.button} onPress={onClose} activeOpacity={0.7}>
+                        <TouchableOpacity
+							style={styles.button}
+							onPress={onClose}
+							activeOpacity={0.7}
+							accessibilityRole="button"
+							accessibilityLabel="Close download status"
+						>
                             <Text style={styles.buttonText}>Done</Text>
                         </TouchableOpacity>
                     )}

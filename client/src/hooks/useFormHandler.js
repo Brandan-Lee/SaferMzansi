@@ -2,33 +2,40 @@ import { useCallback, useState } from "react";
 import { validateField } from "@utils/securityAndValidation/validationUtil";
 
 export const useFormHandler = (initialState) => {
-	const [formData, setFormData] = useState(initialState);
+	const [formData, setFormData] = useState(() => ({ ...initialState }));
 	const [errors, setErrors] = useState({});
 
-	//Method that helps when the input of the field is changed
-	const handleChange = (field, value) => {
+	const handleChange = useCallback((field, value) => {
 		const updatedData = { ...formData, [field]: value };
 		setFormData(updatedData);
 
-		if (errors[field]) {
-			const errorMessage = validateField(field, value, updatedData);
-			setErrors((prev) => ({
-				...prev,
-				[field]: errorMessage,
-			}));
-		}
-	};
+		setErrors((currentErrors) => {
+			const fieldsToRecheck = [field];
+			if (field === "password") fieldsToRecheck.push("confirmPassword");
+			if (field === "decoyPin") fieldsToRecheck.push("emergencyPin");
 
-	//Method to show the errors around the user input
-	const handleFieldBlur = (field) => {
+			const nextErrors = { ...currentErrors };
+			fieldsToRecheck.forEach((fieldToCheck) => {
+				if (fieldToCheck === field || currentErrors[fieldToCheck]) {
+					nextErrors[fieldToCheck] = validateField(
+						fieldToCheck,
+						updatedData[fieldToCheck],
+						updatedData,
+					);
+				}
+			});
+			return nextErrors;
+		});
+	}, [formData]);
+
+	const handleFieldBlur = useCallback((field) => {
 		const errorMessage = validateField(field, formData[field], formData);
-		setErrors((prev) => ({
-			...prev,
+		setErrors((currentErrors) => ({
+			...currentErrors,
 			[field]: errorMessage,
 		}));
-	};
+	}, [formData]);
 
-	//Data that has to be returned
 	return {
 		formData,
 		errors,

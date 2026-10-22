@@ -1,32 +1,34 @@
 const userModel = require("#models/userModel.js");
+const evidenceModel = require("#models/evidenceModel.js");
+
+const performUserAction = async (action, errorMessage) => {
+	const result = await action();
+	if (!result) {
+		throw new Error(errorMessage);
+	}
+	return result;
+};
 
 const updateUser = async (payload) => {
-	const updatedUser = await userModel.updateUser(payload);
-	if (!updatedUser) {
-		throw new Error("Failed to update user profile in database");
-	}
-
-	return updatedUser;
+	return performUserAction(
+		() => userModel.updateUser(payload),
+		"Failed to update user profile in database",
+	);
 };
 
 const softDeleteUser = async (userId) => {
-	const result = await userModel.softDeleteUser(userId);
-
-	if (!result) {
-		throw new Error("Failed to soft delete user in database");
-	}
-
-	return result;
+	return performUserAction(
+		() => userModel.softDeleteUser(userId),
+		"Failed to soft delete user in database",
+	);
 };
 
 const hardDeleteUser = async (userId) => {
-	const result = await userModel.handleDeleteUser(userId);
-
-	if (!result) {
-		throw new Error("Failed to hard delete user in database");
-	}
-
-	return result;
+	await evidenceModel.permanentDeleteEvidenceForUser(userId);
+	return performUserAction(
+		() => userModel.handleDeleteUser(userId),
+		"Failed to hard delete user in database",
+	);
 };
 
 module.exports = { updateUser, softDeleteUser, hardDeleteUser };

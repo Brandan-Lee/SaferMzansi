@@ -4,7 +4,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { CATEGORIES } from "@constants/supportConstants";
 
 export default function ServicePin({ category, selected }) {
-	const { color, icon } = CATEGORIES[category];
+	const categoryStyle = CATEGORIES[category];
+	const color = categoryStyle?.color || "#6B7280";
+	const icon = categoryStyle?.icon || "map-marker";
 	return (
 		<View style={styles.pinWrap}>
 			<View

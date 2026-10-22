@@ -1,17 +1,13 @@
-import { calculateDistanceKm } from "@utils/location/geoUtils";
+import {
+	calculateDistanceKm,
+	isValidCoordinate,
+} from "@utils/location/geoUtils";
 import { API_BASE_URL } from "@config/config";
 
-const REQUEST_TIMEOUT_MS = 4000;
+const REQUEST_TIMEOUT_MS = 9000;
 
 export const fetchNearestPoliceStation = async (latitude, longitude) => {
-	if (
-		!Number.isFinite(latitude) ||
-		!Number.isFinite(longitude) ||
-		latitude < -90 ||
-		latitude > 90 ||
-		longitude < -180 ||
-		longitude > 180
-	) {
+	if (!isValidCoordinate({ latitude, longitude })) {
 		console.warn("[Nominatim] Skipping police lookup for invalid coordinates.");
 		return null;
 	}
@@ -35,12 +31,16 @@ export const fetchNearestPoliceStation = async (latitude, longitude) => {
 			throw new Error(`Nominatim police lookup failed with ${response.status}.`);
 		}
 		results = await response.json();
+		if (!Array.isArray(results)) {
+			throw new Error("Nominatim returned an invalid police lookup response.");
+		}
 	} finally {
 		clearTimeout(timeoutId);
 	}
 
-	const nearest = (Array.isArray(results) ? results : [])
+	const nearest = results
 		.map((item) => {
+			if (!item || typeof item !== "object") return null;
 			const stationLatitude = Number(item.lat);
 			const stationLongitude = Number(item.lon);
 			if (
@@ -79,14 +79,7 @@ export const fetchNearestPoliceStation = async (latitude, longitude) => {
 };
 
 export const fetchGeoapifyServices = async (latitude, longitude) => {
-	if (
-		!Number.isFinite(latitude) ||
-		!Number.isFinite(longitude) ||
-		latitude < -90 ||
-		latitude > 90 ||
-		longitude < -180 ||
-		longitude > 180
-	) {
+	if (!isValidCoordinate({ latitude, longitude })) {
 		return [];
 	}
 
@@ -123,20 +116,27 @@ export const fetchGeoapifyServices = async (latitude, longitude) => {
 		const mappedResults = (
 			Array.isArray(data?.data?.services) ? data.data.services : []
 		)
-			.filter(
-				(item) =>
-					item.id &&
-					typeof item.category === "string" &&
-					Number.isFinite(item.lat) &&
-					Number.isFinite(item.lon),
-			)
 			.map((item) => {
+				if (!item || typeof item !== "object") return null;
+				const placeLatitude = Number(item.lat);
+				const placeLongitude = Number(item.lon);
+				if (
+					!item.id ||
+					typeof item.category !== "string" ||
+					!isValidCoordinate({
+						latitude: placeLatitude,
+						longitude: placeLongitude,
+					})
+				) {
+					return null;
+				}
+
 				const placeObj = {
 					id: item.id,
 					category: item.category,
 					name: item.name || "Local Support Facility",
-					latitude: item.lat,
-					longitude: item.lon,
+					latitude: placeLatitude,
+					longitude: placeLongitude,
 					address: item.address || "Address details on map",
 					hours: item.hours || "Open standard hours / 24 Hours",
 					phone: item.phone || "Contact via office",
@@ -148,7 +148,8 @@ export const fetchGeoapifyServices = async (latitude, longitude) => {
 					{ latitude: placeObj.latitude, longitude: placeObj.longitude },
 				);
 				return placeObj;
-			});
+			})
+			.filter(Boolean);
 
 		const validWithinRadius = mappedResults
 			.filter((place) => place.distance <= 20)

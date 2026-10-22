@@ -1,5 +1,5 @@
 import React from "react";
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function SettingsRow({
@@ -24,7 +24,7 @@ export default function SettingsRow({
 			accessibilityLabel={title}
 			accessibilityState={isToggle ? { checked: value } : undefined}
 		>
-			<Animated.View
+			<View
 				style={[
 					styles.row,
 					isHighlighted && { backgroundColor: highlightColor },
@@ -51,7 +51,7 @@ export default function SettingsRow({
 				) : (
 					<Feather name="chevron-right" size={24} color={color} />
 				)}
-			</Animated.View>
+			</View>
 		</TouchableOpacity>
 	);
 }

@@ -25,7 +25,7 @@ export const ProtectionRadar = ({ actions = [], navigation }) => (
 			<TouchableOpacity
 				activeOpacity={0.8}
 				style={styles.centerShield}
-				onPress={() => navigation.navigate("SOSScreen")}
+				onPress={() => navigation?.navigate("SOSScreen")}
 				accessibilityRole="button"
 				accessibilityLabel="Open emergency SOS"
 			>
@@ -35,22 +35,25 @@ export const ProtectionRadar = ({ actions = [], navigation }) => (
 				</View>
 			</TouchableOpacity>
 
-			{actions.map((action) => {
+			{actions.map((action, index) => {
 				const IconComponent = action.icon;
+				const angle = Number.isFinite(action.angle)
+					? action.angle
+					: -90 + (index * 360) / Math.max(actions.length, 1);
 				return (
 					<TouchableOpacity
 						key={action.id}
 						style={[
 							styles.radialButton,
-							getRadialPosition(action.angle),
+							getRadialPosition(angle),
 							{ backgroundColor: action.bg || "#7E22CE" },
 						]}
 						activeOpacity={0.7}
 						onPress={() =>
-							action.route && navigation.navigate(action.route)
+							action.route && navigation?.navigate(action.route)
 						}
 						accessibilityRole="button"
-						accessibilityLabel={`${action.id} shortcut`}
+						accessibilityLabel={`${action.title || action.id || "Safety"} shortcut`}
 					>
 						{IconComponent ? (
 							<IconComponent size={20} color={action.color || "#FFFFFF"} />

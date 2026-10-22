@@ -13,6 +13,24 @@ const PasswordStrengthMeter = ({ password = "" }) => {
 		number: /[0-9]/.test(password),
 		symbol: /[^A-Za-z0-9]/.test(password),
 	};
+	const ruleItems = [
+		{
+			label: "At least 8 characters",
+			passed: checks.length,
+		},
+		{
+			label: "Uppercase & lowercase letters",
+			passed: checks.uppercase && checks.lowercase,
+		},
+		{
+			label: "At least one number",
+			passed: checks.number,
+		},
+		{
+			label: "At least one special character",
+			passed: checks.symbol,
+		},
+	];
 
 	const config = [
 		{
@@ -81,77 +99,23 @@ const PasswordStrengthMeter = ({ password = "" }) => {
 
 			{/* Rules Checklist Card */}
 			<View style={styles.rulesCard}>
-				{/* Rule 1 */}
-				<View style={styles.ruleRow}>
-					<Feather
-						name={checks.length ? "check-circle" : "circle"}
-						size={16}
-						color={checks.length ? "#047857" : "#6B7280"}
-					/>
-					<Text
-						style={[
-							styles.ruleText,
-							checks.length ? styles.ruleValid : styles.ruleInvalid,
-						]}
-					>
-						At least 8 characters
-					</Text>
-				</View>
-
-				{/* Rule 2 */}
-				<View style={styles.ruleRow}>
-					<Feather
-						name={
-							checks.uppercase && checks.lowercase ? "check-circle" : "circle"
-						}
-						size={16}
-						color={checks.uppercase && checks.lowercase ? "#047857" : "#6B7280"}
-					/>
-					<Text
-						style={[
-							styles.ruleText,
-							checks.uppercase && checks.lowercase
-								? styles.ruleValid
-								: styles.ruleInvalid,
-						]}
-					>
-						Uppercase & lowercase letters
-					</Text>
-				</View>
-
-				{/* Rule 3 */}
-				<View style={styles.ruleRow}>
-					<Feather
-						name={checks.number ? "check-circle" : "circle"}
-						size={16}
-						color={checks.number ? "#047857" : "#6B7280"}
-					/>
-					<Text
-						style={[
-							styles.ruleText,
-							checks.number ? styles.ruleValid : styles.ruleInvalid,
-						]}
-					>
-						At least one number
-					</Text>
-				</View>
-
-				{/* Rule 4 */}
-				<View style={styles.ruleRow}>
-					<Feather
-						name={checks.symbol ? "check-circle" : "circle"}
-						size={16}
-						color={checks.symbol ? "#047857" : "#6B7280"}
-					/>
-					<Text
-						style={[
-							styles.ruleText,
-							checks.symbol ? styles.ruleValid : styles.ruleInvalid,
-						]}
-					>
-						At least one special character
-					</Text>
-				</View>
+				{ruleItems.map(({ label, passed }) => (
+					<View key={label} style={styles.ruleRow}>
+						<Feather
+							name={passed ? "check-circle" : "circle"}
+							size={16}
+							color={passed ? "#047857" : "#6B7280"}
+						/>
+						<Text
+							style={[
+								styles.ruleText,
+								passed ? styles.ruleValid : styles.ruleInvalid,
+							]}
+						>
+							{label}
+						</Text>
+					</View>
+				))}
 			</View>
 		</View>
 	);

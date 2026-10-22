@@ -16,7 +16,7 @@ const ProfileDetailCard = ({ icon, label, value }) => {
 					style={[styles.rowValue, !value && styles.rowValueEmpty]}
 					numberOfLines={1}
 				>
-					{value || "Not provided"}
+					{value ?? "Not provided"}
 				</Text>
 			</View>
 		</SurfaceCard>

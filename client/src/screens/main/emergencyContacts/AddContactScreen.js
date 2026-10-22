@@ -41,7 +41,7 @@ const AddContactScreen = ({ navigation }) => {
 		cancelLabel: "Cancel",
 		isDestructive: false,
 		iconName: "alert-circle-outline",
-		onConfirm: () => { },
+		onConfirm: () => {},
 	});
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
@@ -73,7 +73,6 @@ const AddContactScreen = ({ navigation }) => {
 		setIsLoading(true);
 
 		try {
-			// const fullName = `${formData.name.trim()} ${formData.surname.trim()}`;
 			const contactPayload = {
 				firstName: formData.name.trim(),
 				surname: formData.surname.trim(),
@@ -95,8 +94,10 @@ const AddContactScreen = ({ navigation }) => {
 				return;
 			}
 
+			const fullName =
+				`${contactPayload.firstName} ${contactPayload.surname}`.trim();
 			setBanner({
-				message: `Saved! ${(formData.name, formData.surname)} was added to your emergency contacts.`,
+				message: `Saved! ${fullName} was added to your emergency contacts.`,
 				type: "success",
 			});
 

@@ -1,11 +1,9 @@
 import * as Crypto from "expo-crypto";
 import { logLocalTable } from "@database/logLocalTable";
+import { getDatabaseTimestamp } from "@database/timeUtil";
 
 export const logLocalIncidents = (db) =>
 	logLocalTable(db, "Local_Incidents");
-
-const getTimeStamp = () =>
-	new Date().toISOString().replace("T", " ").slice(0, 23);
 
 export const createLocalIncident = async (
 	db,
@@ -14,7 +12,7 @@ export const createLocalIncident = async (
 	triggerType = "PANIC_BUTTON",
 ) => {
 	const incidentId = Crypto.randomUUID();
-	const timeStamp = getTimeStamp();
+	const timeStamp = getDatabaseTimestamp();
 
 	const query = `
 		INSERT INTO Local_Incidents (
@@ -38,14 +36,35 @@ export const updateIncidentOnCancel = async (
 	incidentId,
 	status = "CANCELLED",
 	evidenceId = null,
+	endTime = getDatabaseTimestamp(),
 ) => {
-	const now = getTimeStamp();
 	const query = `
 		UPDATE Local_Incidents
-		SET status = ?, end_time = ?, evidence_id = ?, updated_at = ?, is_synched = 0
+		SET status = ?, end_time = ?, evidence_id = COALESCE(?, evidence_id),
+			updated_at = ?, is_synched = 0
 		WHERE incident_id = ?;`;
 
-	return await db.runAsync(query, [status, now, evidenceId, now, incidentId]);
+	const result = await db.runAsync(query, [
+		status,
+		endTime,
+		evidenceId,
+		endTime,
+		incidentId,
+	]);
+	const updatedIncident = await db.getFirstAsync(
+		"SELECT status, end_time FROM Local_Incidents WHERE incident_id = ?",
+		[incidentId],
+	);
+
+	if (
+		!updatedIncident ||
+		updatedIncident.status !== status ||
+		updatedIncident.end_time !== endTime
+	) {
+		throw new Error("The local emergency status could not be updated.");
+	}
+
+	return result;
 };
 
 export const saveOrUpdateLocalIncident = async (db, userId, incidentData) => {
@@ -67,7 +86,7 @@ export const saveOrUpdateLocalIncident = async (db, userId, incidentData) => {
 		);
 	}
 
-	const timestamp = getTimeStamp();
+	const timestamp = getDatabaseTimestamp();
 	const incidentStartTime = startTime || timestamp;
 
 	const query = `

@@ -32,7 +32,7 @@ export function useLocation() {
 			}
 
 			// Fetch current position based on desired accuracy
-			let currentLocation = await Location.getCurrentPositionAsync({
+			const currentLocation = await Location.getCurrentPositionAsync({
 				accuracy: wantExact
 					? Location.Accuracy.High
 					: Location.Accuracy.Balanced,

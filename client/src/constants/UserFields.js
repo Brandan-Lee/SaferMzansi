@@ -1,4 +1,4 @@
-export const USER_FORM_FIELDS = [
+export const USER_FORM_FIELDS = Object.freeze([
 	{
 		key: "name",
 		label: "Name",
@@ -28,4 +28,4 @@ export const USER_FORM_FIELDS = [
 		keyboardType: "email-address",
 		autoCapitalize: "none",
 	},
-];
+]);

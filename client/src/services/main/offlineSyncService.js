@@ -1,6 +1,6 @@
 import NetInfo from "@react-native-community/netinfo";
 import { postApi, safeApiCall } from "@services/ApiClient";
-import { syncQueuedEvidence } from "./evidenceService";
+import { syncQueuedEvidence } from "./evidenceSyncService";
 import { replaceLocalContactId } from "@database/repositories/contactRepository";
 
 const markSynced = async (db, table, idColumn, id) => {

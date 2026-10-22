@@ -1,10 +1,32 @@
 import * as SecureStore from "expo-secure-store";
 import NetInfo from "@react-native-community/netinfo";
-import { isTokenExpired } from "../utils/auth/authTokenUtil";
+import { API_BASE_URL } from "@config/config";
+import {
+	isOfflineToken,
+	isTokenExpired,
+	removeAuthToken,
+} from "@utils/auth/authTokenUtil";
+import { STORAGE_KEYS } from "@constants/storageKeys";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
-const TOKEN_KEY = "user_jwt_token";
 const REQUEST_TIMEOUT_MS = 4000;
+const TIMEOUT_ERROR = "The request timed out. Please try again.";
+const NETWORK_ERROR = "Network connection failed";
+const AUTH_REQUIRED_ERROR =
+	"Log in online before syncing changes from this device.";
+
+const isPublicEndpoint = (endpoint) =>
+	endpoint.startsWith("/auth/login") ||
+	endpoint.startsWith("/auth/register") ||
+	endpoint.startsWith("/auth/forgot-password") ||
+	endpoint.startsWith("/auth/reset-password") ||
+	endpoint.startsWith("/otp/");
+
+const createRequestError = (error) => ({
+	ok: false,
+	status: 0,
+	data: null,
+	error,
+});
 
 // Normal API calls time out quickly; urgent calls can opt out when needed.
 export const postApi = async (
@@ -16,31 +38,32 @@ export const postApi = async (
 	let timeoutId;
 
 	const request = async () => {
-		const token = await SecureStore.getItemAsync(TOKEN_KEY);
+		if (!API_BASE_URL) {
+			throw new Error("The API base URL is not configured.");
+		}
+
+		const token = await SecureStore.getItemAsync(STORAGE_KEYS.AUTH_TOKEN);
 		const network = await NetInfo.fetch();
 		if (controller.signal.aborted) {
-			return {
-				ok: false,
-				status: 0,
-				data: null,
-				error: "The request timed out. Please try again.",
-			};
+			return createRequestError(TIMEOUT_ERROR);
 		}
 		if (
 			network.isConnected === false ||
 			network.isInternetReachable === false
 		) {
-			return {
-				ok: false,
-				status: 0,
-				data: null,
-				error: "Network connection failed",
-			};
+			return createRequestError(NETWORK_ERROR);
 		}
 
-		// Verify the offline JWT token before sending protected requests.
-		if (token && !endpoint.includes("/users") && isTokenExpired(token)) {
-			await SecureStore.deleteItemAsync(TOKEN_KEY);
+		if (isOfflineToken(token) && !isPublicEndpoint(endpoint)) {
+			return createRequestError(AUTH_REQUIRED_ERROR);
+		}
+
+		if (
+			token &&
+			!isPublicEndpoint(endpoint) &&
+			isTokenExpired(token)
+		) {
+			await removeAuthToken();
 			throw new Error(
 				"Your session has expired. Please log in again when online",
 			);
@@ -48,7 +71,7 @@ export const postApi = async (
 
 		try {
 		// POST call
-			const response = await fetch(`${API_URL}${endpoint}`, {
+			const response = await fetch(`${API_BASE_URL}${endpoint}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -80,24 +103,16 @@ export const postApi = async (
 			}
 		} catch (networkError) {
 			console.warn("Network request failed:", networkError.message);
-			return {
-				ok: false,
-				status: 0,
-				data: null,
-				error: controller.signal.aborted
-					? "The request timed out. Please try again."
-					: "Network connection failed",
-			};
+			return createRequestError(
+				controller.signal.aborted ? TIMEOUT_ERROR : NETWORK_ERROR,
+			);
 		}
 	};
 
 	try {
-		const pendingRequest = request().catch((error) => ({
-			ok: false,
-			status: 0,
-			data: null,
-			error: error.message || "Network connection failed",
-		}));
+		const pendingRequest = request().catch((error) =>
+			createRequestError(error.message || NETWORK_ERROR),
+		);
 
 		// A zero timeout lets an urgent request wait for the server's full response.
 		if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
@@ -111,7 +126,7 @@ export const postApi = async (
 					ok: false,
 					status: 0,
 					data: null,
-					error: "The request timed out. Please try again.",
+					error: TIMEOUT_ERROR,
 				});
 			}, timeoutMs);
 		});
@@ -137,12 +152,10 @@ export const safeApiCall = async (apiFunction, fallbackErrorMessage) => {
 			};
 		}
 
-		const payload = response.data?.data !== undefined ? response.data.data : response.data;
-
-		//Successful response
+		// Preserve the server's response envelope for callers that need metadata.
 		return {
 			success: true,
-			data: response.data || payload,
+			data: response.data,
 		};
 	} catch (err) {
 		//All around error

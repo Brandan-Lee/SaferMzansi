@@ -10,6 +10,6 @@
       "#utils/*": ["./src/utils/*"]
     }
   },
-  "include": ["src/**/*", "index.js", "server.js"],
+  "include": ["src/**/*", "server.js"],
   "exclude": ["node_modules"]
 }

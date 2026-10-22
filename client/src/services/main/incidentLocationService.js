@@ -1,6 +1,10 @@
 import { postApi, safeApiCall } from "@services/ApiClient";
 
 export const postLocationOnline = async (db, locationPayload) => {
+	if (!db || !locationPayload || typeof locationPayload !== "object") {
+		throw new Error("A database and incident location are required.");
+	}
+
 	try {
 		const result = await safeApiCall(
 			() => postApi("/locations/add", locationPayload),
@@ -17,6 +21,9 @@ export const postLocationOnline = async (db, locationPayload) => {
 		return result;
 	} catch (error) {
 		console.warn("[Location Service] Online location posting warning:", error);
-		return { success: false, error: error.message };
+		return {
+			success: false,
+			error: error instanceof Error ? error.message : "Could not save location.",
+		};
 	}
 };

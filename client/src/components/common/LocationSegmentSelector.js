@@ -6,25 +6,34 @@ import { THEME } from "@constants/supportConstants";
 export default function LocationSegmentSelector({ mode, onSelectMode }) {
 	return (
 		<View style={styles.segment}>
-			{["approximate", "exact"].map((m) => (
+			{["approximate", "exact"].map((m) => {
+				const isExact = m === "exact";
+				const selected = mode === m;
+				const label = isExact ? "Exact location" : "Approximate";
+
+				return (
 				<TouchableOpacity
 					key={m}
-					style={[styles.segmentItem, mode === m && styles.segmentActive]}
+					style={[styles.segmentItem, selected && styles.segmentActive]}
 					onPress={() => onSelectMode(m)}
 					activeOpacity={0.8}
+					accessibilityRole="button"
+					accessibilityLabel={label}
+					accessibilityState={{ selected }}
 				>
 					<Ionicons
-						name={m === "exact" ? "locate" : "radio-button-on-outline"}
+						name={isExact ? "locate" : "radio-button-on-outline"}
 						size={16}
-						color={mode === m ? "#fff" : THEME.purple}
+						color={selected ? "#fff" : THEME.purple}
 					/>
 					<Text
-						style={[styles.segmentText, mode === m && styles.segmentTextActive]}
+						style={[styles.segmentText, selected && styles.segmentTextActive]}
 					>
-						{m === "exact" ? "Exact location" : "Approximate"}
+						{label}
 					</Text>
 				</TouchableOpacity>
-			))}
+				);
+			})}
 		</View>
 	);
 }

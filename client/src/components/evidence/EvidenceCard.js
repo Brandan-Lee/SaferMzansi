@@ -6,8 +6,9 @@ import EvidenceFilePreview from "@components/evidence/EvidenceFilePreview";
 const PURPLE = "#6B21A8";
 const MAX_PREVIEWS = 4;
 
-export default function EvidenceCard({ item, onPress }) {
+export default function EvidenceCard({ item = {}, onPress }) {
 	const files = Array.isArray(item.files) ? item.files : [];
+	const dateLabel = item.date || "Undated evidence";
 	const remainingCount = Math.max(0, files.length - MAX_PREVIEWS);
 
 	return (
@@ -15,7 +16,7 @@ export default function EvidenceCard({ item, onPress }) {
 			style={({ pressed }) => [styles.card, pressed && styles.pressed]}
 			onPress={onPress}
 			accessibilityRole="button"
-			accessibilityLabel={`${files.length} evidence files, added ${item.date}. Open evidence.`}
+			accessibilityLabel={`${files.length} evidence files, added ${dateLabel}. Open evidence.`}
 			accessibilityHint="Opens the files in this evidence group"
 		>
 			<View style={styles.header}>
@@ -26,7 +27,7 @@ export default function EvidenceCard({ item, onPress }) {
 					<View style={styles.headingText}>
 						<Text style={styles.eyebrow}>SECURE EVIDENCE</Text>
 						<Text style={styles.date} numberOfLines={2}>
-							{item.date}
+							{dateLabel}
 						</Text>
 					</View>
 				</View>
@@ -36,7 +37,10 @@ export default function EvidenceCard({ item, onPress }) {
 			<View style={styles.footer}>
 				<View style={styles.previewRow}>
 					{files.slice(0, MAX_PREVIEWS).map((file, index) => (
-						<View key={`${file.evidence_id || item.id}-${index}`} style={styles.preview}>
+						<View
+							key={`${file.evidence_id || item.id}-${index}`}
+							style={styles.preview}
+						>
 							<EvidenceFilePreview file={file} size={48} />
 						</View>
 					))}
@@ -101,7 +105,12 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 		gap: 12,
 	},
-	previewRow: { flexDirection: "row", alignItems: "center", flexWrap: "wrap", gap: 8 },
+	previewRow: {
+		flexDirection: "row",
+		alignItems: "center",
+		flexWrap: "wrap",
+		gap: 8,
+	},
 	preview: {
 		width: 52,
 		height: 52,

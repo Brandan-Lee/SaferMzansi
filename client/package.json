@@ -9,12 +9,11 @@
     "@react-navigation/native": "^7.4.1",
     "@react-navigation/native-stack": "^7.19.2",
     "@supabase/supabase-js": "^2.117.3",
-    "AsyncStorage": "^0.1.5",
     "babel-preset-expo": "~57.0.0",
     "base-64": "^1.0.0",
     "buffer": "^6.0.3",
     "crypto-js": "^4.2.0",
-    "expo": "~57.0.30",
+    "expo": "~57.0.31",
     "expo-asset": "~57.0.20",
     "expo-audio": "~57.0.5",
     "expo-crypto": "~57.0.4",
@@ -22,10 +21,10 @@
     "expo-file-system": "~57.0.7",
     "expo-font": "~57.0.4",
     "expo-linear-gradient": "~57.0.2",
-    "expo-location": "~57.0.21",
+    "expo-location": "~57.0.22",
     "expo-secure-store": "~57.0.4",
     "expo-sensors": "~57.0.3",
-    "expo-sharing": "~57.0.23",
+    "expo-sharing": "~57.0.24",
     "expo-sqlite": "~57.0.4",
     "expo-status-bar": "~57.0.1",
     "expo-task-manager": "~57.0.21",
@@ -45,14 +44,14 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint ."
   },
   "private": true,
   "devDependencies": {
     "@expo/ngrok": "^4.1.0",
     "babel-plugin-module-resolver": "^5.0.3",
     "eslint": "^8.57.1",
-    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5"
   }
 }

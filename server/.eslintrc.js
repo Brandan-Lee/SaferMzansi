@@ -4,23 +4,7 @@ module.exports = {
 		es2020: true,
 	},
 	parserOptions: {
-		ecmaVersion: 2020,
+		ecmaVersion: 2022,
 	},
-	extends: ["eslint:recommended", "plugin:import/recommended"],
-	plugins: ["import"],
-	rules: {
-		"import/order": [
-			"error",
-			{
-				groups: [
-					"builtin",
-					"external",
-					"internal",
-					["parent", "sibling", "index"],
-				],
-				"newlines-between": "always",
-				alphabetize: { order: "asc", caseInsensitive: true },
-			},
-		],
-	},
+	extends: ["eslint:recommended"],
 };

@@ -1,4 +1,4 @@
-export const EMERGENCY_TIMER_FORM_FIELDS = [
+export const EMERGENCY_TIMER_FORM_FIELDS = Object.freeze([
 	{
 		key: "timerSeconds",
 		label: "Countdown Window (Seconds)",
@@ -7,4 +7,4 @@ export const EMERGENCY_TIMER_FORM_FIELDS = [
 		keyboardType: "number-pad",
 		maxLength: 2,
 	},
-];
+]);

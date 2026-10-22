@@ -1,74 +1,54 @@
 const contactService = require("#services/main/contactServiceServer.js");
 
-const addContact = async (req, res, next) => {
-	try {
-		const contact = await contactService.addEmergencyContact(req.body);
-		return res.status(201).json({
-			success: true,
-			message: "Emergency contact added successfully",
-			data: contact,
-		});
-	} catch (error) {
-		console.error("[Backend Add Contact Error]:", error);
-		next(error);
-	}
+const addContact = async (req, res) => {
+	const contact = await contactService.addEmergencyContact(req.body);
+	return res.status(201).json({
+		success: true,
+		message: "Emergency contact added successfully",
+		data: contact,
+	});
 };
 
-const getContacts = async (req, res, next) => {
-	try {
-		const userId = req.body?.user_id || req.body?.userId || req.query?.user_id;
+const getContacts = async (req, res) => {
+	const userId = req.body?.user_id || req.body?.userId || req.query?.user_id;
 
-		const contacts = await contactService.getEmergencyContacts(userId);
+	const contacts = await contactService.getEmergencyContacts(userId);
 
-		return res.status(200).json({
-			success: true,
-			message: "All emergency contacts retrieved",
-			data: {
-				contacts,
-			},
-		});
-	} catch (error) {
-		next(error);
-	}
+	return res.status(200).json({
+		success: true,
+		message: "All emergency contacts retrieved",
+		data: { contacts },
+	});
 };
 
-const updateContact = async (req, res, next) => {
-	try {
-		// Ensure contact_id and user_id are normalized for service consumption
-		const payload = {
-			...req.body,
-			contact_id: req.body.contact_id || req.body.contactId,
-			user_id: req.body.user_id || req.body.userId,
-		};
+const updateContact = async (req, res) => {
+	const payload = {
+		...req.body,
+		contact_id: req.body.contact_id || req.body.contactId,
+		user_id: req.body.user_id || req.body.userId,
+	};
 
-		const contact = await contactService.updateContact(payload);
+	const contact = await contactService.updateContact(payload);
 
-		return res.status(200).json({
-			success: true,
-			message: "Emergency contact updated successfully",
-			data: contact,
-		});
-	} catch (error) {
-		next(error);
-	}
+	return res.status(200).json({
+		success: true,
+		message: "Emergency contact updated successfully",
+		data: contact,
+	});
 };
 
-const deleteContact = async (req, res, next) => {
-	try {
-		const userId = req.body?.user_id || req.body?.userId || req.query?.user_id;
-		const contactId =
-			req.body?.contact_id || req.body?.contactId || req.query?.contact_id;
+const deleteContact = async (req, res) => {
+	const userId = req.body?.user_id || req.body?.userId || req.query?.user_id;
+	const contactId =
+		req.body?.contact_id || req.body?.contactId || req.query?.contact_id;
 
-		const contact = await contactService.deleteContact(contactId, userId);
+	const contact = await contactService.deleteContact(contactId, userId);
 
-		return res.status(200).json({
-			success: true,
-			message: "Emergency contact deleted successfully",
-			data: contact,
-		});
-	} catch (error) {
-		next(error);
-	}
+	return res.status(200).json({
+		success: true,
+		message: "Emergency contact deleted successfully",
+		data: contact,
+	});
 };
 
 module.exports = {

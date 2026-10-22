@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
 	View,
 	StyleSheet,
@@ -7,7 +7,7 @@ import {
 	Platform,
 	ActivityIndicator,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ConfirmationModal from "@components/modals/ConfirmationModal";
 import { DECOY_FORM_FIELDS } from "@constants/DecoyFields";
 import { CustomInput } from "@components/forms/CustomInput";
@@ -197,33 +197,50 @@ const DecoyUpdateScreen = () => {
 	const navigation = useNavigation();
 	const { user } = useAuth();
 	const [storedPins, setStoredPins] = useState(null);
+	const [loadError, setLoadError] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
 
-	const loadDecoyData = async () => {
+	const loadDecoyData = useCallback(async () => {
+		setIsLoading(true);
+		setLoadError(null);
 		try {
 			const pins = await getStoredPins();
-			setStoredPins(pins || { decoyPin: "", emergencyPin: "" });
+			setStoredPins(pins);
 		} catch (error) {
 			console.error("Failed to load decoy settings", error);
-			setStoredPins({ decoyPin: "", emergencyPin: "" });
+			setLoadError("Decoy PIN settings could not be read from secure storage.");
+		} finally {
+			setIsLoading(false);
 		}
-	};
+	}, []);
 
-	useEffect(() => {
-		loadDecoyData();
-		const unsubscribe = navigation.addListener("focus", loadDecoyData);
-		return unsubscribe;
-	}, [navigation]);
+	useFocusEffect(
+		useCallback(() => {
+			loadDecoyData();
+		}, [loadDecoyData]),
+	);
 
-	if (!storedPins) {
+	if (isLoading || loadError || !storedPins) {
 		return (
 			<MainLayout
 				title="Update Decoy Configuration"
 				onBack={() => navigation.goBack()}
 				tab="Settings"
 				navigation={navigation}
+				banner={loadError ? { message: loadError, type: "error" } : null}
+				actionButton={
+					loadError
+						? {
+								label: "Retry",
+								onPress: loadDecoyData,
+							}
+						: undefined
+				}
 			>
 				<View style={styles.loaderContainer}>
-					<ActivityIndicator size="large" color="#6B21A8" />
+					{isLoading ? (
+						<ActivityIndicator size="large" color="#6B21A8" />
+					) : null}
 				</View>
 			</MainLayout>
 		);
@@ -231,6 +248,7 @@ const DecoyUpdateScreen = () => {
 
 	return (
 		<DecoyUpdateForm
+			key={`${storedPins.decoyPin || ""}:${storedPins.emergencyPin || ""}`}
 			storedPins={storedPins}
 			navigation={navigation}
 			user={user}

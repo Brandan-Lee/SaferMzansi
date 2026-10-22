@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-export const SafetyToolCard = ({ item, onPress }) => {
-	// Dynamically assign the component reference to a capitalized variable
+export const SafetyToolCard = ({ item = {}, onPress }) => {
 	const IconComponent = item.icon;
 
 	return (
@@ -10,6 +9,8 @@ export const SafetyToolCard = ({ item, onPress }) => {
 			activeOpacity={0.7}
 			style={styles.gridCard}
 			onPress={onPress}
+			accessibilityRole="button"
+			accessibilityLabel={`${item.title || "Safety tool"}${item.subtitle ? `, ${item.subtitle}` : ""}`}
 		>
 			<View style={[styles.iconContainer, { backgroundColor: item.bg }]}>
 				{IconComponent && <IconComponent size={20} color={item.color} />}
@@ -44,15 +45,16 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 	},
 	cardTitle: {
-		fontSize: 13,
-		fontWeight: "600",
+		fontSize: 14,
+		fontWeight: "700",
 		color: "#0F172A",
-		marginBottom: 2,
+		marginBottom: 4,
 		textAlign: "center",
 	},
 	cardSubtitle: {
-		fontSize: 11,
-		color: "#94A3B8",
+		fontSize: 12,
+		fontWeight: "500",
+		color: "#475569",
 		textAlign: "center",
 	},
 });

@@ -1,20 +1,4 @@
-const nodemailer = require("nodemailer");
-
-const port =
-	parseInt(process.env.SMTP_PORT || process.env.EMAIL_PORT, 10) || 587;
-
-const transporter = nodemailer.createTransport({
-	host: process.env.SMTP_HOST || "smtp.sendgrid.net",
-	port,
-	secure: port === 465,
-	connectionTimeout: 10000,
-	greetingTimeout: 10000,
-	socketTimeout: 15000,
-	auth: {
-		user: process.env.SMTP_USER,
-		pass: process.env.SMTP_PASS,
-	},
-});
+const { sendMail: deliverMail } = require("#utils/mailTransport.js");
 
 const escapeHtml = (value) =>
 	String(value).replace(/[&<>"']/g, (character) => {
@@ -51,12 +35,8 @@ const emergencyEmailHtml = (message) => `
 
 const sendEmail = async ({ to, subject, text, html }) => {
 	try {
-		const info = await transporter.sendMail({
-			from: `"${process.env.FROM_NAME || "SaferMzansi Emergency Alert"}" <${
-				process.env.FROM_EMAIL ||
-				process.env.SMTP_FROM ||
-				"alert@safermzansi.com"
-			}>`,
+		const info = await deliverMail({
+			from: `"${process.env.FROM_NAME || "SaferMzansi Emergency Alert"}" <${process.env.FROM_EMAIL || process.env.SMTP_FROM || "alert@safermzansi.com"}>`,
 			to,
 			subject,
 			text,

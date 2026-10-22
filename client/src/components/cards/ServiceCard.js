@@ -90,7 +90,7 @@ export default function ServiceCard({
 								fullWidth={false}
 								onPress={(event) => {
 									event.stopPropagation?.();
-									onAttemptCall?.();
+									onAttemptCall?.(place);
 								}}
 							/>
 						)}

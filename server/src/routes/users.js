@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const userController = require("#controllers/userController.js");
+const asyncHandler = require("#middleware/asyncHandler.js");
 const { validateBody } = require("#middleware/validateRequest.js");
 
 const REQUIRED_USER_FIELDS = [
@@ -18,19 +19,19 @@ const REQUIRED_DELETE_FIELDS = ["user_id"];
 router.post(
 	"/update",
 	validateBody(REQUIRED_USER_FIELDS),
-	userController.updateUser,
+	asyncHandler(userController.updateUser),
 );
 
 router.post(
 	"/soft-delete",
 	validateBody(REQUIRED_DELETE_FIELDS),
-	userController.softDeleteUser,
+	asyncHandler(userController.softDeleteUser),
 );
 
 router.post(
 	"/hard-delete",
 	validateBody(REQUIRED_DELETE_FIELDS),
-	userController.hardDeleteUser,
+	asyncHandler(userController.hardDeleteUser),
 );
 
 module.exports = router;

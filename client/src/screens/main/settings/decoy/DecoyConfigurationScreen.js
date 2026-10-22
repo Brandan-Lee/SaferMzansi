@@ -12,8 +12,7 @@ import { Feather, MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getStoredPins } from "@utils/storage/secureStore";
-
-const DECOY_LAUNCH_KEY = "@setting_launch_decoy";
+import { STORAGE_KEYS } from "@constants/storageKeys";
 
 const DecoyConfigurationScreen = ({ navigation }) => {
 	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
@@ -32,7 +31,9 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 	useEffect(() => {
 		const loadDecoyData = async () => {
 			try {
-				const savedToggle = await AsyncStorage.getItem(DECOY_LAUNCH_KEY);
+				const savedToggle = await AsyncStorage.getItem(
+					STORAGE_KEYS.LAUNCH_DECOY,
+				);
 				if (savedToggle !== null) {
 					setLaunchAsDecoy(savedToggle === "true");
 				}
@@ -61,7 +62,7 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 				return;
 			}
 			setLaunchAsDecoy(value);
-			await AsyncStorage.setItem(DECOY_LAUNCH_KEY, String(value));
+			await AsyncStorage.setItem(STORAGE_KEYS.LAUNCH_DECOY, String(value));
 		} catch (error) {
 			console.error("Failed to save decoy launch setting", error);
 		}
@@ -222,7 +223,6 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 					<Text style={styles.previewButtonText}>
 						Preview & Test Decoy Calculator
 					</Text>
-					<Feather name="chevron-right" size={18} color="#D8B4FE" />
 				</TouchableOpacity>
 
 				{/* LAUNCH TOGGLE SETTING */}
@@ -298,7 +298,9 @@ const DecoyConfigurationScreen = ({ navigation }) => {
 							}}
 							accessibilityRole="button"
 						>
-							<Text style={styles.previewModalPrimaryText}>Open test calculator</Text>
+							<Text style={styles.previewModalPrimaryText}>
+								Open test calculator
+							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={styles.previewModalSecondary}
@@ -346,7 +348,12 @@ const styles = StyleSheet.create({
 		marginBottom: 14,
 	},
 	previewModalTitle: { fontSize: 20, fontWeight: "700", color: "#1F2937" },
-	previewModalText: { marginTop: 8, marginBottom: 14, color: "#4B5563", lineHeight: 22 },
+	previewModalText: {
+		marginTop: 8,
+		marginBottom: 14,
+		color: "#4B5563",
+		lineHeight: 22,
+	},
 	previewPinRow: {
 		flexDirection: "row",
 		justifyContent: "space-between",
@@ -364,7 +371,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	previewModalPrimaryText: { color: "#FFFFFF", fontWeight: "700", fontSize: 15 },
+	previewModalPrimaryText: {
+		color: "#FFFFFF",
+		fontWeight: "700",
+		fontSize: 15,
+	},
 	previewModalSecondary: {
 		minHeight: 48,
 		marginTop: 8,

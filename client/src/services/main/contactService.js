@@ -1,10 +1,15 @@
 import * as Crypto from "expo-crypto";
+import { decryptOrKeepValue } from "@utils/securityAndValidation/decryptionUtil";
 import {
 	encryptData,
-	decryptData,
 	generateBlindIndex,
 	encryptPayload,
 } from "@utils/securityAndValidation/securityUtil";
+import {
+	normalizeEmail,
+	normalizeName,
+	normalizePhone,
+} from "@utils/normalizationUtil";
 import { postApi, safeApiCall } from "@services/ApiClient";
 import {
 	saveOrUpdateLocalEmergencyContact,
@@ -17,18 +22,18 @@ import {
 
 // Service to handle adding or updating an emergency contact
 export const addEmergencyContact = async (db, userId, contactData) => {
-	const { firstName, surname, phoneNum, email } = contactData;
+	const firstName = normalizeName(contactData.firstName);
+	const surname = normalizeName(contactData.surname);
+	const phoneNum = normalizePhone(contactData.phoneNum);
+	const email = normalizeEmail(contactData.email);
 
 	if (!userId) {
 		throw new Error("User session is required to add an emergency contact.");
 	}
 
-	let existingContact = null;
-	try {
-		existingContact = await findContactByEmail(db, userId, email);
-	} catch (error) {
-		console.warn("[Contact Service] Local DB check error");
-	}
+	const existingContact = email
+		? await findContactByEmail(db, userId, email)
+		: null;
 
 	if (existingContact) {
 		throw new Error("A contact with this email has already been registered");
@@ -47,8 +52,15 @@ export const addEmergencyContact = async (db, userId, contactData) => {
 	}
 
 	const contactId = Crypto.randomUUID();
-	const emailBlindIndex = email ? generateBlindIndex(email) : null;
-	const encryptedData = encryptPayload({ firstName, surname, email, phoneNum });
+	const emailBlindIndex = email
+		? generateBlindIndex(email)
+		: null;
+	const encryptedData = encryptPayload({
+		firstName,
+		surname,
+		email,
+		phoneNum,
+	});
 
 	const apiPayload = {
 		contact_id: contactId,
@@ -118,8 +130,7 @@ export const getEmergencyContacts = async (db, userId) => {
 
 	const isFromServer = res.success && Boolean(serverContacts);
 
-	const localContacts =
-		(await getLocalEmergencyContacts(db, userId).catch(() => [])) || [];
+	const localContacts = await getLocalEmergencyContacts(db, userId);
 	const rawList = isFromServer
 		? [
 				...serverContacts,
@@ -127,39 +138,29 @@ export const getEmergencyContacts = async (db, userId) => {
 			]
 		: localContacts;
 
-	const safeDecrypt = (val, fieldName) => {
-		if (!val) return "";
-		try {
-			const decrypted = decryptData(val);
-			if (decrypted) return decrypted;
-			return val;
-		} catch (err) {
-			console.error(`Could not decrypt contact field ${fieldName}:`, err);
-			return val;
-		}
-	};
-
 	const contactsById = new Map();
 	const contacts = rawList.map((c) => {
 		const contactId = c.contactId || c.contact_id || c.id;
 
 		const firstName =
-			safeDecrypt(c.encrypted_contact_name, "firstName") ||
+			decryptOrKeepValue(c.encrypted_contact_name, "contact", "firstName") ||
 			c.firstName ||
 			c.first_name ||
 			"";
 		const surname =
-			safeDecrypt(c.encrypted_contact_surname, "surname") ||
+			decryptOrKeepValue(c.encrypted_contact_surname, "contact", "surname") ||
 			c.surname ||
 			c.last_name ||
 			"";
 		const phone =
-			safeDecrypt(c.encrypted_contact_phone_num, "phone") ||
+			decryptOrKeepValue(c.encrypted_contact_phone_num, "contact", "phone") ||
 			c.phone ||
 			c.phone_number ||
 			"";
 		const email =
-			safeDecrypt(c.encrypted_contact_email, "email") || c.email || "";
+			decryptOrKeepValue(c.encrypted_contact_email, "contact", "email") ||
+			c.email ||
+			"";
 
 		const normalizedName =
 			`${firstName} ${surname}`.trim() || c.name || "Unnamed Contact";
@@ -212,24 +213,15 @@ export const updateEmergencyContact = async (
 	const { firstName, surname, phone, email } = contactPayload;
 
 	// Normalize input data
-	const newFirstName = firstName ? firstName.trim() : "";
-	const newSurname = surname ? surname.trim() : "";
-	const newPhone = phone ? phone.replace(/[\s-]/g, "") : "";
-	const newEmail = email ? email.trim().toLowerCase() : "";
+	const newFirstName = normalizeName(firstName);
+	const newSurname = normalizeName(surname);
+	const newPhone = normalizePhone(phone);
+	const newEmail = normalizeEmail(email);
 
-	// Extract existing contact safely
-	const existingFirstName = existingContact.firstName
-		? existingContact.firstName.trim()
-		: "";
-	const existingSurname = existingContact.surname
-		? existingContact.surname.trim()
-		: "";
-	const existingPhone = existingContact.phone
-		? existingContact.phone.replace(/[\s-]/g, "")
-		: "";
-	const existingEmail = existingContact.email
-		? existingContact.email.trim().toLowerCase() // Added ()
-		: "";
+	const existingFirstName = normalizeName(existingContact.firstName);
+	const existingSurname = normalizeName(existingContact.surname);
+	const existingPhone = normalizePhone(existingContact.phone);
+	const existingEmail = normalizeEmail(existingContact.email);
 
 	// Re-encrypt values that have changed, or encrypt fresh values
 	const encryptedContactName =
@@ -255,6 +247,9 @@ export const updateEmergencyContact = async (
 		if (newEmail) {
 			emailBlindIndex = generateBlindIndex(newEmail);
 			encryptedContactEmail = encryptData(newEmail);
+		} else {
+			emailBlindIndex = null;
+			encryptedContactEmail = null;
 		}
 	}
 

@@ -1,11 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-	Text,
-	ScrollView,
-	StyleSheet,
-	View,
-	TouchableOpacity,
-} from "react-native";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import { Text, ScrollView, StyleSheet, View, Alert } from "react-native";
 
 import {
 	DEFAULT_LOCATION,
@@ -14,21 +8,19 @@ import {
 } from "@constants/supportConstants";
 import { roundCoordinates, handlePhoneCall } from "@utils/location/geoUtils";
 
-import MainLayout from "@components/layouts/MainLayout";
 import SupportMap from "@components/maps/SupportMap";
 import LocationSegmentSelector from "@components/common/LocationSegmentSelector";
 import CategoryLegend from "@components/common/CategoryLegend";
 import ServiceCard from "@components/cards/ServiceCard";
 import HelplineCard from "@components/cards/HelplineCard";
+import { useFocusEffect } from "@react-navigation/native";
+import SupportHubNotice from "./SupportHubNotice";
 import { useLocation } from "@hooks/useLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSupportPlaces } from "@hooks/useSupportPlaces";
-import { Ionicons } from "@expo/vector-icons";
 import { useNetStatus } from "@utils/network/netStatus";
-
-const KEYS = {
-	SHARE_LOCATION: "@setting_share_location",
-};
+import { STORAGE_KEYS } from "@constants/storageKeys";
+import MainLayout from "@components/layouts/MainLayout";
 
 export default function SupportHubScreen({ navigation }) {
 	const mapRef = useRef(null);
@@ -42,31 +34,41 @@ export default function SupportHubScreen({ navigation }) {
 	} = useLocation();
 	const { isOnline } = useNetStatus();
 
-	useEffect(() => {
-		const checkStoredLocationSettings = async () => {
-			try {
-				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
-				const allowed = savedShare === "true";
-				setIsLocationAllowed(allowed);
+	useFocusEffect(
+		useCallback(() => {
+			let isActive = true;
+			const checkStoredLocationSettings = async () => {
+				try {
+					const savedShare = await AsyncStorage.getItem(
+						STORAGE_KEYS.SHARE_LOCATION,
+					);
+					const allowed = savedShare === "true";
+					if (!isActive) return;
+					setIsLocationAllowed(allowed);
+					if (allowed && isOnline) {
+						await getLocation(mode === "exact");
+					}
+				} catch (error) {
+					console.error("Failed to load location setting", error);
+				}
+			};
 
-				setMode("exact");
-				getLocation(true);
-			} catch (error) {
-				console.error("Failed to load location setting", error);
+			checkStoredLocationSettings();
+			return () => {
+				isActive = false;
+			};
+		}, [getLocation, isOnline, mode]),
+	);
+
+	const onAttemptCall = async (place) => {
+		try {
+			const callStarted = await handlePhoneCall(place.phone);
+			if (!callStarted) {
+				Alert.alert("Call unavailable", "No valid phone number is available.");
 			}
-		};
-
-		checkStoredLocationSettings();
-	}, [getLocation]);
-
-	// Added onAttemptCall handler for handling missing or sample phone numbers via a banner
-	const onAttemptCall = (place) => {
-		const result = handlePhoneCall(place.phone, place.isSample);
-
-		if (result && !result.success) {
-			setTimeout(() => setBanner(null), 4000);
-		} else if (result && result.isSample) {
-			setTimeout(() => setBanner(null), 4000);
+		} catch (error) {
+			console.error("Failed to open the phone dialer:", error);
+			Alert.alert("Call unavailable", "Could not open the phone dialer.");
 		}
 	};
 
@@ -78,14 +80,6 @@ export default function SupportHubScreen({ navigation }) {
 		return mode === "exact" ? location : roundCoordinates(location);
 	}, [location, mode]);
 
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			if (locationLoading) {
-			}
-		}, 5000);
-		return () => clearTimeout(timer);
-	}, [locationLoading]);
-
 	const {
 		places,
 		visiblePlaces,
@@ -96,56 +90,32 @@ export default function SupportHubScreen({ navigation }) {
 		setSelectedId,
 		expandedId,
 		setExpandedId,
-	} = useSupportPlaces(userLocation);
+	} = useSupportPlaces(userLocation, {
+		enabled: isLocationAllowed === true && isOnline && Boolean(location),
+	});
 
 	if (isLocationAllowed === false) {
 		return (
-			<MainLayout
-				title="Support Hub"
-				onBack={() => navigation.goBack()}
-				tab="Support Hub"
+			<SupportHubNotice
 				navigation={navigation}
-			>
-				<View style={styles.restrictedContainer}>
-					<Ionicons name="location-outline" size={64} color={THEME.purple} />
-					<Text style={styles.restrictedTitle}>Location Access Disabled</Text>
-					<Text style={styles.restrictedText}>
-						The Support Hub requires live location access to find nearby safety
-						and medical facilities. Please enable "Location for emergency alerts" in your
-						Settings to use this feature.
-					</Text>
-					<TouchableOpacity
-						style={styles.settingsButton}
-						onPress={() => navigation.navigate("SettingsScreen")}
-						activeOpacity={0.8}
-					>
-						<Text style={styles.settingsButtonText}>Go to Settings</Text>
-					</TouchableOpacity>
-				</View>
-			</MainLayout>
+				icon="location-outline"
+				title="Location Access Disabled"
+				message={
+					'The Support Hub needs location access to find nearby safety and medical facilities. Enable "Location for emergency alerts" in Settings to continue.'
+				}
+				showSettingsButton
+			/>
 		);
 	}
 
 	if (!isOnline) {
 		return (
-			<MainLayout
-				title="Support Hub"
-				onBack={() => navigation.goBack()}
-				tab="Support Hub"
+			<SupportHubNotice
 				navigation={navigation}
-			>
-				<View style={styles.restrictedContainer}>
-					<Ionicons name="location-outline" size={64} color={THEME.purple} />
-					<Text style={styles.restrictedTitle}>
-						Network Connection Disabled
-					</Text>
-					<Text style={styles.restrictedText}>
-						The Support Hub requires a live network connection to find nearby
-						safety and medical facilities. Please enable "mobile data or wifi
-						connection" in your notification bar to use this feature.
-					</Text>
-				</View>
-			</MainLayout>
+				icon="cloud-offline-outline"
+				title="Network Connection Disabled"
+				message="The Support Hub needs a live network connection to find nearby safety and medical facilities. Enable mobile data or Wi-Fi to continue."
+			/>
 		);
 	}
 
@@ -285,35 +255,6 @@ export default function SupportHubScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-	restrictedContainer: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		paddingHorizontal: 30,
-		paddingBottom: 50,
-	},
-	restrictedTitle: {
-		fontSize: 22,
-		fontWeight: "700",
-		color: THEME.title,
-		marginTop: 16,
-		textAlign: "center",
-	},
-	restrictedText: {
-		fontSize: 14,
-		color: "#555",
-		textAlign: "center",
-		marginTop: 10,
-		lineHeight: 20,
-		marginBottom: 24,
-	},
-	settingsButton: {
-		backgroundColor: THEME.purple,
-		paddingVertical: 14,
-		paddingHorizontal: 24,
-		borderRadius: 12,
-	},
-	settingsButtonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
 	emptyContainer: {
 		padding: 20,
 		alignItems: "center",

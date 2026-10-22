@@ -1,20 +1,15 @@
 import {
-	findLocalUserEmails,
 	getLocalUserIdByEmail,
 	markUserAsSynched,
 	markUserAsVerifiedLocally,
 } from "@database/repositories/userRepository";
 import { postApi, safeApiCall } from "@services/ApiClient";
-
-const normalizedEmail = (email) =>
-	String(email ?? "")
-		.trim()
-		.toLowerCase();
+import { normalizeEmail } from "@utils/normalizationUtil";
 
 //Method that uses the api client to send an OTP to the users email
 export const sendOtpEmail = async (email) => {
 	return safeApiCall(
-		() => postApi("/otp/send-otp-email", { email: normalizedEmail(email) }),
+		() => postApi("/otp/send-otp-email", { email: normalizeEmail(email) }),
 		"[OTP Service] Failed to send OTP to the users email. Please try again",
 	);
 };
@@ -26,7 +21,7 @@ export const verifyOtpCode = async (
 	otp,
 	purpose = "verification",
 ) => {
-	const sanitizedEmail = normalizedEmail(email);
+	const sanitizedEmail = normalizeEmail(email);
 	const matchedUserId = await getLocalUserIdByEmail(db, sanitizedEmail);
 
 	//Send the POST api call to verify the otp entered by the user

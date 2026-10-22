@@ -1,4 +1,4 @@
-export const DECOY_FORM_FIELDS = [
+export const DECOY_FORM_FIELDS = Object.freeze([
 	{
 		key: "decoyPin",
 		label: "Enter your decoy pin",
@@ -11,4 +11,4 @@ export const DECOY_FORM_FIELDS = [
 		icon: "lock",
 		placeholder: "••••••••",
 	},
-];
+]);

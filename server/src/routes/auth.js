@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const authController = require("#controllers/authController.js");
+const asyncHandler = require("#middleware/asyncHandler.js");
 const { validateBody } = require("#middleware/validateRequest.js");
 
 const REQUIRED_REGISTRATION_FIELDS = [
@@ -25,22 +26,22 @@ const REQUIRED_RESET_PASSWORD_FIELDS = [
 router.post(
 	"/register",
 	validateBody(REQUIRED_REGISTRATION_FIELDS),
-	authController.register,
+	asyncHandler(authController.register),
 );
 router.post(
 	"/login",
 	validateBody(REQUIRED_LOGIN_FIELDS),
-	authController.login,
+	asyncHandler(authController.login),
 );
 router.post(
 	"/forgot-password",
 	validateBody(REQUIRED_FORGOT_PASSWORD_FIELDS),
-	authController.forgotPassword,
+	asyncHandler(authController.forgotPassword),
 );
 router.post(
 	"/reset-password",
 	validateBody(REQUIRED_RESET_PASSWORD_FIELDS),
-	authController.resetPassword,
+	asyncHandler(authController.resetPassword),
 );
 
 module.exports = router;

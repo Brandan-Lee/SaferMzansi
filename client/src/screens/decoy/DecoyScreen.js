@@ -10,19 +10,17 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 	const { isTesting } = route.params || {};
 
 	const [pin, setPin] = useState("");
-	const [emergencyPin, setEmergencyPin] = useState("");
 
 	const unlockSOS = () => {
 		if (onEmergencyUnlock) {
-			onEmergencyUnlock();
+			onEmergencyUnlock({ isTesting: Boolean(isTesting) });
 		} else {
-			navigation.navigate("SOSScreen", { isTesting: true });
+			navigation.navigate("SOSScreen", { isTesting: Boolean(isTesting) });
 		}
 	};
 
 	const handleButtonPress = (value) => {
-		setPin(pin + value);
-		setEmergencyPin(emergencyPin + value);
+		setPin((currentPin) => currentPin + value);
 	};
 
 	const calculate = async () => {
@@ -36,7 +34,14 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 			}
 		}
 
-		const matchType = await verifyDecoyAttempt(pin);
+		let matchType;
+		try {
+			matchType = await verifyDecoyAttempt(pin);
+		} catch (error) {
+			console.error("[Decoy] Could not verify the saved PIN:", error);
+			setPin("Error");
+			return;
+		}
 
 		if (matchType === "emergency") {
 			setPin("");
@@ -62,7 +67,6 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 
 	const clear = () => {
 		setPin("");
-		setEmergencyPin("");
 	};
 
 	return (

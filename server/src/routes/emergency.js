@@ -2,6 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 const emergencyController = require("#controllers/emergencyController.js");
+const asyncHandler = require("#middleware/asyncHandler.js");
 const { validateBody } = require("#middleware/validateRequest.js");
 
 const REQUIRED_BROADCAST_FIELDS = [
@@ -19,7 +20,7 @@ const REQUIRED_BROADCAST_FIELDS = [
 router.post(
 	"/broadcast",
 	validateBody(REQUIRED_BROADCAST_FIELDS),
-	emergencyController.broadcastEmergency,
+	asyncHandler(emergencyController.broadcastEmergency),
 );
 
 module.exports = router;

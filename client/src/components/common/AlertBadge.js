@@ -19,11 +19,21 @@ export const AlertBadge = ({ message, type = "error", duration = 4000, onDismiss
 		return null;
 	}
 
-	const isError = String(type).toLowerCase() === "error";
-	const bgStyle = isError ? styles.errorBg : styles.successBg;
-	const textStyle = isError ? styles.errorText : styles.successText;
-	const iconName = isError ? "alert-circle" : "check-circle";
-	const iconColor = isError ? "#DC2626" : "#16A34A";
+	const normalizedType = String(type).toLowerCase();
+	const isError = normalizedType === "error";
+	const isWarning = normalizedType === "warning";
+	const bgStyle = isError
+		? styles.errorBg
+		: isWarning
+			? styles.warningBg
+			: styles.successBg;
+	const textStyle = isError
+		? styles.errorText
+		: isWarning
+			? styles.warningText
+			: styles.successText;
+	const iconName = isError || isWarning ? "alert-circle" : "check-circle";
+	const iconColor = isError ? "#DC2626" : isWarning ? "#B54708" : "#16A34A";
 
 	return (
 		<View style={[styles.container, bgStyle]}>
@@ -52,6 +62,11 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: "#FCA5A5",
 	},
+	warningBg: {
+		backgroundColor: "#FEF3C7",
+		borderWidth: 1,
+		borderColor: "#FCD34D",
+	},
 	successBg: {
 		backgroundColor: "#DCFCE7",
 		borderWidth: 1,
@@ -67,6 +82,9 @@ const styles = StyleSheet.create({
 	},
 	errorText: {
 		color: "#991B1B",
+	},
+	warningText: {
+		color: "#92400E",
 	},
 	successText: {
 		color: "#166534",

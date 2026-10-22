@@ -43,7 +43,7 @@ const FIELD_RULES = {
 			: rawVal !== formData.password
 				? "Passwords do not match"
 				: "",
-	decoyPin: (val, rawVal, formData) => {
+	decoyPin: (val) => {
 		const str = String(val ?? "").trim();
 		if (!str) return "Decoy PIN is required";
 		if (str.length < 4) return "Decoy PIN must be at least 4 characters";
@@ -60,9 +60,9 @@ const FIELD_RULES = {
 	},
 	timerSeconds: (val) => {
 		const str = String(val ?? "").trim();
-		const parsed = parseInt(str, 10);
+		const parsed = Number(str);
 		if (!str) return "Timer window is required";
-		if (isNaN(parsed) || parsed < 3 || parsed > 30) {
+		if (!Number.isInteger(parsed) || parsed < 3 || parsed > 30) {
 			return "Allowed range is between 3 and 30 seconds";
 		}
 		return "";
@@ -71,7 +71,7 @@ const FIELD_RULES = {
 
 //Method that helps to validate the fields enter into the form
 export const validateField = (field, value, formData = {}) => {
-	const trimmed = value?.trim() || "";
+	const trimmed = typeof value === "string" ? value.trim() : value;
 	const validator = FIELD_RULES[field];
 	return validator ? validator(trimmed, value, formData) : "";
 };
@@ -137,7 +137,30 @@ export const validateForgotPasswordForm = (formData) => validateForm(formData);
 //Method that validates the Reset Password form
 export const validateResetPasswordForm = (formData) => validateForm(formData);
 
-export const validateContactForm = (formData) => validateForm(formData);
+export const validateContactForm = (formData) => {
+	const errors = {};
+
+	["name", "surname"].forEach((field) => {
+		const error = validateField(field, formData[field], formData);
+		if (error) errors[field] = error;
+	});
+
+	const phone = String(formData.phone ?? "").trim();
+	const email = String(formData.email ?? "").trim();
+	if (phone) {
+		const error = validateField("phone", phone, formData);
+		if (error) errors.phone = error;
+	}
+	if (email) {
+		const error = validateField("email", email, formData);
+		if (error) errors.email = error;
+	}
+	if (!phone && !email) {
+		errors.phone = "Enter a phone number or an email address";
+	}
+
+	return { isValid: Object.keys(errors).length === 0, errors };
+};
 
 export const validateUserForm = (formData) => validateForm(formData);
 

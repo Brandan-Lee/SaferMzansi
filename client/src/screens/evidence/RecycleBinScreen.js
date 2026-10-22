@@ -149,7 +149,10 @@ const RecycleBinScreen = () => {
                             </View>
 
                             {group.files.map((file, fileIndex) => (
-                                <View key={fileIndex} style={styles.fileCardWrapper}>
+                                <View
+									key={file.evidenceId || file.evidence_id || fileIndex}
+									style={styles.fileCardWrapper}
+								>
                                     <EvidenceDetailCard
                                         file={file}
                                         index={fileIndex}
@@ -178,7 +181,6 @@ const RecycleBinScreen = () => {
                 loading={isActionLoading}
                 onConfirm={handleConfirmAction}
                 onCancel={() => !isActionLoading && setModalConfig(null)}
-				banner={banner}
             />
         </MainLayout>
     );

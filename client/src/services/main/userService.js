@@ -1,3 +1,4 @@
+import * as FileSystem from "expo-file-system/legacy";
 import {
 	deleteUserLocally,
 	getUserDetails,
@@ -8,11 +9,16 @@ import {
 	restoreUserLocally,
 } from "@database/repositories/userRepository";
 import { postApi, safeApiCall } from "@services/ApiClient";
+import { decryptOrKeepValue } from "@utils/securityAndValidation/decryptionUtil";
 import {
-	decryptData,
 	encryptData,
 	generateBlindIndex,
 } from "@utils/securityAndValidation/securityUtil";
+import {
+	normalizeEmail,
+	normalizeName,
+	normalizePhone,
+} from "@utils/normalizationUtil";
 
 export const getLocalUserDetails = async (db, userId) => {
 	if (!userId) {
@@ -32,24 +38,10 @@ export const getLocalUserDetails = async (db, userId) => {
 		return null;
 	}
 
-	const safeDecrypt = (val, fieldName) => {
-		if (!val) return "";
-		try {
-			const decrypted = decryptData(val);
-			if (decrypted) return decrypted;
-			return val;
-		} catch (err) {
-			console.error(
-				`Could not decrypt user field ${fieldName}:`,
-				err,
-			);
-			return val;
-		}
-	};
-
 	const firstName =
-		safeDecrypt(
+		decryptOrKeepValue(
 			rawUser.encrypted_name || rawUser.encrypted_first_name,
+			"user",
 			"firstName",
 		) ||
 		rawUser.firstName ||
@@ -57,8 +49,9 @@ export const getLocalUserDetails = async (db, userId) => {
 		"";
 
 	const surname =
-		safeDecrypt(
+		decryptOrKeepValue(
 			rawUser.encrypted_surname || rawUser.encrypted_last_name,
+			"user",
 			"surname",
 		) ||
 		rawUser.surname ||
@@ -66,11 +59,14 @@ export const getLocalUserDetails = async (db, userId) => {
 		"";
 
 	const email =
-		safeDecrypt(rawUser.encrypted_email, "email") || rawUser.email || "";
+		decryptOrKeepValue(rawUser.encrypted_email, "user", "email") ||
+		rawUser.email ||
+		"";
 
 	const userNumber =
-		safeDecrypt(
+		decryptOrKeepValue(
 			rawUser.encrypted_phone_num || rawUser.encrypted_phone,
+			"user",
 			"userNumber",
 		) ||
 		rawUser.userNumber ||
@@ -107,43 +103,34 @@ export const updateUser = async (
 
 	const { firstName, surname, phone, email } = userPayload;
 
-	const newFirstName = firstName ? firstName.trim() : "";
-	const newSurname = surname ? surname.trim() : "";
-	const newPhone = phone ? phone.replace(/[\s-]/g, "") : "";
-	const newEmail = email ? email.trim().toLowerCase() : "";
+	const newFirstName = normalizeName(firstName);
+	const newSurname = normalizeName(surname);
+	const newPhone = normalizePhone(phone);
+	const newEmail = normalizeEmail(email);
 
-	// Extract existing contact safely
-	const existingFirstName = existingUser.firstName
-		? existingUser.firstName.trim()
-		: "";
-	const existingSurname = existingUser.surname
-		? existingUser.surname.trim()
-		: "";
-	const existingPhone = existingUser.phone
-		? existingUser.phone.replace(/[\s-]/g, "")
-		: "";
-	const existingEmail = existingUser.email
-		? existingUser.email.trim().toLowerCase() // Added ()
-		: "";
+	const existingFirstName = normalizeName(existingUser.firstName);
+	const existingSurname = normalizeName(existingUser.surname);
+	const existingPhone = normalizePhone(existingUser.userNumber || existingUser.phone);
+	const existingEmail = normalizeEmail(existingUser.email);
 
-	// Re-encrypt values that have changed, or encrypt fresh values
+	// Only encrypt fields that changed so unrelated updates keep their ciphertext.
 	const encryptedName =
-		newFirstName !== existingFirstName || !existingUser.encrypted_contact_name
+		newFirstName !== existingFirstName || !existingUser.encrypted_name
 			? encryptData(newFirstName)
-			: existingUser.encrypted_contact_name;
+			: existingUser.encrypted_name;
 
 	const encryptedSurname =
-		newSurname !== existingSurname || !existingUser.encrypted_contact_surname
+		newSurname !== existingSurname || !existingUser.encrypted_surname
 			? encryptData(newSurname)
-			: existingUser.encrypted_contact_surname;
+			: existingUser.encrypted_surname;
 
 	const encryptedPhone =
-		newPhone !== existingPhone || !existingUser.encrypted_contact_phone_num
+		newPhone !== existingPhone || !existingUser.encrypted_phone_num
 			? encryptData(newPhone)
-			: existingUser.encrypted_contact_phone_num;
+			: existingUser.encrypted_phone_num;
 
-	let emailBlindIndex = existingUser.contact_email_blind_index || null;
-	let encryptedEmail = existingUser.encrypted_contact_email || null;
+	let emailBlindIndex = existingUser.email_blind_index || null;
+	let encryptedEmail = existingUser.encrypted_email || null;
 
 	if (newEmail !== existingEmail || !encryptedEmail) {
 		if (newEmail) {
@@ -165,9 +152,9 @@ export const updateUser = async (
 		userId,
 		emailBlindIndex,
 		encryptedName,
-		encryptedSurname: encryptedSurname,
+		encryptedSurname,
 		encryptedPhoneNum: encryptedPhone,
-		encryptedEmail: encryptedEmail,
+		encryptedEmail,
 		passwordHash: existingUser.password_hash,
 		isVerified: existingUser.is_verified || 0,
 		isSynched: 0,
@@ -235,16 +222,18 @@ export const hardDeleteAccount = async (db, userId) => {
 		throw new Error("User ID is required for hard delete operations");
 	}
 
+	const localEvidence = await db.getAllAsync(
+		"SELECT local_file_url FROM Local_Evidence_Vault WHERE user_id = ?",
+		[userId],
+	);
 	const result = await safeApiCall(
 		() => postApi("/users/hard-delete", { user_id: userId }),
 		"Server failed to hard delete account. Please try again.",
 	);
 
-	if (result?.success) {
-	} else {
-		console.warn(
-			"[User Service] Backend hard delete failed or offline, proceeding with local deletion:",
-			result?.error
+	if (!result?.success) {
+		throw new Error(
+			result?.error || "Server failed to permanently delete the account.",
 		);
 	}
 
@@ -253,6 +242,23 @@ export const hardDeleteAccount = async (db, userId) => {
 	} catch (error) {
 		console.error("[User Service] Failed to delete user locally during hard delete:", error);
 		throw new Error("Failed to clear local user data");
+	}
+
+	for (const evidence of localEvidence) {
+		const localFileUrl = evidence.local_file_url;
+		if (
+			localFileUrl?.startsWith("file://") ||
+			localFileUrl?.startsWith("content://")
+		) {
+			try {
+				await FileSystem.deleteAsync(localFileUrl, { idempotent: true });
+			} catch (error) {
+				console.warn(
+					"[User Service] Could not remove a local evidence file:",
+					error,
+				);
+			}
+		}
 	}
 
 	return {

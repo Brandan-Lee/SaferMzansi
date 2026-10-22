@@ -3,24 +3,20 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+const TABS = [
+	{ name: "Home", route: "HomeScreen", icon: "house-user" },
+	{ name: "Contacts", route: "EmergencyContactsScreen", icon: "address-book" },
+	{ name: "Vault", route: "EvidenceVaultScreen", icon: "vault" },
+	{
+		name: "Support Hub",
+		route: "SupportHubScreen",
+		icon: "hand-holding-heart",
+	},
+	{ name: "Settings", route: "SettingsScreen", icon: "gear" },
+];
+
 export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 	const insets = useSafeAreaInsets();
-
-	const tabs = [
-		{ name: "Home", route: "HomeScreen", icon: "house-user" },
-		{
-			name: "Contacts",
-			route: "EmergencyContactsScreen",
-			icon: "address-book",
-		},
-		{ name: "Vault", route: "EvidenceVaultScreen", icon: "vault" },
-		{
-			name: "Support Hub",
-			route: "SupportHubScreen",
-			icon: "hand-holding-heart",
-		},
-		{ name: "Settings", route: "SettingsScreen", icon: "gear" },
-	];
 
 	return (
 		<View
@@ -30,7 +26,7 @@ export const NavigationBar = ({ activeTab = "Home", navigation }) => {
 			]}
 		>
 			<View style={styles.tabBar}>
-				{tabs.map((tab) => {
+				{TABS.map((tab) => {
 					const isActive = activeTab === tab.name;
 					return (
 						<TouchableOpacity

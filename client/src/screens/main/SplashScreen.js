@@ -1,11 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import {
-    View,
-    Text,
-    StyleSheet,
-    Animated,
-    Easing,
-} from "react-native";
+import { View, Text, StyleSheet, Animated, Easing } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -13,49 +7,49 @@ const PURPLE = "#6B21A8";
 const LIGHTER_PURPLE = "#F8F1FD";
 const BACKGROUND = "#FAF7FF";
 const MUTED = "#777777";
+const LOGO_FADE_DURATION_MS = 500;
+const TEXT_FADE_DURATION_MS = 1000;
 
 const SplashScreen = () => {
-    const navigation = useNavigation();
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-    const scaleAnim = useRef(new Animated.Value(0.88)).current;
-    const textAnim = useRef(new Animated.Value(0)).current;
+	const navigation = useNavigation();
+	const fadeAnim = useRef(new Animated.Value(0)).current;
+	const scaleAnim = useRef(new Animated.Value(0.88)).current;
+	const textAnim = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => {
-        const animation = Animated.sequence([
-            Animated.parallel([
-                Animated.timing(fadeAnim, {
-                    toValue: 1,
-                    duration: 500,
-                    easing: Easing.out(Easing.ease),
-                    useNativeDriver: true,
-                }),
+	useEffect(() => {
+		const animation = Animated.sequence([
+			Animated.parallel([
+				Animated.timing(fadeAnim, {
+					toValue: 1,
+					duration: LOGO_FADE_DURATION_MS,
+					easing: Easing.out(Easing.ease),
+					useNativeDriver: true,
+				}),
 
-                Animated.spring(scaleAnim, {
-                    toValue: 1,
-                    friction: 6,
-                    tension: 55,
-                    useNativeDriver: true,
-                }),
-            ]),
+				Animated.spring(scaleAnim, {
+					toValue: 1,
+					friction: 6,
+					tension: 55,
+					useNativeDriver: true,
+				}),
+			]),
 
-            Animated.timing(textAnim, {
-                toValue: 1,
-                duration: 1000,
-                easing: Easing.out(Easing.ease),
-                useNativeDriver: true,
-            }),
-        ]);
-        animation.start(({ finished }) => {
-            if (finished) {
-                navigation.replace("LoginScreen");
-            }
-        });
+			Animated.timing(textAnim, {
+				toValue: 1,
+				duration: TEXT_FADE_DURATION_MS,
+				easing: Easing.out(Easing.ease),
+				useNativeDriver: true,
+			}),
+		]);
+		animation.start(({ finished }) => {
+			if (finished) navigation.replace("LoginScreen");
+		});
 
-        return () => animation.stop();
-    }, [fadeAnim, scaleAnim, textAnim, navigation]);
+		return () => animation.stop();
+	}, [fadeAnim, scaleAnim, textAnim, navigation]);
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} accessibilityLabel="SaferMzansi loading">
             <View style={styles.centerContent}>
                 <Animated.View
                     style={[

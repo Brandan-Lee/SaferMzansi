@@ -69,7 +69,10 @@ const ConfirmationModal = ({
 									]}
 									onPress={onCancel}
 									activeOpacity={0.7}
-									disabled={loading} // 👈 Disable cancel during loading
+									disabled={loading}
+									accessibilityRole="button"
+									accessibilityLabel={cancelLabel}
+									accessibilityState={{ disabled: loading }}
 								>
 									<Text style={styles.cancelText}>{cancelLabel}</Text>
 								</TouchableOpacity>
@@ -85,6 +88,9 @@ const ConfirmationModal = ({
 									onPress={onConfirm}
 									activeOpacity={0.7}
 									disabled={loading}
+									accessibilityRole="button"
+									accessibilityLabel={confirmLabel}
+									accessibilityState={{ disabled: loading, busy: loading }}
 								>
 									{loading ? (
 										<ActivityIndicator size="small" color="#FFFFFF" />

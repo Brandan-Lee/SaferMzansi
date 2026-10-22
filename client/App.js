@@ -5,49 +5,22 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { SQLiteProvider } from "expo-sqlite";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import * as Location from "expo-location";
 import { initDatabase } from "@database/init";
 import { AuthProvider } from "@context/AuthContext";
 import { NetStatusProvider } from "@utils/network/netStatus";
 import AppNavigator from "@navigation/AppNavigator";
-import * as TaskManager from "expo-task-manager";
 import { useShake } from "@hooks/useShake";
 import { useLocation } from "@hooks/useLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNavigationContainerRef } from "@react-navigation/native";
 import { ModalProvider } from "@context/ModalContext";
-import { BACKGROUND_LOCATION_TASK } from "@constants/locationConstants";
+import { STORAGE_KEYS } from "@constants/storageKeys";
+import { startBackgroundLocationTracking } from "@services/main/backgroundLocationService";
 
 const DATABASE_NAME = "safer_mzansi.db";
 
-const KEYS = {
-	SHARE_LOCATION: "@setting_share_location",
-	GESTURE: "@setting_gesture",
-};
-
 // Create a global navigation reference
 export const navigationRef = createNavigationContainerRef();
-
-TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ error }) => {
-	if (error) {
-		console.error("SaferMzansi Background Location Task Exception:", error);
-		return;
-	}
-
-	try {
-		const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
-		const isSharingEnabled = savedShare === "true";
-
-		if (!isSharingEnabled) {
-			await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
-			return;
-		}
-
-		// Background fixes are not sent or stored; SOS dispatch shares a fix only when triggered.
-	} catch (err) {
-		console.error("Error reading storage inside background task:", err);
-	}
-});
 
 export default function App() {
 	const { getLocation } = useLocation();
@@ -63,44 +36,11 @@ export default function App() {
 		}
 	};
 
-	const runBackgroundLocationTracking = async () => {
-		try {
-			// Settings owns permission prompts; startup only resumes previously granted access.
-			const foreground = await Location.getForegroundPermissionsAsync();
-			const background = await Location.getBackgroundPermissionsAsync();
-			if (
-				foreground.status !== "granted" ||
-				background.status !== "granted"
-			) {
-				return;
-			}
-
-			const isRegistered = await TaskManager.isTaskRegisteredAsync(
-				BACKGROUND_LOCATION_TASK,
-			);
-
-			if (!isRegistered) {
-				await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
-					accuracy: Location.Accuracy.Balanced,
-					timeInterval: 5000,
-					distanceInterval: 1,
-					showsBackgroundLocationIndicator: true,
-					foregroundService: {
-						notificationTitle: "Safer Mzansi Active",
-						notificationBody:
-							"Location access is active for emergency alerts.",
-						notificationColor: "#FF0000",
-					},
-				});
-			}
-		} catch (error) {
-			console.error("Could not enable background location access:", error);
-		}
-	};
-
 	const handleEmergencyShake = async () => {
 		try {
-			const savedGesture = await AsyncStorage.getItem(KEYS.GESTURE);
+			const savedGesture = await AsyncStorage.getItem(
+				STORAGE_KEYS.EMERGENCY_GESTURE,
+			);
 			const isGestureEnabled = savedGesture === "true";
 
 			if (!isGestureEnabled) return;
@@ -131,10 +71,12 @@ export default function App() {
 	useEffect(() => {
 		const initializeSettings = async () => {
 			try {
-				const savedShare = await AsyncStorage.getItem(KEYS.SHARE_LOCATION);
+				const savedShare = await AsyncStorage.getItem(
+					STORAGE_KEYS.SHARE_LOCATION,
+				);
 
 				if (savedShare === "true") {
-					runBackgroundLocationTracking();
+					await startBackgroundLocationTracking();
 				}
 			} catch (error) {
 				console.error("Error reading location sharing preference: ", error);

@@ -65,7 +65,11 @@ export default function EvidenceVaultScreen({ navigation }) {
 	const [banner, setBanner] = useState(null);
 
 	const loadEvidence = useCallback(async () => {
-		if (!db || !user.userId) return setLoading(false);
+		if (!db || !user?.userId) {
+			setEvidenceItems([]);
+			setLoading(false);
+			return;
+		}
 		try {
 			setLoading(true);
 			setBanner(null);
@@ -90,7 +94,7 @@ export default function EvidenceVaultScreen({ navigation }) {
 	);
 
 	const selectAndSaveFiles = async () => {
-		if (uploading || !db || !user.userId) return;
+		if (uploading || !db || !user?.userId) return;
 
 		try {
 			setUploading(true);
