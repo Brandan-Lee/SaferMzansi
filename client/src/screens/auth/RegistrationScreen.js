@@ -7,11 +7,12 @@ import { CustomInput } from "@components/forms/CustomInput";
 import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { validateRegistrationForm } from "@utils/securityAndValidation/validationUtil";
 import { useFormHandler } from "@hooks/useFormHandler";
-import AuthLayout, { MainLayout } from "@components/layouts/AuthLayout";
+import AuthLayout from "@components/layouts/AuthLayout";
 import { sendOtpEmail } from "@services/auth/otpService";
 import { checkNetworkAndNotify } from "@utils/network/networkGuard";
 import PasswordStrengthMeter from "@components/forms/PasswordStrengthMeter";
 import { REGISTRATION_FORM_FIELDS } from "@constants/AuthFields";
+import { useModal } from "@context/ModalContext";
 
 const INITIAL_STATE = {
 	name: "",
@@ -31,19 +32,14 @@ const RegistrationScreen = () => {
 	const [agreed, setAgreed] = useState(false);
 	const [loading, setIsLoading] = useState(false);
 	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+	const { openModal } = useModal();
 
-	//Method that helps to handle when the user agrees to the terms and conditions
 	const handleToggleAgreed = () => {
 		setAgreed((prev) => {
 			const next = !prev;
-
 			if (next && errors.agreed) {
-				setErrors((errs) => ({
-					...errs,
-					agreed: "",
-				}));
+				setErrors((errs) => ({ ...errs, agreed: "" }));
 			}
-
 			return next;
 		});
 	};
@@ -51,19 +47,16 @@ const RegistrationScreen = () => {
 	const handleRegister = async () => {
 		setBanner(null);
 
-		//Validate if the form is valid or not
 		const { isValid, errors: validationErrors } = validateRegistrationForm(
 			formData,
 			agreed,
 		);
 
-		//Form is not valid
 		if (!isValid) {
 			setErrors(validationErrors);
 			return;
 		}
 
-		//The user was not online when registering
 		if (!checkNetworkAndNotify(isOnline, setBanner)) {
 			return;
 		}
@@ -164,28 +157,24 @@ const RegistrationScreen = () => {
 					I agree to the{" "}
 					<Text
 						style={styles.link}
-						onPress={() => {
-							navigation.navigate("TOSScreen");
-						}}
+						onPress={() => openModal('terms')}
 					>
 						Terms of Service
 					</Text>{" "}
 					and{" "}
 					<Text
 						style={styles.link}
-						onPress={() => {
-							navigation.navigate("PrivacyPolicyScreen");
-						}}
+						onPress={() => openModal('privacy')}
 					>
 						Privacy Policy
 					</Text>
 				</Text>
 			</TouchableOpacity>
-			{/* Inline Client Validation Error for Checkbox */}
+
 			{Boolean(errors.agreed) && (
 				<Text style={styles.checkboxErrorText}>{errors.agreed}</Text>
 			)}
-			{/* Action Button */}
+
 			<PrimaryButton
 				title="REGISTER"
 				onPress={handleRegister}

@@ -8,12 +8,12 @@ import {
 	Alert,
 	Animated,
 } from "react-native";
-
-import { SafeAreaView } from "react-native-safe-area-context";
+// import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import MainLayout from "@components/layouts/MainLayout";
 import { useAuth } from "@context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useModal } from "@context/ModalContext";
 
 const KEYS = {
 	SHARE_LOCATION: "@setting_share_location",
@@ -29,6 +29,8 @@ const SettingsScreen = ({ navigation, route }) => {
 	const [GestureTrigger, setGestureTrigger] = useState(false);
 	const { logOut } = useAuth();
 	const [highlightedKey, setHighlightedKey] = useState(null);
+
+	const { openModal } = useModal();
 
 	const highlightAnim = useRef(new Animated.Value(0)).current;
 
@@ -107,11 +109,6 @@ const SettingsScreen = ({ navigation, route }) => {
 		} catch (error) {
 			console.error(`Failed to save setting for key: ${key}`, error);
 		}
-	};
-
-	//must remove
-	const showTemporaryAlert = (title) => {
-		Alert.alert(title, "This function will be connected later.");
 	};
 
 	const SettingRow = ({
@@ -284,14 +281,14 @@ const SettingsScreen = ({ navigation, route }) => {
 					icon="shield-lock-outline"
 					materialIcon
 					title="Privacy policy"
-					onPress={() => showTemporaryAlert("Privacy policy")} //ADD PAGE HERE
+					onPress={() => openModal('privacy')}
 				/>
 
 				<SettingRow
 					icon="check-circle-outline"
 					materialIcon
 					title="Terms of Service"
-					onPress={() => showTemporaryAlert("Terms of Service")} //ADD PAGE HERE
+					onPress={() => openModal('terms')}
 				/>
 
 				{/* LOGOUT BUTTON */}

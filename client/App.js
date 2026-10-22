@@ -15,6 +15,7 @@ import { useShake } from "@hooks/useShake";
 import { useLocation } from "@hooks/useLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNavigationContainerRef } from "@react-navigation/native";
+import { ModalProvider } from "@context/ModalContext";
 
 const DATABASE_NAME = "safer_mzansi.db";
 export const BACKGROUND_LOCATION_TASK = "BACKGROUND_LOCATION_TASK";
@@ -204,13 +205,15 @@ export default function App() {
 			>
 				<NetStatusProvider>
 					<AuthProvider>
-						<View style={styles.container}>
-							<AppNavigator
-								navigationRef={navigationRef}
-								onNavigationReady={handleNavigationReady}
-							/>
-							<StatusBar style="auto" />
-						</View>
+						<ModalProvider>
+							<View style={styles.container}>
+								<AppNavigator
+									navigationRef={navigationRef}
+									onNavigationReady={handleNavigationReady}
+								/>
+								<StatusBar style="auto" />
+							</View>
+						</ModalProvider>
 					</AuthProvider>
 				</NetStatusProvider>
 			</SQLiteProvider>
