@@ -61,18 +61,36 @@ export default function EvidenceFilePreview({ file, size = 52 }) {
 		};
 	}, [file]);
 
+	const fileType = (
+		file?.file_type ||
+		file?.mimeType ||
+		file?.fileType ||
+		""
+	).toLowerCase();
+	const imagePaths = [
+		file?.name,
+		file?.local_file_url,
+		file?.uri,
+		file?.cloud_file_url,
+		file?.cloudFileUrl,
+	];
+	const hasPreviewUri = imagePaths.some(
+		(path) => typeof path === "string" && path.length > 0,
+	);
 	const isImage =
 		file?.type === "image" ||
-		(file?.file_type || file?.mimeType || file?.fileType || "").startsWith(
-			"image/",
-		);
+		fileType.startsWith("image/") ||
+		imagePaths.some((path) =>
+			/\.(avif|bmp|gif|heic|heif|jpe?g|png|tiff?|webp)(?:[?#].*)?$/i.test(
+				path || "",
+			),
+		) ||
+		(file?.type === "file" && hasPreviewUri);
 
 	const handleImageError = async () => {
 		const cloudPath = file?.cloud_file_url || file?.cloudFileUrl;
 		if (
 			!cloudPath ||
-			cloudPath === resolvedUri ||
-			cloudPath.startsWith("http") ||
 			refreshAttempts.current > 0
 		) {
 			setImageFailed(true);
@@ -81,15 +99,24 @@ export default function EvidenceFilePreview({ file, size = 52 }) {
 
 		refreshAttempts.current += 1;
 		try {
-			const { data, error } = await supabase.storage
-				.from("EvidenceVault")
-				.createSignedUrl(cloudPath, 300);
-			if (error) throw error;
-			if (data?.signedUrl && isMounted.current) {
-				setResolvedUri(data.signedUrl);
+			let fallbackUri = cloudPath;
+			if (!cloudPath.startsWith("http")) {
+				const { data, error } = await supabase.storage
+					.from("EvidenceVault")
+					.createSignedUrl(cloudPath, 300);
+				if (error) throw error;
+				fallbackUri = data?.signedUrl || "";
+			}
+
+			if (
+				fallbackUri &&
+				fallbackUri !== resolvedUri &&
+				isMounted.current
+			) {
+				setResolvedUri(fallbackUri);
 				return;
 			}
-			setImageFailed(true);
+			if (isMounted.current) setImageFailed(true);
 		} catch (error) {
 			console.error("Could not load evidence preview:", error);
 			if (isMounted.current) setImageFailed(true);
@@ -107,14 +134,14 @@ export default function EvidenceFilePreview({ file, size = 52 }) {
 		);
 	}
 
-	const fileType = file?.type || file?.file_type || file?.mimeType || "";
+	const displayType = file?.type || fileType || "";
 	const icon =
 		file?.icon ||
-		(fileType.startsWith("video/") || fileType === "video"
+		(displayType.startsWith("video/") || displayType === "video"
 			? "video"
-			: fileType.startsWith("audio/") || fileType === "audio"
+			: displayType.startsWith("audio/") || displayType === "audio"
 				? "mic"
-				: fileType.includes("pdf") || fileType === "pdf"
+				: displayType.includes("pdf") || displayType === "pdf"
 					? "file-text"
 					: "file");
 
