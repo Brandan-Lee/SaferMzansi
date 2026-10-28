@@ -242,7 +242,7 @@ const OTPScreen = ({ navigation, route }) => {
 			await AsyncStorage.multiRemove([
 				getLockoutKey(sanitizedEmail),
 				getAttemptsKey(sanitizedEmail),
-			]).catch(() => {});
+			]).catch(() => { });
 
 			// Registration Flow
 			// OTPScreen_3.js

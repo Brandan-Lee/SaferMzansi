@@ -140,10 +140,62 @@ export const markContactAsUnSynched = async (db, contactId) => {
 
 export const replaceLocalContactId = async (db, currentId, canonicalId) => {
 	if (!currentId || !canonicalId || currentId === canonicalId) return;
-	await db.runAsync(
-		`UPDATE Local_Emergency_Contacts SET contact_id = ? WHERE contact_id = ?`,
-		[canonicalId, currentId],
-	);
+
+	await db.withTransactionAsync(async () => {
+		const currentContact = await db.getFirstAsync(
+			"SELECT * FROM Local_Emergency_Contacts WHERE contact_id = ?",
+			[currentId],
+		);
+		if (!currentContact) return;
+
+		const canonicalContact = await db.getFirstAsync(
+			"SELECT contact_id, user_id FROM Local_Emergency_Contacts WHERE contact_id = ?",
+			[canonicalId],
+		);
+
+		if (!canonicalContact) {
+			await db.runAsync(
+				"UPDATE Local_Emergency_Contacts SET contact_id = ? WHERE contact_id = ?",
+				[canonicalId, currentId],
+			);
+			return;
+		}
+
+		if (canonicalContact.user_id !== currentContact.user_id) {
+			throw new Error("Cannot reconcile contact IDs belonging to different users.");
+		}
+
+		await db.runAsync(
+			`UPDATE Local_Emergency_Contacts SET
+				contact_email_blind_index = ?,
+				encrypted_contact_name = ?,
+				encrypted_contact_surname = ?,
+				encrypted_contact_phone_num = ?,
+				encrypted_contact_email = ?,
+				is_synched = 1,
+				is_deleted = ?,
+				created_at = ?,
+				updated_at = ?,
+				deleted_at = ?
+			WHERE contact_id = ?`,
+			[
+				currentContact.contact_email_blind_index,
+				currentContact.encrypted_contact_name,
+				currentContact.encrypted_contact_surname,
+				currentContact.encrypted_contact_phone_num,
+				currentContact.encrypted_contact_email,
+				currentContact.is_deleted,
+				currentContact.created_at,
+				currentContact.updated_at,
+				currentContact.deleted_at,
+				canonicalId,
+			],
+		);
+		await db.runAsync(
+			"DELETE FROM Local_Emergency_Contacts WHERE contact_id = ?",
+			[currentId],
+		);
+	});
 };
 
 export const softDeleteLocalEmergencyContact = async (

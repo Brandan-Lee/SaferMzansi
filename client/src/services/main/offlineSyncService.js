@@ -10,35 +10,55 @@ const markSynced = async (db, table, idColumn, id) => {
 	);
 };
 
+const syncUser = async (user) => {
+	const result = user.is_deleted
+		? await safeApiCall(
+				() => postApi("/users/soft-delete", { user_id: user.user_id }),
+				"Failed to sync account deactivation.",
+			)
+		: await safeApiCall(
+				() =>
+					postApi("/users/update", {
+						user_id: user.user_id,
+						email_blind_index: user.email_blind_index,
+						encrypted_name: user.encrypted_name,
+						encrypted_surname: user.encrypted_surname,
+						encrypted_phone_num: user.encrypted_phone_num,
+						encrypted_email: user.encrypted_email,
+					}),
+				"Failed to sync user profile.",
+			);
+
+	return result;
+};
+
+export const syncPendingUserProfile = async (db, userId) => {
+	const user = await db.getFirstAsync(
+		"SELECT * FROM Local_Users WHERE user_id = ? AND is_synched = 0",
+		[userId],
+	);
+	if (!user) return true;
+
+	const result = await syncUser(user);
+	if (!result.success) {
+		console.warn(
+			`[Offline Sync] User ${user.user_id} remains queued:`,
+			result.error,
+		);
+		return false;
+	}
+
+	await markSynced(db, "Local_Users", "user_id", user.user_id);
+	return true;
+};
+
 const syncUsers = async (db) => {
 	const users = await db.getAllAsync(
-		`SELECT * FROM Local_Users WHERE is_synched = 0 ORDER BY updated_at ASC`,
+		`SELECT user_id FROM Local_Users WHERE is_synched = 0 ORDER BY updated_at ASC`,
 	);
 
 	for (const user of users) {
-		const result = user.is_deleted
-			? await safeApiCall(
-					() => postApi("/users/soft-delete", { user_id: user.user_id }),
-					"Failed to sync account deactivation.",
-				)
-			: await safeApiCall(
-					() =>
-						postApi("/users/update", {
-							user_id: user.user_id,
-							email_blind_index: user.email_blind_index,
-							encrypted_name: user.encrypted_name,
-							encrypted_surname: user.encrypted_surname,
-							encrypted_phone_num: user.encrypted_phone_num,
-							encrypted_email: user.encrypted_email,
-						}),
-					"Failed to sync user profile.",
-				);
-
-		if (result.success) {
-			await markSynced(db, "Local_Users", "user_id", user.user_id);
-		} else {
-			console.warn(`[Offline Sync] User ${user.user_id} remains queued:`, result.error);
-		}
+		await syncPendingUserProfile(db, user.user_id);
 	}
 };
 
@@ -56,6 +76,7 @@ const syncContacts = async (db) => {
 		const serverContacts = contactsResult.data?.data?.contacts || [];
 		const matchingServerContact = serverContacts.find(
 			(serverContact) =>
+				contact.contact_email_blind_index &&
 				serverContact.user_id === contact.user_id &&
 				serverContact.contact_email_blind_index ===
 					contact.contact_email_blind_index,

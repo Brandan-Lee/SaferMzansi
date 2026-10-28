@@ -61,6 +61,10 @@ const RegistrationScreen = () => {
 			return;
 		}
 		setIsLoading(true);
+		setBanner({
+			message: "Sending your verification code...",
+			type: "success",
+		});
 
 		try {
 			const sanitizedEmail = formData.email.trim().toLowerCase();

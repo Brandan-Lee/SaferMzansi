@@ -20,7 +20,11 @@ export default function AuthStack({
 			initialRouteName={initialRoute}
 		>
 			<Stack.Screen name="SplashScreen" component={SplashScreen} />
-			<Stack.Screen name="LoginScreen" component={LoginScreen} />
+			<Stack.Screen
+				name="LoginScreen"
+				component={LoginScreen}
+				initialParams={initialRoute === "LoginScreen" ? initialParams : undefined}
+			/>
 			<Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
 			<Stack.Screen
 				name="ForgotPasswordScreen"

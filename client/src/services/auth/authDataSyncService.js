@@ -8,7 +8,11 @@ import {
 } from "@database/repositories/evidenceRepository";
 import { saveOrUpdateLocalIncident } from "@database/repositories/incidentRepository";
 import { saveOrUpdateLocalIncidentLocation } from "@database/repositories/incidentLocationRepository";
-import { markUserAsSynched, saveOrUpdateLocalUser } from "@database/repositories/userRepository";
+import {
+	getUserDetails,
+	markUserAsSynched,
+	saveOrUpdateLocalUser,
+} from "@database/repositories/userRepository";
 import { createOfflinePasswordVerifier } from "@utils/securityAndValidation/offlinePasswordUtil";
 
 export const syncServerIncidentsAndLocations = async (
@@ -80,24 +84,30 @@ export const syncServerAccount = async (
 ) => {
 	if (!user?.user_id) return;
 
-	const offlinePasswordVerifier =
-		await createOfflinePasswordVerifier(password);
-	await saveOrUpdateLocalUser(db, {
-		userId: user.user_id,
-		emailBlindIndex: user.email_blind_index,
-		encryptedName: user.encrypted_name,
-		encryptedSurname: user.encrypted_surname,
-		encryptedEmail: user.encrypted_email,
-		encryptedPhoneNum: user.encrypted_phone_num,
-		passwordHash: user.password_hash || existingPasswordHash || "",
-		offlinePasswordVerifier,
-		createdAt: user.created_at,
-		updatedAt: user.updated_at,
-		deletedAt: user.deleted_at,
-		isDeleted: user.is_deleted ? 1 : 0,
-		isVerified: user.is_verified ? 1 : 0,
-	});
-	await markUserAsSynched(db, user.user_id);
+	const localUser = await getUserDetails(db, user.user_id);
+	const hasPendingLocalChanges =
+		localUser && Number(localUser.is_synched) === 0;
+
+	if (!hasPendingLocalChanges) {
+		const offlinePasswordVerifier =
+			await createOfflinePasswordVerifier(password);
+		await saveOrUpdateLocalUser(db, {
+			userId: user.user_id,
+			emailBlindIndex: user.email_blind_index,
+			encryptedName: user.encrypted_name,
+			encryptedSurname: user.encrypted_surname,
+			encryptedEmail: user.encrypted_email,
+			encryptedPhoneNum: user.encrypted_phone_num,
+			passwordHash: user.password_hash || existingPasswordHash || "",
+			offlinePasswordVerifier,
+			createdAt: user.created_at,
+			updatedAt: user.updated_at,
+			deletedAt: user.deleted_at,
+			isDeleted: user.is_deleted ? 1 : 0,
+			isVerified: user.is_verified ? 1 : 0,
+		});
+		await markUserAsSynched(db, user.user_id);
+	}
 
 	for (const contact of contacts) {
 		const contactId = contact.contact_id || contact.id;

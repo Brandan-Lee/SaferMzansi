@@ -133,24 +133,6 @@ const SettingsScreen = ({ navigation, route }) => {
 				await AsyncStorage.setItem(key, "false");
 				stateSetter(false);
 				await stopBackgroundLocationTracking();
-				Alert.alert(
-					"Location sharing is off",
-					"To revoke foreground and background location permissions, open this app's device settings and change its Location permission.",
-					[
-						{ text: "Not now", style: "cancel" },
-						{
-							text: "Open Settings",
-							onPress: () =>
-								Linking.openSettings().catch((error) => {
-									console.error("Could not open app settings:", error);
-									setBanner({
-										message: "Open this app's settings to revoke location permission.",
-										type: "error",
-									});
-								}),
-						},
-					],
-				);
 				return;
 			} else if (key === STORAGE_KEYS.AUTO_RECORDING && newValue) {
 				const permission = await AudioModule.requestRecordingPermissionsAsync();
@@ -170,7 +152,16 @@ const SettingsScreen = ({ navigation, route }) => {
 	};
 
 	const handleLogout = async () => {
-		await logOut("LoginScreen");
+		setBanner({
+			message: "Logging out...",
+			type: "warning",
+		});
+		await logOut("LoginScreen", {
+			banner: {
+				message: "You have been logged out.",
+				type: "success",
+			},
+		});
 	};
 
 	return (

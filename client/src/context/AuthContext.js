@@ -10,7 +10,10 @@ import {
 import { useSQLiteContext } from "expo-sqlite";
 import NetInfo from "@react-native-community/netinfo";
 import { loginUser, registerUser } from "@services/auth/authService";
-import { syncOfflineChanges } from "@services/main/offlineSyncService";
+import {
+	syncOfflineChanges,
+	syncPendingUserProfile,
+} from "@services/main/offlineSyncService";
 import {
 	getLocalUserDetails,
 	restoreLocalAccountAfterLogin,
@@ -136,6 +139,24 @@ export const AuthProvider = ({ children }) => {
 					}
 
 					await saveToken(result.token);
+					if (!isOfflineToken(result.token)) {
+						try {
+							const profileSynced = await syncPendingUserProfile(
+								db,
+								result.userId,
+							);
+							if (!profileSynced) {
+								console.warn(
+									"[Auth] Saved profile changes are still pending server sync.",
+								);
+							}
+						} catch (error) {
+							console.error(
+								"[Auth] Failed to sync pending profile changes after login:",
+								error,
+							);
+						}
+					}
 				}
 
 				return result;

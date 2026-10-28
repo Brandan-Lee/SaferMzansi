@@ -109,7 +109,7 @@ const EditContactScreen = ({ navigation, route }) => {
 			});
 
 			setTimeout(() => {
-				navigation.navigate("ContactDetailsScreen", {
+				navigation.popTo("ContactDetailsScreen", {
 					contact: {
 						...contact,
 						...contactPayload,

@@ -24,7 +24,6 @@ const Stack = createNativeStackNavigator();
 
 export default function MainStack({
 	user,
-	onSosClose,
 	initialRouteName = "HomeScreen",
 }) {
 	return (
@@ -76,7 +75,7 @@ export default function MainStack({
 			<Stack.Screen name="RecycleBinScreen" component={RecycleBinScreen} />
 			<Stack.Screen name="SOSScreen">
 				{(screenProps) => (
-					<SOSScreen {...screenProps} onClose={onSosClose} />
+					<SOSScreen {...screenProps} />
 				)}
 			</Stack.Screen>
 		</Stack.Navigator>

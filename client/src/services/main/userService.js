@@ -195,8 +195,6 @@ export const softDeleteUser = async (db, userId) => {
 		throw new Error("User ID is needed for soft delete operations");
 	}
 
-	await markUserAsSoftDeletedLocally(db, userId);
-
 	const result = await safeApiCall(
 		() => postApi(
 			"/users/soft-delete",
@@ -205,15 +203,28 @@ export const softDeleteUser = async (db, userId) => {
 		"Server failed to soft delete user. Please try again",
 	);
 
-	if (result?.success) {
+	if (!result?.success || result.data?.success !== true) {
+		throw new Error(
+			result?.error || "Server failed to soft delete user. Please try again",
+		);
+	}
+
+	try {
+		await markUserAsSoftDeletedLocally(db, userId);
 		await markUserAsSynched(db, userId);
-	} else {
-		console.warn("[User Service] Account deactivation saved locally for later sync");
-		await markUserAsUnSynched(db, userId);
+	} catch (error) {
+		console.error(
+			"[User Service] Account was disabled on the server, but local state could not be updated:",
+			error,
+		);
+		throw new Error(
+			"Your account was disabled on the server, but this device could not update its local profile. Please log in online to synchronize it.",
+		);
 	}
 
 	return {
 		success: true,
+		syncedWithServer: true,
 	};
 };
 

@@ -100,7 +100,9 @@ const ContactDetailsScreen = ({ navigation, route }) => {
 				throw new Error(result?.error || "Failed to delete contact.");
 			}
 			hideModal();
-			navigation.goBack();
+			navigation.popTo("EmergencyContactsScreen", {
+				userId: user?.userId,
+			});
 		} catch (error) {
 			setBanner({
 				message: error.message || "Failed to delete emergency contact.",

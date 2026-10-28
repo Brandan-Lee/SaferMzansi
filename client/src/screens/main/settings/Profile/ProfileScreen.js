@@ -52,6 +52,15 @@ const ProfileScreen = ({ navigation }) => {
 			setLoading(true);
 			const userRecord = await getLocalUserDetails(db, user.userId);
 			setUserDetails(userRecord);
+			setBanner(
+				Number(userRecord?.is_synched) === 0
+					? {
+							message:
+								"Profile changes are saved on this device but have not synced to the server yet.",
+							type: "warning",
+						}
+					: null,
+			);
 		} catch (error) {
 			console.error("Failed to load user profile:", error);
 		} finally {
@@ -122,6 +131,10 @@ const ProfileScreen = ({ navigation }) => {
 		setBanner(null);
 		setDeletionAction("soft");
 		setLoading(true);
+		setBanner({
+			message: "Disabling your account...",
+			type: "warning",
+		});
 
 		try {
 			if (!checkNetworkAndNotify(isOnline, setBanner)) {
@@ -129,6 +142,10 @@ const ProfileScreen = ({ navigation }) => {
 			}
 
 			await softDeleteUser(db, user.userId);
+			setBanner({
+				message: "Your account has been disabled. Redirecting to login...",
+				type: "success",
+			});
 
 			setTimeout(async () => {
 				setDeleteModalVisible(false);
@@ -149,6 +166,10 @@ const ProfileScreen = ({ navigation }) => {
 		setBanner(null);
 		setDeletionAction("hard");
 		setLoading(true);
+		setBanner({
+			message: "Permanently deleting your account...",
+			type: "warning",
+		});
 
 		try {
 			if (!checkNetworkAndNotify(isOnline, setBanner)) {
@@ -156,6 +177,10 @@ const ProfileScreen = ({ navigation }) => {
 			}
 
 			await hardDeleteAccount(db, user.userId);
+			setBanner({
+				message: "Your account has been deleted. Redirecting to login...",
+				type: "success",
+			});
 
 			setTimeout(async () => {
 				setDeleteModalVisible(false);
@@ -178,7 +203,6 @@ const ProfileScreen = ({ navigation }) => {
 			onBack={() => navigation.goBack()}
 			tab="Settings"
 			navigation={navigation}
-			banner={banner}
 		>
 			<KeyboardAvoidingView
 				style={{ flex: 1 }}

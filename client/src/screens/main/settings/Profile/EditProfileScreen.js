@@ -90,10 +90,18 @@ const EditProfileScreen = ({ navigation, route }) => {
 				return;
 			}
 
-			setBanner({
-				message: `User Profile has been successfully updated.`,
-				type: "success",
-			});
+			setBanner(
+				result.syncedWithServer
+					? {
+							message: "User profile has been successfully updated.",
+							type: "success",
+						}
+					: {
+							message:
+								"Profile saved on this device, but the server has not confirmed the update yet.",
+							type: "warning",
+						},
+			);
 
 			setTimeout(() => {
 				navigation.navigate("ProfileScreen", {

@@ -20,23 +20,11 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 		pendingAuthRoute,
 		pendingAuthParams,
 		checkAuthSession,
-		logOut,
 	} = useContext(AuthContext);
 
 	const [isCheckingLaunch, setIsCheckingLaunch] = useState(true);
 	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
 	const [isDecoyUnlocked, setIsDecoyUnlocked] = useState(false);
-	const returnFromSos = async () => {
-		setIsDecoyUnlocked(false);
-		await logOut();
-		if (navigationRef?.current?.isReady()) {
-			navigationRef.current.reset({
-				index: 0,
-				routes: [{ name: "AppContent" }],
-			});
-		}
-	};
-
 	useEffect(() => {
 		const initializeApp = async () => {
 			try {
@@ -91,7 +79,7 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 								</Stack.Screen>
 							</Stack.Navigator>
 						) : hasActiveLogin && sessionToken ? (
-							<MainStack user={user} onSosClose={returnFromSos} />
+							<MainStack user={user} />
 						) : (
 							<AuthStack
 								initialRoute={pendingAuthRoute || "SplashScreen"}
@@ -101,9 +89,7 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 					}
 				</Stack.Screen>
 				<Stack.Screen name="SOSScreen">
-					{(screenProps) => (
-						<SOSScreen {...screenProps} onClose={returnFromSos} />
-					)}
+					{(screenProps) => <SOSScreen {...screenProps} />}
 				</Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>

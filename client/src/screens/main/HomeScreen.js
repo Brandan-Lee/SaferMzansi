@@ -116,8 +116,11 @@ const HomeScreen = ({ navigation, route }) => {
 	const displayName = resolveDisplayName(user?.userName);
 	const userId = route?.params?.userId || user?.userId;
 
-	const refreshHome = useCallback(() => {
-		if (refreshInFlightRef.current) return refreshInFlightRef.current;
+	const refreshHome = useCallback(async (refreshAfterCurrent = false) => {
+		if (refreshInFlightRef.current) {
+			await refreshInFlightRef.current;
+			if (!refreshAfterCurrent) return;
+		}
 
 		const refresh = (async () => {
 			try {
@@ -162,13 +165,13 @@ const HomeScreen = ({ navigation, route }) => {
 		})();
 
 		refreshInFlightRef.current = refresh;
-		const clearRefresh = () => {
+		try {
+			await refresh;
+		} finally {
 			if (refreshInFlightRef.current === refresh) {
 				refreshInFlightRef.current = null;
 			}
-		};
-		refresh.then(clearRefresh, clearRefresh);
-		return refresh;
+		}
 	}, [db, userId]);
 
 	// Run on mount even if navigation does not emit an initial focus event.
@@ -183,7 +186,7 @@ const HomeScreen = ({ navigation, route }) => {
 	// Refresh counts and preferences whenever the user returns to Home.
 	useFocusEffect(
 		useCallback(() => {
-			refreshHome();
+			refreshHome(true);
 		}, [refreshHome]),
 	);
 

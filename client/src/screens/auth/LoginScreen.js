@@ -8,18 +8,20 @@ import { PrimaryButton } from "@components/forms/PrimaryButton";
 import { useFormHandler } from "@hooks/useFormHandler";
 import { LOGIN_FORM_FIELDS } from "@constants/AuthFields";
 import AuthLayout from "@components/layouts/AuthLayout";
+import { useNetStatus } from "@utils/network/netStatus";
 
 const INITIAL_STATE = {
 	email: "",
 	password: "",
 };
 
-const LoginScreen = () => {
+const LoginScreen = ({ route }) => {
 	const { login, updateSession, loading } = useAuth();
 	const navigation = useNavigation();
+	const { isOnline } = useNetStatus();
 	const { formData, errors, setErrors, handleChange, handleFieldBlur } =
 		useFormHandler(INITIAL_STATE);
-	const [banner, setBanner] = useState(null);
+	const [banner, setBanner] = useState(route?.params?.banner || null);
 
 	//Method that handles login operations
 	const handleLogin = async () => {
@@ -35,6 +37,12 @@ const LoginScreen = () => {
 		}
 
 		try {
+			setBanner({
+				message: isOnline
+					? "Signing in..."
+					: "Signing in with your saved offline credentials...",
+				type: "success",
+			});
 			//Login through authContext
 			const result = await login({
 				email: formData.email.trim().toLowerCase(),
