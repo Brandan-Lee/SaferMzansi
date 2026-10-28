@@ -1,0 +1,27 @@
+{
+  "cli": {
+    "version": ">= 12.0.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://lhrfmvheuxnoeburgbok.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_MuoAjgtm9_d-KRe0ZFGGrg_B6AWapXo",
+        "EXPO_PUBLIC_API_URL": "http://10.0.2.2:8080/api",
+        "EXPO_PUBLIC_DATABASE_NAME": "safer_mzansi.db",
+        "EXPO_PUBLIC_AES_256_SECRET_KEY": "e27f0a2c7abf88e779c933434390206eeaf8ba301ea8ee9392c5f10bfb2633d8"
+      }
+    },
+    "production": {} 
+  },
+  "submit": {
+    "production": {}
+  }
+}

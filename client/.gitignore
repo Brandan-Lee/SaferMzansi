@@ -32,3 +32,5 @@ ios/build/
 *.p8
 *.p12
 *.mobileprovision
+
+eas.json

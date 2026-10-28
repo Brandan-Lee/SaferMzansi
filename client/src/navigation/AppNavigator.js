@@ -20,11 +20,38 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 		pendingAuthRoute,
 		pendingAuthParams,
 		checkAuthSession,
+		logOut,
 	} = useContext(AuthContext);
 
 	const [isCheckingLaunch, setIsCheckingLaunch] = useState(true);
 	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
 	const [isDecoyUnlocked, setIsDecoyUnlocked] = useState(false);
+
+	const handleEmergencyCancel = async () => {
+		let shouldLaunchDecoy = false;
+		try {
+			shouldLaunchDecoy =
+				(await AsyncStorage.getItem(STORAGE_KEYS.LAUNCH_DECOY)) === "true";
+		} catch (error) {
+			console.error("Failed to load decoy launch preference after SOS cancel", error);
+		}
+
+		setLaunchAsDecoy(shouldLaunchDecoy);
+		setIsDecoyUnlocked(false);
+		await logOut("LoginScreen");
+		navigationRef?.current?.resetRoot({
+			index: 0,
+			routes: [{ name: "AppContent" }],
+		});
+	};
+
+	const handleEmergencyClose = () => {
+		navigationRef?.current?.resetRoot({
+			index: 0,
+			routes: [{ name: "AppContent" }],
+		});
+	};
+
 	useEffect(() => {
 		const initializeApp = async () => {
 			try {
@@ -89,7 +116,13 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 					}
 				</Stack.Screen>
 				<Stack.Screen name="SOSScreen">
-					{(screenProps) => <SOSScreen {...screenProps} />}
+					{(screenProps) => (
+						<SOSScreen
+							{...screenProps}
+							onCancel={handleEmergencyCancel}
+							onClose={handleEmergencyClose}
+						/>
+					)}
 				</Stack.Screen>
 			</Stack.Navigator>
 		</NavigationContainer>

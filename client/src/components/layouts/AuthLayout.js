@@ -22,6 +22,9 @@ const AuthLayout = ({
 	navActionText,
 	onNavPress,
 	scrollable = true,
+	showFooter = true,
+	safeAreaEdges = ["top", "bottom"],
+	scrollContentStyle,
 	style,
 }) => {
 	const ContainerView = scrollable ? ScrollView : View;
@@ -33,7 +36,7 @@ const AuthLayout = ({
 			end={{ x: 0, y: 1 }}
 			style={[styles.gradient, style]}
 		>
-			<SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+			<SafeAreaView style={styles.container} edges={safeAreaEdges}>
 				<KeyboardAvoidingView
 					style={styles.flexOne}
 					behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -41,7 +44,10 @@ const AuthLayout = ({
 					<ContainerView
 						{...(scrollable
 							? {
-									contentContainerStyle: styles.scrollContent,
+									contentContainerStyle: [
+										styles.scrollContent,
+										scrollContentStyle,
+									],
 									showsVerticalScrollIndicator: false,
 									keyboardShouldPersistTaps: "handled",
 								}
@@ -75,9 +81,11 @@ const AuthLayout = ({
 								) : null}
 							</View>
 
-							<Text style={styles.footerText}>
-								Your safety. Your privacy. Our priority.
-							</Text>
+							{showFooter ? (
+								<Text style={styles.footerText}>
+									Your safety. Your privacy. Our priority.
+								</Text>
+							) : null}
 						</View>
 					</ContainerView>
 				</KeyboardAvoidingView>

@@ -4,7 +4,7 @@ import { Vibration } from "react-native";
 
 export function useShake(
 	onShake,
-	sensitivity = 0.35,
+	sensitivity = 3,
 	timeout = 1500,
 	coolDownMs = 60000,
 ) {

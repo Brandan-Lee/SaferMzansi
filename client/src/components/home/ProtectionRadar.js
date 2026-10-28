@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 
 const RADAR_SIZE = 230;
@@ -27,7 +27,8 @@ export const ProtectionRadar = ({ actions = [], navigation }) => (
 				style={styles.centerShield}
 				onPress={() => navigation?.navigate("SOSScreen")}
 				accessibilityRole="button"
-				accessibilityLabel="Open emergency SOS"
+				accessibilityLabel="Emergency SOS"
+				accessibilityHint="Opens the emergency alert countdown"
 			>
 				<View style={styles.logoBadge}>
 					<Icon name="shield" size={42} color="#FFFFFF" />
@@ -49,9 +50,7 @@ export const ProtectionRadar = ({ actions = [], navigation }) => (
 							{ backgroundColor: action.bg || "#7E22CE" },
 						]}
 						activeOpacity={0.7}
-						onPress={() =>
-							action.route && navigation?.navigate(action.route)
-						}
+						onPress={() => action.route && navigation?.navigate(action.route)}
 						accessibilityRole="button"
 						accessibilityLabel={`${action.title || action.id || "Safety"} shortcut`}
 					>
@@ -62,11 +61,18 @@ export const ProtectionRadar = ({ actions = [], navigation }) => (
 				);
 			})}
 		</View>
+		<Text style={styles.emergencyHint}>
+			Press on the shield icon to trigger an emergency alert
+		</Text>
 	</View>
 );
 
 const styles = StyleSheet.create({
-	radarSection: { alignItems: "center", justifyContent: "center", paddingVertical: 12 },
+	radarSection: {
+		alignItems: "center",
+		justifyContent: "center",
+		paddingVertical: 12,
+	},
 	radarContainer: {
 		width: RADAR_SIZE,
 		height: RADAR_SIZE,
@@ -101,15 +107,22 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		zIndex: 10,
 		elevation: 8,
-		shadowColor: "#6B21A8",
+		shadowColor: "#B42318",
 		shadowOffset: { width: 0, height: 4 },
-		shadowOpacity: 0.35,
-		shadowRadius: 8,
+		shadowOpacity: 0.65,
+		shadowRadius: 9,
 		borderWidth: 3,
-		borderColor: "#FFFFFF",
+		borderColor: "#EF4444",
 	},
 	logoBadge: { alignItems: "center", justifyContent: "center" },
 	heart: { position: "absolute", top: 11 },
+	emergencyHint: {
+		marginTop: 8,
+		color: "#7F1D1D",
+		fontSize: 14,
+		fontWeight: "700",
+		textAlign: "center",
+	},
 	radialButton: {
 		position: "absolute",
 		width: ACTION_BUTTON_SIZE,

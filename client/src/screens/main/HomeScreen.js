@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState, useMemo } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+	useMemo,
+} from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationBar } from "@components/common/NavigationBar";
 import { ProtectionRadar } from "@components/home/ProtectionRadar";
@@ -116,63 +122,66 @@ const HomeScreen = ({ navigation, route }) => {
 	const displayName = resolveDisplayName(user?.userName);
 	const userId = route?.params?.userId || user?.userId;
 
-	const refreshHome = useCallback(async (refreshAfterCurrent = false) => {
-		if (refreshInFlightRef.current) {
-			await refreshInFlightRef.current;
-			if (!refreshAfterCurrent) return;
-		}
+	const refreshHome = useCallback(
+		async (refreshAfterCurrent = false) => {
+			if (refreshInFlightRef.current) {
+				await refreshInFlightRef.current;
+				if (!refreshAfterCurrent) return;
+			}
 
-		const refresh = (async () => {
+			const refresh = (async () => {
+				try {
+					const [savedShare, savedDecoy] = await AsyncStorage.multiGet([
+						STORAGE_KEYS.SHARE_LOCATION,
+						STORAGE_KEYS.LAUNCH_DECOY,
+					]);
+					if (isMountedRef.current) {
+						setShareLiveLocation(savedShare[1] === "true");
+						setDecoyActivated(savedDecoy[1] === "true");
+					}
+				} catch (error) {
+					console.error("[Home] Failed to load saved preferences:", error);
+				}
+
+				if (!db || !userId) {
+					if (isMountedRef.current) {
+						setContactCount(-1);
+						setEvidenceCount(-1);
+					}
+					return;
+				}
+
+				try {
+					const [contactsTotal, evidenceTotal] = await Promise.all([
+						getLocalContactTotal(db, userId),
+						getEvidenceTotal(db, userId),
+					]);
+					if (isMountedRef.current) {
+						setContactCount(contactsTotal);
+						setEvidenceCount(evidenceTotal);
+					}
+
+					if (__DEV__) await logAllLocalTables(db);
+				} catch (error) {
+					console.error("[Home] Failed to refresh dashboard data:", error);
+					if (isMountedRef.current) {
+						setContactCount(-1);
+						setEvidenceCount(-1);
+					}
+				}
+			})();
+
+			refreshInFlightRef.current = refresh;
 			try {
-				const [savedShare, savedDecoy] = await AsyncStorage.multiGet([
-					STORAGE_KEYS.SHARE_LOCATION,
-					STORAGE_KEYS.LAUNCH_DECOY,
-				]);
-				if (isMountedRef.current) {
-					setShareLiveLocation(savedShare[1] === "true");
-					setDecoyActivated(savedDecoy[1] === "true");
-				}
-			} catch (error) {
-				console.error("[Home] Failed to load saved preferences:", error);
-			}
-
-			if (!db || !userId) {
-				if (isMountedRef.current) {
-					setContactCount(-1);
-					setEvidenceCount(-1);
-				}
-				return;
-			}
-
-			try {
-				const [contactsTotal, evidenceTotal] = await Promise.all([
-					getLocalContactTotal(db, userId),
-					getEvidenceTotal(db, userId),
-				]);
-				if (isMountedRef.current) {
-					setContactCount(contactsTotal);
-					setEvidenceCount(evidenceTotal);
-				}
-
-				if (__DEV__) await logAllLocalTables(db);
-			} catch (error) {
-				console.error("[Home] Failed to refresh dashboard data:", error);
-				if (isMountedRef.current) {
-					setContactCount(-1);
-					setEvidenceCount(-1);
+				await refresh;
+			} finally {
+				if (refreshInFlightRef.current === refresh) {
+					refreshInFlightRef.current = null;
 				}
 			}
-		})();
-
-		refreshInFlightRef.current = refresh;
-		try {
-			await refresh;
-		} finally {
-			if (refreshInFlightRef.current === refresh) {
-				refreshInFlightRef.current = null;
-			}
-		}
-	}, [db, userId]);
+		},
+		[db, userId],
+	);
 
 	// Run on mount even if navigation does not emit an initial focus event.
 	useEffect(() => {
@@ -200,8 +209,8 @@ const HomeScreen = ({ navigation, route }) => {
 						: contactCount < 0
 							? "Contacts could not be loaded"
 							: contactCount === 0
-							? "No emergency contacts saved"
-							: `${contactCount} saved emergency contact${contactCount === 1 ? "" : "s"}`,
+								? "No emergency contacts saved"
+								: `${contactCount} saved emergency contact${contactCount === 1 ? "" : "s"}`,
 			};
 		}
 
@@ -214,8 +223,8 @@ const HomeScreen = ({ navigation, route }) => {
 						: evidenceCount < 0
 							? "Vault could not be loaded"
 							: evidenceCount === 0
-							? "No incident evidence stored yet"
-							: `${evidenceCount} encrypted file${evidenceCount === 1 ? "" : "s"} in vault`,
+								? "No incident evidence stored yet"
+								: `${evidenceCount} encrypted file${evidenceCount === 1 ? "" : "s"} in vault`,
 			};
 		}
 
@@ -270,7 +279,13 @@ const HomeScreen = ({ navigation, route }) => {
 
 	return (
 		<View style={styles.screenContainer}>
-			<AuthLayout title={`Welcome back ${displayName}`} style={styles.authLayout}>
+			<AuthLayout
+				title={`Welcome back ${displayName}`}
+				showFooter={false}
+				safeAreaEdges={["top"]}
+				scrollContentStyle={{ paddingBottom: 0 }}
+				style={styles.authLayout}
+			>
 				<View style={styles.content}>
 					<ProtectionRadar actions={radialActions} navigation={navigation} />
 

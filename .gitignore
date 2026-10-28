@@ -38,3 +38,5 @@ android/local.properties
 android/app/build/
 ios/Pods/
 ios/build/
+
+eas.json

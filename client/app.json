@@ -11,10 +11,14 @@
       "infoPlist": {
         "UIBackgroundModes": [
           "location",
+          "fetch",
+          "location",
           "fetch"
         ],
-        "NSMicrophoneUsageDescription": "This app requires access to the microphone to record audio."
-      }
+        "NSMicrophoneUsageDescription": "This app requires access to the microphone to record audio.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.anonymous.SaferMzansi"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,6 +27,7 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "usesCleartextTraffic": true,
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
@@ -34,7 +39,8 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.ACCESS_BACKGROUND_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
-        "android.permission.FOREGROUND_SERVICE_LOCATION"
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ],
       "package": "com.anonymous.SaferMzansi"
     },
@@ -69,7 +75,13 @@
           "enableBackgroundPlayback": false
         }
       ],
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-status-bar"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ac9c9adc-a32a-43f8-8697-691dc7e12a6e"
+      }
+    }
   }
 }

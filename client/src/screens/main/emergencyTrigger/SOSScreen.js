@@ -218,8 +218,8 @@ export default function SOSScreen({
 		} catch (error) {
 			console.warn("[Emergency SOS] Failed to stop recording on cancel:", error);
 		}
-		if (onCancel) onCancel();
-		else if (onClose) onClose();
+		if (onCancel) await onCancel();
+		else if (onClose) await onClose();
 		else if (navigation?.canGoBack()) navigation.goBack();
 	};
 
@@ -265,8 +265,8 @@ export default function SOSScreen({
 				console.warn("[Emergency SOS] Failed to stop recording:", error);
 			}
 		}
-		if (onClose) onClose();
-		else if (onCancel) onCancel();
+		if (onClose) await onClose();
+		else if (onCancel) await onCancel();
 		else if (navigation?.canGoBack()) navigation.goBack();
 	};
 
