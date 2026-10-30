@@ -24,6 +24,7 @@ const Stack = createNativeStackNavigator();
 
 export default function MainStack({
 	user,
+	isOffline = false,
 	initialRouteName = "HomeScreen",
 }) {
 	return (
@@ -37,6 +38,14 @@ export default function MainStack({
 				initialParams={{
 					userName: user?.userName,
 					userId: user?.userId,
+					banner: isOffline
+						? {
+								message:
+									"You're signed in offline. Changes will sync when you're back online.",
+								type: "warning",
+								duration: 8000,
+							}
+						: undefined,
 				}}
 			/>
 			<Stack.Screen name="DecoyScreen" component={DecoyScreen} />

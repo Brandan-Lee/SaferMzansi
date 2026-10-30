@@ -141,7 +141,9 @@ export const loginUser = async (db, email, password) => {
 			);
 		}
 
-		if (!localUser.password_hash) {
+		const storedPasswordVerifier =
+			localUser.offline_password_verifier || localUser.password_hash;
+		if (!storedPasswordVerifier) {
 			throw new Error(
 				"Offline authentication credentials are missing. Please connect online once to sync.",
 			);
@@ -149,7 +151,7 @@ export const loginUser = async (db, email, password) => {
 
 		const passwordCheck = await verifyOfflinePassword(
 			password,
-			localUser.offline_password_verifier || localUser.password_hash,
+			storedPasswordVerifier,
 		);
 		if (!passwordCheck.valid) {
 			throw new Error(

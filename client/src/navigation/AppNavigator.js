@@ -9,6 +9,7 @@ import MainStack from "./MainStack";
 import DecoyScreen from "@screens/decoy/DecoyScreen";
 import SOSScreen from "@screens/main/emergencyTrigger/SOSScreen";
 import { STORAGE_KEYS } from "@constants/storageKeys";
+import { isOfflineToken } from "@utils/auth/authTokenUtil";
 
 const Stack = createNativeStackNavigator();
 
@@ -106,7 +107,10 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 								</Stack.Screen>
 							</Stack.Navigator>
 						) : hasActiveLogin && sessionToken ? (
-							<MainStack user={user} />
+							<MainStack
+								user={user}
+								isOffline={isOfflineToken(sessionToken)}
+							/>
 						) : (
 							<AuthStack
 								initialRoute={pendingAuthRoute || "SplashScreen"}

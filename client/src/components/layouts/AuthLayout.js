@@ -58,7 +58,11 @@ const AuthLayout = ({
 								<AppHeader title={title} subtitle={subtitle} />
 
 								{banner?.message ? (
-									<AlertBadge message={banner.message} type={banner.type} />
+									<AlertBadge
+										message={banner.message}
+										type={banner.type}
+										duration={banner.duration}
+									/>
 								) : null}
 
 								<View

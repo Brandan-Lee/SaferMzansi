@@ -281,6 +281,7 @@ const HomeScreen = ({ navigation, route }) => {
 		<View style={styles.screenContainer}>
 			<AuthLayout
 				title={`Welcome back ${displayName}`}
+				banner={route.params?.banner}
 				showFooter={false}
 				safeAreaEdges={["top"]}
 				scrollContentStyle={{ paddingBottom: 0 }}
