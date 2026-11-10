@@ -1,6 +1,7 @@
 // Keep persistent setting names in one place to avoid typos between screens.
 export const STORAGE_KEYS = {
 	AUTH_TOKEN: "user_jwt_token",
+	OFFLINE_AUTH_TOKEN: "offline_auth_jwt_token",
 	OFFLINE_PASSWORD_KEY: "offline_password_verifier_key",
 	SHARE_LOCATION: "@setting_share_location",
 	EMERGENCY_GESTURE: "@setting_gesture",

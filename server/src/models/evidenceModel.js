@@ -5,6 +5,8 @@ const TABLE_NAME = "Evidence_Vault";
 const STORAGE_BUCKET = "EvidenceVault";
 const STORAGE_PAGE_SIZE = 100;
 const STORAGE_REMOVE_BATCH_SIZE = 100;
+const UUID_PATTERN =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const validateIds = (evidenceId, userId, actionName) => {
     if (!evidenceId || !userId) {
@@ -124,6 +126,33 @@ const getEvidenceByUserId = async (userId) => {
     return data || [];
 };
 
+const uploadEvidenceFile = async ({
+    userId,
+    evidenceId,
+    fileName,
+    fileType,
+    file,
+}) => {
+    if (!UUID_PATTERN.test(userId) || !UUID_PATTERN.test(evidenceId)) {
+        throw new Error("Valid user and evidence IDs are required for upload.");
+    }
+
+    const safeFileName = String(fileName || "evidence")
+        .replace(/%2f|%5c/gi, "_")
+        .replace(/[^a-zA-Z0-9._-]/g, "_")
+        .slice(0, 120);
+    const storagePath = `${userId}/${evidenceId}_${safeFileName || "evidence"}`;
+    const { data, error } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .upload(storagePath, file, {
+            contentType: fileType || "application/octet-stream",
+            upsert: true,
+        });
+
+    if (error) throw error;
+    return data.path;
+};
+
 const deleteEvidence = (evidenceId, userId) =>
     updateEvidenceRecord(evidenceId, userId, {
         is_deleted: true,
@@ -232,6 +261,7 @@ module.exports = {
     createEvidence,
     findEvidenceById,
     getEvidenceByUserId,
+    uploadEvidenceFile,
     deleteEvidence,
     restoreEvidence,
     permanentDeleteEvidence,

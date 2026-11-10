@@ -2,8 +2,7 @@ import { File } from "expo-file-system";
 import * as FileSystem from "expo-file-system/legacy";
 import NetInfo from "@react-native-community/netinfo";
 import { Buffer } from "buffer";
-import { supabase } from "@config/supabase_client";
-import { postApi, safeApiCall } from "@services/ApiClient";
+import { postApi, postBinaryApi, safeApiCall } from "@services/ApiClient";
 import {
 	getPendingEvidence,
 	markEvidenceAsSynched,
@@ -39,20 +38,22 @@ const uploadEvidenceFile = async (db, userId, item) => {
 		encoding: FileSystem.EncodingType.Base64,
 	});
 
-	const { data, error } = await supabase.storage
-		.from("EvidenceVault")
-		.upload(
-			`${userId}/${item.evidence_id}_${file.name}`,
-			Buffer.from(fileContents, "base64"),
-			{
-				contentType: item.file_type,
-				upsert: true,
-			},
+	const response = await postBinaryApi(
+		`/evidence/upload/${encodeURIComponent(userId)}/${encodeURIComponent(item.evidence_id)}`,
+		Buffer.from(fileContents, "base64"),
+		{ fileType: item.file_type, fileName: file.name },
+	);
+	const path = response.data?.data?.path;
+	if (!response.ok || !path) {
+		throw new Error(
+			`Cloud storage upload failed: ${
+				response.data?.error || response.error || "The server returned no file path."
+			}`,
 		);
-	if (error) throw new Error(`Cloud storage upload failed: ${error.message}`);
+	}
 
-	await updateEvidenceCloudFileUrl(db, item.evidence_id, data.path);
-	return data.path;
+	await updateEvidenceCloudFileUrl(db, item.evidence_id, path);
+	return path;
 };
 
 const syncEvidenceMetadata = async (item, userId, cloudFileUrl) => {

@@ -188,6 +188,12 @@ const syncIncidentLocations = async (db) => {
 	);
 
 	for (const location of locations) {
+		const incident = await db.getFirstAsync(
+			"SELECT is_synched FROM Local_Incidents WHERE incident_id = ?",
+			[location.incident_id],
+		);
+		if (!incident || Number(incident.is_synched) !== 1) continue;
+
 		const result = await safeApiCall(
 			() =>
 				postApi("/locations/add", {

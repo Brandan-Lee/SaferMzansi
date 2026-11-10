@@ -12,13 +12,20 @@ import {
 	saveOrUpdateLocalUser,
 	updateLocalPasswordVerifier,
 } from "@database/repositories/userRepository";
-import { OFFLINE_TOKEN_PREFIX } from "@utils/auth/authTokenUtil";
+import {
+	getOfflineAuthToken,
+	isTokenExpired,
+	OFFLINE_TOKEN_PREFIX,
+} from "@utils/auth/authTokenUtil";
 import {
 	createOfflinePasswordVerifier,
 	verifyOfflinePassword,
 } from "@utils/securityAndValidation/offlinePasswordUtil";
 import { normalizeEmail } from "@utils/normalizationUtil";
-import { syncServerAccount, syncServerIncidentsAndLocations } from "./authDataSyncService";
+import {
+	syncServerAccount,
+	syncServerIncidentsAndLocations,
+} from "./authDataSyncService";
 
 // Service to handle user registration
 export const registerUser = async (db, userData) => {
@@ -129,11 +136,23 @@ export const loginUser = async (db, email, password) => {
 			contacts: response.data.contacts,
 			evidence: response.data.evidence,
 			incidents: response.data.incidents,
-			locations:
-				response.data.incident_locations || response.data.locations,
+			locations: response.data.incident_locations || response.data.locations,
 		});
 	} else if (response.status === 0) {
 		isOffline = true;
+
+		const savedToken = await getOfflineAuthToken();
+		console.log("savedToken", savedToken);
+		if (!savedToken) {
+			throw new Error(
+				"No saved online session is available for offline login. Connect to the internet and sign in first.",
+			);
+		}
+		if (isTokenExpired(savedToken)) {
+			throw new Error(
+				"Your saved session has expired. Connect to the internet and sign in again before logging in offline.",
+			);
+		}
 
 		if (!localUser) {
 			throw new Error(
@@ -141,11 +160,18 @@ export const loginUser = async (db, email, password) => {
 			);
 		}
 
-		if (!localUser.password_hash) {
+		console.log("localUser", localUser);
+
+		if (!localUser.offline_password_verifier) {
 			throw new Error(
 				"Offline authentication credentials are missing. Please connect online once to sync.",
 			);
 		}
+
+		console.log(
+			"localUser.offline_password_verifier",
+			localUser.offline_password_verifier,
+		);
 
 		const passwordCheck = await verifyOfflinePassword(
 			password,
@@ -169,9 +195,7 @@ export const loginUser = async (db, email, password) => {
 		throw new Error(response.error || "Server login failed. Please try again");
 	}
 
-	const authenticatedUser = response.success
-		? response.data?.user
-		: localUser;
+	const authenticatedUser = response.success ? response.data?.user : localUser;
 
 	return {
 		userId: authenticatedUser?.user_id,
@@ -242,8 +266,7 @@ export const resetPasswordUser = async (db, password, email, resetToken) => {
 		);
 	}
 
-	const localPasswordVerifier =
-		await createOfflinePasswordVerifier(password);
+	const localPasswordVerifier = await createOfflinePasswordVerifier(password);
 
 	await saveOrUpdateLocalUser(db, {
 		userId: serverUser.user_id,

@@ -26,6 +26,17 @@ const getEvidence = async (req, res) => {
 	});
 };
 
+const uploadEvidenceFile = async (req, res) => {
+	const path = await evidenceService.uploadEvidenceFile({
+		userId: req.params.userId,
+		evidenceId: req.params.evidenceId,
+		fileName: req.get("x-file-name") || "evidence",
+		fileType: req.get("x-file-content-type"),
+		file: req.body,
+	});
+	return sendResponse(res, 201, "Evidence file uploaded successfully", { path });
+};
+
 const deleteEvidence = async (req, res) => {
 	const { evidenceId, userId } = extractParams(req);
 	const evidence = await evidenceService.deleteEvidence(evidenceId, userId);
@@ -52,6 +63,7 @@ const permanentDeleteEvidence = async (req, res) => {
 module.exports = {
     addEvidence,
     getEvidence,
+    uploadEvidenceFile,
     deleteEvidence,
     restoreEvidence,
     permanentDeleteEvidence,
