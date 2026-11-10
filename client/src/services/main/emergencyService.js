@@ -316,25 +316,25 @@ export const executeEmergencyDispatch = async (
 			const allContacts = await getLocalEmergencyContacts(db, emergencyUserId);
 			const contactsWithEmail = allContacts.filter((contact) => contact.email);
 			if (contactsWithEmail.length === 0) {
-				const [incidentSync, locationSync] = await Promise.all([
-					postIncidentOnline(db, {
-						incident_id: incidentId,
-						user_id: emergencyUserId,
-						evidence_id: null,
-						trigger_type: triggerType,
-						status: "ACTIVE",
-						start_time: startTime,
-						tracking_token: trackingToken,
-					}),
-					postLocationOnline(db, {
-						location_id: locationId,
-						incident_id: incidentId,
-						latitude: locationCoords.latitude,
-						longitude: locationCoords.longitude,
-						altitude: locationCoords.altitude,
-						accuracy: locationCoords.accuracy,
-					}),
-				]);
+				const incidentSync = await postIncidentOnline(db, {
+					incident_id: incidentId,
+					user_id: emergencyUserId,
+					evidence_id: null,
+					trigger_type: triggerType,
+					status: "ACTIVE",
+					start_time: startTime,
+					tracking_token: trackingToken,
+				});
+				const locationSync = incidentSync?.success
+					? await postLocationOnline(db, {
+							location_id: locationId,
+							incident_id: incidentId,
+							latitude: locationCoords.latitude,
+							longitude: locationCoords.longitude,
+							altitude: locationCoords.altitude,
+							accuracy: locationCoords.accuracy,
+						})
+					: { success: false };
 				const primaryContact = await getPrimaryEmergencyContact(
 					db,
 					emergencyUserId,

@@ -13,6 +13,7 @@ import { decryptOrKeepValue } from "@utils/securityAndValidation/decryptionUtil"
 import { useAuth } from "@context/AuthContext";
 import { STORAGE_KEYS } from "@constants/storageKeys";
 import AuthLayout from "@components/layouts/AuthLayout";
+import { isOfflineToken } from "@utils/auth/authTokenUtil";
 import { useFocusEffect } from "@react-navigation/native";
 import { useSQLiteContext } from "expo-sqlite";
 import { getLocalContactTotal } from "@database/repositories/contactRepository";
@@ -105,7 +106,7 @@ const INITIAL_RADIAL_ACTIONS = [
 ];
 
 const HomeScreen = ({ navigation, route }) => {
-	const { user } = useAuth();
+	const { user, sessionToken } = useAuth();
 	const db = useSQLiteContext();
 	const [contactCount, setContactCount] = useState(null);
 	const [evidenceCount, setEvidenceCount] = useState(null);
@@ -121,6 +122,14 @@ const HomeScreen = ({ navigation, route }) => {
 
 	const displayName = resolveDisplayName(user?.userName);
 	const userId = route?.params?.userId || user?.userId;
+	const offlineBanner = isOfflineToken(sessionToken)
+		? {
+				message:
+					"You're using offline mode. Changes are saved on this device and will sync when you're back online.",
+				type: "warning",
+				duration: 0,
+			}
+		: null;
 
 	const refreshHome = useCallback(
 		async (refreshAfterCurrent = false) => {
@@ -286,6 +295,7 @@ const HomeScreen = ({ navigation, route }) => {
 				safeAreaEdges={["top"]}
 				scrollContentStyle={{ paddingBottom: 0 }}
 				style={styles.authLayout}
+				banner={offlineBanner}
 			>
 				<View style={styles.content}>
 					<ProtectionRadar actions={radialActions} navigation={navigation} />

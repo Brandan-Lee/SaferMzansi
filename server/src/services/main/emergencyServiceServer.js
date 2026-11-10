@@ -78,10 +78,9 @@ const handleEmergencyBroadcast = async (payload) => {
 		}
 	};
 
-	// Run independent server work together so emergency requests return sooner.
-	const [incidentSaved, locationSaved, emailResults] = await Promise.all([
-		saveIncident(),
-		saveLocation(),
+	const incidentSaved = await saveIncident();
+	const [locationSaved, emailResults] = await Promise.all([
+		incidentSaved ? saveLocation() : false,
 		Promise.all(contactsWithEmail.map(sendContactEmail)),
 	]);
 	const emailSuccessCount = emailResults.filter(Boolean).length;

@@ -31,6 +31,12 @@ export const saveToken = async (token) => {
 	}
 
 	await SecureStore.setItemAsync(TOKEN_KEY, normalizedToken);
+	if (!isOfflineToken(normalizedToken)) {
+		await SecureStore.setItemAsync(
+			STORAGE_KEYS.OFFLINE_AUTH_TOKEN,
+			normalizedToken,
+		);
+	}
 };
 
 export const parseJwt = (token) => {
@@ -72,6 +78,23 @@ export const getAuthToken = async () => {
 		console.error("Failed to read the authentication token:", error);
 		return null;
 	}
+};
+
+export const getOfflineAuthToken = async () => {
+	const cachedToken = await SecureStore.getItemAsync(
+		STORAGE_KEYS.OFFLINE_AUTH_TOKEN,
+	);
+	if (cachedToken) return cachedToken;
+
+	const activeToken = await SecureStore.getItemAsync(TOKEN_KEY);
+	if (!activeToken || isOfflineToken(activeToken)) return null;
+
+	// Migrate JWTs saved by versions that used only the active-token key.
+	await SecureStore.setItemAsync(
+		STORAGE_KEYS.OFFLINE_AUTH_TOKEN,
+		activeToken,
+	);
+	return activeToken;
 };
 
 export const removeAuthToken = async () => {

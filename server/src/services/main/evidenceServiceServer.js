@@ -52,6 +52,13 @@ const getEvidence = async (userId) => {
 	return evidenceModel.getEvidenceByUserId(userId);
 };
 
+const uploadEvidenceFile = async (upload) => {
+	if (!Buffer.isBuffer(upload.file) || upload.file.length === 0) {
+		throw createHttpError("An evidence file is required.", 400);
+	}
+	return evidenceModel.uploadEvidenceFile(upload);
+};
+
 const deleteEvidence = (evidenceId, userId) =>
 	executeEvidenceAction(
 		evidenceId,
@@ -74,6 +81,7 @@ const permanentDeleteEvidence = (evidenceId, userId) =>
 module.exports = {
     addEvidence,
     getEvidence,
+    uploadEvidenceFile,
     deleteEvidence,
     restoreEvidence,
     permanentDeleteEvidence,

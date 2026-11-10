@@ -5,7 +5,11 @@ const EMERGENCY_BROADCAST_PATH = "/api/emergency/broadcast";
 
 // Most requests should finish quickly; emergency broadcasts may wait for email delivery.
 const requestDeadline = (req, res, next) => {
-	if (req.method === "POST" && req.path === EMERGENCY_BROADCAST_PATH) {
+	if (
+		req.method === "POST" &&
+		(req.path === EMERGENCY_BROADCAST_PATH ||
+			req.path.startsWith("/api/evidence/upload/"))
+	) {
 		return next();
 	}
 

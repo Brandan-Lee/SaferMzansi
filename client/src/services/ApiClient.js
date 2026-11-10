@@ -13,6 +13,7 @@ const TIMEOUT_ERROR = "The request timed out. Please try again.";
 const NETWORK_ERROR = "Network connection failed";
 const AUTH_REQUIRED_ERROR =
 	"Log in online before syncing changes from this device.";
+const UPLOAD_TIMEOUT_MS = 120000;
 
 const isPublicEndpoint = (endpoint) =>
 	endpoint.startsWith("/auth/login") ||
@@ -132,6 +133,72 @@ export const postApi = async (
 		});
 
 		return await Promise.race([pendingRequest, timeoutResponse]);
+	} finally {
+		clearTimeout(timeoutId);
+	}
+};
+
+export const postBinaryApi = async (
+	endpoint,
+	body,
+	{ fileType = "application/octet-stream", fileName = "" } = {},
+) => {
+	if (!API_BASE_URL) {
+		return createRequestError("The API base URL is not configured.");
+	}
+
+	const token = await SecureStore.getItemAsync(STORAGE_KEYS.AUTH_TOKEN);
+	if (!token || isOfflineToken(token)) {
+		return createRequestError(AUTH_REQUIRED_ERROR);
+	}
+	if (isTokenExpired(token)) {
+		await removeAuthToken();
+		return createRequestError(
+			"Your session has expired. Please log in again when online",
+		);
+	}
+
+	const network = await NetInfo.fetch();
+	if (
+		network.isConnected === false ||
+		network.isInternetReachable === false
+	) {
+		return createRequestError(NETWORK_ERROR);
+	}
+
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), UPLOAD_TIMEOUT_MS);
+	try {
+		const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/octet-stream",
+				"X-File-Content-Type": fileType,
+				"X-File-Name": encodeURIComponent(fileName),
+			},
+			body,
+			signal: controller.signal,
+		});
+		const rawText = await response.text();
+		try {
+			return {
+				ok: response.ok,
+				status: response.status,
+				data: JSON.parse(rawText),
+			};
+		} catch {
+			return {
+				ok: false,
+				status: response.status,
+				data: null,
+				error: `Server error (HTTP ${response.status})`,
+			};
+		}
+	} catch (error) {
+		return createRequestError(
+			controller.signal.aborted ? "The upload timed out. Please try again." : NETWORK_ERROR,
+		);
 	} finally {
 		clearTimeout(timeoutId);
 	}
