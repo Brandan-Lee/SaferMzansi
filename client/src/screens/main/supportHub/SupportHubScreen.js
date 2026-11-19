@@ -168,6 +168,7 @@ export default function SupportHubScreen({ navigation }) {
 			<ScrollView
 				contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40 }}
 				showsVerticalScrollIndicator={false}
+				nestedScrollEnabled
 			>
 				<SupportMap
 					mapRef={mapRef}
@@ -247,7 +248,11 @@ export default function SupportHubScreen({ navigation }) {
 					Helplines
 				</Text>
 				{HELPLINES.map((h) => (
-					<HelplineCard key={h.phone} helpline={h} onPress={() => {}} />
+					<HelplineCard
+						key={h.phone}
+						helpline={h}
+						onPress={() => onAttemptCall(h)}
+					/>
 				))}
 			</ScrollView>
 		</MainLayout>

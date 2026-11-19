@@ -203,6 +203,8 @@ export const AuthProvider = ({ children }) => {
 					}
 				: null;
 			setSession(token, restoredUser);
+			// Keep the saved token available for syncing, but require a fresh
+			// interactive login before showing the authenticated app.
 			return { isAuthenticated: true, token, user: restoredUser };
 		} catch (error) {
 			console.error("Error checking auth session:", error);

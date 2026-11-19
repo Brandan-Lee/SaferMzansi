@@ -12,6 +12,31 @@ const MIME_TYPES = {
 	file: "application/octet-stream",
 };
 
+const getMimeType = (fileName, mimeType) => {
+	if (mimeType && mimeType !== MIME_TYPES.file) return mimeType;
+
+	switch (fileName.split(".").pop()?.toLowerCase()) {
+		case "m4a":
+			return "audio/mp4";
+		case "mp3":
+			return "audio/mpeg";
+		case "aac":
+			return "audio/aac";
+		case "wav":
+			return "audio/wav";
+		case "ogg":
+			return "audio/ogg";
+		default:
+			return MIME_TYPES.file;
+	}
+};
+
+const getUti = (mimeType) => {
+	if (mimeType === "audio/mp4") return "public.mpeg-4-audio";
+	if (mimeType === "audio/mpeg") return "public.mp3";
+	return "public.item";
+};
+
 const sanitizeFileName = (name) => {
 	const safeName = String(name || "evidence")
 		.replace(/[\\/:*?"<>|]/g, "_")
@@ -80,8 +105,10 @@ export const downloadToDownloadsDirectory = async (
 	filePath,
 	localFileName,
 	localFileUri = null,
+	mimeType = null,
 ) => {
 	const fileName = sanitizeFileName(localFileName);
+	const resolvedMimeType = getMimeType(fileName, mimeType);
 	let temporaryUri = null;
 
 	try {
@@ -105,7 +132,7 @@ export const downloadToDownloadsDirectory = async (
 			const destinationUri = await StorageAccessFramework.createFileAsync(
 				permissions.directoryUri,
 				fileName,
-				MIME_TYPES.file,
+				resolvedMimeType,
 			);
 			await FileSystem.writeAsStringAsync(destinationUri, fileData, {
 				encoding: FileSystem.EncodingType.Base64,
@@ -117,7 +144,8 @@ export const downloadToDownloadsDirectory = async (
 			throw new Error("File sharing is not available on this device.");
 		}
 		await Sharing.shareAsync(downloadResult.uri, {
-			UTI: "public.item",
+			mimeType: resolvedMimeType,
+			UTI: getUti(resolvedMimeType),
 			dialogTitle: "Save File",
 		});
 		return true;

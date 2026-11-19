@@ -46,13 +46,15 @@ const FIELD_RULES = {
 	decoyPin: (val) => {
 		const str = String(val ?? "").trim();
 		if (!str) return "Decoy PIN is required";
-		if (str.length < 4) return "Decoy PIN must be at least 4 characters";
+		if (!/^\d+$/.test(str)) return "Decoy PIN must contain numbers only";
+		if (str.length < 4) return "Decoy PIN must be at least 4 digits";
 		return "";
 	},
 	emergencyPin: (val, rawVal, formData) => {
 		const str = String(val ?? "").trim();
 		if (!str) return "Emergency PIN is required";
-		if (str.length < 4) return "Emergency PIN must be at least 4 characters";
+		if (!/^\d+$/.test(str)) return "Emergency PIN must contain numbers only";
+		if (str.length < 4) return "Emergency PIN must be at least 4 digits";
 		if (formData?.decoyPin && str === String(formData.decoyPin).trim()) {
 			return "Emergency PIN cannot be the same as Decoy PIN";
 		}

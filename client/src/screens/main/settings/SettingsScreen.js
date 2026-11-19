@@ -5,8 +5,6 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Animated,
-	Alert,
-	Linking,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as Location from "expo-location";

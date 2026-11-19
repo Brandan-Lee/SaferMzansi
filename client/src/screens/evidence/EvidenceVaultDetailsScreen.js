@@ -20,6 +20,7 @@ const getFileName = (file) => {
 	const localUrl = file.local_file_url || file.localFileUrl || file.uri || "";
 	const evidenceId = getFileId(file);
 	const cloudUrl = file.cloud_file_url || file.cloudFileUrl || "";
+	const mime = file.file_type || file.fileType || "";
 
 	const storedPath =
 		localUrl.startsWith("file://") || localUrl.startsWith("content://")
@@ -28,27 +29,39 @@ const getFileName = (file) => {
 	if (storedPath.includes("/")) {
 		const baseName = storedPath.substring(storedPath.lastIndexOf("/") + 1);
 		if (evidenceId && baseName.startsWith(`${evidenceId}_`)) {
-			return baseName.replace(`${evidenceId}_`, "");
+			return normalizeAudioFileName(
+				baseName.replace(`${evidenceId}_`, ""),
+				mime,
+			);
 		}
-		return baseName;
+		return normalizeAudioFileName(baseName, mime);
 	}
 
 	if (file.name && file.name.includes(".")) {
 		if (evidenceId && file.name.startsWith(`${evidenceId}_`)) {
-			return file.name.replace(`${evidenceId}_`, "");
+			return normalizeAudioFileName(
+				file.name.replace(`${evidenceId}_`, ""),
+				mime,
+			);
 		}
-		return file.name;
+		return normalizeAudioFileName(file.name, mime);
 	}
 
-	const mime = file.file_type || file.fileType || "";
 	const ext = mime.includes("webp")
 		? "webp"
 		: mime.includes("pdf")
 			? "pdf"
+			: mime.startsWith("audio/")
+				? "m4a"
 			: "jpg";
 
 	return `${evidenceId}.${ext}`;
 };
+
+const normalizeAudioFileName = (fileName, mimeType) =>
+	mimeType.startsWith("audio/") && fileName.toLowerCase().endsWith(".mp4")
+		? `${fileName.slice(0, -4)}.m4a`
+		: fileName;
 
 // Prefer the saved storage key; fallback mirrors the upload path based on the cached filename.
 const getRemotePath = (userId, file) => {
@@ -152,6 +165,7 @@ export default function EvidenceVaultDetailsScreen() {
 				remotePath,
 				localName,
 				file.local_file_url || file.localFileUrl || file.uri,
+				file.file_type || file.fileType,
 			);
 			updateDownloadModal({
 				loading: false,

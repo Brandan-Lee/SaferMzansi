@@ -19,13 +19,19 @@ const authenticateUser = (req, res, next) => {
 		return next(createHttpError("The authentication token is invalid or expired.", 401));
 	}
 
-	if (
-		!payload ||
-		typeof payload !== "object" ||
-		payload.userId !== req.params.userId
-	) {
-		return next(createHttpError("The authenticated user does not match the upload.", 403));
+	if (!payload || typeof payload !== "object" || !payload.userId) {
+		return next(createHttpError("The authentication token is invalid.", 401));
 	}
+
+	const requestedUserId =
+		req.params?.userId ||
+		req.params?.user_id ||
+		req.body?.user_id;
+	if (requestedUserId && payload.userId !== String(requestedUserId).trim()) {
+		return next(createHttpError("The authenticated user does not match the requested resource.", 403));
+	}
+
+	req.auth = { userId: payload.userId };
 
 	return next();
 };

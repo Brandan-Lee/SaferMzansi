@@ -155,7 +155,9 @@ const DecoyAddScreen = () => {
 							icon={field.icon}
 							placeholder={field.placeholder}
 							value={formData[field.key]}
-							onChangeText={(val) => handleChange(field.key, val)}
+							onChangeText={(val) =>
+								handleChange(field.key, val.replace(/\D/g, ""))
+							}
 							onBlur={() => handleFieldBlur(field.key)}
 							secureTextEntry={field.secureTextEntry}
 							keyboardType={field.keyboardType}

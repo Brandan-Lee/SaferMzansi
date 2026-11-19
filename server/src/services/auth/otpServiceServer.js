@@ -4,10 +4,13 @@ const { sendMail, generateOtpEmailHTML } = require("#utils/emailUtil.js");
 
 const otpStore = new Map();
 const passwordResetTokenStore = new Map();
+const emailVerificationProofStore = new Map();
 const otpRequestTimes = new Map();
+const otpFailedAttempts = new Map();
 const OTP_REQUEST_COOLDOWN_MS = 60 * 1000;
 const OTP_EXPIRY_MS = 5 * 60 * 1000;
 const RESET_TOKEN_EXPIRY_MS = 5 * 60 * 1000;
+const OTP_MAX_FAILED_ATTEMPTS = 5;
 
 const sanitizeEmail = (email) =>
 	email ? String(email).trim().toLowerCase() : "";
@@ -43,6 +46,7 @@ const createOtpMailOptions = (
 		expiresAt: Date.now() + OTP_EXPIRY_MS,
 		purpose,
 		userId,
+		failedAttempts: 0,
 	});
 
 	return {
@@ -128,6 +132,13 @@ const queueOtpEmail = (email, userId) => {
 const verifyOtpCode = async (email, otp, purpose = "verification") => {
 	const key = sanitizeEmail(email);
 	const receivedOtp = otp ? String(otp).trim() : "";
+	const lockoutUntil = otpFailedAttempts.get(key);
+	if (lockoutUntil && Date.now() < lockoutUntil) {
+		return buildResponse(false, 429, "Too many incorrect attempts");
+	}
+	if (lockoutUntil && Date.now() >= lockoutUntil) {
+		otpFailedAttempts.delete(key);
+	}
 	const record = otpStore.get(key);
 
 	if (!record || record.purpose !== purpose) {
@@ -148,6 +159,11 @@ const verifyOtpCode = async (email, otp, purpose = "verification") => {
 	}
 
 	if (record.otp !== receivedOtp) {
+		record.failedAttempts = (record.failedAttempts || 0) + 1;
+		if (record.failedAttempts >= OTP_MAX_FAILED_ATTEMPTS) {
+			otpStore.delete(key);
+			otpFailedAttempts.set(key, Date.now() + OTP_REQUEST_COOLDOWN_MS);
+		}
 		return buildResponse(
 			false,
 			400,
@@ -156,6 +172,18 @@ const verifyOtpCode = async (email, otp, purpose = "verification") => {
 	}
 
 	otpStore.delete(key);
+
+	if (purpose === "verification") {
+		const proof = crypto.randomBytes(32).toString("hex");
+		emailVerificationProofStore.set(key, {
+			proof,
+			expiresAt: Date.now() + OTP_EXPIRY_MS,
+		});
+		return {
+			...buildResponse(true, 200, "OTP verified successfully."),
+			verificationProof: proof,
+		};
+	}
 
 	if (purpose === "password_reset" && record.userId) {
 		const resetToken = crypto.randomBytes(32).toString("hex");
@@ -190,8 +218,20 @@ const consumePasswordResetToken = (resetToken, userId) => {
 	if (!isPasswordResetTokenValid(resetToken, userId)) {
 		return false;
 	}
-
 	passwordResetTokenStore.delete(resetToken);
+	return true;
+};
+
+const consumeEmailVerificationProof = (email, proof) => {
+	const key = sanitizeEmail(email);
+	const record = emailVerificationProofStore.get(key);
+	if (!record || record.proof !== proof || Date.now() > record.expiresAt) {
+		if (record && Date.now() > record.expiresAt) {
+			emailVerificationProofStore.delete(key);
+		}
+		return false;
+	}
+	emailVerificationProofStore.delete(key);
 	return true;
 };
 
@@ -201,4 +241,5 @@ module.exports = {
 	verifyOtpCode,
 	isPasswordResetTokenValid,
 	consumePasswordResetToken,
+	consumeEmailVerificationProof,
 };

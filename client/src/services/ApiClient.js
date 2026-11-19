@@ -8,7 +8,7 @@ import {
 } from "@utils/auth/authTokenUtil";
 import { STORAGE_KEYS } from "@constants/storageKeys";
 
-const REQUEST_TIMEOUT_MS = 4000;
+const REQUEST_TIMEOUT_MS = 20000;
 const TIMEOUT_ERROR = "The request timed out. Please try again.";
 const NETWORK_ERROR = "Network connection failed";
 const AUTH_REQUIRED_ERROR =
@@ -76,6 +76,9 @@ export const postApi = async (
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
+					...(token && !isPublicEndpoint(endpoint)
+						? { Authorization: `Bearer ${token}` }
+						: {}),
 				},
 				body: JSON.stringify(body),
 				signal: controller.signal,
@@ -103,7 +106,9 @@ export const postApi = async (
 				};
 			}
 		} catch (networkError) {
-			console.warn("Network request failed:", networkError.message);
+			if (!controller.signal.aborted) {
+				console.warn("Network request failed:", networkError.message);
+			}
 			return createRequestError(
 				controller.signal.aborted ? TIMEOUT_ERROR : NETWORK_ERROR,
 			);
@@ -141,7 +146,12 @@ export const postApi = async (
 export const postBinaryApi = async (
 	endpoint,
 	body,
-	{ fileType = "application/octet-stream", fileName = "" } = {},
+	{
+		fileType = "application/octet-stream",
+		fileName = "",
+		fileSha256 = "",
+		fileSize = "",
+	} = {},
 ) => {
 	if (!API_BASE_URL) {
 		return createRequestError("The API base URL is not configured.");
@@ -176,6 +186,8 @@ export const postBinaryApi = async (
 				"Content-Type": "application/octet-stream",
 				"X-File-Content-Type": fileType,
 				"X-File-Name": encodeURIComponent(fileName),
+				"X-File-Sha256": fileSha256,
+				"X-File-Size": String(fileSize),
 			},
 			body,
 			signal: controller.signal,

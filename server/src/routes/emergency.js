@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const emergencyController = require("#controllers/emergencyController.js");
 const asyncHandler = require("#middleware/asyncHandler.js");
+const authenticateUser = require("#middleware/authenticateUser.js");
 const { validateBody } = require("#middleware/validateRequest.js");
 
 const REQUIRED_BROADCAST_FIELDS = [
@@ -19,6 +20,7 @@ const REQUIRED_BROADCAST_FIELDS = [
 
 router.post(
 	"/broadcast",
+	authenticateUser,
 	validateBody(REQUIRED_BROADCAST_FIELDS),
 	asyncHandler(emergencyController.broadcastEmergency),
 );

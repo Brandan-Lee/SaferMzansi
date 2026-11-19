@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Accelerometer } from "expo-sensors";
-import { Vibration } from "react-native";
 
 export function useShake(
 	onShake,
@@ -68,12 +67,11 @@ export function useShake(
 								timer.current = null;
 							}, timeout);
 
-							if (shakeCount.current >= 2) {
+							if (shakeCount.current >= 3) {
 								if (timer.current) clearTimeout(timer.current);
 								timer.current = null;
 								shakeCount.current = 0;
 								lastTriggerTime.current = Date.now();
-								Vibration.vibrate(500);
 								savedOnShake.current?.();
 							}
 						}

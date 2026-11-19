@@ -167,7 +167,6 @@ export default function SOSScreen({
 		if (isLoadingTimer) return;
 
 		const endTime = Date.now() + secondsLeft * 1000;
-		Vibration.vibrate(400);
 
 		intervalRef.current = setInterval(() => {
 			const remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));

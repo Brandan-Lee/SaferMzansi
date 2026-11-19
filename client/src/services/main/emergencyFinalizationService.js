@@ -26,7 +26,7 @@ export const finalizeEmergencyOnCancel = async (
 					file_type: "audio/mp4",
 					local_file_url: audioUri,
 					file_size: 0,
-					file_name: `emergency_audio_${incidentId || Date.now()}.mp4`,
+					file_name: `emergency_audio_${incidentId || Date.now()}.m4a`,
 				});
 
 				if (evidenceResult?.success) {

@@ -12,10 +12,16 @@ const saveDecoyConfiguration = async (userId, decoyData, action) => {
 		throw new Error("User session is required to save decoy settings.");
 	}
 
+	if (!/^\d+$/.test(decoyPin)) {
+		throw new Error("Decoy PIN must contain numbers only.");
+	}
 	if (decoyPin.length < 4) {
 		throw new Error("Please enter a decoy PIN with at least 4 digits.");
 	}
 
+	if (!/^\d+$/.test(emergencyPin)) {
+		throw new Error("Emergency PIN must contain numbers only.");
+	}
 	if (emergencyPin.length < 4) {
 		throw new Error("Please enter an emergency PIN with at least 4 digits.");
 	}

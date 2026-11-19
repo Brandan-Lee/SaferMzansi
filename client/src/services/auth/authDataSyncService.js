@@ -157,6 +157,11 @@ export const syncServerAccount = async (
 				cloudFileUrl: item.cloud_file_url || item.file_url || "",
 				sha256Hash: item.sha256_hash || "",
 				fileSize: item.file_size || 0,
+				capturedAt:
+					item.uploaded_at ||
+					item.captured_at ||
+					item.created_at ||
+					new Date().toISOString(),
 				isSynched: 1,
 				isDeleted: item.is_deleted ? 1 : 0,
 			});

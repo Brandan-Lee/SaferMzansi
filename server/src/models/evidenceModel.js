@@ -1,4 +1,5 @@
 const { supabase } = require("#config/supabase_db.js");
+const crypto = require("crypto");
 const { omitNullish } = require("#utils/databaseUtil.js");
 
 const TABLE_NAME = "Evidence_Vault";
@@ -131,10 +132,28 @@ const uploadEvidenceFile = async ({
     evidenceId,
     fileName,
     fileType,
+    fileSha256,
+    fileSize,
     file,
 }) => {
     if (!UUID_PATTERN.test(userId) || !UUID_PATTERN.test(evidenceId)) {
         throw new Error("Valid user and evidence IDs are required for upload.");
+    }
+    if (!Buffer.isBuffer(file) || file.length === 0) {
+        throw new Error("An evidence file is required.");
+    }
+
+    const actualHash = crypto.createHash("sha256").update(file).digest("hex");
+    const claimedHash = String(fileSha256 || "").trim().toLowerCase();
+    const claimedSize = Number(fileSize);
+    if (!claimedHash || !/^[a-f0-9]{64}$/.test(claimedHash)) {
+        throw new Error("A valid evidence SHA-256 hash is required.");
+    }
+    if (actualHash !== claimedHash) {
+        throw new Error("Evidence file hash does not match the uploaded file.");
+    }
+    if (!Number.isFinite(claimedSize) || claimedSize !== file.length) {
+        throw new Error("Evidence file size does not match the uploaded file.");
     }
 
     const safeFileName = String(fileName || "evidence")
@@ -176,6 +195,10 @@ const permanentDeleteEvidence = async (evidenceId, userId) => {
 
     if (fetchError) throw fetchError;
 
+    if (!evidence) {
+        return { evidence_id: safeEvidenceId, user_id: safeUserId };
+    }
+
     const storagePaths = new Set(
         await listStoragePaths(safeUserId, safeEvidenceId),
     );
@@ -183,8 +206,6 @@ const permanentDeleteEvidence = async (evidenceId, userId) => {
         storagePaths.add(evidence.cloud_file_url);
     }
     await removeStoragePaths([...storagePaths]);
-
-    if (!evidence) return { evidence_id: safeEvidenceId, user_id: safeUserId };
 
     const { data, error: deleteError } = await supabase
         .from(TABLE_NAME)

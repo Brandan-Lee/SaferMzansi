@@ -29,7 +29,7 @@ export const createSupportMapHtml = ({
 		<!DOCTYPE html>
 		<html>
 		<head>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
 			<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 			<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 			<style>
@@ -42,6 +42,10 @@ export const createSupportMapHtml = ({
 			<script>
 				var map = L.map('map', {
 					zoomControl: false,
+					dragging: true,
+					touchZoom: true,
+					doubleClickZoom: true,
+					scrollWheelZoom: true,
 					maxBounds: null,
 					maxBoundsViscosity: 0.0
 				}).setView([${userLocation.latitude}, ${userLocation.longitude}], 14);

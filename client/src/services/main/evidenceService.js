@@ -84,7 +84,7 @@ export const addEvidence = async (db, userId, evidenceData) => {
 		const localPayload = {
 			evidenceId, userId, fileType: file_type, localFileUrl: cachedFile.uri,
 			cloudFileUrl: "", sha256Hash, fileSize: file_size || cachedFile.size || 0,
-			createdAt: timestamp, updatedAt: timestamp, isSynched: 0, isDeleted: 0,
+			capturedAt: timestamp, updatedAt: timestamp, isSynched: 0, isDeleted: 0,
 		};
 
 		await saveOrUpdateLocalEvidence(db, userId, localPayload);
@@ -127,7 +127,11 @@ export const syncEvidenceVault = async (db, userId) => {
 			cloudFileUrl: item.cloud_file_url || item.file_url || "",
 			sha256Hash: item.sha256_hash || "",
 			fileSize: item.file_size || 0,
-			createdAt: item.uploaded_at || item.captured_at || new Date().toISOString(),
+			capturedAt:
+				item.uploaded_at ||
+				item.captured_at ||
+				item.created_at ||
+				new Date().toISOString(),
 			updatedAt: item.uploaded_at || new Date().toISOString(),
 			isSynched: 1,
 			isDeleted: item.is_deleted ? 1 : 0,

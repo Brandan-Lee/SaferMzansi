@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
+	Animated,
+	PanResponder,
 	View,
 	Text,
 	StyleSheet,
@@ -63,18 +65,128 @@ export default function LegalModal({
 	children,
 }) {
 	const insets = useSafeAreaInsets();
+	const translateY = useRef(new Animated.Value(0)).current;
+	const backdropOpacity = useRef(new Animated.Value(1)).current;
+	const onCloseRef = useRef(onClose);
+	onCloseRef.current = onClose;
+	const isClosing = useRef(false);
+	const dragFrame = useRef(null);
+	const pendingDragY = useRef(0);
+	const closeWithAnimation = () => {
+		if (isClosing.current) return;
+		isClosing.current = true;
+		Animated.parallel([
+			Animated.timing(translateY, {
+				toValue: 500,
+				duration: 220,
+				useNativeDriver: true,
+			}),
+			Animated.timing(backdropOpacity, {
+				toValue: 0,
+				duration: 220,
+				useNativeDriver: true,
+			}),
+		]).start(({ finished }) => {
+			if (finished) onCloseRef.current();
+			isClosing.current = false;
+		});
+	};
+	const panResponder = useRef(
+		PanResponder.create({
+			onStartShouldSetPanResponder: () => true,
+			onMoveShouldSetPanResponderCapture: (_event, gestureState) =>
+				gestureState.dy > 0 &&
+				Math.abs(gestureState.dy) > Math.abs(gestureState.dx),
+			onMoveShouldSetPanResponder: (_event, gestureState) =>
+				gestureState.dy > 4 &&
+				Math.abs(gestureState.dy) > Math.abs(gestureState.dx),
+			onPanResponderTerminationRequest: () => false,
+			onPanResponderMove: (_event, gestureState) => {
+				pendingDragY.current = Math.max(0, gestureState.dy);
+				if (dragFrame.current === null) {
+					dragFrame.current = requestAnimationFrame(() => {
+						translateY.setValue(pendingDragY.current);
+						dragFrame.current = null;
+					});
+				}
+			},
+			onPanResponderRelease: (_event, gestureState) => {
+				if (dragFrame.current !== null) {
+					cancelAnimationFrame(dragFrame.current);
+					dragFrame.current = null;
+				}
+				if (gestureState.dy > 80 || (gestureState.dy > 20 && gestureState.vy > 0.6)) {
+					closeWithAnimation();
+					return;
+				}
+				Animated.spring(translateY, {
+					toValue: 0,
+					useNativeDriver: true,
+					bounciness: 4,
+				}).start();
+			},
+			onPanResponderTerminate: () => {
+				if (dragFrame.current !== null) {
+					cancelAnimationFrame(dragFrame.current);
+					dragFrame.current = null;
+				}
+				Animated.spring(translateY, {
+					toValue: 0,
+					useNativeDriver: true,
+					bounciness: 4,
+				}).start();
+			},
+		}),
+	).current;
+
+	useEffect(() => {
+		if (visible) {
+			translateY.setValue(0);
+			backdropOpacity.setValue(1);
+			isClosing.current = false;
+		}
+	}, [backdropOpacity, translateY, visible]);
+
+	useEffect(
+		() => () => {
+			if (dragFrame.current !== null) {
+				cancelAnimationFrame(dragFrame.current);
+			}
+		},
+		[],
+	);
 
 	return (
 		<Modal
 			visible={visible}
 			transparent={true}
-			animationType="slide"
-			onRequestClose={onClose}
+			animationType="none"
+			onRequestClose={closeWithAnimation}
 			statusBarTranslucent={true}
 		>
 			<View style={styles.overlay}>
-				<View style={styles.modalContainer}>
-					<View style={styles.handle} />
+				<Animated.View
+					pointerEvents="none"
+					style={[
+						StyleSheet.absoluteFill,
+						styles.backdrop,
+						{ opacity: backdropOpacity },
+					]}
+				/>
+				<Animated.View
+					style={[
+						styles.modalContainer,
+						{ transform: [{ translateY }] },
+					]}
+				>
+					<View
+						style={styles.handleArea}
+						{...panResponder.panHandlers}
+						accessibilityRole="adjustable"
+						accessibilityLabel="Swipe down to close"
+					>
+						<View style={styles.handle} />
+					</View>
 
 					<View style={styles.header}>
 						<View style={styles.headerIcon}>
@@ -110,14 +222,14 @@ export default function LegalModal({
 					>
 						<TouchableOpacity
 							activeOpacity={0.8}
-							onPress={onClose}
+							onPress={closeWithAnimation}
 							style={styles.closeButton}
 							accessibilityRole="button"
 						>
 							<Text style={styles.closeButtonText}>Close</Text>
 						</TouchableOpacity>
 					</View>
-				</View>
+				</Animated.View>
 			</View>
 		</Modal>
 	);
@@ -129,6 +241,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		padding: 12,
+	},
+	backdrop: {
 		backgroundColor: "rgba(20, 8, 30, 0.68)",
 	},
 	modalContainer: {
@@ -140,14 +254,16 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: BORDER,
 	},
+	handleArea: {
+		minHeight: 34,
+		justifyContent: "center",
+		alignItems: "center",
+	},
 	handle: {
 		width: 46,
 		height: 5,
 		borderRadius: 3,
 		backgroundColor: "#D3BEDF",
-		alignSelf: "center",
-		marginTop: 10,
-		marginBottom: 7,
 	},
 	header: {
 		flexDirection: "row",

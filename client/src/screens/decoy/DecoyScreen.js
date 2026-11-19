@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import React, { useRef, useState } from "react";
+import { PanResponder, StyleSheet, Text, View, Pressable } from "react-native";
 import { evaluate } from "mathjs";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { verifyDecoyAttempt } from "@services/main/decoyService";
@@ -10,6 +10,25 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 	const { isTesting } = route.params || {};
 
 	const [pin, setPin] = useState("");
+	const [hasResult, setHasResult] = useState(false);
+	const swipeResponder = useRef(
+		PanResponder.create({
+			onMoveShouldSetPanResponder: (_event, gestureState) =>
+				gestureState.dx < -15 &&
+				Math.abs(gestureState.dx) > Math.abs(gestureState.dy),
+			onPanResponderRelease: (_event, gestureState) => {
+				if (
+					gestureState.dx < -35 &&
+					Math.abs(gestureState.dx) > Math.abs(gestureState.dy)
+				) {
+					setPin((currentPin) =>
+						currentPin === "Error" ? "" : currentPin.slice(0, -1),
+					);
+					setHasResult(false);
+				}
+			},
+		}),
+	).current;
 
 	const unlockSOS = () => {
 		if (onEmergencyUnlock) {
@@ -20,7 +39,15 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 	};
 
 	const handleButtonPress = (value) => {
-		setPin((currentPin) => currentPin + value);
+		const isArithmeticOperator = ["+", "-", "*", "/"].includes(value);
+		setPin((currentPin) => {
+			if (currentPin === "Error") return value;
+			if (hasResult && !isArithmeticOperator) {
+				return value === "." ? "0." : value;
+			}
+			return currentPin + value;
+		});
+		setHasResult(false);
 	};
 
 	const calculate = async () => {
@@ -60,19 +87,26 @@ const DecoyScreen = ({ onDecoyUnlock, onEmergencyUnlock }) => {
 		try {
 			const result = evaluate(pin);
 			setPin(result.toString());
+			setHasResult(true);
 		} catch (error) {
 			setPin("Error");
+			setHasResult(false);
 		}
 	};
 
 	const clear = () => {
 		setPin("");
+		setHasResult(false);
 	};
 
 	return (
 		<View style={styles.container}>
 			{/* Calculator Display */}
-			<View style={styles.screen}>
+			<View
+				style={styles.screen}
+				{...swipeResponder.panHandlers}
+				accessibilityHint="Swipe left to delete the previous character"
+			>
 				<Text style={styles.text} numberOfLines={2} adjustsFontSizeToFit>
 					{pin || "0"}
 				</Text>

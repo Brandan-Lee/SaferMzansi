@@ -1,4 +1,5 @@
 const contactModel = require("#models/contactModel.js");
+const crypto = require("crypto");
 const evidenceModel = require("#models/evidenceModel.js");
 const locationModel = require("#models/incidentLocationModel.js");
 const incidentModel = require("#models/incidentModel.js");
@@ -7,6 +8,7 @@ const {
 	queueOtpEmail,
 	isPasswordResetTokenValid,
 	consumePasswordResetToken,
+	consumeEmailVerificationProof,
 } = require("#services/auth/otpServiceServer.js");
 const { createHttpError } = require("#utils/httpError.js");
 const { hashPassword, verifyPassword } = require("#utils/securityUtil.js");
@@ -20,6 +22,14 @@ const getIncidentLocations = async (incidents) => {
 };
 
 const registerUser = async (userData) => {
+	const { verification_proof, email } = userData;
+	if (
+		!verification_proof ||
+		typeof email !== "string" ||
+		!consumeEmailVerificationProof(email, verification_proof)
+	) {
+		throw createHttpError("Email verification is required.", 403);
+	}
 	const existingUser = await userModel.findUserByEmailBlindIndex(
 		userData.email_blind_index,
 	);
@@ -31,6 +41,8 @@ const registerUser = async (userData) => {
 	const password_hash = await hashPassword(userData.password);
 	const otherUserData = { ...userData };
 	delete otherUserData.password;
+	delete otherUserData.email;
+	delete otherUserData.verification_proof;
 
 	const newUser = await userModel.createUser({
 		...otherUserData,
@@ -103,6 +115,21 @@ const requestForgotPassword = async (email, email_blind_index) => {
 
 	try {
 		if (email && email_blind_index) {
+			const blindIndexSecret =
+				process.env.EXPO_PUBLIC_AES_256_SECRET_KEY ||
+				process.env.EMAIL_BLIND_INDEX_SECRET;
+			if (!blindIndexSecret) {
+				throw new Error("EMAIL_BLIND_INDEX_SECRET must be configured.");
+			}
+			const normalizedEmail = String(email).trim().toLowerCase();
+			const suppliedIndex = String(email_blind_index).trim();
+			const derivedIndex = crypto
+				.createHmac("sha256", blindIndexSecret)
+				.update(normalizedEmail)
+				.digest("hex");
+			if (suppliedIndex !== derivedIndex) {
+				return;
+			}
 			const user = await userModel.findUserByEmailBlindIndex(email_blind_index);
 
 			if (user) {

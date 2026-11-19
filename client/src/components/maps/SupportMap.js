@@ -85,7 +85,9 @@ export default function SupportMap({
 				ref={webViewRef}
 				source={{ html: mapHtml }}
 				style={styles.map}
-				scrollEnabled={false}
+				scrollEnabled
+				nestedScrollEnabled
+				bounces={false}
 				onMessage={(event) => {
 					const placeId = event.nativeEvent.data;
 					if (onSelectMarker) onSelectMarker(placeId);

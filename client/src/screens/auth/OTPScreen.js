@@ -263,6 +263,7 @@ const OTPScreen = ({ navigation, route }) => {
 						email: sanitizedEmail,
 						phoneNum: pendingUserData.phoneNum,
 						password: pendingUserData.password,
+						verification_proof: response.data?.verification_proof,
 					});
 
 					if (result?.token || result?.success) {

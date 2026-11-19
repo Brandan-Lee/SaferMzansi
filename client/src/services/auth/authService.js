@@ -43,12 +43,14 @@ export const registerUser = async (db, userData) => {
 
 	const apiPayload = {
 		user_id: userId,
+		email,
 		email_blind_index: emailBlindIndex,
 		encrypted_name: encryptedData.name,
 		encrypted_surname: encryptedData.surname,
 		encrypted_email: encryptedData.email,
 		encrypted_phone_num: encryptedData.phoneNum,
 		password,
+		verification_proof: userData.verification_proof,
 	};
 
 	const result = await safeApiCall(

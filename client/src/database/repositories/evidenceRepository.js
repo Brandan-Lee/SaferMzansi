@@ -4,9 +4,7 @@ export const logLocalEvidence = (db) =>
 	logLocalTable(db, "Local_Evidence_Vault");
 
 const getTimestamp = () => {
-	const now = new Date();
-	const localTime = new Date(now.getTime() + (2 * 60 * 60 * 1000));
-	return localTime.toISOString().replace("T", " ").slice(0, 23);
+	return new Date().toISOString();
 };
 
 const formatFileSize = (bytes) => {
@@ -80,6 +78,7 @@ export const saveOrUpdateLocalEvidence = async (db, userId, evidenceData) => {
 		cloudFileUrl = "",
 		sha256Hash,
 		fileSize,
+		capturedAt,
 		isSynched = 0,
 		isDeleted = 0,
 		deletedAt = null,
@@ -96,6 +95,7 @@ export const saveOrUpdateLocalEvidence = async (db, userId, evidenceData) => {
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(evidence_id) DO UPDATE SET
             file_type = excluded.file_type,
+            captured_at = excluded.captured_at,
             local_file_url = CASE
                 WHEN excluded.local_file_url != '' THEN excluded.local_file_url
                 WHEN Local_Evidence_Vault.local_file_url LIKE 'file://%'
@@ -117,7 +117,7 @@ export const saveOrUpdateLocalEvidence = async (db, userId, evidenceData) => {
 
 	await db.runAsync(query, [
 		evidenceId, userId, fileType, localFileUrl, cloudFileUrl,
-		sha256Hash, fileSize, getTimestamp(), isDeleted, deletedAt, isSynched, getTimestamp()
+		sha256Hash, fileSize, capturedAt || getTimestamp(), isDeleted, deletedAt, isSynched, getTimestamp()
 	]);
 };
 
@@ -162,7 +162,7 @@ export const getLocalEvidenceGroupedByDate = async (db, userId) => {
         SELECT evidence_id, user_id, file_type, local_file_url, cloud_file_url, file_size, captured_at
         FROM Local_Evidence_Vault
         WHERE user_id = ? AND is_deleted = 0
-        ORDER BY captured_at DESC;
+        ORDER BY datetime(captured_at) DESC, captured_at DESC;
     `;
 	const rows = await db.getAllAsync(query, [userId]);
 	return formatEvidenceRowsToGroups(rows, "captured_at");
@@ -173,7 +173,7 @@ export const getDeletedEvidenceGroupedByDate = async (db, userId) => {
         SELECT evidence_id, user_id, file_type, local_file_url, cloud_file_url, file_size, captured_at, deleted_at
         FROM Local_Evidence_Vault
         WHERE user_id = ? AND is_deleted = 1
-        ORDER BY deleted_at DESC;
+        ORDER BY datetime(deleted_at) DESC, deleted_at DESC;
     `;
 	const rows = await db.getAllAsync(query, [userId]);
 	return formatEvidenceRowsToGroups(rows, "deleted_at");

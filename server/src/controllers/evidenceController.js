@@ -32,6 +32,8 @@ const uploadEvidenceFile = async (req, res) => {
 		evidenceId: req.params.evidenceId,
 		fileName: req.get("x-file-name") || "evidence",
 		fileType: req.get("x-file-content-type"),
+		fileSha256: req.get("x-file-sha256"),
+		fileSize: req.get("x-file-size"),
 		file: req.body,
 	});
 	return sendResponse(res, 201, "Evidence file uploaded successfully", { path });

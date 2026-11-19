@@ -27,30 +27,35 @@ router.post(
 
 router.post(
     "/add",
+    authenticateUser,
     validateBody(REQUIRED_EVIDENCE_FIELDS),
     asyncHandler(evidenceController.addEvidence),
 );
 
 router.post(
     "/get-evidence",
+    authenticateUser,
     validateBody(REQUIRED_GET_EVIDENCE_FIELDS),
     asyncHandler(evidenceController.getEvidence),
 );
 
 router.post(
     "/delete",
+    authenticateUser,
     validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
     asyncHandler(evidenceController.deleteEvidence),
 );
 
 router.post(
     "/restore",
+    authenticateUser,
     validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
     asyncHandler(evidenceController.restoreEvidence),
 );
 
 router.post(
     "/permanent-delete",
+    authenticateUser,
     validateBody(REQUIRED_DELETE_EVIDENCE_FIELDS),
     asyncHandler(evidenceController.permanentDeleteEvidence),
 );

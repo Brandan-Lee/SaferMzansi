@@ -38,6 +38,7 @@ const verifyOtp = async (req, res) => {
 		message: "OTP verified successfully",
 		is_verified: true,
 		...(result.resetToken && { reset_token: result.resetToken }),
+		...(result.verificationProof && { verification_proof: result.verificationProof }),
 	});
 };
 

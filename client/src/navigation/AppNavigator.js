@@ -21,37 +21,24 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 		pendingAuthRoute,
 		pendingAuthParams,
 		checkAuthSession,
-		logOut,
 	} = useContext(AuthContext);
 
 	const [isCheckingLaunch, setIsCheckingLaunch] = useState(true);
 	const [launchAsDecoy, setLaunchAsDecoy] = useState(false);
 	const [isDecoyUnlocked, setIsDecoyUnlocked] = useState(false);
 
-	const handleEmergencyCancel = async () => {
-		let shouldLaunchDecoy = false;
-		try {
-			shouldLaunchDecoy =
-				(await AsyncStorage.getItem(STORAGE_KEYS.LAUNCH_DECOY)) === "true";
-		} catch (error) {
-			console.error("Failed to load decoy launch preference after SOS cancel", error);
-		}
-
-		setLaunchAsDecoy(shouldLaunchDecoy);
-		setIsDecoyUnlocked(false);
-		await logOut("LoginScreen");
+	const returnFromEmergency = ({ triggeredFromDecoy = false } = {}) => {
+		const shouldReturnToDecoy = triggeredFromDecoy && !hasActiveLogin;
+		setLaunchAsDecoy(shouldReturnToDecoy);
+		setIsDecoyUnlocked(!shouldReturnToDecoy);
 		navigationRef?.current?.resetRoot({
 			index: 0,
 			routes: [{ name: "AppContent" }],
 		});
 	};
 
-	const handleEmergencyClose = () => {
-		navigationRef?.current?.resetRoot({
-			index: 0,
-			routes: [{ name: "AppContent" }],
-		});
-	};
+	const handleEmergencyCancel = (options) => returnFromEmergency(options);
+	const handleEmergencyClose = (options) => returnFromEmergency(options);
 
 	useEffect(() => {
 		const initializeApp = async () => {
@@ -100,6 +87,7 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 											onEmergencyUnlock={({ isTesting }) =>
 												navigationRef?.current?.navigate("SOSScreen", {
 													isTesting,
+													triggeredFromDecoy: true,
 												})
 											}
 										/>
@@ -123,8 +111,18 @@ export default function AppNavigator({ navigationRef, onNavigationReady }) {
 					{(screenProps) => (
 						<SOSScreen
 							{...screenProps}
-							onCancel={handleEmergencyCancel}
-							onClose={handleEmergencyClose}
+							onCancel={() =>
+								handleEmergencyCancel({
+									triggeredFromDecoy:
+										screenProps.route?.params?.triggeredFromDecoy,
+								})
+							}
+							onClose={() =>
+								handleEmergencyClose({
+									triggeredFromDecoy:
+										screenProps.route?.params?.triggeredFromDecoy,
+								})
+							}
 						/>
 					)}
 				</Stack.Screen>

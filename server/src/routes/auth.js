@@ -7,12 +7,14 @@ const { validateBody } = require("#middleware/validateRequest.js");
 
 const REQUIRED_REGISTRATION_FIELDS = [
 	"user_id",
+	"email",
 	"email_blind_index",
 	"encrypted_name",
 	"encrypted_surname",
 	"encrypted_email",
 	"encrypted_phone_num",
 	"password",
+	"verification_proof",
 ];
 
 const REQUIRED_LOGIN_FIELDS = ["email_blind_index", "password"];

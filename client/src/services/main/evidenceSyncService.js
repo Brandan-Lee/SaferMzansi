@@ -41,7 +41,12 @@ const uploadEvidenceFile = async (db, userId, item) => {
 	const response = await postBinaryApi(
 		`/evidence/upload/${encodeURIComponent(userId)}/${encodeURIComponent(item.evidence_id)}`,
 		Buffer.from(fileContents, "base64"),
-		{ fileType: item.file_type, fileName: file.name },
+		{
+			fileType: item.file_type,
+			fileName: file.name,
+			fileSha256: item.sha256_hash,
+			fileSize: item.file_size,
+		},
 	);
 	const path = response.data?.data?.path;
 	if (!response.ok || !path) {

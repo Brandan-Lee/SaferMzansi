@@ -21,10 +21,13 @@ export const useEmergencyRecording = (isTesting) => {
 		if (!recordingStarted.current) return recordingUri.current;
 
 		recordingStarted.current = false;
-		await recorder.stop();
-		setIsRecording(false);
-		recordingUri.current = recorder.uri || null;
-		return recordingUri.current;
+		try {
+			await recorder.stop();
+			recordingUri.current = recorder.uri || null;
+			return recordingUri.current;
+		} finally {
+			setIsRecording(false);
+		}
 	}, [recorder]);
 
 	useEffect(() => {
